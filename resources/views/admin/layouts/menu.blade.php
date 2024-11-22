@@ -87,6 +87,12 @@
           <div data-i18n="User">User</div>
         </a>
       </li>
+      <li class="menu-item {{ request()->routeIs('package.index') ? 'active' : '' }}">
+        <a href="{{route('package.index')}}" class="menu-link">
+          <i class="menu-icon tf-icons ri-handbag-line"></i>
+          <div data-i18n="Packages">Packages</div>
+        </a>
+      </li>
       {{-- <li class="menu-item active open">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons ri-home-smile-line"></i>
