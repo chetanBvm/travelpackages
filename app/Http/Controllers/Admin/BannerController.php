@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PromotionStoreRequest;
-use App\Models\Promotion;
+use App\Http\Requests\BannerStoreRequest;
+use App\Models\Banner;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Yajra\DataTables\Facades\DataTables;
 
-class PromotionController extends Controller
+class BannerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class PromotionController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Promotion::query();
+            $data = Banner::query();
 
             return DataTables::of($data)
                 ->filter(function ($query) use ($request) {
@@ -41,7 +41,7 @@ class PromotionController extends Controller
                 ->rawColumns(['actions'])
                 ->make(true);
         }
-        return view('admin.promotion.index');
+        return view('admin.banner.index');
     }
 
     /**
@@ -55,32 +55,37 @@ class PromotionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PromotionStoreRequest $request): RedirectResponse
+    public function store(BannerStoreRequest $request):RedirectResponse
     {
         DB::beginTransaction();
         try {
             $validated = $request->validated();
 
-            Promotion::create([
+            //Check if the request has an image file
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $tempName = uniqid('asset_', true).'.'.$file->getClientOriginalExtension();
+                $asset_image = $file->storeAs('uploads/banner', $tempName, 'public');
+            }
+
+            Banner::create([
                 'name' => $validated['name'],
-                'price' => $validated['price'],
-                'type' => $validated['type'],
-                'expiry_date' => $validated['expiry_date'],
+                'image' => $asset_image,
                 'status' => $validated['status'],
             ]);
 
-            DB::commit(); //commit the promotion
+            DB::commit(); //commit the banner
 
-            return redirect()->route('promotion.index')->with('success', 'Promotion Created Successfully');
+            return redirect()->route('banner.index')->with('success', 'Banner Created Successfully');
         } catch (\Exception $exception) {
             DB::rollBack(); //Roll back the data if something goes wrong
 
             // Log the entire exception for better debugging (with stack trace)
-            Log::error('Error creating promotion: ' . $exception->getMessage(), [
+            Log::error('Error creating banner: ' . $exception->getMessage(), [
                 'exception' => $exception,
             ]);
 
-            return redirect()->back()->with('error', 'something went wrong while creating the promotion');
+            return redirect()->back()->with('error', 'something went wrong while creating the banner');
         }
     }
 
@@ -94,65 +99,75 @@ class PromotionController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     * 
-     * @return string $id
      */
     public function edit(string $id)
     {
-        $promotion = Promotion::findOrFail($id);
-
-        return view('admin.promotion.edit', compact('promotion'));
+        $banner = Banner::findOrFail($id);
+        return view('admin.banner.edit',compact('banner'));
     }
 
     /**
      * Update the specified resource in storage.
-     * 
-     *  @return string $id
      */
-    public function update(Request $request, string $id)
+    public function update(BannerStoreRequest $request, string $id)
     {
-        //find the package by its ID
-        $promotion = Promotion::findOrFail($id);
-
+        //find the banner by its ID
+        $banner = Banner::findOrFail($id);
+        
         DB::beginTransaction();
-
         try {
             // Validate the incoming request data
             $validated = $request->validated();
 
-            // Update the promotion record
-            $promotion->update([
+            // Update the banner record
+            $banner->update([
                 'name' => $validated['name'],
-                'type' => $validated['type'],
-                'price' => $validated['price'],
-                'expiry_date' => $validated['expiry_date'],
                 'status' => $validated['status'],
             ]);
 
+            //Check if the request has an image file
+            if ($request->hasFile('image')) {
+
+                // Validate the image file (optional, add size/extension validation if necessary)
+                $request->validate([
+                    'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                ]);
+
+                $file = $request->file('image');
+                $tempName = uniqid('asset_', true).'.'.$file->getClientOriginalExtension();
+                // $oldFilePath = 'uploads/packages'.$package->images;
+                // if (Storage::disk('public')->exists($oldFilePath)) {
+                //     Storage::disk('public')->delete($oldFilePath);
+                // }
+
+                $asset_image = $file->storeAs('uploads/banner', $tempName, 'public');
+                $banner->update([
+                    'image' => $asset_image,
+                ]);
+            }
+
             DB::commit(); //commit the transaction
 
-            return redirect()->route('promotion.index')->with('success', 'Promotion updated successfully!');
+            return redirect()->route('banner.index')->with('success', 'Banner updated successfully!');
         } catch (\Exception $exception) {
             DB::rollBack(); //Roll back the data if something goes wrong
 
             // Log the entire exception for better debugging (with stack trace)
-            Log::error('Error updating promotion: ' . $exception->getMessage(), [
+            Log::error('Error updating package: '.$exception->getMessage(), [
                 'exception' => $exception,
             ]);
 
-            return redirect()->back()->with('error', 'something went wrong while updating the promotion');
+            return redirect()->back()->with('error', 'something went wrong while updating the banner');
         }
     }
 
     /**
      * Remove the specified resource from storage.
-     * 
-     * @return string $id
      */
     public function destroy(string $id)
     {
-        Promotion::find($id)->delete();
+        Banner::find($id)->delete();
 
-        return redirect()->route('promotion.index')->with('success', 'Promotion deleted successfully');
+        return redirect()->route('banner.index')->with('success', 'Banner deleted successfully');
     }
 }
