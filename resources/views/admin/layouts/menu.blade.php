@@ -93,6 +93,19 @@
           <div data-i18n="Packages">Packages</div>
         </a>
       </li>
+      <li class="menu-item {{ request()->routeIs('promotion.index') ? 'active' : '' }}">
+        <a href="{{route('promotion.index')}}" class="menu-link">
+          <i class="menu-icon tf-icons ri-discount-percent-line"></i>
+          <div data-i18n="Promotion">Promotion</div>
+        </a>
+      </li>
+      <li class="menu-item {{ request()->routeIs('banner.index') ? 'active' : '' }}">
+        <a href="{{route('banner.index')}}" class="menu-link">
+          <i class="menu-icon tf-icons ri-flag-fill"></i>
+          <div data-i18n="Banner">Banner</div>
+        </a>
+      </li>
+
       {{-- <li class="menu-item active open">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons ri-home-smile-line"></i>
