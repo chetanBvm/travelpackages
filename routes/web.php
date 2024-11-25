@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DestinationController;
 use App\Http\Controllers\Admin\PackagesController;
 use App\Http\Controllers\Admin\UserController;
@@ -14,13 +15,12 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/dashboard',function(){
-    return view('admin.dashboard');
-});
-
 //Admin
 Route::group(['prefix' => 'admin','middelware'=> ['auth']], function () {
-    
+   
+    //dashboard
+    Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard.index');
+
     //User
     Route::resource('user', UserController::class);
     
