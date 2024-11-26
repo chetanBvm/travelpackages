@@ -51,7 +51,7 @@ class PackagesController extends Controller
      */
     public function create()
     {
-        return view('admin.packages.edit');
+        return view('admin.packages.store');
     }
 
     /**
@@ -109,7 +109,7 @@ class PackagesController extends Controller
     public function edit(string $id)
     {
         //Find the package by its ID
-        // $package = Package::findOrFail($id);
+        $package = Package::findOrFail($id);
 
         return view('admin.packages.edit');
     }
