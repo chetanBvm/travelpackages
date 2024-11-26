@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Yajra\DataTables\Facades\DataTables;
+use Yajra\DataTables\DataTables;
 
 class DestinationController extends Controller
 {
@@ -18,27 +18,17 @@ class DestinationController extends Controller
      */
     public function index(Request $request)
     {
+        
         if ($request->ajax()) {
-            $data = Destination::query();
-
+            $data = Destination::all();
             return DataTables::of($data)
-                ->filter(function ($query) use ($request) {
-                    if ($request->has('search') && $request->search != '') {
-                        $query->where(function ($q) use ($request) {
-                            $q->where('name', 'like', "%{$request->search}%");
-                        });
-                    }
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $urlpath = url('admin/destination');
+                    return '<a href="'.$urlpath.'/'.$row->id.'/edit'.'" class="edit"><i class="material-icons">edit</i></a><a href="javascript:void(0);" onClick="deleteFunc('.$row->id.')" class="delete"><i class="material-icons">delete</i></a>';
+                   
                 })
-                ->addColumn('actions', function ($row) {
-                    return '
-                        <div class="d-flex">
-                         <button class="view-btn btn btn-sm btn-dark mr-2" data-id="'.$row->id.'">view</button>
-                        <button class="edit-btn btn btn-sm btn-dark mr-2" data-id="'.$row->id.'">Edit</button>
-                        <button class="delete-btn btn btn-sm btn-danger" data-id="'.$row->id.'">Delete</button>
-                        </div>
-                    ';
-                })
-                ->rawColumns(['actions'])
+                ->rawColumns(['action'])
                 ->make(true);
         }
 
@@ -50,7 +40,7 @@ class DestinationController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.destination.create');
     }
 
     /**
@@ -75,9 +65,7 @@ class DestinationController extends Controller
             DB::rollBack(); //Roll back the data if something goes wrong
 
             // Log the entire exception for better debugging (with stack trace)
-            Log::error('Error creating destination: '.$exception->getMessage(), [
-                'exception' => $exception,
-            ]);
+            Log::error('Error creating destination: ' . $exception->getMessage());
 
             return redirect()->back()->with('error', 'something went wrong while creating the destination');
         }
@@ -133,9 +121,7 @@ class DestinationController extends Controller
             DB::rollBack(); //Roll back the data if something goes wrong
 
             // Log the entire exception for better debugging (with stack trace)
-            Log::error('Error updating destination: '.$exception->getMessage(), [
-                'exception' => $exception,
-            ]);
+            Log::error('Error updating destination: ' . $exception->getMessage());
 
             return redirect()->back()->with('error', 'something went wrong while updating the destination');
         }
@@ -150,6 +136,6 @@ class DestinationController extends Controller
     {
         Destination::find($id)->delete();
 
-        return redirect()->route('destination.index')->with('success', 'Destination deleted successfully');
+        return response()->json(['success' => 'Destination deleted successfully!']);
     }
 }

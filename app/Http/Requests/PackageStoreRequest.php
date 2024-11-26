@@ -11,7 +11,7 @@ class PackageStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,12 @@ class PackageStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'description' => 'required',
-            'days' => 'required|numeric',
+            'description' => 'nullable|string',
+            'days' => 'required|numeric|min:0',
+            'price' => 'numeric|min:0',
+            'images' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status' => 'string',
+            'destination_id' => 'string|exists:destinations,id',
         ];
     }
 
