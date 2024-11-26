@@ -33,7 +33,7 @@ Route::get('/clear-cache', function () {
 Route::group(['prefix' => 'admin','middelware'=> ['auth','verified']], function () {
    
     //dashboard
-    Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard.index');
+    Route::get('/dashboard',[DashboardController::class,'index'])->name('admin.dashboard');
 
     //User
     Route::resource('user', UserController::class);

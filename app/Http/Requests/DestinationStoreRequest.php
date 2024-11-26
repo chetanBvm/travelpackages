@@ -24,6 +24,7 @@ class DestinationStoreRequest extends FormRequest
         return [
             'name' => 'required|string',
             'type' => 'required|string',
+            'status' => 'string',
         ];
     }
 

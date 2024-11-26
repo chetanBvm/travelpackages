@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PackageStoreRequest;
+use App\Models\Destination;
 use App\Models\Package;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -20,26 +21,15 @@ class PackagesController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Package::with('destiantion');
+            $data = Package::with('destination');
 
             return DataTables::of($data)
-                ->filter(function ($query) use ($request) {
-                    if ($request->has('search') && $request->search != '') {
-                        $query->where(function ($q) use ($request) {
-                            $q->where('name', 'like', "%{$request->search}%");
-                        });
-                    }
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $urlpath = url('admin/package');
+                    return '<a href="' . $urlpath . '/' . $row->id . '/edit' . '" class="edit"><i class="material-icons">edit</i></a><a href="javascript:void(0);" onClick="deleteFunc(' . $row->id . ')" class="delete"><i class="material-icons">delete</i></a>';
                 })
-                ->addColumn('actions', function ($row) {
-                    return '
-                        <div class="d-flex">
-                         <button class="view-btn btn btn-sm btn-dark mr-2" data-id="'.$row->id.'">view</button>
-                        <button class="edit-btn btn btn-sm btn-dark mr-2" data-id="'.$row->id.'">Edit</button>
-                        <button class="delete-btn btn btn-sm btn-danger" data-id="'.$row->id.'">Delete</button>
-                        </div>
-                    ';
-                })
-                ->rawColumns(['actions'])
+                ->rawColumns(['action'])
                 ->make(true);
         }
 
@@ -51,7 +41,19 @@ class PackagesController extends Controller
      */
     public function create()
     {
-        return view('admin.packages.store');
+        // Check if there are any destinations
+        $destinationCount = Destination::count();
+
+        // If no destinations exist, redirect to the destinations page with a message
+        if ($destinationCount == 0) {
+            return redirect()->route('destination.index')->with('error', 'Please create a destination before creating a package.');
+        }
+
+        // Get destinations if they exist
+        $destination = Destination::get();
+
+        // Return the view with destinations
+        return view('admin.packages.create', compact('destination'));
     }
 
     /**
@@ -62,14 +64,13 @@ class PackagesController extends Controller
         DB::beginTransaction();
         try {
             $validated = $request->validated();
-
+            $asset_image = null;
             //Check if the request has an image file
             if ($request->hasFile('images')) {
                 $file = $request->file('images');
-                $tempName = uniqid('asset_', true).'.'.$file->getClientOriginalExtension();
+                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
                 $asset_image = $file->storeAs('uploads/packages', $tempName, 'public');
             }
-
             Package::create([
                 'name' => $validated['name'],
                 'description' => $validated['description'],
@@ -77,17 +78,16 @@ class PackagesController extends Controller
                 'images' => $asset_image,
                 'days' => $validated['days'],
                 'status' => $validated['status'],
+                'destination_id' => $validated['destination_id'],
             ]);
             DB::commit();  //commit the transaction
 
-            return redirect()->route('packages.index')->with('success', 'Package Created Successfully!');
+            return redirect()->route('package.index')->with('success', 'Package Created Successfully!');
         } catch (\Exception $exception) {
             DB::rollBack(); //Roll back the data if something goes wrong
 
             // Log the entire exception for better debugging (with stack trace)
-            Log::error('Error creating package: '.$exception->getMessage(), [
-                'exception' => $exception,
-            ]);
+            Log::error('Error creating package: ' . $exception->getMessage());
 
             return redirect()->back()->with('error', 'something went wrong while creating the package');
         }
@@ -110,8 +110,8 @@ class PackagesController extends Controller
     {
         //Find the package by its ID
         $package = Package::findOrFail($id);
-
-        return view('admin.packages.edit');
+        $destination = Destination::all();
+        return view('admin.packages.edit', compact('package', 'destination'));
     }
 
     /**
@@ -144,8 +144,8 @@ class PackagesController extends Controller
                 ]);
 
                 $file = $request->file('images');
-                $tempName = uniqid('asset_', true).'.'.$file->getClientOriginalExtension();
-                $oldFilePath = 'uploads/packages'.$package->images;
+                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
+                $oldFilePath = 'uploads/packages' . $package->images;
                 if (Storage::disk('public')->exists($oldFilePath)) {
                     Storage::disk('public')->delete($oldFilePath);
                 }
@@ -158,12 +158,12 @@ class PackagesController extends Controller
 
             DB::commit(); //commit the transaction
 
-            return redirect()->route('packages.index')->with('success', 'Package updated successfully!');
+            return redirect()->route('package.index')->with('success', 'Package updated successfully!');
         } catch (\Exception $exception) {
             DB::rollBack(); //Roll back the data if something goes wrong
 
             // Log the entire exception for better debugging (with stack trace)
-            Log::error('Error updating package: '.$exception->getMessage(), [
+            Log::error('Error updating package: ' . $exception->getMessage(), [
                 'exception' => $exception,
             ]);
 
@@ -181,29 +181,8 @@ class PackagesController extends Controller
         // Find the package by its ID
         $package = Package::findOrFail($id);
 
-        DB::beginTransaction();
-        try {
-            if ($package->images && Storage::disk('public')->exists('uploads/packages/'.$package->images)) {
-                Storage::disk('public')->delete('uploads/packages/'.$package->images); // Delete the image file
-            }
+        $package->delete();
 
-            $package->delete();
-
-            DB::commit();  //Commit the transaction
-
-            // Redirect to the packages index with a success message
-            return redirect()->route('packages.index')->with('success', 'Package deleted successfully!');
-        } catch (\Exception $exception) {
-            // Roll back the transaction if an error occurs
-            DB::rollBack();
-
-            // Log the error for debugging
-            Log::error('Error deleting package: '.$exception->getMessage(), [
-                'exception' => $exception,
-            ]);
-
-            // Redirect back with an error message
-            return redirect()->back()->with('error', 'Something went wrong while deleting the package.');
-        }
+        return response()->json(['success' => 'Package deleted successfully!']);
     }
 }

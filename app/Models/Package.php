@@ -11,10 +11,10 @@ class Package extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'description', 'price', 'days', 'images'];
+    protected $fillable = ['name', 'description', 'price', 'days', 'images','status','destination_id'];
 
     public function destination(): HasOne
     {
-        return $this->hasOne(Destination::class);
+        return $this->hasOne(Destination::class,'id','destination_id');
     }
 }

@@ -19,24 +19,13 @@ class PromotionController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Promotion::query();
+            $data = Promotion::all();
 
             return DataTables::of($data)
-                ->filter(function ($query) use ($request) {
-                    if ($request->has('search') && $request->search != '') {
-                        $query->where(function ($q) use ($request) {
-                            $q->where('name', 'like', "%{$request->search}%");
-                        });
-                    }
-                })
-                ->addColumn('actions', function ($row) {
-                    return '
-                        <div class="d-flex">
-                         <button class="view-btn btn btn-sm btn-dark mr-2" data-id="' . $row->id . '">view</button>
-                        <button class="edit-btn btn btn-sm btn-dark mr-2" data-id="' . $row->id . '">Edit</button>
-                        <button class="delete-btn btn btn-sm btn-danger" data-id="' . $row->id . '">Delete</button>
-                        </div>
-                    ';
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $urlpath = url('admin/promotion');
+                    return '<a href="' . $urlpath . '/' . $row->id . '/edit' . '" class="edit"><i class="material-icons">edit</i></a><a href="javascript:void(0);" onClick="deleteFunc(' . $row->id . ')" class="delete"><i class="material-icons">delete</i></a>';
                 })
                 ->rawColumns(['actions'])
                 ->make(true);
