@@ -30,6 +30,13 @@ Route::get('/clear-cache', function () {
     return 'Route cache cleared!';
 });
 
+//migrate command
+Route::get('/migrate', function () {
+    Artisan::call('migrate');
+
+    return "Specific migration executed successfully!";
+});
+
 //Admin
 Route::group(['prefix' => 'admin'], function () {
 
