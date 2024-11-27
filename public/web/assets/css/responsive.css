@@ -1,0 +1,897 @@
+/*--------------------------------------------------------------------------------------*/
+/*Responsive-Css-Here
+/*--------------------------------------------------------------------------------------*/
+@media (max-width:1410px){
+	.travel-banner {
+		padding: 82px 0px;
+		height: 570px !important;
+	}
+.college-content h1 {
+	font-size: 67px;
+}
+.service-content p {
+	min-height: 72px;
+}
+.college-inner {
+	position: relative;
+	height: 100%;
+}	
+}
+
+
+@media (max-width:1199px){
+	.travel-banner {
+		height: 520px;
+	}
+	.btn-wrapper .select-form-btn {
+		width: max-content;
+	}
+	.Destination-form-main {
+		column-gap: 5px;
+	}
+
+  .banner-left h1 {
+	font-size: 54px;
+	line-height: 63.18px;
+}
+.banner-left {
+	row-gap: 14px;
+}
+.shape-one {
+	position: absolute;
+	top: 12%;
+	left: -10px;
+}
+.flag-city {
+	font-size: 20px;
+}
+.service-content {
+	padding: 40px 9px;
+}
+.college-inner {
+	height: 100%;
+}
+.main-menu {
+	column-gap: 30px;
+}
+.college-content h1 {
+	font-size: 48px;
+	line-height: 62.18px;
+}
+.welcome-left h2 {
+	font-size: 42px;
+	line-height: 48.35px;
+}
+.package-left-bottom ul {
+	column-gap: 20px;
+}
+.package-left-bottom ul li {
+	font-size: 15px;
+}
+.fillter-price .duration-btn {
+	column-gap: 16px;
+}
+.fillter-btn {
+	padding: 13px 28px;
+}
+.package-left-head li h2 {
+	font-size: 22px;
+}
+.package-left-head li h3 {
+	font-size: 22px;
+	line-height: 28.87px;
+}
+.fillter-price li {
+	column-gap: 10px;
+}
+.fillter-price .duration-btn {
+	column-gap: 10px;
+	padding: 10px;
+	font-size: 13px;
+}
+.fillter-btn {
+	padding: 6px 10px;
+	column-gap: 5px;
+	font-size: 13px;
+}
+.sort-by {
+	font-size: 12px;
+}
+.fillter-city {
+	column-gap: 14px;
+}
+.duration-btn {
+	padding: 10px;
+}
+.package-inner {
+	row-gap: 40px;
+}
+.package-left-head li h2 {
+	font-size: 18px;     
+	line-height: 24px;
+}
+.package-left-head li h3 {
+	font-size: 18px;
+	line-height: 24.87px;
+}
+.package-left {
+	row-gap: 10px;
+}
+.package-left-middle p {
+	font-size: 16px;
+	line-height: 27px;
+}
+.package-left-bottom ul {
+	column-gap: 30px;
+	flex-wrap: wrap;
+	justify-content: start;
+	row-gap: 20px;
+}
+.travel-btn {
+	padding: 13px 41px;
+}
+}
+
+
+@media (max-width:991px){
+	.Destination-form {
+		margin-top: 32px;
+	}
+	.select2-dropdown.select2-dropdown--below{
+		width: 278.817px !important;
+	}
+	.travel-banner {
+		height: 589px !important;
+	  }
+	.Destination-form-main {
+		justify-content: inherit;
+	}
+	.select2-container--default .select2-selection--single .select2-selection__arrow {
+		right: -41px;
+	}
+	.select2-container--default .select2-selection--single {
+		width: 280px;
+	}
+	.Destination-form-data {
+		width: 70%;
+	  }
+	.Destination-form-main {
+		display: grid;
+		grid-template-columns: auto auto;
+	  }
+	  .Destination-form-data {
+		margin-top: 10px;
+	}
+#navbarSupportedContent {
+	position: absolute;
+	top: 70px;
+	left: 0;
+	width: 100%;
+	background: var(--white);
+	padding: 20px;
+	border-radius: 20px;
+	z-index: 999;
+	border: 1px solid var(--primary);
+	
+}
+
+.main-menu {
+	row-gap: 20px;
+}
+.login-sec {
+	column-gap: 10px;
+	justify-content: center;
+	padding-top: 20px;
+}
+.login-btn {
+	padding: 10px 20px;
+	border: 1.5px solid var(--dark);
+	border-radius: 30px;
+	background: var(--dark);
+	font-family: Plus Jakarta Sans;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 17.64px;
+	text-align: center;
+	color: var(--white);
+}
+.navbar-toggler {
+	box-shadow: none;
+	border: none;
+}
+.navbar-toggler:focus {
+	box-shadow: none;
+}
+.popular-content {
+	flex-wrap: wrap;
+	row-gap: 20px;
+}
+.popular-content li {
+	width: 33%;
+}
+.banner-left h1 {
+	font-size: 44px;
+	line-height: 53.18px;
+}
+.shape-three {
+	position: absolute;
+	right: -49px;
+	top: 20%;
+	transform: translateY(-50%);
+}
+.shape-one {
+	position: absolute;
+	top: 2%;
+	left: -80px;
+}
+.campaign-content h2 {
+	font-family: Plus Jakarta Sans;
+	font-size: 50px;
+	font-weight: 700;
+	line-height: 68.2px;
+	text-align: center;
+	color: var(--white);
+}
+.main-heading {
+	font-family: Raleway;
+	font-size: 38px;
+	font-weight: 700;
+	line-height: 46.35px;
+	text-align: center;
+}
+.discover-head h2 {
+	max-width: 100%;
+}
+.content {
+	margin: 0;
+	font-family: Raleway;
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 21.13px;
+	text-align: center;
+	color: var(--gray);
+}
+
+.discover-bottom .col {
+  flex: 1 0 33%;
+}
+.discover-bottom .row {
+	row-gap: 20px;
+}
+.welcome-img-right {
+	flex-direction: row;
+	column-gap: 15px;
+}
+.welcome-left h2 {
+	font-size: 32px;
+	line-height: 39.35px;
+}
+.welcome-left {
+	display: flex;
+	flex-direction: column;
+	row-gap: 17px;
+}
+.service-bottom .row {
+	row-gap: 20px;
+}
+.footer-content {
+	row-gap: 20px;
+}
+.footer-content h2 {
+	font-size: 17px;
+	line-height: 27.72px;
+}
+.track-wapper {
+	padding: 17px 0px;
+	row-gap: 10px;
+}
+.footer-contact li {
+	font-size: 13px;
+	column-gap: 10px;
+}
+.social-icon {
+	column-gap: 14px;
+}
+.footer-menu {
+	display: flex;
+	flex-direction: column;
+	row-gap: 9px;
+}
+.college-content h1 {
+	font-size: 35px;
+	line-height: 42.18px;
+}
+.tours-right {
+	row-gap: 10px;
+}
+.tours-right p {
+	font-size: 14px;
+	line-height: 26px;
+	margin: 0;
+}
+.featured-left {
+	row-gap: 10px;
+}
+.featured-left-content {
+	row-gap: 6px;
+}
+.featured-left-content h2 {
+	font-size: 32px;
+	line-height: 38px;
+}
+.featured-left-content p {
+	font-size: 16px;
+}
+.tours-right h2 {
+	font-size: 24px;
+}
+}
+
+@media (max-width:767px){
+	.select2-dropdown.select2-dropdown--below {
+		width: 219.8px !important;
+	  }
+	.travel-banner {
+		background-size: auto;
+	}
+	.select2-container--default .select2-selection--single .select2-selection__arrow {
+		right: 23px;
+
+	}
+	.select2-container--default .select2-selection--single {
+		width: 222px;
+	}
+	.Destination-form-data {
+		width: 96%;
+	}
+.flag-city {
+	font-size: 16px;
+	bottom: 14px;
+	left: 14px;
+}
+.campaign-content h2 {
+	font-family: Plus Jakarta Sans;
+	font-size: 30px;
+	font-weight: 700;
+	line-height: 38.2px;
+	text-align: center;
+	color: var(--white);
+}
+.travel-btn {
+	padding: 13px 31px;
+	background: var(--primary);
+	border-radius: 30px;
+	color: var(--white);
+	font-family: Plus Jakarta Sans;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 17.64px;
+	text-align: center;
+	border: 1px solid var(--primary);
+}
+.shape-one {
+	position: absolute;
+	top: 2%;
+	left: 0;
+}
+.shape-three {
+	position: absolute;
+	right: 0;
+	top: 20%;
+	transform: translateY(-50%);
+}
+.footer-inner .row {
+	row-gap: 30px;
+}
+.welcome-img-left img {
+	width: 100%;
+}
+.welcome-img-right figure {
+	width: 100%;
+}
+.welcome-img-right img {
+	width: 100%;
+}
+.welcome-inner > .row {
+  flex-direction: column-reverse;
+  row-gap: 30px;
+}
+.welcome-img-left img {
+	width: 100%;
+	height: 500px;
+}
+.track-head p {
+	text-align: center;
+}
+.track-bottom > .row {
+	row-gap: 30px;
+}
+.ticket-right {
+	margin-top: 20px;
+}
+.package-wapper .row {
+	row-gap: 30px;
+}
+.package-left {
+	row-gap: 20px;
+}
+.page-number li {
+	width: 20px;
+	height: 20px;
+	font-size: 12px;
+}
+.page-count {
+	font-size: 12.23px;
+}
+.prev-btn {
+	padding: 6px 8px;
+	font-size: 12.91px;
+}
+.package-pagenation {
+	column-gap: 10px;
+}
+.next-btn {
+	padding: 6px 8px;	
+}
+.fillter-price {
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	column-gap: 20px;
+}
+.package-head .row {
+	row-gap: 20px;
+}
+.tours-inner .row {
+	row-gap: 30px;
+}
+.main-heading {
+	font-size: 28px;
+}
+.college-content {
+	width: 100%;
+}
+.featured-inner .row {
+	row-gap: 30px;
+}
+.blog-detail-head h1 {
+	font-size: 30px;
+	line-height: 38px;
+}
+.blog-detail-bottom h2 {
+	font-size: 18px;
+	line-height: 27.18px;
+	padding-bottom: 22px;
+}
+.blog-detail-bottom p {
+	font-size: 16px;
+	padding-bottom: 24px;
+}
+
+}
+
+@media(max-width:575px){
+	.select2-container--default .select2-selection--single {
+		width: 175px;
+	  }
+	  .select2-dropdown.select2-dropdown--below {
+		width: 177.8px !important;
+	  }
+	.Destination-form-main {
+		grid-template-columns: auto auto;
+	  }
+ .travel-banner {
+	padding: 40px 0px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+	right: 58px;
+}
+.explore {
+	background: var(--white);
+	padding: 12px 22px;
+	color: var(--primary);
+	font-family: Plus Jakarta Sans;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 17.64px;
+	text-align: left;
+	display: flex;
+	width: max-content;
+	align-items: center;
+	column-gap: 5px;
+	border-radius: 30px;
+	box-shadow: 0px 4px 10px 0px #8C8C8C1A;
+}
+.banner-left h1 {
+	font-size: 34px;
+	line-height: 43.18px;
+}
+.banner-left p {
+	font-family: Raleway;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 26px;
+	text-align: left;
+	margin: 0;
+	color: var(--gray);
+	max-width: 558px;
+}
+.bannr-inner .row {
+	row-gap: 30px;
+}
+.banner-award {
+	box-shadow: -8px 8px 40px 0px #0000000D;
+	background: var(--white);
+	padding: 6px 10px;
+	border-radius: 10px;
+	width: max-content;
+	display: flex;
+	align-items: center;
+	column-gap: 10px;
+	transition: .3s ease-in-out;
+	cursor: pointer;
+}
+.banner-award h6 {
+	max-width: 76px;
+	text-align: left;
+	font-family: Poppins;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 19px;
+}
+.award-content p {
+	margin: 0;
+	font-family: Poppins;
+	font-size: 10px;
+	font-weight: 400;
+	line-height: 18px;
+	text-align: left;
+	color: var(--gray);
+	max-width: 101px;
+}
+.shape-three {
+	position: absolute;
+	right: 0;
+	top: 30%;
+	transform: translateY(-50%);
+}
+.shape-one {
+	position: absolute;
+	top: 62%;
+	left: 0;
+}
+.main-heading {
+	font-family: Raleway;
+	font-size: 23px;
+	font-weight: 700;
+	line-height: 36.35px;
+	text-align: center;
+}
+.tranding-inner {
+	display: flex;
+	flex-direction: column;
+	row-gap: 30px;
+	position: relative;
+}
+.discover {
+	padding: 20px 0px;
+	position: relative;
+}
+.discover-inner {
+	display: flex;
+	flex-direction: column;
+	row-gap: 30px;
+}
+.discover-bottom .col {
+	flex: 1 0 100%;
+}
+.campaign-content {
+	max-width: 100%;
+	width: 100%;
+}
+.campaign-content h2 {
+	font-family: Plus Jakarta Sans;
+	font-size: 24px;
+	font-weight: 700;
+	line-height: 32.2px;
+	text-align: center;
+	color: var(--white);
+}
+.travel-btn {
+	padding: 9px 20px;
+	background: var(--primary);
+	border-radius: 30px;
+	color: var(--white);
+	font-family: Plus Jakarta Sans;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 17.64px;
+	text-align: center;
+	border: 1px solid var(--primary);
+}
+.campaign-inner video {
+	height: 400px;
+	object-fit: cover;
+}
+.popular-content {
+	display: flex;
+	padding: 24px 0px;
+	justify-content: space-between;
+	border: 1.5px solid rgba(123, 121, 121, .3);
+	border-radius: 30px;
+}
+.popular-content li {
+	width: 50%;
+}
+.popular-inner {
+	display: flex;
+	flex-direction: column;
+	row-gap: 30px;
+}
+.hotels {
+	padding: 30px 0px;
+}
+.popular {
+	padding: 30px 0px;
+}
+.hotels-inner {
+	display: flex;
+	flex-direction: column;
+	row-gap: 30px;
+}
+.experience {
+	padding: 30px 0px;
+}
+.experience-inner {
+	display: flex;
+	flex-direction: column;
+	row-gap: 20px;
+}
+.experience-slider .item {
+	padding: 10px;
+}
+.experience {
+	padding: 30px 0px 50px;
+}
+.rights p {
+	font-family: Plus Jakarta Sans;
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 25px;
+	letter-spacing: -0.20000000298023224px;
+	text-align: center;
+	margin: 0;
+	color: var(--white);
+}
+.tranding {
+    position: relative;
+    margin-top: 112px;
+  }
+.college-inner img {
+	width: 100%;
+	max-height: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.college-inner figure {
+	height: 100%;
+}
+.college-inner {
+	height: 480px;
+}
+.college-content {
+	width: 100%;
+	row-gap: 15px;
+
+}
+	.college-content h1 {
+	font-size: 35px;
+	line-height: 40px;
+}
+.college-content p {
+	font-size: 14px;
+}
+.welcome-left h2 {
+	font-size: 26px;
+	line-height: 34.35px;
+}
+.welcome-left p {
+	font-size: 15px;
+	line-height: 26px;
+}
+.welcome {
+	padding: 40px 0px;
+}
+.travel-service {
+	padding: 40px 0px;
+}
+.service-inner {
+	row-gap: 40px;
+}
+.track {
+	padding: 40px 0px;
+}
+.track-inner {
+	row-gap: 40px;
+}
+.welcome-img-left img {
+	width: 100%;
+	height: 400px;
+	object-fit: cover;
+}
+.track-head {
+	row-gap: 10px;
+}
+header {
+	padding: 15px 0px;
+}
+.package-left-head {
+	display: flex;
+	align-items: start;
+	width: 100%;
+	flex-direction: column;
+	justify-content: start;
+	  row-gap: 10px;
+}
+.package-left-head li {
+	display: flex;
+	flex-direction: row;
+	row-gap: 10px;
+	justify-content: space-between;
+	column-gap: 10px;
+}
+.package-left-head li h2 {
+	font-size: 15px;
+	line-height: 24px;
+}
+.day-night {
+	font-size: 15px;
+}
+.page-number.mobile-page {
+	display: flex;
+}
+.page-number.dasktop-page {
+	display: none;
+}
+.page-count {
+	display: none;
+}
+.tours {
+	padding: 40px 0px;
+}
+.gallery {
+	padding: 30px 0px;
+}
+.gallery-inner {
+	display: flex;
+	flex-direction: column;
+	row-gap: 20px;
+}
+.question {
+	padding: 30px 0px;
+}
+.question-inner {
+	display: flex;
+	flex-direction: column;
+	row-gap: 30px;
+}
+.question-bottom form {
+	padding: 15px;
+	row-gap: 20px;
+}
+.question-form {
+	row-gap: 10px;
+}
+.question-form input {
+	padding: 14px;
+}
+.question-bottom form .row {
+	row-gap: 20px;
+}
+.contact-content input {
+	padding: 14px;
+}
+.contact-form {
+	padding: 14px;
+}
+.contact-form .row {
+	row-gap: 20px;
+}
+.featured {
+	padding: 40px 0px;
+	background: #F4F0F8;
+}
+.featured-left-content h2 {
+	font-size: 22px;
+	line-height: 38px;
+	letter-spacing: 0;
+}
+.posts {
+	padding: 30px 0px;
+}
+.posts-inner {
+	row-gap: 30px;
+}
+.tours-right h2 {
+	font-size: 18px;
+	line-height: 28px;
+}
+.blog-detail-head {
+	flex-direction: column;
+	row-gap: 10px;
+}
+.policy-inner h2 {
+	font-size: 20px;
+	line-height: 24.18px;
+	padding-bottom: 15px;
+}
+.policy-inner p {
+	font-size: 14px;
+	line-height: 26px;
+	padding-bottom: 30px;
+}
+.policy-inner {
+	padding: 30px 0px;
+}
+.policy-inner ul li {
+	margin: 0;
+	font-family: Raleway;
+	font-size: 15px;
+	font-weight: 400;
+	line-height: 28px;
+	text-align: left;
+	color: var(--gray);
+}
+}
+@media(max-width:480px){
+
+	/* .select2-container--default .select2-selection--single {
+		width: 175px;
+	  }
+	  .select2-dropdown.select2-dropdown--below {
+		width: 177.8px !important;
+	  } */
+	   .btn-wrapper{
+		text-align: center;
+	   }
+	   .select2-dropdown.select2-dropdown--below {
+		width: 287.8px !important;
+	  }
+	.Destination-form-main {
+		grid-template-columns: auto ;
+	  }
+	  .select2-container--default .select2-selection--single {
+		width: 310px;
+	  }
+	  .select2-container--default .select2-selection--single .select2-selection__arrow {
+		right: 49px;
+	}
+	.offer-news {
+		font-size: 13px;
+	}
+ /* .travel-banner {
+	padding: 40px 0px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+	right: 31px;
+} */
+
+	.tranding {
+		margin-top: 144px;
+	  }
+	  .banner-left h1 {
+		font-size: 29px;
+		line-height: 43.18px;
+	  }
+}
+@media (max-width: 380px) {
+	.select2-container--default .select2-selection--single {
+	  width: 261px;
+	}
+	.select2-container--default .select2-selection--single .select2-selection__arrow {
+		right: 10px;
+	}
+	.select2-dropdown.select2-dropdown--below {
+		width: 254.8px !important;
+	  }
+  }
