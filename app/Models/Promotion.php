@@ -10,5 +10,5 @@ class Promotion extends Model
 {
     use HasFactory,SoftDeletes;
 
-    protected $fillable = ['name','type','price','status','expiry_date'];
+    protected $fillable = ['name','type','price','status','expiry_date','code'];
 }

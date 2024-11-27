@@ -27,7 +27,7 @@ class PromotionController extends Controller
                     $urlpath = url('admin/promotion');
                     return '<a href="' . $urlpath . '/' . $row->id . '/edit' . '" class="edit"><i class="material-icons">edit</i></a><a href="javascript:void(0);" onClick="deleteFunc(' . $row->id . ')" class="delete"><i class="material-icons">delete</i></a>';
                 })
-                ->rawColumns(['actions'])
+                ->rawColumns(['action'])
                 ->make(true);
         }
         return view('admin.promotion.index');
@@ -56,6 +56,7 @@ class PromotionController extends Controller
                 'type' => $validated['type'],
                 'expiry_date' => $validated['expiry_date'],
                 'status' => $validated['status'],
+                'code' => $validated['code'],
             ]);
 
             DB::commit(); //commit the promotion
@@ -65,9 +66,7 @@ class PromotionController extends Controller
             DB::rollBack(); //Roll back the data if something goes wrong
 
             // Log the entire exception for better debugging (with stack trace)
-            Log::error('Error creating promotion: ' . $exception->getMessage(), [
-                'exception' => $exception,
-            ]);
+            Log::error('Error creating promotion: ' . $exception->getMessage());
 
             return redirect()->back()->with('error', 'something went wrong while creating the promotion');
         }
@@ -98,7 +97,7 @@ class PromotionController extends Controller
      * 
      *  @return string $id
      */
-    public function update(Request $request, string $id)
+    public function update(PromotionStoreRequest $request, string $id)
     {
         //find the package by its ID
         $promotion = Promotion::findOrFail($id);
@@ -116,6 +115,7 @@ class PromotionController extends Controller
                 'price' => $validated['price'],
                 'expiry_date' => $validated['expiry_date'],
                 'status' => $validated['status'],
+                'code' => $validated['code'],
             ]);
 
             DB::commit(); //commit the transaction
@@ -125,9 +125,7 @@ class PromotionController extends Controller
             DB::rollBack(); //Roll back the data if something goes wrong
 
             // Log the entire exception for better debugging (with stack trace)
-            Log::error('Error updating promotion: ' . $exception->getMessage(), [
-                'exception' => $exception,
-            ]);
+            Log::error('Error updating promotion: ' . $exception->getMessage());
 
             return redirect()->back()->with('error', 'something went wrong while updating the promotion');
         }
@@ -140,8 +138,9 @@ class PromotionController extends Controller
      */
     public function destroy(string $id)
     {
+        // Find the promotion by its ID
         Promotion::find($id)->delete();
 
-        return redirect()->route('promotion.index')->with('success', 'Promotion deleted successfully');
+        return response()->json(['success', 'Promotion deleted successfully!']);
     }
 }

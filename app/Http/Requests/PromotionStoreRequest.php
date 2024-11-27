@@ -25,6 +25,9 @@ class PromotionStoreRequest extends FormRequest
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0', // Added numeric and minimum validation for price
             'type' => 'required|string|max:100', // Added string validation and length limit for type
+            'expiry_date' => 'required|date',
+            'status' => 'string',
+            'code' =>'required',
         ];
     }
 
@@ -47,6 +50,8 @@ class PromotionStoreRequest extends FormRequest
             'type.required' => 'The promotion type is required.',
             'type.string' => 'The promotion type must be a valid string.',
             'type.max' => 'The promotion type cannot exceed 100 characters.',
+
+            'expiry_date' => 'The promotion expiry date is required.',
         ];
     }
 }
