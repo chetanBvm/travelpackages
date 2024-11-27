@@ -2,7 +2,7 @@
     <div class="sidebar-header">
         <div class="d-flex justify-content-between">
             <div class="logo">
-                <a href="{{route('admin.dashboard')}}"><img src="{{asset('admin/assets/images/logo/logo.png')}}" alt="Logo" srcset=""></a>
+                <a href="{{route('admin.dashboard')}}"><img src="{{asset('admin/assets/images/logo/logo4.png')}}" alt="Logo" srcset=""></a>
             </div>
             <div class="toggler">
                 <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -18,12 +18,12 @@
                     <span>Dashboards</span>
                 </a>
             </li>
-            <li class="sidebar-item {{ request()->routeIs('user.index') ? 'active' : '' }}">
+            {{-- <li class="sidebar-item {{ request()->routeIs('user.index') ? 'active' : '' }}">
                 <a href="{{route('user.index')}}" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
                     <span>User</span>
                 </a>
-            </li>
+            </li> --}}
             <li class="sidebar-item {{ request()->routeIs('destination.index') ? 'active' : '' }}">
                 <a href="{{route('destination.index')}}" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
