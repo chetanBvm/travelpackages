@@ -19,7 +19,7 @@
                         @csrf
                         <div class="form-body">
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name</label>
                                         <input type="text" id="name-vertical" class="form-control" name="name"
@@ -29,7 +29,7 @@
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
-                                
+                                <div class="col-6">
                                 <div class="form-group">
                                     <label for="code">Code</label>
                                     <input type="text" id="code" class="form-control" name="code"
@@ -40,7 +40,7 @@
                                 @enderror
                             </div>
 
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="price">Price</label>
                                         <input type="text" id="price" class="form-control" name="price"
@@ -50,7 +50,7 @@
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="type">Type</label>
                                         <input type="text" id="type" class="form-control" name="type"
@@ -61,7 +61,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="type">Expiry Date</label>
                                         <input type="date" id="expiry_date" class="form-control" name="expiry_date"
@@ -71,7 +71,7 @@
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Status</label>
                                         <select class="form-select" id="basicSelect" name="status">
@@ -94,7 +94,7 @@
     </div>
 @endsection
 @section('js')
-    
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 

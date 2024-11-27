@@ -18,15 +18,15 @@ class DestinationController extends Controller
      */
     public function index(Request $request)
     {
-        
+
         if ($request->ajax()) {
             $data = Destination::all();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
                     $urlpath = url('admin/destination');
-                    return '<a href="'.$urlpath.'/'.$row->id.'/edit'.'" class="edit"><i class="material-icons">edit</i></a><a href="javascript:void(0);" onClick="deleteFunc('.$row->id.')" class="delete"><i class="material-icons">delete</i></a>';
-                   
+                    return '<a href="'.$urlpath.'/'.$row->id.'/edit'.'" class="edit"><i class="bi bi-pen-fill"></i></a><a href="javascript:void(0);" onClick="deleteFunc('.$row->id.')" class="delete"><i class="bi bi-trash-fill"></i></a>';
+
                 })
                 ->rawColumns(['action'])
                 ->make(true);

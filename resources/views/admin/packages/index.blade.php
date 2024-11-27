@@ -26,14 +26,11 @@
         <section>
             <div class="card">
                 <div class="card-header">
-                    Packages
+                    <span>Packages</span>
+                    <a href="{{ route('package.create') }}" type="button"
+                    class="btn btn-info d-none d-lg-block m-l-15">&#x002B; Add New</a>
                 </div>
-                <div class="col-md-12 align-self-center text-right">
-                    <div class="d-flex justify-content-end align-items-center">
-                        <a href="{{ route('package.create') }}" type="button"
-                            class="btn btn-info d-none d-lg-block m-l-15"><i class="zmdi zmdi-plus"></i> Add New</a>
-                    </div>
-                </div>
+
                 <div class="card-body">
                     <table class="table table-striped data-table">
                         <thead>
@@ -67,7 +64,7 @@
                         data: 'id',
                         name: 'id'
                     },
-                    {   
+                    {
                         data: 'destination.name',
                         name:'destination.name'
                     },

@@ -94,7 +94,7 @@
                                             <div>
                                                 <img id="imagePreview" src="{{ asset('storage/' . $package->images) }}"
                                                     alt="Current Image" width="100" height="100">
-                                            </div>                                        
+                                            </div>
                                         @endif
                                         <input type="file" class="form-control" name="images" id="image">
                                     </div>
