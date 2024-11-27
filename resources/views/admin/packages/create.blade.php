@@ -29,7 +29,7 @@
                         @csrf
                         <div class="form-body">
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="destination-vertical">Destination</label>
                                         <select class="form-select" id="basicSelect" name="destination_id">
@@ -43,7 +43,7 @@
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name</label>
                                         <input type="text" id="name-vertical" class="form-control" name="name"
@@ -53,7 +53,7 @@
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="price">Price</label>
                                         <input type="text" id="price" class="form-control" name="price"
@@ -63,7 +63,7 @@
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Days</label>
                                         <input type="text" id="days" class="form-control" name="days"
@@ -82,16 +82,6 @@
                                         </select>
                                     </div>
                                 </div>
-
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="">Description</label>
-                                        <textarea name="description" id="default" cols="30" rows="10"></textarea>
-                                    </div>
-                                    @error('description')
-                                        <span class="text-danger" role="alert">*{{ $message }}</span>
-                                    @enderror
-                                </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <div>
@@ -101,6 +91,16 @@
                                         <input type="file" class="form-control" name="images" id="main_image" accept="image/jpeg, image/png, image/gif, image/jpg">
                                     </div>
                                 </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="">Description</label>
+                                        <textarea name="description" id="default" cols="30" rows="10"></textarea>
+                                    </div>
+                                    @error('description')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
+
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
                                     <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
