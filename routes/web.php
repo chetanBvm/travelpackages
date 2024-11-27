@@ -42,7 +42,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('login', [AuthController::class, 'index'])->name('admin.login');
     Route::post('check-login', [AuthController::class, 'checkLogin'])->name('admin.login.check');
 
-    Route::group(['middelware' => ['auth', 'verified']], function () {
+    Route::group(['middleware' => ['auth', 'verified']], function () {
 
         //Admin logout
         Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');

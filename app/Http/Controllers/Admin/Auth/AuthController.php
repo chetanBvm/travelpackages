@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Helpers\Admin as AdminHelper;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -30,7 +31,8 @@ class AuthController extends Controller
         $getUser = User::Email($email)->first();
         if (!empty($getUser)) {
             if (Hash::check($password, $getUser->password) == true) {
-                AdminHelper::setSession($getUser->id, 1);
+                Auth::login($getUser);
+                AdminHelper::setSession($getUser->id);
                 if ($request->rememberme === 'on') {
                     AdminHelper::setRememberMeCookie($email, $password);
                 } else {
@@ -46,7 +48,12 @@ class AuthController extends Controller
 
     public function logout()
     {
+        
         AdminHelper::destroySession();
+        
+        Auth::logout();
+
+
         return redirect()->route('admin.login');
     }
 }
