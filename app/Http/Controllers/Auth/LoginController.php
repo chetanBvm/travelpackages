@@ -29,8 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    // protected $redirectTo = '/home';
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/home';
 
 
     /**
@@ -47,9 +46,6 @@ class LoginController extends Controller
     protected function logout(Request $request)
     {
         $this->guard()->logout();
-        Auth::logout();
-        Session::flush();
-        Session::regenerate();
         return redirect('/login');
     }
 }

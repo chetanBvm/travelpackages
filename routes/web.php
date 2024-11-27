@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DestinationController;
@@ -30,23 +31,33 @@ Route::get('/clear-cache', function () {
 });
 
 //Admin
-Route::group(['prefix' => 'admin','middelware'=> ['auth','verified']], function () {
-   
-    //dashboard
-    Route::get('/dashboard',[DashboardController::class,'index'])->name('admin.dashboard');
+Route::group(['prefix' => 'admin'], function () {
 
-    //User
-    Route::resource('user', UserController::class);
-    
-    //Packages
-    Route::resource('package',PackagesController::class);
+    Route::get('',[AuthController::class,'index']);
+    Route::get('login', [AuthController::class, 'index'])->name('admin.login');
+    Route::post('check-login', [AuthController::class, 'checkLogin'])->name('admin.login.check');
 
-    //Destination
-    Route::resource('destination',DestinationController::class);
+    Route::group(['middelware' => ['auth', 'verified']], function () {
 
-    //Promotion
-    Route::resource('promotion',PromotionController::class);
+        //Admin logout
+        Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');
 
-    //Banner
-    Route::resource('banner',BannerController::class);
+        //dashboard
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+        //User
+        Route::resource('user', UserController::class);
+
+        //Packages
+        Route::resource('package', PackagesController::class);
+
+        //Destination
+        Route::resource('destination', DestinationController::class);
+
+        //Promotion
+        Route::resource('promotion', PromotionController::class);
+
+        //Banner
+        Route::resource('banner', BannerController::class);
+    });
 });
