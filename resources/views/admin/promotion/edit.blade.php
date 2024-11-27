@@ -1,6 +1,6 @@
 @php
     $title = 'My Vacay Host';
-    $filename = 'Create Promotion';
+    $filename = 'Edit Promotion';
 @endphp
 @extends('admin.layouts.app')
 @section('title', $title)
@@ -10,20 +10,21 @@
     <div class="col-md-12 col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Create Promotion</h4>
+                <h4 class="card-title">Edit Promotion</h4>
             </div>
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form form-vertical" action="{{ route('promotion.store') }}" method="post"
+                    <form class="form form-vertical" action="{{ route('promotion.update',$promotion->id) }}" method="post"
                         enctype="multipart/form-data" id="createDrawPromotion">
                         @csrf
+                        {{ method_field('PUT') }}
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name</label>
                                         <input type="text" id="name-vertical" class="form-control" name="name"
-                                            placeholder="Name" value="{{old('name')}}">
+                                            placeholder="Name" value="{{$promotion->name}}">
                                     </div>
                                     @error('name')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -33,7 +34,7 @@
                                 <div class="form-group">
                                     <label for="code">Code</label>
                                     <input type="text" id="code" class="form-control" name="code"
-                                        placeholder="code" value="{{old('code')}}">
+                                        placeholder="code" value="{{$promotion->code}}">
                                 </div>
                                 @error('code')
                                     <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -44,7 +45,7 @@
                                     <div class="form-group">
                                         <label for="price">Price</label>
                                         <input type="text" id="price" class="form-control" name="price"
-                                            placeholder="price" value="{{old('price')}}">
+                                            placeholder="price" value="{{$promotion->price}}">
                                     </div>
                                     @error('price')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -54,7 +55,7 @@
                                     <div class="form-group">
                                         <label for="type">Type</label>
                                         <input type="text" id="type" class="form-control" name="type"
-                                            placeholder="type" value="{{old('type')}}">
+                                            placeholder="type" value="{{$promotion->type}}">
                                     </div>
                                     @error('type')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -65,7 +66,7 @@
                                     <div class="form-group">
                                         <label for="type">Expiry Date</label>
                                         <input type="date" id="expiry_date" class="form-control" name="expiry_date"
-                                            placeholder="expiry date" value="{{old('expiry_date')}}">
+                                            placeholder="expiry date" value="{{$promotion->expiry_date}}">
                                     </div>
                                     @error('expiry_date')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -75,6 +76,7 @@
                                     <div class="form-group">
                                         <label for="days">Status</label>
                                         <select class="form-select" id="basicSelect" name="status">
+                                            <option value="{{$promotion->status}}">{{$promotion->status}}</option>
                                             <option value="Active">Active</option>
                                             <option value="InActive">InActive</option>
                                         </select>

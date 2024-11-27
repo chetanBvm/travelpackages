@@ -38,7 +38,7 @@
                     <table class="table table-striped data-table">
                         <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th>No</th>
                                     <th>Destination Name</th>
                                     <th>Name</th>
                                     {{-- <th>image</th> --}}

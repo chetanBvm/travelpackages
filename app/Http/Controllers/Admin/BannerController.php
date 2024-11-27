@@ -7,9 +7,12 @@ use App\Http\Requests\BannerStoreRequest;
 use App\Models\Banner;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Session\Store;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
+
+use function Livewire\store;
 
 class BannerController extends Controller
 {
@@ -19,26 +22,19 @@ class BannerController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Banner::query();
+            $data = Banner::all();
 
             return DataTables::of($data)
-                ->filter(function ($query) use ($request) {
-                    if ($request->has('search') && $request->search != '') {
-                        $query->where(function ($q) use ($request) {
-                            $q->where('name', 'like', "%{$request->search}%");
-                        });
-                    }
+                ->addIndexColumn()
+                ->addColumn('image', function($row){
+                    $url= asset('storage/').'/'.$row->image;
+                    return '<img src="'.$url.'" border="0" width="40" class="img-rounded" align="center" />';
                 })
-                ->addColumn('actions', function ($row) {
-                    return '
-                        <div class="d-flex">
-                         <button class="view-btn btn btn-sm btn-dark mr-2" data-id="' . $row->id . '">view</button>
-                        <button class="edit-btn btn btn-sm btn-dark mr-2" data-id="' . $row->id . '">Edit</button>
-                        <button class="delete-btn btn btn-sm btn-danger" data-id="' . $row->id . '">Delete</button>
-                        </div>
-                    ';
+                ->addColumn('action', function ($row) {
+                    $urlpath = url('admin/banner');
+                    return '<a href="' . $urlpath . '/' . $row->id . '/edit' . '" class="edit"><i class="material-icons">edit</i></a><a href="javascript:void(0);" onClick="deleteFunc(' . $row->id . ')" class="delete"><i class="material-icons">delete</i></a>';
                 })
-                ->rawColumns(['actions'])
+                ->rawColumns(['image','action'])
                 ->make(true);
         }
         return view('admin.banner.index');
@@ -49,22 +45,22 @@ class BannerController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.banner.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(BannerStoreRequest $request):RedirectResponse
+    public function store(BannerStoreRequest $request): RedirectResponse
     {
         DB::beginTransaction();
         try {
             $validated = $request->validated();
-
+            $asset_image = null;
             //Check if the request has an image file
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
-                $tempName = uniqid('asset_', true).'.'.$file->getClientOriginalExtension();
+                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
                 $asset_image = $file->storeAs('uploads/banner', $tempName, 'public');
             }
 
@@ -81,9 +77,7 @@ class BannerController extends Controller
             DB::rollBack(); //Roll back the data if something goes wrong
 
             // Log the entire exception for better debugging (with stack trace)
-            Log::error('Error creating banner: ' . $exception->getMessage(), [
-                'exception' => $exception,
-            ]);
+            Log::error('Error creating banner: ' . $exception->getMessage());
 
             return redirect()->back()->with('error', 'something went wrong while creating the banner');
         }
@@ -103,7 +97,7 @@ class BannerController extends Controller
     public function edit(string $id)
     {
         $banner = Banner::findOrFail($id);
-        return view('admin.banner.edit',compact('banner'));
+        return view('admin.banner.edit', compact('banner'));
     }
 
     /**
@@ -113,7 +107,7 @@ class BannerController extends Controller
     {
         //find the banner by its ID
         $banner = Banner::findOrFail($id);
-        
+
         DB::beginTransaction();
         try {
             // Validate the incoming request data
@@ -134,7 +128,7 @@ class BannerController extends Controller
                 ]);
 
                 $file = $request->file('image');
-                $tempName = uniqid('asset_', true).'.'.$file->getClientOriginalExtension();
+                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
                 // $oldFilePath = 'uploads/packages'.$package->images;
                 // if (Storage::disk('public')->exists($oldFilePath)) {
                 //     Storage::disk('public')->delete($oldFilePath);
@@ -153,9 +147,7 @@ class BannerController extends Controller
             DB::rollBack(); //Roll back the data if something goes wrong
 
             // Log the entire exception for better debugging (with stack trace)
-            Log::error('Error updating package: '.$exception->getMessage(), [
-                'exception' => $exception,
-            ]);
+            Log::error('Error updating package: ' . $exception->getMessage());
 
             return redirect()->back()->with('error', 'something went wrong while updating the banner');
         }
@@ -168,6 +160,6 @@ class BannerController extends Controller
     {
         Banner::find($id)->delete();
 
-        return redirect()->route('banner.index')->with('success', 'Banner deleted successfully');
+        return response()->json(['success','Banner deleted successfully!']);
     }
 }
