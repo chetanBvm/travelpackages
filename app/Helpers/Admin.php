@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Models\User as AdminModel;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class Admin
@@ -23,10 +24,10 @@ class Admin
     public static function setSession($userId = '', $role = '')
     {
         self::destroySession();
+       
         Session::put('user_id', $userId);
-        Session::put('user_role', $role);
+        // Session::put('user_role', $role);
         Session::save();
-
         return 'success';
     }
     public static function getSession()
