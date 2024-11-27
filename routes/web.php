@@ -7,13 +7,11 @@ use App\Http\Controllers\Admin\DestinationController;
 use App\Http\Controllers\Admin\PackagesController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\DashboardController as ControllersDashboardController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
 
@@ -68,3 +66,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::resource('banner', BannerController::class);
     });
 });
+
+//Web
+Route::get('/',[ControllersDashboardController::class,'index'])->name('dashboard');
