@@ -48,7 +48,7 @@
                                     <div class="form-group">
                                         <label class="image" for="">Image</label>
                                         <div class="@error('image') error @enderror">
-                                            <input type="file" name="image" id="banner"
+                                            <input type="file" name="image" id="image"
                                                 class="filestyle image_style" onchange="readURL(this);"
                                                 accept="image/jpeg, image/png, image/gif, image/jpg">
                                         </div>
@@ -61,7 +61,7 @@
                                         <?php
                                         } else { ?>
                                         <img id="image" src="<?php echo asset('storage') . '/' . $banner['image']; ?>" class="image_style" alt="your image"
-                                            style="display:block;" />
+                                            style="display:block; width:100px;"  />
                                         <?php
                                         } ?>
                                         @error('image')
@@ -108,9 +108,9 @@
                     name: {
                         required: true
                     },
-                    image: {
-                        required: true
-                    },
+                    // image: {
+                    //     required: true
+                    // },
                     status: {
                         required: true
                     },
@@ -120,9 +120,9 @@
                     name: {
                         required: "Please enter the name of the package."
                     },
-                    image: {
-                        required: "Please choose the file."
-                    },
+                    // image: {
+                    //     required: "Please choose the file."
+                    // },
                     status: {
                         required: "Please select the status."
                     }

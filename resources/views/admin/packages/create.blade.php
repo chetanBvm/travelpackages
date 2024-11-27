@@ -8,6 +8,16 @@
 @section('content')
 
     <div class="col-md-12 col-12">
+        @if (session()->has('message'))
+            <div class="alert alert-success">
+                {{ session()->get('message') }}
+            </div>
+        @endif
+        @if (session()->has('error'))
+            <div class="alert alert-danger">
+                {{ session()->get('error') }}
+            </div>
+        @endif
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Create Packages</h4>
@@ -25,7 +35,7 @@
                                         <select class="form-select" id="basicSelect" name="destination_id">
                                             <option value="">---</option>
                                             @foreach ($destination as $value)
-                                                <option value="{{$value->id}}">{{$value->name}}</option>
+                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -84,8 +94,11 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
+                                        <div>
+                                        <img id="imagePreview" class="profile-image" src="{{asset('admin/assets/images/faces/1.jpg')}}"  alt="your image" width="100px" height="auto" />
+                                        </div>
                                         <label class="image" for="">Image</label>
-                                        <input type="file" class="form-control" name="images" id="image">
+                                        <input type="file" class="form-control" name="images" id="main_image" accept="image/jpeg, image/png, image/gif, image/jpg">
                                     </div>
                                 </div>
                                 <div class="col-12 d-flex justify-content-end">
@@ -113,6 +126,19 @@
             selector: '#dark',
             toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
             plugins: 'code'
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $("#imagePreview").attr("src", e.target.result); //css("background-image", "url("+e.target.result+")");
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#main_image").change(function() {
+            readURL(this);
         });
 
         //Validation script
