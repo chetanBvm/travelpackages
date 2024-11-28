@@ -45,6 +45,20 @@
 
                                 <div class="col-12">
                                     <div class="form-group">
+                                        <label for="text-vertical">Type</label>
+                                        <select class="form-select" id="basicSelect" name="type">
+                                            <option value="{{ $banner->type }}">{{ $banner->type }}</option>
+                                            <option value="Home">Home</option>
+                                            <option value="About">About</option>
+                                        </select>
+                                    </div>
+                                    @error('type')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div> 
+
+                                <div class="col-12">
+                                    <div class="form-group">
                                         <label for="status">Status</label>
                                         <select class="form-select" id="basicSelect" name="status">
                                             <option value="{{ $banner->status }}">{{ $banner->status }}</option>

@@ -26,6 +26,7 @@ class BannerStoreRequest extends FormRequest
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'status' => 'string',
             'text'=>  'required|string',
+            'type' => 'string',
         ];
     }
 

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('banners', function (Blueprint $table) {
             $table->longText('text')->after('name');
+            $table->string('type')->after('text');
         });
     }
 
