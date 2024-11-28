@@ -35,11 +35,11 @@
                                         <select class="form-select" id="basicSelect" name="destination_id">
                                             <option value="">---</option>
                                             @foreach ($destination as $value)
-                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                <option value="{{ $value->id }}">{{ $value['country']->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    @error('name')
+                                    @error('destination_id')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -145,6 +145,9 @@
         $(document).ready(function() {
             $('#createDrawPackages').validate({ // initialize the plugin
                 rules: {
+                    destination_id:{
+                        required:true,
+                    },
                     name: {
                         required: true
                     },
@@ -163,6 +166,9 @@
                 },
                 // Customizing error messages
                 messages: {
+                    destination_id:{
+                        required: "Please select the destination."
+                    },
                     name: {
                         required: "Please enter the name of the package."
                     },

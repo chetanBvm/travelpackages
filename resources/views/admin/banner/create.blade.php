@@ -28,7 +28,18 @@
                                     @error('name')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
-                                </div>                              
+                                </div> 
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="text-vertical">Text</label>
+                                        <input type="text" id="text-vertical" class="form-control" name="text"
+                                            placeholder="text">
+                                    </div>
+                                    @error('text')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div> 
+
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="days">Status</label>
@@ -78,6 +89,9 @@
                     name: {
                         required: true
                     },
+                    text:{
+                        required:true
+                    },
                     image: {
                         required: true
                     },
@@ -88,10 +102,13 @@
                 // Customizing error messages
                 messages: {
                     name: {
-                        required: "Please enter the name of the package."
+                        required: "Please enter the name of the."
                     },
+                    text:{
+                        required: "Please enter the text of the banner"
+                    }
                     image: {
-                        required: "Please upload or choose the image."
+                        required: "Please choose the image."
                     },
                     status: {
                         required: "Please select the status."

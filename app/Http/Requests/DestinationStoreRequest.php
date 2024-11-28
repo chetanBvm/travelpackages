@@ -22,8 +22,10 @@ class DestinationStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+            'countries_id' => 'required',
+            // 'name' => 'required|string',
             'type' => 'required|string',
+            'images' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'string',
         ];
     }
@@ -36,7 +38,8 @@ class DestinationStoreRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'name is required',
+            'countries_id.required' => 'country name is required',
+            // 'name.required' => 'name is required',
             'type.required' => 'type is required',
         ];
     }

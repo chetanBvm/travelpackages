@@ -21,7 +21,7 @@ class PackagesController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Package::with('destination');
+            $data = Package::with('destination.country');
 
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -50,8 +50,7 @@ class PackagesController extends Controller
         }
 
         // Get destinations if they exist
-        $destination = Destination::get();
-
+        $destination = Destination::with('country')->get();
         // Return the view with destinations
         return view('admin.packages.create', compact('destination'));
     }
@@ -110,7 +109,7 @@ class PackagesController extends Controller
     {
         //Find the package by its ID
         $package = Package::findOrFail($id);
-        $destination = Destination::all();
+        $destination = Destination::with('country')->get();
         return view('admin.packages.edit', compact('package', 'destination'));
     }
 

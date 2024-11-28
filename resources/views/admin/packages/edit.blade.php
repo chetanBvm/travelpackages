@@ -27,7 +27,7 @@
                                             @foreach ($destination as $value)
                                                 <option value="{{ $value->id }}"
                                                     {{ $value->id == $package->destination_id ? 'selected' : '' }}>
-                                                    {{ $value->name }}</option>
+                                                    {{ $value->country->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -78,16 +78,6 @@
 
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="">Description</label>
-                                        <textarea name="description" id="default" cols="30" rows="10">{{ old('description', strip_tags($package->description) ?? '') }}</textarea>
-                                    </div>
-                                    @error('description')
-                                        <span class="text-danger" role="alert">*{{ $message }}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="form-group">
                                         <label class="image" for="">Image</label>
                                         <!-- Display the existing image if available -->
                                         @if ($package->images)
@@ -99,6 +89,17 @@
                                         <input type="file" class="form-control" name="images" id="image">
                                     </div>
                                 </div>
+                                
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="">Description</label>
+                                        <textarea name="description" id="default" cols="30" rows="10">{{ old('description', strip_tags($package->description) ?? '') }}</textarea>
+                                    </div>
+                                    @error('description')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
                                     <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>

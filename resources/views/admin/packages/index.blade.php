@@ -65,8 +65,8 @@
                         name: 'id'
                     },
                     {
-                        data: 'destination.name',
-                        name:'destination.name'
+                        data: 'destination.country.name',
+                        name:'destination.country.name'
                     },
                     {
                         data: 'name',

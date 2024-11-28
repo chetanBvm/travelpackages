@@ -67,6 +67,7 @@ class BannerController extends Controller
             Banner::create([
                 'name' => $validated['name'],
                 'image' => $asset_image,
+                'text' => $validated['text'],
                 'status' => $validated['status'],
             ]);
 
@@ -116,6 +117,7 @@ class BannerController extends Controller
             // Update the banner record
             $banner->update([
                 'name' => $validated['name'],
+                'text' => $validated['text'],
                 'status' => $validated['status'],
             ]);
 
