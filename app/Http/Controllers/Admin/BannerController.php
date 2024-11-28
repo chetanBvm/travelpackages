@@ -68,6 +68,7 @@ class BannerController extends Controller
                 'name' => $validated['name'],
                 'image' => $asset_image,
                 'text' => $validated['text'],
+                'type' => $validated['type'],
                 'status' => $validated['status'],
             ]);
 
@@ -118,6 +119,7 @@ class BannerController extends Controller
             $banner->update([
                 'name' => $validated['name'],
                 'text' => $validated['text'],
+                'type' => $validated['type'],
                 'status' => $validated['status'],
             ]);
 

@@ -41,6 +41,7 @@
                                 <th>No</th>
                                 <th>Name</th>
                                 <th>Text</th>
+                                <th>Type</th>
                                 <th>Banner Image</th>
                                 <th>Status</th>
                                 <th width="100px">Action</th>
@@ -72,6 +73,10 @@
                     {
                         data:'text',
                         name: 'text',
+                    },
+                    {
+                        data:'type',
+                        name:'type'
                     },
                     {
                         data:'image',

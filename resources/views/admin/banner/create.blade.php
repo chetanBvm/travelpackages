@@ -39,7 +39,18 @@
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div> 
-
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="text-vertical">Type</label>
+                                        <select class="form-select" id="basicSelect" name="type">
+                                            <option value="Home">Home</option>
+                                            <option value="About">About</option>
+                                        </select>
+                                    </div>
+                                    @error('type')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div> 
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="days">Status</label>
@@ -92,6 +103,9 @@
                     text:{
                         required:true
                     },
+                    type:{
+                        required:true
+                    },
                     image: {
                         required: true
                     },
@@ -106,7 +120,10 @@
                     },
                     text:{
                         required: "Please enter the text of the banner"
-                    }
+                    },
+                    type:{
+                        required: "Please enter the type of the banner"
+                    },
                     image: {
                         required: "Please choose the image."
                     },
