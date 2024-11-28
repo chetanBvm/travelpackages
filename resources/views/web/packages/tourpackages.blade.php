@@ -6,10 +6,12 @@
             <div class="container-fluid">
                 <div class="college-inner">
                     <figure>
-                        <img src="{{ asset('web/assets/images/package-bg.png') }}" />
+                        <img src="{{asset('storage').'/'.$data['banner']->image}}">
+                        {{-- <img src="{{ asset('web/assets/images/package-bg.png') }}" /> --}}
                     </figure>
                     <div class="college-content">
-                        <h1>Holiday Package</h1>
+                        <h1>{{$data['banner']->text}}</h1>
+                        {{-- <h1>Holiday Package</h1> --}}
                     </div>
                 </div>
             </div>
@@ -167,7 +169,7 @@
                                 <div class="col-md-5">
                                     <div class="package-left">
                                         <figure>
-                                            <img src="{{asset('storage').'/'.$packages->images}}">
+                                            <img src="{{ asset('storage') . '/' . $packages->images }}">
                                             {{-- <img src="images/package-one.png"> --}}
                                         </figure>
                                     </div>
@@ -176,23 +178,24 @@
                                     <div class="package-left">
                                         <ul class="package-left-head">
                                             <li>
-                                                <h2>{{$packages->name}}</h2>
-                                                <span class="day-night">{{$packages->days}} Days</span>
+                                                <h2>{{ $packages->name }}</h2>
+                                                <span class="day-night">{{ $packages->days }} Days</span>
                                             </li>
                                             <li>
-                                                <h3>$ {{$packages->price}}</h3>
+                                                <h3>$ {{ $packages->price }}</h3>
                                                 <span class="start-price">Starting Price</span>
                                             </li>
                                         </ul>
                                         <div class="package-left-middle">
-                                            <p>{!!$packages->description!!}</p>
+                                            <p>{!! $packages->description !!}</p>
                                             {{-- <p> On the western coast, Goa is known for its endless beaches, stellar
                                                 nightlife, eclectic seafood, world-heritage listed architecture. Spread
                                                 across jus...</p> --}}
                                             {{-- <a class="view-more-btn" href="package-single.php">View More</a> --}}
                                         </div>
 
-                                        <a class="travel-btn" href="package-single.php">Send Enquiry</a>
+                                        <a class="travel-btn" href="{{ route('web.packageDetails', $packages->id) }}">Send
+                                            Enquiry</a>
                                     </div>
                                 </div>
                             </div>
@@ -296,7 +299,10 @@
                             </div>
                         </div>
                     </div> --}}
-                    <div class="package-pagenation">
+                    {{-- <div class="package-pagenation">
+                        {{ $data['package']->links() }}
+                    </div> --}}
+                    {{-- <div class="package-pagenation">
                         <span class="page-count">Page 1 of 30 </span>
                         <button class="prev-btn"><i class="fa-solid fa-angle-left"></i> Previous</button>
                         <ul class="page-number dasktop-page">
@@ -319,7 +325,7 @@
                             <li>10</li>
                         </ul>
                         <button class="next-btn">Next <i class="fa-solid fa-angle-right"></i></button>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
     </div>

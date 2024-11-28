@@ -25,7 +25,7 @@
 						<h2>Important links</h2>
 						<ul class="footer-menu">
 							<li><a class="active" href="javascript::">Home</a></li>
-							<li><a href="javascript::">About Us</a></li>
+							<li><a href="{{route('pages.about')}}">About Us</a></li>
 							<li><a href="javascript::">Contact Us</a></li>
 							<li><a href="blog.php">Blogs</a></li>
 							<li><a href="privacy-policy.php">Privacy Policy</a></li>
