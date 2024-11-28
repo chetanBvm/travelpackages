@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\PackagesController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\DashboardController as ControllersDashboardController;
+use App\Http\Controllers\PackagesController as ControllersPackagesController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -68,4 +69,8 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 //Web
+
 Route::get('/',[ControllersDashboardController::class,'index'])->name('dashboard');
+
+//Packages
+Route::get('tour-packages',[ControllersPackagesController::class,'tourPackages'])->name('web.packages');

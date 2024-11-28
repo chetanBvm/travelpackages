@@ -13,7 +13,7 @@
      <div class="collapse navbar-collapse header-inner" id="navbarSupportedContent">
        <ul class="navbar-nav m-auto mt-0 mb-lg-0 main-menu">
          <li class="nav-item">
-           <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+           <a class="nav-link active" aria-current="page" href="{{route('dashboard')}}">Home</a>
          </li>
  
          <li class="nav-item our-service">
@@ -22,7 +22,7 @@
              <div class="collapse service-menu" id="collapseExample1">
            <div class="card card-body">
              <ul class="inner-menu">
-               <li><a href="#"><img src="{{asset('web/assets/images/TourPackages.svg')}}"> Tour Packages</a></li>
+               <li><a href="{{route('web.packages')}}"><img src="{{asset('web/assets/images/TourPackages.svg')}}"> Tour Packages</a></li>
                <li><a href="#"><img src="{{asset('web/assets/images/RiverCruisePackages.svg')}}"> Ocean Cruise Packages</a></li>
                <li><a href="#"><img src="{{asset('web/assets/images/OceanCruisePackages.svg')}}"> River Cruise Packages</a></li>
              </ul>

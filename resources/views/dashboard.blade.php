@@ -1,15 +1,17 @@
 @extends('layouts.app')
 @section('content')
     <div class="main">
-
-        <section class="travel-banner">
+        <section class="travel-banner" @if($data['banner']->type == 'Home')style="background-image: url({{asset('storage').'/'. $data['banner']->image}})" @endif>
             <div class="container">
                 <div class="bannr-inner">
                     <div class="row justify-content-center">
                         <div class="col-md-12">
                             <div class="banner-left text-center">
                                 <span class="explore">Explore the world! <i class="fa-solid fa-compass"></i></span>
-                                <h1>From Southeast Asia to<br> the <span class="world">World.</span> </h1>
+                                @if($data['banner']->type == 'Home')
+                                <h1> {!!$data['banner']->text!!}</h1>
+                                {{-- <h1>From Southeast Asia to<br> the <span class="world">World.</span> </h1> --}}
+                                @endif                                
                             </div>
                         </div>
                     </div>
@@ -303,7 +305,7 @@
                                 <div class="col-sm-6 col-md-4 col-lg-3">
                                     <div class="hotels-wapper">
                                         <figure>
-                                            <img src="{{ asset('web/assets/images/hotel-one.png') }}">
+                                            <img src="{{asset('storage').'/'.$packages->images}}">                                          
                                         </figure>
                                         <div class="hotels-content">
                                             <h3>{{ $packages->name }}</h3>
