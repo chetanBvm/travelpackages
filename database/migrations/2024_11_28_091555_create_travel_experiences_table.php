@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('banners', function (Blueprint $table) {
+        Schema::create('travel_experiences', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('image');
-            $table->enum('status',['Active','InActive'])->default('Active');
+            $table->string('image')->nullable();
+            $table->longText('description');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('banners');
+        Schema::dropIfExists('travel_experiences');
     }
 };

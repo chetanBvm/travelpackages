@@ -48,6 +48,24 @@
                     <span>Banner</span>
                 </a>
             </li>
+            <li class="sidebar-item {{ request()->routeIs('airline.index') ? 'active' : '' }}">
+                <a href="{{route('airline.index')}}" class='sidebar-link'>
+                    <i class="bi bi-grid-fill"></i>
+                    <span>Airline</span>
+                </a>
+            </li>
+            <li class="sidebar-item {{ request()->routeIs('stay.index') ? 'active' : '' }}">
+                <a href="{{route('stay.index')}}" class='sidebar-link'>
+                    <i class="bi bi-grid-fill"></i>
+                    <span>Stay</span>
+                </a>
+            </li>
+            <li class="sidebar-item {{ request()->routeIs('travel-experience.index') ? 'active' : '' }}">
+                <a href="{{route('travel-experience.index')}}" class='sidebar-link'>
+                    <i class="bi bi-grid-fill"></i>
+                    <span>Travel Experinece</span>
+                </a>
+            </li>
                 {{-- <ul class="submenu">
                     <li class="submenu-item">
                         <a href=""></a>

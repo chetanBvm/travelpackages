@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\AirlinesController;
 use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DestinationController;
 use App\Http\Controllers\Admin\PackagesController;
 use App\Http\Controllers\Admin\PromotionController;
+use App\Http\Controllers\Admin\StayController;
+use App\Http\Controllers\Admin\TravelExperienceController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\DashboardController as ControllersDashboardController;
 use App\Http\Controllers\PackagesController as ControllersPackagesController;
@@ -65,6 +68,15 @@ Route::group(['prefix' => 'admin'], function () {
 
         //Banner
         Route::resource('banner', BannerController::class);
+
+        //Stay
+        Route::resource('stay',StayController::class);
+
+        //Airline
+        Route::resource('airline', AirlinesController::class);
+        
+        //Travel Experience
+        Route::resource('travel-experience',TravelExperienceController::class);
     });
 });
 
