@@ -1,25 +1,21 @@
 @extends('layouts.app')
 @section('content')
     <div class="main">
-
-        <section class="travel-banner">
+        <section class="travel-banner" @if($data['banner']->type == 'Home')style="background-image: url({{asset('storage').'/'. $data['banner']->image}})" @endif>
             <div class="container">
                 <div class="bannr-inner">
                     <div class="row justify-content-center">
                         <div class="col-md-12">
                             <div class="banner-left text-center">
                                 <span class="explore">Explore the world! <i class="fa-solid fa-compass"></i></span>
-                                <h1>From Southeast Asia to<br> the <span class="world">World.</span> </h1>
+                                @if($data['banner']->type == 'Home')
+                                <h1> {!!$data['banner']->text!!}</h1>
+                                {{-- <h1>From Southeast Asia to<br> the <span class="world">World.</span> </h1> --}}
+                                @endif                                
                             </div>
-
-
-
                         </div>
-
                     </div>
-
                     <div class="Destination-form">
-
                         <div class="row justify-content-between">
                             <div class="col-12">
                                 <form class="Destination-form-main">
@@ -29,10 +25,13 @@
                                                     src="{{ asset('web/assets/images/location.svg') }}"></div> Destination
                                         </label>
                                         <select class="form-select" id="mySelect" aria-label="Default select example">
-                                            <option value="1"> All destinations</option>
+                                            @foreach($data['country'] as $countries)
+                                            <option value="{{$countries->id}}">{{$countries->name}}</option>
+                                            @endforeach
+                                            {{-- <option value="1"> All destinations</option>
                                             <option selected>Central America</option>
                                             <option value="2">Africa / Middle East</option>
-                                            <option value="3">Asia</option>
+                                            <option value="3">Asia</option> --}}
                                         </select>
                                     </div>
 
@@ -88,32 +87,18 @@
                                             <option value="2">Ocean Cruise Packages</option>
                                             <option value="3">River Cruise Packages</option>
                                         </select>
-
-
                                     </div>
-
 
                                     <div class="btn-wrapper">
                                         <button class="select-form-btn">Find your trip</button>
                                     </div>
                                 </form>
-
                             </div>
                         </div>
-
-
                     </div>
-
                 </div>
             </div>
         </section>
-
-
-
-
-
-
-
 
         <!-- Tranding -->
         <section class="tranding">
@@ -125,17 +110,18 @@
                     </div>
                     <div class="tranding-bottom">
                         <div class="row">
-                            <div class="col-sm-6 col-md-6">
-                                <div class="tranding-content">
-                                    @foreach ($data['destination'] as $destinations)
+                            @foreach ($data['destination'] as $destinations)
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="tranding-content">
                                         <figure class="city">
-                                            <img src="{{ asset('web/assets/images/trand-one.png') }}">
+                                            <img src="{{ asset('storage/').'/'.$destinations->image }}">
                                         </figure>
-                                        <div class="flag-city">{{ $destinations->name }}<img
-                                                src="{{ asset('web/assets/images/flag-1.png') }}"></div>
-                                    @endforeach
+                                        <div class="flag-city">{{ $destinations->country->name }}
+                                            {{ $destinations->country->emoji }}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
                             {{-- <div class="col-sm-6 col-md-6">
                                 <div class="tranding-content">
                                     <figure class="city">
@@ -319,12 +305,12 @@
                                 <div class="col-sm-6 col-md-4 col-lg-3">
                                     <div class="hotels-wapper">
                                         <figure>
-                                            <img src="{{ asset('web/assets/images/hotel-one.png') }}">
+                                            <img src="{{asset('storage').'/'.$packages->images}}">                                          
                                         </figure>
                                         <div class="hotels-content">
-                                            <h3>{{$packages->name}}</h3>
-                                            <p>{{strip_tags($packages->description)}}</p>
-                                            <span class="inr">INR {{$packages->price}}</span>
+                                            <h3>{{ $packages->name }}</h3>
+                                            <p>{{ strip_tags($packages->description) }}</p>
+                                            <span class="inr">INR {{ $packages->price }}</span>
                                         </div>
                                     </div>
                                 </div>
