@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\TravelExperienceController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\DashboardController as ControllersDashboardController;
 use App\Http\Controllers\PackagesController as ControllersPackagesController;
+use App\Http\Controllers\PagesController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -42,7 +43,7 @@ Route::get('/migrate', function () {
 //Admin
 Route::group(['prefix' => 'admin'], function () {
 
-    Route::get('',[AuthController::class,'index']);
+    Route::get('', [AuthController::class, 'index']);
     Route::get('login', [AuthController::class, 'index'])->name('admin.login');
     Route::post('check-login', [AuthController::class, 'checkLogin'])->name('admin.login.check');
 
@@ -70,19 +71,24 @@ Route::group(['prefix' => 'admin'], function () {
         Route::resource('banner', BannerController::class);
 
         //Stay
-        Route::resource('stay',StayController::class);
+        Route::resource('stay', StayController::class);
 
         //Airline
         Route::resource('airline', AirlinesController::class);
-        
+
         //Travel Experience
-        Route::resource('travel-experience',TravelExperienceController::class);
+        Route::resource('travel-experience', TravelExperienceController::class);
     });
 });
 
 //Web
 
-Route::get('/',[ControllersDashboardController::class,'index'])->name('dashboard');
+Route::get('/', [ControllersDashboardController::class, 'index'])->name('dashboard');
 
 //Packages
-Route::get('tour-packages',[ControllersPackagesController::class,'tourPackages'])->name('web.packages');
+Route::get('tour-packages', [ControllersPackagesController::class, 'tourPackages'])->name('web.packages');
+Route::get('package-detail/{id}', [ControllersPackagesController::class, 'packageDetail'])->name('web.packageDetails');
+
+
+//Pages
+Route::get('about-us',[PagesController::class,'aboutUs'])->name('pages.about');

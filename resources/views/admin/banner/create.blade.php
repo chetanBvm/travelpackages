@@ -45,6 +45,7 @@
                                         <select class="form-select" id="basicSelect" name="type">
                                             <option value="Home">Home</option>
                                             <option value="About">About</option>
+                                            <option value="Packages">Packages</option>
                                         </select>
                                     </div>
                                     @error('type')

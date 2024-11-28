@@ -180,46 +180,48 @@
                     </div>
                     <div class="discover-bottom">
                         <div class="row">
+                            @foreach($data['stay'] as $stay)
                             <div class="col">
                                 <div class="discover-content">
                                     <figure>
-                                        <img src="{{ asset('web/assets/images/dis-one.png') }}">
+                                        <img src="{{ asset('storage').'/'. $stay->image }}">
                                     </figure>
-                                    <div class="flag-city">Villa</div>
+                                    <div class="flag-city">{{$stay->name}}</div>
                                 </div>
                             </div>
-                            <div class="col">
+                            @endforeach
+                            {{-- <div class="col">
                                 <div class="discover-content">
                                     <figure>
                                         <img src="{{ asset('web/assets/images/dis-two.png') }}">
                                     </figure>
                                     <div class="flag-city">Apartment</div>
                                 </div>
-                            </div>
-                            <div class="col">
+                            </div> --}}
+                            {{-- <div class="col">
                                 <div class="discover-content">
                                     <figure>
                                         <img src="{{ asset('web/assets/images/dis-three.png') }}">
                                     </figure>
                                     <div class="flag-city">Houseboat</div>
                                 </div>
-                            </div>
-                            <div class="col">
+                            </div> --}}
+                            {{-- <div class="col">
                                 <div class="discover-content">
                                     <figure>
                                         <img src="{{ asset('web/assets/images/dis-four.png') }}">
                                     </figure>
                                     <div class="flag-city">Cottage</div>
                                 </div>
-                            </div>
-                            <div class="col">
+                            </div> --}}
+                            {{-- <div class="col">
                                 <div class="discover-content">
                                     <figure>
                                         <img src="{{ asset('web/assets/images/dis-five.png') }}">
                                     </figure>
                                     <div class="flag-city">All Inclusive</div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -251,13 +253,15 @@
                     </div>
                     <div class="popular-bottom">
                         <ul class="popular-content">
+                            @foreach($data['airline'] as $airline)
                             <li>
                                 <figure class="indigo">
-                                    <img src="{{ asset('web/assets/images/popular-one.png') }}">
+                                    <img src="{{ asset('storage').'/'. $airline->image }}">
                                 </figure>
-                                <h3>IndiGo</h3>
+                                <h3>{{$airline->name}}</h3>
                             </li>
-                            <li>
+                            @endforeach
+                            {{-- <li>
                                 <figure class="air-india">
                                     <img src="{{ asset('web/assets/images/popular-two.png') }}">
                                 </figure>
@@ -286,7 +290,7 @@
                                     <img src="{{ asset('web/assets/images/popular-six.png') }}">
                                 </figure>
                                 <h3>SpiceJet</h3>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </div>
@@ -308,7 +312,8 @@
                                             <img src="{{asset('storage').'/'.$packages->images}}">                                          
                                         </figure>
                                         <div class="hotels-content">
-                                            <h3>{{ $packages->name }}</h3>
+                                            <a href="{{route('web.packageDetails',$packages->id)}}"><h3>{{ $packages->name }}</h3></a>
+                                            
                                             <p>{{ strip_tags($packages->description) }}</p>
                                             <span class="inr">INR {{ $packages->price }}</span>
                                         </div>
@@ -420,18 +425,22 @@
                     </div>
                     <div class="experience-bottom">
                         <div class="owl-carousel owl-theme experience-slider">
+                            @foreach($data['experience'] as $experience)
                             <div class="item">
                                 <div class="exprerience-wapper">
                                     <figure>
-                                        <img src="{{ asset('web/assets/images/experience-one.png') }}">
+                                        <img src="{{asset('storage').'/'.$experience->image}}">
+                                        {{-- <img src="{{ asset('web/assets/images/experience-one.png') }}"> --}}
                                     </figure>
-                                    <h4>Yuvraj sharma</h4>
-                                    <P>I went for my honeymoon with Travel Agency. I discussed about my destination with
+                                    <h4>{{$experience->name}}</h4>
+                                    <p>{!! $experience->description !!}</p>
+                                    {{-- <P>I went for my honeymoon with Travel Agency. I discussed about my destination with
                                         akash and he shared an amazing itinerary which covered all the places of Kashmir
-                                        which were a must visit during month of december. </P>
+                                        which were a must visit during month of december. </P> --}}
                                 </div>
                             </div>
-                            <div class="item">
+                            @endforeach
+                            {{-- <div class="item">
                                 <div class="exprerience-wapper">
                                     <figure>
                                         <img src="{{ asset('web/assets/images/experience-two.png') }}">
@@ -441,8 +450,8 @@
                                         akash and he shared an amazing itinerary which covered all the places of Kashmir
                                         which were a must visit during month of december. </P>
                                 </div>
-                            </div>
-                            <div class="item">
+                            </div> --}}
+                            {{-- <div class="item">
                                 <div class="exprerience-wapper">
                                     <figure>
                                         <img src="{{ asset('web/assets/images/experience-three.png') }}">
@@ -452,7 +461,7 @@
                                         akash and he shared an amazing itinerary which covered all the places of Kashmir
                                         which were a must visit during month of december. </P>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
