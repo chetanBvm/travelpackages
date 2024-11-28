@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PackageStoreRequest extends FormRequest
+class AirlineStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,17 +22,13 @@ class PackageStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'days' => 'required|numeric|min:0',
-            'price' => 'numeric|min:0',
-            'images' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'string',
-            'destination_id' => 'string|exists:destinations,id',
         ];
     }
 
-    /**
+     /**
      * Get the error messages for the defined validation rules.
      *
      * @return array<string, string>
@@ -40,9 +36,13 @@ class PackageStoreRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'name is required',
-            // 'description.required' => 'description is required',
-            'days.required' => 'days is required',
+            'name.required' => 'The airline name is required and cannot be empty.',
+            'name.max' => 'The airline name cannot exceed 255 characters.',
+
+            'image.required' => 'An image is required for the airline.',
+            'image.image' => 'The uploaded file must be an image (jpeg, png, jpg, gif, or svg).',
+            'image.mimes' => 'The image must be one of the following types: jpeg, png, jpg, gif, svg.',
+            'image.max' => 'The image size must not exceed 2MB.',
         ];
     }
 }

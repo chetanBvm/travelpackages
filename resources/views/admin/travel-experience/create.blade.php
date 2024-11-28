@@ -1,6 +1,6 @@
 @php
     $title = 'My Vacay Host';
-    $filename = 'Create Banner';
+    $filename = 'Create Travel Experience';
 @endphp
 @extends('admin.layouts.app')
 @section('title', $title)
@@ -10,12 +10,12 @@
     <div class="col-md-12 col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Create Banner</h4>
+                <h4 class="card-title">Create Travel Experience</h4>
             </div>
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form form-vertical" action="{{ route('banner.store') }}" method="post"
-                        enctype="multipart/form-data" id="createDrawBanner">
+                    <form class="form form-vertical" action="{{ route('travel-experience.store') }}" method="post"
+                        enctype="multipart/form-data" id="createDrawStay">
                         @csrf
                         <div class="form-body">
                             <div class="row">                              
@@ -29,42 +29,21 @@
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div> 
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="text-vertical">Text</label>
-                                        <input type="text" id="text-vertical" class="form-control" name="text"
-                                            placeholder="text">
-                                    </div>
-                                    @error('text')
-                                        <span class="text-danger" role="alert">*{{ $message }}</span>
-                                    @enderror
-                                </div> 
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="text-vertical">Type</label>
-                                        <select class="form-select" id="basicSelect" name="type">
-                                            <option value="Home">Home</option>
-                                            <option value="About">About</option>
-                                        </select>
-                                    </div>
-                                    @error('type')
-                                        <span class="text-danger" role="alert">*{{ $message }}</span>
-                                    @enderror
-                                </div> 
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="days">Status</label>
-                                        <select class="form-select" id="basicSelect" name="status">
-                                            <option value="Active">Active</option>
-                                            <option value="InActive">InActive</option>
-                                        </select>
-                                    </div>
-                                </div>                               
+                           
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label class="image" for="">Image</label>
                                         <input type="file" class="form-control" name="image" id="image">
                                     </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="">Description</label>
+                                        <textarea name="description" id="default" cols="30" rows="10"></textarea>
+                                    </div>
+                                    @error('description')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
@@ -95,17 +74,11 @@
 
         //Validation script
         $(document).ready(function() {
-            $('#createDrawBanner').validate({ // initialize the plugin
+            $('#createDrawStay').validate({ // initialize the plugin
                 rules: {
                     name: {
                         required: true
-                    },
-                    text:{
-                        required:true
-                    },
-                    type:{
-                        required:true
-                    },
+                    },                   
                     image: {
                         required: true
                     },
@@ -117,13 +90,7 @@
                 messages: {
                     name: {
                         required: "Please enter the name of the."
-                    },
-                    text:{
-                        required: "Please enter the text of the banner"
-                    },
-                    type:{
-                        required: "Please enter the type of the banner"
-                    },
+                    },                    
                     image: {
                         required: "Please choose the image."
                     },
