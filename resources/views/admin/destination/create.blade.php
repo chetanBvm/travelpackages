@@ -21,15 +21,21 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">Name</label>
-                                        <input type="text" id="name-vertical" class="form-control" name="name"
-                                            placeholder="Name">
+                                        <label for="first-name-vertical">Country Name</label>
+                                        <select class="form-select" id="basicSelect" name="countries_id">
+                                            @foreach ($country as $countries)
+                                                <option value="{{ $countries->id }}">{{ $countries->name }}</option>
+                                            @endforeach
+                                        </select>
+
+                                        {{-- <input type="text" id="name-vertical" class="form-control" name="name"
+                                            placeholder="Name"> --}}
                                     </div>
-                                    @error('name')
+                                    @error('countries_id')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
-                                
+
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="days">Type</label>
@@ -50,13 +56,13 @@
                                     </div>
                                 </div>
 
-                                
-                                {{-- <div class="col-12">
+                                <div class="col-12">
                                     <div class="form-group">
                                         <label class="image" for="">Image</label>
-                                        <input type="file" class="form-control" id="image">
+                                        <input type="file" name="image" class="form-control" id="image"
+                                            accept="image/jpeg, image/png, image/gif, image/jpg">
                                     </div>
-                                </div> --}}
+                                </div>
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
                                     <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
@@ -70,7 +76,7 @@
     </div>
 @endsection
 @section('js')
-    
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 
@@ -79,7 +85,7 @@
         $(document).ready(function() {
             $('#createDrawDestination').validate({ // initialize the plugin
                 rules: {
-                    name: {
+                    countries_id: {
                         required: true
                     },
                     type: {
@@ -91,8 +97,8 @@
                 },
                 // Customizing error messages
                 messages: {
-                    name: {
-                        required: "Please enter the name of the destination."
+                    countries_id: {
+                        required: "Please select the country name of the destination."
                     },
                     type: {
                         required: "Please enter the type."

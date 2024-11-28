@@ -32,11 +32,20 @@
                                     @enderror
                                 </div>
 
-
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="text-vertical">Text</label>
+                                        <input type="text" id="text-vertical" class="form-control" name="text"
+                                            value="{{ $banner->text }}" placeholder="text">
+                                    </div>
+                                    @error('text')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
 
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="days">Status</label>
+                                        <label for="status">Status</label>
                                         <select class="form-select" id="basicSelect" name="status">
                                             <option value="{{ $banner->status }}">{{ $banner->status }}</option>
                                             <option value="Active">Active</option>
@@ -108,6 +117,9 @@
                     name: {
                         required: true
                     },
+                    text:{
+                        required:true
+                    },
                     // image: {
                     //     required: true
                     // },
@@ -118,13 +130,16 @@
                 // Customizing error messages
                 messages: {
                     name: {
-                        required: "Please enter the name of the package."
+                        required: "Please enter the name of the banner."
                     },
+                    text:{
+                        required: "Please enter the text of the banner."
+                    }
                     // image: {
                     //     required: "Please choose the file."
                     // },
                     status: {
-                        required: "Please select the status."
+                        required: "Please select the status of the banner."
                     }
                 },
                 errorPlacement: function(error, element) {

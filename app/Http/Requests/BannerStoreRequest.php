@@ -25,6 +25,7 @@ class BannerStoreRequest extends FormRequest
             'name' => 'required|string|max:255',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'status' => 'string',
+            'text'=>  'required|string',
         ];
     }
 
@@ -43,6 +44,8 @@ class BannerStoreRequest extends FormRequest
             'image.image' => 'The uploaded file must be an image (jpeg, png, jpg, gif, or svg).',
             'image.mimes' => 'The image must be one of the following types: jpeg, png, jpg, gif, svg.',
             'image.max' => 'The image size must not exceed 2MB.',
+
+            'text' => 'The Banner text is required and cannot empty.',
         ];
     }
 }

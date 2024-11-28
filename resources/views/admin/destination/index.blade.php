@@ -50,7 +50,8 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Name</th>
+                                <th>Country Name</th>
+                                <th>Image</th>
                                 <th>type</th>
                                 <th>Status</th>
                                 <th width="100px">Action</th>
@@ -76,8 +77,12 @@
                         name: 'id'
                     },
                     {
-                        data: 'name',
-                        name: 'name'
+                        data: 'country.name',
+                        name: 'country.name'
+                    },
+                    {
+                        data:'image',
+                        name:'image'
                     },
                     {
                         data: 'type',

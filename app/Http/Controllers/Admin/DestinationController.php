@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DestinationStoreRequest;
+use App\Models\Country;
 use App\Models\Destination;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Yajra\DataTables\DataTables;
 
@@ -20,15 +22,19 @@ class DestinationController extends Controller
     {
 
         if ($request->ajax()) {
-            $data = Destination::all();
+            $data = Destination::with('country');
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('image', function($row){
+                    $url= asset('storage/').'/'.$row->image;
+                    return '<img src="'.$url.'" border="0" width="40" class="img-rounded" align="center" />';
+                })
                 ->addColumn('action', function($row){
                     $urlpath = url('admin/destination');
                     return '<a href="'.$urlpath.'/'.$row->id.'/edit'.'" class="edit"><i class="bi bi-pen-fill"></i></a><a href="javascript:void(0);" onClick="deleteFunc('.$row->id.')" class="delete"><i class="bi bi-trash-fill"></i></a>';
 
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['image','action'])
                 ->make(true);
         }
 
@@ -40,7 +46,8 @@ class DestinationController extends Controller
      */
     public function create()
     {
-        return view('admin.destination.create');
+        $country = Country::all();
+        return view('admin.destination.create',compact('country'));
     }
 
     /**
@@ -52,9 +59,17 @@ class DestinationController extends Controller
         try {
             $validated = $request->validated();
 
+            $asset_image = null;
+            //Check if the request has an image file
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
+                $asset_image = $file->storeAs('uploads/destination', $tempName, 'public');
+            }
             Destination::create([
-                'name' => $validated['name'],
+                'countries_id' => $validated['countries_id'],
                 'type' => $validated['type'],
+                'image' => $asset_image,
                 'status' => $validated['status'],
             ]);
 
@@ -87,8 +102,8 @@ class DestinationController extends Controller
     public function edit(string $id)
     {
         $destination = Destination::findOrFail($id);
-
-        return view('admin.destination.edit', compact('destination'));
+        $country = Country::all();
+        return view('admin.destination.edit', compact('destination','country'));
     }
 
     /**
@@ -109,10 +124,31 @@ class DestinationController extends Controller
 
             // Update the destination record
             $destination->update([
-                'name' => $validated['name'],
+                'countries_id' => $validated['countries_id'],
                 'type' => $validated['type'],
                 'status' => $validated['status'],
             ]);
+
+            //Check if the request has an image file
+            if ($request->hasFile('image')) {
+
+                // Validate the image file (optional, add size/extension validation if necessary)
+                $request->validate([
+                    'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                ]);
+
+                $file = $request->file('image');
+                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
+                $oldFilePath = 'uploads/destination' . $destination->images;
+                if (Storage::disk('public')->exists($oldFilePath)) {
+                    Storage::disk('public')->delete($oldFilePath);
+                }
+
+                $asset_image = $file->storeAs('uploads/destination', $tempName, 'public');
+                $destination->update([
+                    'image' => $asset_image,
+                ]);
+            }
 
             DB::commit(); //commit the transaction
 
