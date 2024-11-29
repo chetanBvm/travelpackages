@@ -11,6 +11,9 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Create Banner</h4>
+                <a href="#" type="button"
+                class="btn btn-info gray-btn d-lg-block m-l-15"><i class="bi bi-caret-left-fill"></i><span>Back</span></a>
+
             </div>
             <div class="card-content">
                 <div class="card-body">
@@ -18,8 +21,8 @@
                         enctype="multipart/form-data" id="createDrawBanner">
                         @csrf
                         <div class="form-body">
-                            <div class="row">                              
-                                <div class="col-12">
+                            <div class="row">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name</label>
                                         <input type="text" id="name-vertical" class="form-control" name="name"
@@ -28,8 +31,8 @@
                                     @error('name')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
-                                </div> 
-                                <div class="col-12">
+                                </div>
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="text-vertical">Text</label>
                                         <input type="text" id="text-vertical" class="form-control" name="text"
@@ -38,8 +41,8 @@
                                     @error('text')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
-                                </div> 
-                                <div class="col-12">
+                                </div>
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="text-vertical">Type</label>
                                         <select class="form-select" id="basicSelect" name="type">
@@ -51,8 +54,8 @@
                                     @error('type')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
-                                </div> 
-                                <div class="col-12">
+                                </div>
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Status</label>
                                         <select class="form-select" id="basicSelect" name="status">
@@ -60,7 +63,7 @@
                                             <option value="InActive">InActive</option>
                                         </select>
                                     </div>
-                                </div>                               
+                                </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label class="image" for="">Image</label>

@@ -11,6 +11,9 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Edit Packages</h4>
+                <a href="#" type="button"
+                class="btn btn-info gray-btn d-lg-block m-l-15"><i class="bi bi-caret-left-fill"></i><span>Back</span></a>
+
             </div>
             <div class="card-content">
                 <div class="card-body">
@@ -20,7 +23,7 @@
                         {{ method_field('PUT') }}
                         <div class="form-body">
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Destination</label>
                                         <select class="form-select" id="basicSelect" name="destination_id">
@@ -32,7 +35,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name</label>
                                         <input type="text" id="name-vertical" class="form-control" name="name"
@@ -43,7 +46,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Price</label>
                                         <input type="text" id="price" class="form-control" name="price"
@@ -54,7 +57,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Days</label>
                                         <input type="text" id="days" class="form-control" name="days"
@@ -89,7 +92,7 @@
                                         <input type="file" class="form-control" name="images" id="image">
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="">Description</label>
@@ -99,7 +102,7 @@
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
-                                
+
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
                                     <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
