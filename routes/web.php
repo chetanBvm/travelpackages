@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DestinationController;
+use App\Http\Controllers\Admin\InclusionsController;
+use App\Http\Controllers\Admin\ItineraryController;
 use App\Http\Controllers\Admin\PackagesController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\StayController;
@@ -78,6 +80,12 @@ Route::group(['prefix' => 'admin'], function () {
 
         //Travel Experience
         Route::resource('travel-experience', TravelExperienceController::class);
+
+        //Itinerary
+        Route::resource('itinerary', ItineraryController::class);
+        
+        //Inclusion
+        Route::resource('inclusion',InclusionsController::class);
     });
 });
 
@@ -91,4 +99,4 @@ Route::get('package-detail/{id}', [ControllersPackagesController::class, 'packag
 
 
 //Pages
-Route::get('about-us',[PagesController::class,'aboutUs'])->name('pages.about');
+Route::get('about-us', [PagesController::class, 'aboutUs'])->name('pages.about');
