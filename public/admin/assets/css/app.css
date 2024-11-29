@@ -1381,3 +1381,27 @@ header a {
 header a:hover {
     color:#E5A13D;
 }
+
+input[type="file"]{
+    height: 37px;
+}
+.btn-check:focus+.btn-primary, .btn-primary:focus, .btn-check:focus+.btn-info, .btn-info:focus {
+    box-shadow: none !important;
+}
+.form-check-input:checked {
+    background-color: #E5A13D;
+    border-color: #E5A13D;
+}
+.form-check-input:focus{
+    border-color:none !important;
+}
+.user-menu{
+    align-items: center;
+}
+.btn-info.gray-btn {
+    padding: 7px 20px !important;
+    color: #000000 !important;
+    background-color: #d7d7d7 !important;
+    border-color: #d7d7d7 !important;
+    border-radius: 7px !important;
+}

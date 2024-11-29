@@ -11,6 +11,9 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Edit Stay</h4>
+                <a href="#" type="button"
+                class="btn btn-info gray-btn d-lg-block m-l-15"><i class="bi bi-caret-left-fill"></i><span>Back</span></a>
+
             </div>
             <div class="card-content">
                 <div class="card-body">
@@ -21,7 +24,7 @@
                         <div class="form-body">
                             <div class="row">
 
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name</label>
                                         <input type="text" id="name-vertical" class="form-control" name="name"
@@ -31,8 +34,8 @@
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
-                                                               
-                                <div class="col-12">
+
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="status">Status</label>
                                         <select class="form-select" id="basicSelect" name="status">

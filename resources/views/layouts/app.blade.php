@@ -17,6 +17,7 @@
     <link href="{{asset('web/assets/css/owl.carousel.css')}}" rel="stylesheet" />
     <link href="{{asset('web/assets/css/style.css')}}" rel="stylesheet" />
     <link href="{{asset('web/assets/css/responsive.css')}}" rel="stylesheet" />
+    <link href="{{asset('web/assets/css/perfect-scrollbar.css')}}" rel="stylesheet" />
 </head>
 
 <body>

@@ -2,7 +2,7 @@
 @section('content')
     <div class="main">
         <section class="travel-banner"
-        @if (isset($data['banner']) && $data['banner']->type == 'Home') style="background-image: url({{ asset('storage') . '/' . $data['banner']->image}} ?? '{{asset('web/assets/images/home-background-img.jpg')}}')" 
+        @if (isset($data['banner']) && $data['banner']->type == 'Home') style="background-image: url({{ asset('storage') . '/' . $data['banner']->image}} ?? '{{asset('web/assets/images/home-background-img.jpg')}}')"
         @else
         style="background-image: url('{{ asset('web/assets/images/home-background-img.jpg') }}')"
         @endif>
@@ -129,7 +129,7 @@
                                     </div>
                                 @endforeach
                             @else
-                                <p>No Destination available.</p>
+                                <p class="nodata-para">No Destination available.</p>
                             @endif
 
                             {{-- <div class="col-sm-6 col-md-6">
@@ -202,7 +202,7 @@
                                     </div>
                                 @endforeach
                             @else
-                                <p>No Stay available</p>
+                                <p class="nodata-para">No Stay available</p>
                             @endif
                             {{-- <div class="col">
                                 <div class="discover-content">
@@ -308,7 +308,7 @@
                             </li> --}}
                             </ul>
                         @else
-                            <p>No Airlines available</p>
+                            <p class="nodata-para">No Airlines available</p>
                         @endif
                     </div>
                 </div>
@@ -342,7 +342,7 @@
                                 </div>
                             @endforeach
                             @else
-                            <p>No Packages Available.</p>
+                            <p class="nodata-para">No Packages Available.</p>
                             @endif
                             {{-- <div class="col-sm-6 col-md-4 col-lg-3">
                                 <div class="hotels-wapper">
@@ -465,7 +465,7 @@
                                     </div>
                                 </div>
                             @endforeach
-                            
+
                             {{-- <div class="item">
                                 <div class="exprerience-wapper">
                                     <figure>
@@ -490,7 +490,7 @@
                             </div> --}}
                         </div>
                         @else
-                            <p>No Experiences available.</p>
+                            <p class="nodata-para">No Experiences available.</p>
                             @endif
                     </div>
                 </div>

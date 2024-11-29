@@ -21,6 +21,9 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Create Packages</h4>
+                <a href="#" type="button"
+                class="btn btn-info gray-btn d-lg-block m-l-15"><i class="bi bi-caret-left-fill"></i><span>Back</span></a>
+
             </div>
             <div class="card-content">
                 <div class="card-body">
