@@ -1,17 +1,22 @@
 @extends('layouts.app')
 @section('content')
     <div class="main">
-        <section class="travel-banner" @if($data['banner']->type == 'Home')style="background-image: url({{asset('storage').'/'. $data['banner']->image}})" @endif>
+        <section class="travel-banner"
+        @if (isset($data['banner']) && $data['banner']->type == 'Home') style="background-image: url({{ asset('storage') . '/' . $data['banner']->image}} ?? '{{asset('web/assets/images/home-background-img.jpg')}}')" 
+        @else
+        style="background-image: url('{{ asset('web/assets/images/home-background-img.jpg') }}')"
+        @endif>
             <div class="container">
                 <div class="bannr-inner">
                     <div class="row justify-content-center">
                         <div class="col-md-12">
                             <div class="banner-left text-center">
                                 <span class="explore">Explore the world! <i class="fa-solid fa-compass"></i></span>
-                                @if($data['banner']->type == 'Home')
-                                <h1> {!!$data['banner']->text!!}</h1>
-                                {{-- <h1>From Southeast Asia to<br> the <span class="world">World.</span> </h1> --}}
-                                @endif                                
+                                @if ($data['banner'] && $data['banner']->type == 'Home')
+                                    <h1> {!! $data['banner']->text !!}</h1>
+                                    @else
+                                    <h1>From Southeast Asia to<br> the <span class="world">World.</span> </h1>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -25,8 +30,8 @@
                                                     src="{{ asset('web/assets/images/location.svg') }}"></div> Destination
                                         </label>
                                         <select class="form-select" id="mySelect" aria-label="Default select example">
-                                            @foreach($data['country'] as $countries)
-                                            <option value="{{$countries->id}}">{{$countries->name}}</option>
+                                            @foreach ($data['country'] as $countries)
+                                                <option value="{{ $countries->id }}">{{ $countries->name }}</option>
                                             @endforeach
                                             {{-- <option value="1"> All destinations</option>
                                             <option selected>Central America</option>
@@ -110,18 +115,23 @@
                     </div>
                     <div class="tranding-bottom">
                         <div class="row">
-                            @foreach ($data['destination'] as $destinations)
-                                <div class="col-sm-6 col-md-6">
-                                    <div class="tranding-content">
-                                        <figure class="city">
-                                            <img src="{{ asset('storage/').'/'.$destinations->image }}">
-                                        </figure>
-                                        <div class="flag-city">{{ $destinations->country->name }}
-                                            {{ $destinations->country->emoji }}
+                            @if ($data['destination']->count() > 0)
+                                @foreach ($data['destination'] as $destinations)
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="tranding-content">
+                                            <figure class="city">
+                                                <img src="{{ asset('storage/') . '/' . $destinations->image }}">
+                                            </figure>
+                                            <div class="flag-city">{{ $destinations->country->name }}
+                                                {{ $destinations->country->emoji }}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            @else
+                                <p>No Destination available.</p>
+                            @endif
+
                             {{-- <div class="col-sm-6 col-md-6">
                                 <div class="tranding-content">
                                     <figure class="city">
@@ -180,16 +190,20 @@
                     </div>
                     <div class="discover-bottom">
                         <div class="row">
-                            @foreach($data['stay'] as $stay)
-                            <div class="col">
-                                <div class="discover-content">
-                                    <figure>
-                                        <img src="{{ asset('storage').'/'. $stay->image }}">
-                                    </figure>
-                                    <div class="flag-city">{{$stay->name}}</div>
-                                </div>
-                            </div>
-                            @endforeach
+                            @if ($data['stay']->count() > 0)
+                                @foreach ($data['stay'] as $stay)
+                                    <div class="col">
+                                        <div class="discover-content">
+                                            <figure>
+                                                <img src="{{ asset('storage') . '/' . $stay->image }}">
+                                            </figure>
+                                            <div class="flag-city">{{ $stay->name }}</div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @else
+                                <p>No Stay available</p>
+                            @endif
                             {{-- <div class="col">
                                 <div class="discover-content">
                                     <figure>
@@ -252,16 +266,17 @@
                         <h2 class="main-heading">Popular Domestic Airlines</h2>
                     </div>
                     <div class="popular-bottom">
-                        <ul class="popular-content">
-                            @foreach($data['airline'] as $airline)
-                            <li>
-                                <figure class="indigo">
-                                    <img src="{{ asset('storage').'/'. $airline->image }}">
-                                </figure>
-                                <h3>{{$airline->name}}</h3>
-                            </li>
-                            @endforeach
-                            {{-- <li>
+                        @if ($data['airline']->count() > 0)
+                            <ul class="popular-content">
+                                @foreach ($data['airline'] as $airline)
+                                    <li>
+                                        <figure class="indigo">
+                                            <img src="{{ asset('storage') . '/' . $airline->image }}">
+                                        </figure>
+                                        <h3>{{ $airline->name }}</h3>
+                                    </li>
+                                @endforeach
+                                {{-- <li>
                                 <figure class="air-india">
                                     <img src="{{ asset('web/assets/images/popular-two.png') }}">
                                 </figure>
@@ -291,7 +306,10 @@
                                 </figure>
                                 <h3>SpiceJet</h3>
                             </li> --}}
-                        </ul>
+                            </ul>
+                        @else
+                            <p>No Airlines available</p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -305,21 +323,27 @@
                     </div>
                     <div class="hotels-bottom">
                         <div class="row">
+                            @if($data['package']->count() > 0)
                             @foreach ($data['package'] as $packages)
                                 <div class="col-sm-6 col-md-4 col-lg-3">
                                     <div class="hotels-wapper">
                                         <figure>
-                                            <img src="{{asset('storage').'/'.$packages->images}}">                                          
+                                            <img src="{{ asset('storage') . '/' . $packages->images }}">
                                         </figure>
                                         <div class="hotels-content">
-                                            <a href="{{route('web.packageDetails',$packages->id)}}"><h3>{{ $packages->name }}</h3></a>
-                                            
+                                            <a href="{{ route('web.packageDetails', $packages->id) }}">
+                                                <h3>{{ $packages->name }}</h3>
+                                            </a>
+
                                             <p>{{ strip_tags($packages->description) }}</p>
                                             <span class="inr">INR {{ $packages->price }}</span>
                                         </div>
                                     </div>
                                 </div>
                             @endforeach
+                            @else
+                            <p>No Packages Available.</p>
+                            @endif
                             {{-- <div class="col-sm-6 col-md-4 col-lg-3">
                                 <div class="hotels-wapper">
                                     <figure>
@@ -424,22 +448,24 @@
                         <p class="content">Here some awesome feedback from our travelers</p>
                     </div>
                     <div class="experience-bottom">
+                        @if($data['experience']->count() > 0)
                         <div class="owl-carousel owl-theme experience-slider">
-                            @foreach($data['experience'] as $experience)
-                            <div class="item">
-                                <div class="exprerience-wapper">
-                                    <figure>
-                                        <img src="{{asset('storage').'/'.$experience->image}}">
-                                        {{-- <img src="{{ asset('web/assets/images/experience-one.png') }}"> --}}
-                                    </figure>
-                                    <h4>{{$experience->name}}</h4>
-                                    <p>{!! $experience->description !!}</p>
-                                    {{-- <P>I went for my honeymoon with Travel Agency. I discussed about my destination with
+                            @foreach ($data['experience'] as $experience)
+                                <div class="item">
+                                    <div class="exprerience-wapper">
+                                        <figure>
+                                            <img src="{{ asset('storage') . '/' . $experience->image }}">
+                                            {{-- <img src="{{ asset('web/assets/images/experience-one.png') }}"> --}}
+                                        </figure>
+                                        <h4>{{ $experience->name }}</h4>
+                                        <p>{!! $experience->description !!}</p>
+                                        {{-- <P>I went for my honeymoon with Travel Agency. I discussed about my destination with
                                         akash and he shared an amazing itinerary which covered all the places of Kashmir
                                         which were a must visit during month of december. </P> --}}
+                                    </div>
                                 </div>
-                            </div>
                             @endforeach
+                            
                             {{-- <div class="item">
                                 <div class="exprerience-wapper">
                                     <figure>
@@ -463,6 +489,9 @@
                                 </div>
                             </div> --}}
                         </div>
+                        @else
+                            <p>No Experiences available.</p>
+                            @endif
                     </div>
                 </div>
             </div>

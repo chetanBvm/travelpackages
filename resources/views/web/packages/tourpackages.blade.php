@@ -6,12 +6,18 @@
             <div class="container-fluid">
                 <div class="college-inner">
                     <figure>
-                        <img src="{{asset('storage').'/'.$data['banner']->image}}">
-                        {{-- <img src="{{ asset('web/assets/images/package-bg.png') }}" /> --}}
+                        @if (isset($data['banner']->image))
+                            <img src="{{ asset('storage') . '/' . $data['banner']->image }}">
+                        @else
+                            <img src="{{ asset('web/assets/images/package-bg.png') }}" />
+                        @endif
                     </figure>
                     <div class="college-content">
-                        <h1>{{$data['banner']->text}}</h1>
-                        {{-- <h1>Holiday Package</h1> --}}
+                        @if (isset($data['banner']->text))
+                            <h1>{{ $data['banner']->text }}</h1>
+                        @else
+                            <h1>Holiday Package</h1>
+                        @endif
                     </div>
                 </div>
             </div>
