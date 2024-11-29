@@ -14,10 +14,10 @@ img{max-width:100%; transition: 0.3s ease-in-out;}
 figure {margin: 0; padding: 0;margin-bottom: 0;}
 :root {
 --primary: #F2541D;
---secondary: #E5A13D; 
---white: #ffffff; 
+--secondary: #E5A13D;
+--white: #ffffff;
 --dark: #203638;
---gray: #666666; 
+--gray: #666666;
 }
 /*--------------------------------------------------------------------------------------*/
 /*Header-Css-Here
@@ -1080,7 +1080,7 @@ footer {
   flex-direction: column;
   align-items: center;
   row-gap: 40px;
-} 
+}
 .question-form input {
   border: 1px solid #EAEBEC;
   width: 100%;
@@ -2463,6 +2463,7 @@ color: #666666;
   margin-top:-195px;
   padding-bottom: 30px;
 }
+
 
 .tab-result-section .Destination-form {
 	 margin-top: 70px; 

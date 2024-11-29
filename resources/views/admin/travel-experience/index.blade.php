@@ -26,14 +26,11 @@
         <section>
             <div class="card">
                 <div class="card-header">
-                    Travel Experience
+                    <span>Travel Experience</span>
+                    <a href="{{ route('travel-experience.create') }}" type="button"
+                            class="btn btn-info d-none d-lg-block m-l-15">&#x002B; Add New</a>
                 </div>
-                <div class="col-md-12 align-self-center text-right">
-                    <div class="d-flex justify-content-end align-items-center">
-                        <a href="{{ route('travel-experience.create') }}" type="button"
-                            class="btn btn-info d-none d-lg-block m-l-15"><i class="zmdi zmdi-plus"></i> Add New</a>
-                    </div>
-                </div>
+
                 <div class="card-body">
                     <table class="table table-striped data-table">
                         <thead>

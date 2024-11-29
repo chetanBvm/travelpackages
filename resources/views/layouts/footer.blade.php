@@ -62,16 +62,17 @@
 			<div class="dashline"></div>
 			<p>Develop by BVM Web Solution. © 2024. All rights reserved.</p>
 		</div>
-	</div>	
+	</div>
 </footer>
 
 <script src="{{asset('web/assets/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('web/assets/js/jquery-3.2.1.slim.min.js')}}"></script>
 <script src="{{asset('web/assets/js/owl.carousel.min.js')}}"></script>
+<script src="{{asset('web/assets/js/perfect-scrollbar.min.js')}}"></script>
 <script src="{{asset('web/assets/js/select2.min.js')}}"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
+
 <script type="text/javascript">
 	$(".guests-slider").owlCarousel({
 		loop: true,

@@ -11,6 +11,9 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Create Travel Experience</h4>
+                <a href="#" type="button"
+                class="btn btn-info gray-btn d-lg-block m-l-15"><i class="bi bi-caret-left-fill"></i><span>Back</span></a>
+
             </div>
             <div class="card-content">
                 <div class="card-body">
@@ -18,7 +21,7 @@
                         enctype="multipart/form-data" id="createDrawStay">
                         @csrf
                         <div class="form-body">
-                            <div class="row">                              
+                            <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name</label>
@@ -28,8 +31,8 @@
                                     @error('name')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
-                                </div> 
-                           
+                                </div>
+
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label class="image" for="">Image</label>
@@ -78,7 +81,7 @@
                 rules: {
                     name: {
                         required: true
-                    },                   
+                    },
                     image: {
                         required: true
                     },
@@ -90,7 +93,7 @@
                 messages: {
                     name: {
                         required: "Please enter the name of the."
-                    },                    
+                    },
                     image: {
                         required: "Please choose the image."
                     },

@@ -11,6 +11,9 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Create destination</h4>
+                <a href="#" type="button"
+                class="btn btn-info gray-btn d-lg-block m-l-15"><i class="bi bi-caret-left-fill"></i><span>Back</span></a>
+
             </div>
             <div class="card-content">
                 <div class="card-body">
@@ -19,7 +22,7 @@
                         @csrf
                         <div class="form-body">
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="first-name-vertical">Country Name</label>
                                         <select class="form-select" id="basicSelect" name="countries_id">
@@ -36,7 +39,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Type</label>
                                         <input type="text" id="type" class="form-control" name="type"
@@ -46,7 +49,7 @@
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Status</label>
                                         <select class="form-select" id="basicSelect" name="status">
@@ -56,7 +59,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label class="image" for="">Image</label>
                                         <input type="file" name="image" class="form-control" id="image"
