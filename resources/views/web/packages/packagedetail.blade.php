@@ -495,8 +495,12 @@
                                 aria-labelledby="pills-Itinerary-tab" tabindex="0">
                                 <div class="heading-main">
                                     <div class="heading-inner">
-                                        <h2>AZORES ESCAPE</h2>
-                                        <p>11 Days</p>
+                                        @if(!empty($data['itinerary']))
+                                        <h2>{{$data['itinerary']->name}}</h2>
+                                        @endif
+                                        {{-- <h2>AZORES ESCAPE</h2> --}}
+                                        <p>{{$packages->days}} Days</p>
+                                        {{-- <p>11 Days</p> --}}
                                     </div>
                                     <div class="heading-main-right">
                                         <div class="download-data">
@@ -512,7 +516,10 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="itinerary-inner">
-                                            <h2>Day 1: Canada – Ponta Delgada (Azores, Portugal)</h2>
+                                            @if(!empty($data['itinerary']))
+                                            {!!$data['itinerary']->description!!}
+                                            @endif
+                                            {{-- <h2>Day 1: Canada – Ponta Delgada (Azores, Portugal)</h2>
                                             <p>Flight with a good itinerary.</p>
                                             <h2>Day 2: Ponta Delgada</h2>
                                             <p>Upon arrival at the airport in Ponta Delgada, transfer to your hotel. The
@@ -597,7 +604,7 @@
                                             </p>
                                             <p>-End of services-  </p>
                                             <p>*Please note*  </p>
-                                            <p>The order of the excursions is subject to change.</p>
+                                            <p>The order of the excursions is subject to change.</p> --}}
                                         </div>
                                     </div>
                                 </div>

@@ -1,6 +1,6 @@
 @php
     $title = 'My Vacay Host';
-    $filename = 'Package';
+    $filename = 'Itinerary';
 @endphp
 @extends('admin.layouts.app')
 @section('title', $title)
@@ -20,14 +20,14 @@
             @endif
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Packages</h3>
+                    <h3>Itinerary</h3>
                     <p class="text-subtitle text-muted">For user to check they list</p>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Packages</li>
+                            <li class="breadcrumb-item active" aria-current="page">Itinerary</li>
                         </ol>
                     </nav>
                 </div>
@@ -36,24 +36,22 @@
         <section>
             <div class="card">
                 <div class="card-header">
-                    <span>Packages</span>
-                    <a href="{{ route('package.create') }}" type="button"
-                    class="btn btn-info d-none d-lg-block m-l-15">&#x002B; Add New</a>
+                    <span>Itinerary</span>
+                    <a href="{{ route('itinerary.create') }}" type="button"
+                        class="btn btn-info d-none d-lg-block m-l-15">&#x002B; Add New</a>
                 </div>
 
                 <div class="card-body">
                     <table class="table table-striped data-table">
                         <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Destination Name</th>
-                                    <th>Name</th>
-                                    {{-- <th>image</th> --}}
-                                    <th>Price</th>
-                                    <th>Days</th>
-                                    <th>Status</th>
-                                    <th width="100px">Action</th>
-                                </tr>
+                            <tr>
+                                <th>No</th>
+                                <th>Package Name</th>
+                                <th>Name</th>
+                                {{-- <th>Description</th> --}}
+                                <th>Status</th>
+                                <th width="100px">Action</th>
+                            </tr>
                         </thead>
                         <tbody>
                         </tbody>
@@ -69,30 +67,22 @@
             var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('package.index') }}",
+                ajax: "{{ route('itinerary.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'
                     },
                     {
-                        data: 'destination.country.name',
-                        name:'destination.country.name'
+                        data: 'package.name',
+                        name: 'package.name'
                     },
                     {
                         data: 'name',
                         name: 'name'
-                    },
+                    },                    
                     {
-                        data: 'price',
-                        name: 'price'
-                    },
-                    {
-                        data: 'days',
-                        name: 'days'
-                    },
-                    {
-                        data:'status',
-                        name:'status'
+                        data: 'status',
+                        name: 'status'
                     },
                     {
                         data: 'action',
@@ -104,7 +94,7 @@
             });
 
         });
-        //Delete the Package
+        //Delete the Itinerary
         function deleteFunc(id) {
             Swal.fire({
                 title: 'Are you sure?',
@@ -119,7 +109,7 @@
                     // ajax
                     $.ajax({
                         method: "DELETE",
-                        url: "{{ route('package.destroy', ':id') }}".replace(':id', id),
+                        url: "{{ route('itinerary.destroy', ':id') }}".replace(':id', id),
                         data: {
                             id: id,
                             "_token": "{{ csrf_token() }}"
@@ -129,7 +119,7 @@
                             console.log(res);
                             Swal.fire(
                                 'Deleted!',
-                                'Package delete successfully!',
+                                'Itinerary delete successfully!',
                                 'success'
                             )
                             var oTable = $('.data-table').dataTable();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Banner;
+use App\Models\Itinerary;
 use App\Models\Package;
 use Illuminate\Http\Request;
 
@@ -22,6 +23,7 @@ class PackagesController extends Controller
     {
         $packages = Package::findOrFail($id);
         $data['feature'] = Package::get()->take(10);
-        return view('web.packages.packagedetail',compact('packages'));
+        $data['itinerary'] = Itinerary::where('package_id',$id)->first();
+        return view('web.packages.packagedetail',compact('packages','data'));
     }
 }
