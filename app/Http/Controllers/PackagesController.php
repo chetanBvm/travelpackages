@@ -21,6 +21,7 @@ class PackagesController extends Controller
     public function packageDetail(int $id)
     {
         $packages = Package::findOrFail($id);
+        $data['feature'] = Package::get()->take(10);
         return view('web.packages.packagedetail',compact('packages'));
     }
 }
