@@ -1,11 +1,23 @@
 @extends('layouts.app')
 @section('content')
+    @php
+        use Carbon\Carbon;
+        // Get the current year
+        $currentYear = Carbon::now();
+
+        // Array to hold the months
+        $months = [];
+
+        // Generate the months for the current year
+        for ($i = 0; $i <= 12; $i++) {
+            $months[] = $currentYear->copy()->addMonths($i)->format('M Y');
+        }
+    @endphp
     <div class="main">
         <section class="travel-banner"
-        @if (isset($data['banner']) && $data['banner']->type == 'Home') style="background-image: url({{ asset('storage') . '/' . $data['banner']->image}} ?? '{{asset('web/assets/images/home-background-img.jpg')}}')"
+            @if (isset($data['banner']) && $data['banner']->type == 'Home') style="background-image: url({{ asset('storage') . '/' . $data['banner']->image }} ?? '{{ asset('web/assets/images/home-background-img.jpg') }}')"
         @else
-        style="background-image: url('{{ asset('web/assets/images/home-background-img.jpg') }}')"
-        @endif>
+        style="background-image: url('{{ asset('web/assets/images/home-background-img.jpg') }}')" @endif>
             <div class="container">
                 <div class="bannr-inner">
                     <div class="row justify-content-center">
@@ -14,7 +26,7 @@
                                 <span class="explore">Explore the world! <i class="fa-solid fa-compass"></i></span>
                                 @if ($data['banner'] && $data['banner']->type == 'Home')
                                     <h1> {!! $data['banner']->text !!}</h1>
-                                    @else
+                                @else
                                     <h1>From Southeast Asia to<br> the <span class="world">World.</span> </h1>
                                 @endif
                             </div>
@@ -40,33 +52,28 @@
                                         </select>
                                     </div>
 
-
-
                                     <div class="Destination-form-data">
                                         <label for="mySelectDeparture" class="form-label">
                                             <div class="form-label-img"><img
                                                     src="{{ asset('web/assets/images/calendar.svg') }}"
                                                     class="form-label-img"></div> Departure Month
                                         </label>
-                                        <select class="form-select" id="mySelectDeparture"
+                                        <select class="form-select" id="mySelectDeparture" name="departure_month"
                                             aria-label="Default select example">
-                                            <option>All</option>
-                                            <option value="1" selected>Nov 2024</option>
-                                            <option value="2">Dec 2024</option>
-                                            <option value="3">Jan 2025</option>
-                                            <option value="4">Feb 2025</option>
-                                            <option value="5">Mar 2025</option>
-                                            <option value="6">Apr 2025</option>
-                                            <option value="7">May 2025</option>
+                                            <option value="all">All</option>
+                                            @foreach ($months as $index => $month)
+                                                <option value="{{ $index + 1 }}"
+                                                    {{ old('departure_month') == $index + 1 ? 'selected' : '' }}>
+                                                    {{ $month }}</option>
+                                            @endforeach
                                         </select>
-
-
                                     </div>
 
                                     <div class="Destination-form-data">
                                         <label for="mySelectLength" class="form-label">
                                             <div class="form-label-img"><img
-                                                    src="{{ asset('web/assets/images/timer.svg') }}" class="form-label-img">
+                                                    src="{{ asset('web/assets/images/timer.svg') }}"
+                                                    class="form-label-img">
                                             </div> Length
                                         </label>
                                         <select class="form-select" id="mySelectLength" aria-label="Default select example">
@@ -323,26 +330,26 @@
                     </div>
                     <div class="hotels-bottom">
                         <div class="row">
-                            @if($data['package']->count() > 0)
-                            @foreach ($data['package'] as $packages)
-                                <div class="col-sm-6 col-md-4 col-lg-3">
-                                    <div class="hotels-wapper">
-                                        <figure>
-                                            <img src="{{ asset('storage') . '/' . $packages->images }}">
-                                        </figure>
-                                        <div class="hotels-content">
-                                            <a href="{{ route('web.packageDetails', $packages->id) }}">
-                                                <h3>{{ $packages->name }}</h3>
-                                            </a>
+                            @if ($data['package']->count() > 0)
+                                @foreach ($data['package'] as $packages)
+                                    <div class="col-sm-6 col-md-4 col-lg-3">
+                                        <div class="hotels-wapper">
+                                            <figure>
+                                                <img src="{{ asset('storage') . '/' . $packages->images }}">
+                                            </figure>
+                                            <div class="hotels-content">
+                                                <a href="{{ route('web.packageDetails', $packages->id) }}">
+                                                    <h3>{{ $packages->name }}</h3>
+                                                </a>
 
-                                            <p>{{ strip_tags($packages->description) }}</p>
-                                            <span class="inr">INR {{ $packages->price }}</span>
+                                                <p>{{ strip_tags($packages->description) }}</p>
+                                                <span class="inr">INR {{ $packages->price }}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
                             @else
-                            <p class="nodata-para">No Packages Available.</p>
+                                <p class="nodata-para">No Packages Available.</p>
                             @endif
                             {{-- <div class="col-sm-6 col-md-4 col-lg-3">
                                 <div class="hotels-wapper">
@@ -448,25 +455,25 @@
                         <p class="content">Here some awesome feedback from our travelers</p>
                     </div>
                     <div class="experience-bottom">
-                        @if($data['experience']->count() > 0)
-                        <div class="owl-carousel owl-theme experience-slider">
-                            @foreach ($data['experience'] as $experience)
-                                <div class="item">
-                                    <div class="exprerience-wapper">
-                                        <figure>
-                                            <img src="{{ asset('storage') . '/' . $experience->image }}">
-                                            {{-- <img src="{{ asset('web/assets/images/experience-one.png') }}"> --}}
-                                        </figure>
-                                        <h4>{{ $experience->name }}</h4>
-                                        <p>{!! $experience->description !!}</p>
-                                        {{-- <P>I went for my honeymoon with Travel Agency. I discussed about my destination with
+                        @if ($data['experience']->count() > 0)
+                            <div class="owl-carousel owl-theme experience-slider">
+                                @foreach ($data['experience'] as $experience)
+                                    <div class="item">
+                                        <div class="exprerience-wapper">
+                                            <figure>
+                                                <img src="{{ asset('storage') . '/' . $experience->image }}">
+                                                {{-- <img src="{{ asset('web/assets/images/experience-one.png') }}"> --}}
+                                            </figure>
+                                            <h4>{{ $experience->name }}</h4>
+                                            <p>{!! $experience->description !!}</p>
+                                            {{-- <P>I went for my honeymoon with Travel Agency. I discussed about my destination with
                                         akash and he shared an amazing itinerary which covered all the places of Kashmir
                                         which were a must visit during month of december. </P> --}}
+                                        </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
 
-                            {{-- <div class="item">
+                                {{-- <div class="item">
                                 <div class="exprerience-wapper">
                                     <figure>
                                         <img src="{{ asset('web/assets/images/experience-two.png') }}">
@@ -477,7 +484,7 @@
                                         which were a must visit during month of december. </P>
                                 </div>
                             </div> --}}
-                            {{-- <div class="item">
+                                {{-- <div class="item">
                                 <div class="exprerience-wapper">
                                     <figure>
                                         <img src="{{ asset('web/assets/images/experience-three.png') }}">
@@ -488,10 +495,10 @@
                                         which were a must visit during month of december. </P>
                                 </div>
                             </div> --}}
-                        </div>
+                            </div>
                         @else
                             <p class="nodata-para">No Experiences available.</p>
-                            @endif
+                        @endif
                     </div>
                 </div>
             </div>
