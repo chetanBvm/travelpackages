@@ -1,5 +1,18 @@
 @extends('layouts.app')
 @section('content')
+    @php
+        use Carbon\Carbon;
+        // Get the current year
+        $currentYear = Carbon::now();
+
+        // Array to hold the months
+        $months = [];
+
+        // Generate the months for the current year
+        for ($i = 0; $i <= 12; $i++) {
+            $months[] = $currentYear->copy()->addMonths($i)->format('M Y'); 
+        }
+    @endphp
     <div class="main">
         <!-- College-Banner -->
         <section class="college">
@@ -46,22 +59,14 @@
                                             </select>
                                         </div>
 
-
-
                                         <div class="Destination-form-data">
-                                            <select class="form-select" id="mySelectDeparture"
+                                            <select class="form-select" id="mySelectDeparture" name="departure_month"
                                                 aria-label="Default select example">
-                                                <option selected>Departure Month</option>
-                                                <option value="1">Nov 2024</option>
-                                                <option value="2">Dec 2024</option>
-                                                <option value="3">Jan 2025</option>
-                                                <option value="4">Feb 2025</option>
-                                                <option value="5">Mar 2025</option>
-                                                <option value="6">Apr 2025</option>
-                                                <option value="7">May 2025</option>
+                                                <option selected disabled>Departure Month</option>
+                                                @foreach ($months as $index => $month)
+                                                    <option value="{{ $index + 1 }}" {{ old('departure_month') == ($index + 1) ? 'selected' : '' }}>{{ $month }}</option>
+                                                @endforeach
                                             </select>
-
-
                                         </div>
 
                                         <div class="Destination-form-data">
