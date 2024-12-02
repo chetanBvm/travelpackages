@@ -11,6 +11,19 @@
                             <div class="col-md-8">
                                 <div class="package-single-left">
                                     <div class="row">
+                                        {{-- @foreach($data['packageImages'] as $packageImage)
+                                        <div class="col-md-4">
+                                            <div class="package-single-left-img">
+                                                <figure>
+                                                    @php $images = json_decode($packageImage->images, true); 
+                                                    @endphp
+                                                    @foreach($images as $image)
+                                                    <img src="{{asset('storage').'/'. $image}}">
+                                                    @endforeach
+                                                </figure>
+                                            </div>
+                                        </div>
+                                        @endforeach --}}
                                         <div class="col-md-8">
                                             <div class="package-single-left-img">
                                                 <figure>
@@ -92,7 +105,11 @@
                                     <div class="package-single-right-middle">
 
                                         <div class="texes">
-                                            <h4>$ 25 799.00</h4>
+                                            @php
+                                            $currency = $packages->destination->country->currency_symbol
+                                        @endphp
+                                            <h4>{{$currency}} {{$packages->price}}</h4>
+                                            {{-- <h4>$ 25 799.00</h4> --}}
                                             <p><span>+₹</span>409 taxes & fees</p>
                                             <p><span>1 Room</span> per night</p>
                                             <p class="free">Free Cancellation till 22- May-2024</p>
@@ -909,22 +926,29 @@
 
                     <div class="hotels-bottom">
                         <div class="row">
+                            @foreach($data['packages'] as $package)
                             <div class="col-sm-6 col-md-4">
                                 <div class="hotels-wapper">
                                     <figure>
-                                        <img src="{{ asset('web/assets/images/hotel-one.png') }}">
+                                        <img src="{{asset('storage').'/'.$package->thumbnail}}">
+                                        {{-- <img src="{{ asset('web/assets/images/hotel-one.png') }}"> --}}
                                     </figure>
                                     <div class="hotels-content">
-                                        <a href="package-single.php">
-                                            <h3>Croatia Land & Sea</h3>
+                                        <a href="{{route('web.packageDetails',$package->id)}}">
+                                            <h3>{{$package->name}}</h3>
+                                            {{-- <h3>Croatia Land & Sea</h3> --}}
                                         </a>
-                                        <p>Per night before taxes and fees</p>
-                                        <span class="inr">$ 4,403.29</span>
+                                        <p>{{$package->sub_title ?? 'Per night before taxes and fees'}}</p>
+                                        {{-- <p>Per night before taxes and fees</p> --}}
+                                        @php $currency =  $package->destination->country->currency_symbol @endphp
+                                        <span class="inr">{{$currency}} {{$package->price}}</span> 
+                                        {{-- <span class="inr">$ 4,403.29</span> --}}
                                     </div>
                                 </div>
                             </div>
+                            @endforeach
 
-                            <div class="col-sm-6 col-md-4">
+                            {{-- <div class="col-sm-6 col-md-4">
                                 <div class="hotels-wapper">
                                     <figure>
                                         <img src="{{ asset('web/assets/images/hotel-two.png') }}">
@@ -937,9 +961,9 @@
                                         <span class="inr">$ 1,937.53</span>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            <div class="col-sm-6 col-md-4">
+                            {{-- <div class="col-sm-6 col-md-4">
                                 <div class="hotels-wapper">
                                     <figure>
                                         <img src="{{ asset('web/assets/images/hotel-three.png') }}">
@@ -952,7 +976,7 @@
                                         <span class="inr">$ 1,417.86</span>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

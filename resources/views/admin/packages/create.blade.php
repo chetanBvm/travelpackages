@@ -48,6 +48,16 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
+                                        <label for="name-vertical">sub Title</label>
+                                        <input type="text" id="name-vertical" class="form-control" name="sub_title"
+                                            placeholder="sub title">
+                                    </div>
+                                    @error('sub_title')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
                                         <label for="first-name-vertical">Name</label>
                                         <input type="text" id="name-vertical" class="form-control" name="name"
                                             placeholder="Name">
@@ -166,6 +176,9 @@
                     status: {
                         required: true
                     },
+                    sub_title:{
+                        required:true
+                    },
                 },
                 // Customizing error messages
                 messages: {
@@ -186,7 +199,10 @@
                     },
                     status: {
                         required: "Please select the status."
-                    }
+                    },
+                    sub_title:{
+                        required: "Please enter the sub title."
+                    },
                 },
                 errorPlacement: function(error, element) {
                     var placement = $(element).data('error');

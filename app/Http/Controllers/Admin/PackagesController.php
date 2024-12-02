@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PackageStoreRequest;
 use App\Models\Destination;
 use App\Models\Package;
+use App\Models\PackageImages;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -78,6 +79,7 @@ class PackagesController extends Controller
                 'days' => $validated['days'],
                 'status' => $validated['status'],
                 'destination_id' => $validated['destination_id'],
+                'sub_title' => $validated['sub_title'],
             ]);
             DB::commit();  //commit the transaction
 
@@ -132,6 +134,7 @@ class PackagesController extends Controller
                 'price' => $validated['price'],
                 'days' => $validated['days'],
                 'status' => $validated['status'],
+                'sub_title' => $validated['sub_title'],
             ]);
 
             //Check if the request has an image file

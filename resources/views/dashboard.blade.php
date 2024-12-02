@@ -15,18 +15,20 @@
     @endphp
     <div class="main">
         <section class="travel-banner"
-            @if (isset($data['banner']) && $data['banner']->type == 'Home') style="background-image: url({{ asset('storage') . '/' . $data['banner']->image }} ?? '{{ asset('web/assets/images/home-background-img.jpg') }}')"
-        @else
-        style="background-image: url('{{ asset('web/assets/images/home-background-img.jpg') }}')" @endif>
+            @if (isset($data['homeBanner']) && $data['homeBanner']->type == 'home_banner') style="background-image: url({{ asset('storage') . '/' . $data['homeBanner']->image }})"
+            @else
+                style="background-image: url('{{ asset('web/assets/images/home-background-img.jpg') }}')" @endif>
             <div class="container">
                 <div class="bannr-inner">
                     <div class="row justify-content-center">
                         <div class="col-md-12">
                             <div class="banner-left text-center">
-                                <span class="explore">Explore the world! <i class="fa-solid fa-compass"></i></span>
-                                @if ($data['banner'] && $data['banner']->type == 'Home')
-                                    <h1> {!! $data['banner']->text !!}</h1>
+                                @if ($data['homeBanner'] && $data['homeBanner']->type == 'home_banner')
+                                    <span class="explore">{{ $data['homeBanner']->title }} <i
+                                            class="fa-solid fa-compass"></i></span>
+                                    <h1> {!! $data['homeBanner']->subtitle !!}</h1>
                                 @else
+                                    <span class="explore">Explore the world! <i class="fa-solid fa-compass"></i></span>
                                     <h1>From Southeast Asia to<br> the <span class="world">World.</span> </h1>
                                 @endif
                             </div>
@@ -117,8 +119,13 @@
             <div class="container">
                 <div class="tranding-inner">
                     <div class="tranding-head">
-                        <h2 class="main-heading">Trending Destinations</h2>
-                        <p class="content">Most popular choices for travellers from India</p>
+                        @if ($data['homeDestination'] && $data['homeDestination']->type == 'home_destination')
+                            <h2>{{ $data['homeDestination']->title }}</h2>
+                            <p class="content">{{ $data['homeDestination']->subtitle }}</p>
+                        @else
+                            <h2 class="main-heading">Trending Destinations</h2>
+                            <p class="content">Most popular choices for travellers from India</p>
+                        @endif
                     </div>
                     <div class="tranding-bottom">
                         <div class="row">
@@ -193,7 +200,11 @@
             <div class="container">
                 <div class="discover-inner">
                     <div class="discover-head">
-                        <h2 class="main-heading">Discover your New Favourite Stay</h2>
+                        @if ($data['homeStay'] && $data['homeStay']->type == 'home_stay')
+                            <h2 class="main-heading">{{ $data['homeStay']->title }}</h2>
+                        @else
+                            <h2 class="main-heading">Discover your New Favourite Stay</h2>
+                        @endif
                     </div>
                     <div class="discover-bottom">
                         <div class="row">
@@ -255,13 +266,24 @@
         <section class="campaign">
             <div class="container-fluid">
                 <div class="campaign-inner">
-                    <video width="100%" autoplay="" muted="" loop="" playsinline="">
-                        <source src="{{ asset('web/assets/images/campaign.mp4') }}" type="video/mp4">
-                    </video>
-                    <div class="campaign-content">
-                        <h2>BEST IN TRAVEL 2024</h2>
-                        <a href="javascript::" class="travel-btn">Discover the winners</a>
-                    </div>
+                    @if ($data['homeSection'] && $data['homeSection']->type == 'home_section')
+                        <video width="100%" autoplay="" muted="" loop="" playsinline="">
+                            <source src="{{ asset('storage') . '/' . $data['homeSection']->image }}">
+                        </video>
+                        <div class="campaign-content">
+                            <h2>{{ $data['homeSection']->title }}</h2>
+                            <a href="javascript::" class="travel-btn">{{ $data['homeSection']->subtitle }}</a>
+                        </div>
+                    @else
+                        <video width="100%" autoplay="" muted="" loop="" playsinline="">
+                            <source src="{{ asset('web/assets/images/campaign.mp4') }}" type="video/mp4">
+                        </video>
+                        <div class="campaign-content">
+                            <h2>BEST IN TRAVEL 2024</h2>
+                            <a href="javascript::" class="travel-btn">Discover the winners</a>
+                        </div>
+                    @endif
+
                 </div>
             </div>
         </section>
@@ -270,7 +292,11 @@
             <div class="container">
                 <div class="popular-inner">
                     <div class="popular-head">
-                        <h2 class="main-heading">Popular Domestic Airlines</h2>
+                        @if ($data['homeAirline'] && $data['homeAirline']->type == 'home_airline')
+                            <h2 class="main-heading">{{ $data['homeAirline']->title }}</h2>
+                        @else
+                            <h2 class="main-heading">Popular Domestic Airlines</h2>
+                        @endif
                     </div>
                     <div class="popular-bottom">
                         @if ($data['airline']->count() > 0)
@@ -326,7 +352,11 @@
             <div class="container">
                 <div class="hotels-inner">
                     <div class="hotels-head">
-                        <h2 class="main-heading">Featured Packages</h2>
+                        @if ($data['homePackage'] && $data['homePackage']->type == 'home_package')
+                            <h2 class="main-heading">{{ $data['homePackage']->title }}</h2>
+                        @else
+                            <h2 class="main-heading">Featured Packages</h2>
+                        @endif
                     </div>
                     <div class="hotels-bottom">
                         <div class="row">
@@ -335,15 +365,15 @@
                                     <div class="col-sm-6 col-md-4 col-lg-3">
                                         <div class="hotels-wapper">
                                             <figure>
-                                                <img src="{{ asset('storage') . '/' . $packages->images }}">
+                                                <img src="{{ asset('storage') . '/' . $packages->thumbnail }}">
                                             </figure>
                                             <div class="hotels-content">
                                                 <a href="{{ route('web.packageDetails', $packages->id) }}">
                                                     <h3>{{ $packages->name }}</h3>
                                                 </a>
-
-                                                <p>{{ strip_tags($packages->description) }}</p>
-                                                <span class="inr">INR {{ $packages->price }}</span>
+                                                <p>{{ $packages->sub_title ?? 'Per night before taxes and fees'}}</p>
+                                                @php $currency = $packages->destination->country->currency_symbol @endphp
+                                                <span class="inr">{{$currency}} {{ $packages->price }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -451,8 +481,13 @@
             <div class="container">
                 <div class="experience-inner">
                     <div class="experience-head">
-                        <h2 class="main-heading">Traveler’s Experiences</h2>
-                        <p class="content">Here some awesome feedback from our travelers</p>
+                        @if ($data['homeExperience'] && $data['homeExperience']->type == 'home_travelexperience')
+                            <h2 class="main-heading">{{ $data['homeExperience']->title }}</h2>
+                            <p class="content">{{ $data['homeExperience']->subtitle }}</p>
+                        @else
+                            <h2 class="main-heading">Traveler’s Experiences</h2>
+                            <p class="content">Here some awesome feedback from our travelers</p>
+                        @endif
                     </div>
                     <div class="experience-bottom">
                         @if ($data['experience']->count() > 0)

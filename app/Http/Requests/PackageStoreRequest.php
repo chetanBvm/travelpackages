@@ -29,6 +29,7 @@ class PackageStoreRequest extends FormRequest
             'images' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'string',
             'destination_id' => 'string|exists:destinations,id',
+            'sub_title' => 'required|string',
         ];
     }
 
@@ -40,9 +41,9 @@ class PackageStoreRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'name is required',
-            // 'description.required' => 'description is required',
-            'days.required' => 'days is required',
+            'name.required' => 'name is required.',
+            'days.required' => 'days is required.',
+            'sub_title' => 'Please enter the sub title.'
         ];
     }
 }

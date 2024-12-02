@@ -3,10 +3,12 @@
 use App\Http\Controllers\Admin\AirlinesController;
 use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\ContentManagementController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DestinationController;
 use App\Http\Controllers\Admin\InclusionsController;
 use App\Http\Controllers\Admin\ItineraryController;
+use App\Http\Controllers\Admin\PackageImageController;
 use App\Http\Controllers\Admin\PackagesController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\StayController;
@@ -63,6 +65,9 @@ Route::group(['prefix' => 'admin'], function () {
         //Packages
         Route::resource('package', PackagesController::class);
 
+        //Package Image
+        Route::resource('package-image',PackageImageController::class);
+
         //Destination
         Route::resource('destination', DestinationController::class);
 
@@ -86,6 +91,30 @@ Route::group(['prefix' => 'admin'], function () {
         
         //Inclusion
         Route::resource('inclusion',InclusionsController::class);
+
+        //Content Management
+        Route::group(['prefix' => 'content'],function(){
+            Route::get('home-banner',[ContentManagementController::class,'homeBanner'])->name('home-banner');
+            Route::post('home-banner/save',[ContentManagementController::class,'homeBannerSave'])->name('home-banner.save');
+
+            Route::get('home-destination',[ContentManagementController::class,'homeDestination'])->name('home.destination');
+            Route::post('home-destination/save',[ContentManagementController::class,'homeDestinationSave'])->name('home-destination.save');
+
+            Route::get('home-stay',[ContentManagementController::class,'homeStay'])->name('home.stay');
+            Route::post('home-stay/save',[ContentManagementController::class,'homeStaySave'])->name('home-stay.save');
+
+            Route::get('home-section',[ContentManagementController::class,'homeSection'])->name('home.section');
+            Route::post('home-section/save',[ContentManagementController::class,'homeSectionSave'])->name('home-section.save');
+
+            Route::get('home-airline',[ContentManagementController::class,'homeAirline'])->name('home.airline');
+            Route::post('home-airline/save',[ContentManagementController::class,'homeAirlineSave'])->name('home-airline.save');
+
+            Route::get('home-package',[ContentManagementController::class,'homePackage'])->name('home.package');
+            Route::post('home-package/save',[ContentManagementController::class,'homePackageSave'])->name('home-package.save');
+
+            Route::get('home-travelexperience',[ContentManagementController::class,'homeTravelExperience'])->name('home.travelExperience');
+            Route::post('home-travelexperience/save',[ContentManagementController::class,'homeTravelExperienceSave'])->name('home-experience.save');
+        });
     });
 });
 
