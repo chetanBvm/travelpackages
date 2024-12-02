@@ -37,6 +37,16 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
+                                        <label for="first-name-vertical">sub Title</label>
+                                        <input type="text" id="name-vertical" class="form-control" name="sub_title"
+                                            value="{{ $package->sub_title }}" placeholder="sub title">
+                                    </div>
+                                    @error('sub_title')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
                                         <label for="first-name-vertical">Name</label>
                                         <input type="text" id="name-vertical" class="form-control" name="name"
                                             value="{{ $package->name }}" placeholder="Name">
@@ -163,6 +173,9 @@
                     description: {
                         required: true
                     },
+                    sub_title:{
+                        required: true
+                    },
                     status: {
                         required: true
                     },
@@ -180,6 +193,9 @@
                     },
                     description: {
                         required: "Please provide a description."
+                    },
+                    sub_title:{
+                        required: 'Please enter the sub title.'
                     },
                     status: {
                         required: "Please select the status."

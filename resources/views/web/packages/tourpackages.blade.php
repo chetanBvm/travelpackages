@@ -180,7 +180,7 @@
                                 <div class="col-md-5">
                                     <div class="package-left">
                                         <figure>
-                                            <img src="{{ asset('storage') . '/' . $packages->images }}">
+                                            <img src="{{ asset('storage') . '/' . $packages->thumbnail }}">
                                             {{-- <img src="images/package-one.png"> --}}
                                         </figure>
                                     </div>
@@ -193,7 +193,10 @@
                                                 <span class="day-night">{{ $packages->days }} Days</span>
                                             </li>
                                             <li>
-                                                <h3>$ {{ $packages->price }}</h3>
+                                                @php
+                                                    $currency = $packages->destination->country->currency_symbol
+                                                @endphp
+                                                <h3> {{$currency}} {{ $packages->price }}</h3>
                                                 <span class="start-price">Starting Price</span>
                                             </li>
                                         </ul>
