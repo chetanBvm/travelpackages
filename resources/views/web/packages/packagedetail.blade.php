@@ -8,114 +8,79 @@
 
                     <div class="package-single-bottom">
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-lg-8">
                                 <div class="package-single-left">
                                     <div class="row">
-                                        {{-- @foreach($data['packageImages'] as $packageImage)
-                                        <div class="col-md-4">
-                                            <div class="package-single-left-img">
-                                                <figure>
-                                                    @php $images = json_decode($packageImage->images, true); 
-                                                    @endphp
-                                                    @foreach($images as $image)
-                                                    <img src="{{asset('storage').'/'. $image}}">
-                                                    @endforeach
-                                                </figure>
-                                            </div>
-                                        </div>
-                                        @endforeach --}}
                                         <div class="col-md-8">
                                             <div class="package-single-left-img">
                                                 <figure>
-                                                    <img src="{{ asset('web/assets/images/pool-one.png') }}" />
+                                                    <img src="{{asset('storage').'/'.$packages->images[0]->images}}" />
                                                 </figure>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+
+                                        <div class="col-md-4 mt-md-0 mt-4">
                                             <div class="package-single-left-img">
                                                 <figure>
-                                                    <img src="{{ asset('web/assets/images/pool-two.png') }}" />
+                                                    <img src="{{asset('storage').'/'.$packages->images[1]->images}}">
+                                                    {{-- <img src="images/pool-two.png" /> --}}
                                                 </figure>
                                                 <div class="tree-img">
                                                     <figure>
-                                                        <img src="{{ asset('web/assets/images/pool-three.png') }}" />
+                                                        <img src="{{asset('storage').'/'.$packages->images[2]->images }}">
+                                                        {{-- <img src="images/pool-three.png" /> --}}
                                                     </figure>
-                                                    <figcaption>+21 photos <i class="fa-solid fa-circle-arrow-right"></i>
-                                                    </figcaption>
+                                                    <a href="#" data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal2">
+                                                        <figcaption>{{$packages->images->count()}} photos <i
+                                                                class="fa-solid fa-circle-arrow-right"></i></figcaption>
+                                                    </a>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
                                     <!-- tab-section -->
 
-                                    <div class="package-details-tabs">
-
-                                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link active" id="pills-dateprice-tab"
-                                                    data-bs-toggle="pill" data-bs-target="#pills-dateprice" type="button"
-                                                    role="tab" aria-controls="pills-dateprice"
-                                                    aria-selected="true">Dates & Prices</button>
-                                            </li>
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="pills-Itinerary-tab" data-bs-toggle="pill"
-                                                    data-bs-target="#pills-Itinerary" type="button" role="tab"
-                                                    aria-controls="pills-Itinerary" aria-selected="false">Itinerary</button>
-                                            </li>
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="pills-Accommodation-tab" data-bs-toggle="pill"
-                                                    data-bs-target="#pills-Accommodation" type="button" role="tab"
-                                                    aria-controls="pills-Accommodation"
-                                                    aria-selected="false">Accommodation</button>
-                                            </li>
-
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link " id="pills-Inclusions-tab" data-bs-toggle="pill"
-                                                    data-bs-target="#pills-Inclusions" type="button" role="tab"
-                                                    aria-controls="pills-Inclusions"
-                                                    aria-selected="true">Inclusions/Exclusions</button>
-                                            </li>
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="pills-Map-tab" data-bs-toggle="pill"
-                                                    data-bs-target="#pills-Map" type="button" role="tab"
-                                                    aria-controls="pills-Map" aria-selected="false">Map</button>
-                                            </li>
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="pills-FAQ-tab" data-bs-toggle="pill"
-                                                    data-bs-target="#pills-FAQ" type="button" role="tab"
-                                                    aria-controls="pills-FAQ" aria-selected="false">FAQ</button>
-                                            </li>
-                                        </ul>
-
+                                    <div class="itinerary-inner">
+                                        <p>{!! $packages->description !!}</p>
+                                        {{-- <p>On the western coast, Goa is known for its endless beaches, stellar nightlife,
+                                            eclectic seafood, world-heritage listed architecture. Spread across just
+                                            Experience a comfortable stay in our Classic Hotels, carefully chosen for their
+                                            value, convenient locations, and proximity to major attractions. Relax in
+                                            well-maintained rooms with thoughtful amenities, savor a variety of breakfast
+                                            choices, and benefit from attentive service to enhance your travel experience.
+                                        </p> --}}
+                                        {{-- <p>• 7 nights in Ponta Delgada at the Sao Miguel Park 4* hotel (or similar) in a
+                                            standard room</p> --}}
                                     </div>
-
-
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-lg-4">
                                 <div class="package-single-right">
                                     <div class="package-single-right-head">
-                                        {{$packages->name}}
+                                        <h2>{{ $packages->name }}</h2>
                                         {{-- <h2>Paris & Normandy Cruise</h2> --}}
                                         <div class="guest">
-
-                                            <img src="{{ asset('web/assets/images/timer.svg') }}" /><span>{{$packages->days}} Days</span>
+                                            <img src="{{ asset('web/assets/images/timer.svg') }}" /><span>{{ $packages->days }}
+                                                Days</span>
+                                            {{-- <img src="images/timer.svg" /><span>11 Days</span> --}}
                                         </div>
                                     </div>
                                     <div class="package-single-right-middle">
 
                                         <div class="texes">
                                             @php
-                                            $currency = $packages->destination->country->currency_symbol
-                                        @endphp
-                                            <h4>{{$currency}} {{$packages->price}}</h4>
-                                            {{-- <h4>$ 25 799.00</h4> --}}
+                                                $currency = $packages->destination->country->currency_symbol;
+                                            @endphp
+                                            <h4>{{ $currency }} {{ $packages->price }}</h4>
                                             <p><span>+₹</span>409 taxes & fees</p>
                                             <p><span>1 Room</span> per night</p>
                                             <p class="free">Free Cancellation till 22- May-2024</p>
                                         </div>
                                     </div>
-                                    <a class="travel-btn" href="javascript::">Send Enquiry</a>
+                                    <a class="travel-btn" href="javascript::" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">Send Enquiry</a>
                                 </div>
 
 
@@ -123,14 +88,11 @@
                                 <div class="Package-Includes-main">
                                     <h2>Package Includes</h2>
                                     <ul>
-                                        <li> <img src="{{ asset('web/assets/images/tick-circle.svg') }}" /> INTERNATIONAL
-                                            FLIGHTS</li>
-                                        <li> <img src="{{ asset('web/assets/images/tick-circle.svg') }}" /> WELCOME &
-                                            TRANSFERS</li>
-                                        <li> <img src="{{ asset('web/assets/images/tick-circle.svg') }}" /> HOTEL 4*</li>
-                                        <li> <img src="{{ asset('web/assets/images/tick-circle.svg') }}" /> ALL BREAKFASTS +
-                                            1 LUNCH</li>
-                                        <li> <img src="{{ asset('web/assets/images/tick-circle.svg') }}" /> EXCURSIONS</li>
+                                        <li> <img src="images/tick-circle.svg" /> INTERNATIONAL FLIGHTS</li>
+                                        <li> <img src="images/tick-circle.svg" /> WELCOME & TRANSFERS</li>
+                                        <li> <img src="images/tick-circle.svg" /> HOTEL 4*</li>
+                                        <li> <img src="images/tick-circle.svg" /> ALL BREAKFASTS + 1 LUNCH</li>
+                                        <li> <img src="images/tick-circle.svg" /> EXCURSIONS</li>
                                     </ul>
 
                                     <div class="coupon-main">
@@ -160,7 +122,44 @@
                     <div class="col-md-12">
                         <div class="tab-content" id="pills-tabContent">
 
+                            <div class="package-details-tabs">
 
+                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="pills-dateprice-tab" data-bs-toggle="pill"
+                                            data-bs-target="#pills-dateprice" type="button" role="tab"
+                                            aria-controls="pills-dateprice" aria-selected="true">Dates & Prices</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="pills-Itinerary-tab" data-bs-toggle="pill"
+                                            data-bs-target="#pills-Itinerary" type="button" role="tab"
+                                            aria-controls="pills-Itinerary" aria-selected="false">Itinerary</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="pills-Accommodation-tab" data-bs-toggle="pill"
+                                            data-bs-target="#pills-Accommodation" type="button" role="tab"
+                                            aria-controls="pills-Accommodation" aria-selected="false">Accommodation</button>
+                                    </li>
+
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link " id="pills-Inclusions-tab" data-bs-toggle="pill"
+                                            data-bs-target="#pills-Inclusions" type="button" role="tab"
+                                            aria-controls="pills-Inclusions"
+                                            aria-selected="true">Inclusions/Exclusions</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="pills-Map-tab" data-bs-toggle="pill"
+                                            data-bs-target="#pills-Map" type="button" role="tab"
+                                            aria-controls="pills-Map" aria-selected="false">Map</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="pills-FAQ-tab" data-bs-toggle="pill"
+                                            data-bs-target="#pills-FAQ" type="button" role="tab"
+                                            aria-controls="pills-FAQ" aria-selected="false">FAQ</button>
+                                    </li>
+                                </ul>
+
+                            </div>
                             <div class="tab-pane fade show active" id="pills-dateprice" role="tabpanel"
                                 aria-labelledby="pills-dateprice-tab" tabindex="0">
                                 <div class="heading-main">
@@ -239,19 +238,15 @@
                                     <div class="ticket-details-bottom-main">
                                         <div class="ticket-details-bottom-inner">
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img src="{{ asset('web/assets/images/airplane.svg') }}">Departure
-                                                    Date</span>
+                                                <span><img src="./images/airplane.svg">Departure Date</span>
                                                 <h4>Fri Apr 11</h4>
                                             </div>
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img src="{{ asset('web/assets/images/aroplan-bt.svg') }}">Departure
-                                                    Date</span>
+                                                <span><img src="./images/aroplan-bt.svg">Departure Date</span>
                                                 <h4>Fri Apr 11</h4>
                                             </div>
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img
-                                                        src="{{ asset('web/assets/images/starting-price.svg') }}">Departure
-                                                    Date</span>
+                                                <span><img src="./images/starting-price.svg">Departure Date</span>
                                                 <div class="price-details-data">
                                                     <span>$3698</span>
                                                     <h4>$3,598<span>/person</span></h4>
@@ -265,26 +260,23 @@
                                                 <span>100$ off</span>
                                             </div>
                                             <div class="enquiry-btn">
-                                                <a class="travel-btn" href="javascript::">Send Enquiry</a>
+                                                <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal">Send Enquiry</a>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="ticket-details-bottom-main">
                                         <div class="ticket-details-bottom-inner">
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img src="{{ asset('web/assets/images/airplane.svg') }}">Departure
-                                                    Date</span>
+                                                <span><img src="./images/airplane.svg">Departure Date</span>
                                                 <h4>Sat Apr 13</h4>
                                             </div>
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img src="{{ asset('web/assets/images/aroplan-bt.svg') }}">Departure
-                                                    Date</span>
+                                                <span><img src="./images/aroplan-bt.svg">Departure Date</span>
                                                 <h4>Mon Apr 28</h4>
                                             </div>
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img
-                                                        src="{{ asset('web/assets/images/starting-price.svg') }}">Departure
-                                                    Date</span>
+                                                <span><img src="./images/starting-price.svg">Departure Date</span>
                                                 <div class="price-details-data">
                                                     <span>$3698</span>
                                                     <h4>$3,598<span>/person</span></h4>
@@ -298,26 +290,23 @@
                                                 <span>100$ off</span>
                                             </div>
                                             <div class="enquiry-btn">
-                                                <a class="travel-btn" href="javascript::">Send Enquiry</a>
+                                                <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal">Send Enquiry</a>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="ticket-details-bottom-main">
                                         <div class="ticket-details-bottom-inner">
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img src="{{ asset('web/assets/images/airplane.svg') }}">Departure
-                                                    Date</span>
+                                                <span><img src="./images/airplane.svg">Departure Date</span>
                                                 <h4>Fri Apr 11</h4>
                                             </div>
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img src="{{ asset('web/assets/images/aroplan-bt.svg') }}">Departure
-                                                    Date</span>
+                                                <span><img src="./images/aroplan-bt.svg">Departure Date</span>
                                                 <h4>Fri Apr 11</h4>
                                             </div>
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img
-                                                        src="{{ asset('web/assets/images/starting-price.svg') }}">Departure
-                                                    Date</span>
+                                                <span><img src="./images/starting-price.svg">Departure Date</span>
                                                 <div class="price-details-data">
                                                     <span>$3698</span>
                                                     <h4>$3,598<span>/person</span></h4>
@@ -331,7 +320,8 @@
                                                 <span>100$ off</span>
                                             </div>
                                             <div class="enquiry-btn">
-                                                <a class="travel-btn" href="javascript::">Send Enquiry</a>
+                                                <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal">Send Enquiry</a>
                                             </div>
                                         </div>
                                     </div>
@@ -346,19 +336,15 @@
                                     <div class="ticket-details-bottom-main">
                                         <div class="ticket-details-bottom-inner">
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img src="{{ asset('web/assets/images/airplane.svg') }}">Departure
-                                                    Date</span>
+                                                <span><img src="./images/airplane.svg">Departure Date</span>
                                                 <h4>Fri Apr 11</h4>
                                             </div>
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img src="{{ asset('web/assets/images/aroplan-bt.svg') }}">Departure
-                                                    Date</span>
+                                                <span><img src="./images/aroplan-bt.svg">Departure Date</span>
                                                 <h4>Fri Apr 11</h4>
                                             </div>
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img
-                                                        src="{{ asset('web/assets/images/starting-price.svg') }}">Departure
-                                                    Date</span>
+                                                <span><img src="./images/starting-price.svg">Departure Date</span>
                                                 <div class="price-details-data">
                                                     <span>$3698</span>
                                                     <h4>$3,598<span>/person</span></h4>
@@ -372,7 +358,8 @@
                                                 <span>100$ off</span>
                                             </div>
                                             <div class="enquiry-btn">
-                                                <a class="travel-btn" href="javascript::">Send Enquiry</a>
+                                                <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal">Send Enquiry</a>
                                             </div>
                                         </div>
                                     </div>
@@ -391,19 +378,15 @@
                                     <div class="ticket-details-bottom-main">
                                         <div class="ticket-details-bottom-inner">
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img src="{{ asset('web/assets/images/airplane.svg') }}">Departure
-                                                    Date</span>
+                                                <span><img src="./images/airplane.svg">Departure Date</span>
                                                 <h4>Fri Apr 11</h4>
                                             </div>
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img src="{{ asset('web/assets/images/aroplan-bt.svg') }}">Departure
-                                                    Date</span>
+                                                <span><img src="./images/aroplan-bt.svg">Departure Date</span>
                                                 <h4>Fri Apr 11</h4>
                                             </div>
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img
-                                                        src="{{ asset('web/assets/images/starting-price.svg') }}">Departure
-                                                    Date</span>
+                                                <span><img src="./images/starting-price.svg">Departure Date</span>
                                                 <div class="price-details-data">
                                                     <span>$3698</span>
                                                     <h4>$3,598<span>/person</span></h4>
@@ -417,26 +400,23 @@
                                                 <span>100$ off</span>
                                             </div>
                                             <div class="enquiry-btn">
-                                                <a class="travel-btn" href="javascript::">Send Enquiry</a>
+                                                <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal">Send Enquiry</a>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="ticket-details-bottom-main">
                                         <div class="ticket-details-bottom-inner">
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img src="{{ asset('web/assets/images/airplane.svg') }}">Departure
-                                                    Date</span>
+                                                <span><img src="./images/airplane.svg">Departure Date</span>
                                                 <h4>Sat Apr 13</h4>
                                             </div>
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img src="{{ asset('web/assets/images/aroplan-bt.svg') }}">Departure
-                                                    Date</span>
+                                                <span><img src="./images/aroplan-bt.svg">Departure Date</span>
                                                 <h4>Mon Apr 28</h4>
                                             </div>
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img
-                                                        src="{{ asset('web/assets/images/starting-price.svg') }}">Departure
-                                                    Date</span>
+                                                <span><img src="./images/starting-price.svg">Departure Date</span>
                                                 <div class="price-details-data">
                                                     <span>$3698</span>
                                                     <h4>$3,598<span>/person</span></h4>
@@ -450,7 +430,8 @@
                                                 <span>100$ off</span>
                                             </div>
                                             <div class="enquiry-btn">
-                                                <a class="travel-btn" href="javascript::">Send Enquiry</a>
+                                                <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal">Send Enquiry</a>
                                             </div>
                                         </div>
                                     </div>
@@ -468,19 +449,15 @@
                                     <div class="ticket-details-bottom-main">
                                         <div class="ticket-details-bottom-inner">
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img src="{{ asset('web/assets/images/airplane.svg') }}">Departure
-                                                    Date</span>
+                                                <span><img src="./images/airplane.svg">Departure Date</span>
                                                 <h4>Fri Apr 11</h4>
                                             </div>
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img src="{{ asset('web/assets/images/aroplan-bt.svg') }}">Departure
-                                                    Date</span>
+                                                <span><img src="./images/aroplan-bt.svg">Departure Date</span>
                                                 <h4>Fri Apr 11</h4>
                                             </div>
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img
-                                                        src="{{ asset('web/assets/images/starting-price.svg') }}">Departure
-                                                    Date</span>
+                                                <span><img src="./images/starting-price.svg">Departure Date</span>
                                                 <div class="price-details-data">
                                                     <span>$3698</span>
                                                     <h4>$3,598<span>/person</span></h4>
@@ -494,7 +471,8 @@
                                                 <span>100$ off</span>
                                             </div>
                                             <div class="enquiry-btn">
-                                                <a class="travel-btn" href="javascript::">Send Enquiry</a>
+                                                <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal">Send Enquiry</a>
                                             </div>
                                         </div>
                                     </div>
@@ -512,16 +490,12 @@
                                 aria-labelledby="pills-Itinerary-tab" tabindex="0">
                                 <div class="heading-main">
                                     <div class="heading-inner">
-                                        @if(!empty($data['itinerary']))
-                                        <h2>{{$data['itinerary']->name}}</h2>
-                                        @endif
-                                        {{-- <h2>AZORES ESCAPE</h2> --}}
-                                        <p>{{$packages->days}} Days</p>
-                                        {{-- <p>11 Days</p> --}}
+                                        <h2>AZORES ESCAPE</h2>
+                                        <p>11 Days</p>
                                     </div>
                                     <div class="heading-main-right">
                                         <div class="download-data">
-                                            <img src="{{ asset('web/assets/images/download.svg') }}">
+                                            <img src="{{asset('web/assets/images/download.svg')}}">
                                             <span>Package Details</span>
                                         </div>
                                         <a class="travel-btn btn" href="javascript::">See Dates and Prices</a>
@@ -533,10 +507,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="itinerary-inner">
-                                            @if(!empty($data['itinerary']))
-                                            {!!$data['itinerary']->description!!}
-                                            @endif
-                                            {{-- <h2>Day 1: Canada – Ponta Delgada (Azores, Portugal)</h2>
+                                            <h2>Day 1: Canada – Ponta Delgada (Azores, Portugal)</h2>
                                             <p>Flight with a good itinerary.</p>
                                             <h2>Day 2: Ponta Delgada</h2>
                                             <p>Upon arrival at the airport in Ponta Delgada, transfer to your hotel. The
@@ -621,7 +592,7 @@
                                             </p>
                                             <p>-End of services-  </p>
                                             <p>*Please note*  </p>
-                                            <p>The order of the excursions is subject to change.</p> --}}
+                                            <p>The order of the excursions is subject to change.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -647,39 +618,42 @@
                                                 in well-maintained rooms with thoughtful amenities, savor a variety of
                                                 breakfast choices, and benefit from attentive service to enhance your travel
                                                 experience.</p>
-                                            <p>• 7 nights in Ponta Delgada at the Sao Miguel Park 4* hotel (or similar) in a
-                                                standard room</p>
+                                            {{-- <p>• 7 nights in Ponta Delgada at the Sao Miguel Park 4* hotel (or similar) in a
+                                                standard room</p> --}}
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="accommodation-images">
                                                 <figure>
-                                                    <img src="{{ asset('web/assets/images/Accommodation1.jpg') }}">
+                                                    <img src="images/Accommodation1.jpg">
                                                 </figure>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="accommodation-images">
                                                 <figure>
-                                                    <img src="{{ asset('web/assets/images/Accommodation2.jpg') }}">
+                                                    <img src="images/Accommodation2.jpg">
                                                 </figure>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="accommodation-images">
                                                 <figure>
-                                                    <img src="{{ asset('web/assets/images/Accommodation3.jpg') }}">
+                                                    <img src="images/Accommodation3.jpg">
                                                 </figure>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="tree-img accommodation-images">
                                                 <figure>
-                                                    <img src="{{ asset('web/assets/images/Accommodation4.jpg') }}">
+                                                    <img src="images/Accommodation4.jpg">
                                                 </figure>
-                                                <figcaption>+21 photos <i class="fa-solid fa-circle-arrow-right"></i>
-                                                </figcaption>
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                                                    <figcaption>+21 photos <i class="fa-solid fa-circle-arrow-right"></i>
+                                                    </figcaption>
+                                                </a>
+
                                             </div>
                                         </div>
                                     </div>
@@ -701,40 +675,27 @@
 
                                 <div class="inclusions-data">
                                     <ul>
-                                        <li> <img src="{{ asset('web/assets/images/tick-circle.svg') }}">Round-trip
-                                            international flights between
+                                        <li> <img src="images/tick-circle.svg">Round-trip international flights between
                                             Canada / Ponta Delgada with a good itinerary</li>
-                                        <li> <img src="{{ asset('web/assets/images/tick-circle.svg') }}"> Welcome and
-                                            transfers between the airports
+                                        <li> <img src="images/tick-circle.svg"> Welcome and transfers between the airports
                                             and the hotel in Ponta Delgada</li>
-                                        <li> <img src="{{ asset('web/assets/images/tick-circle.svg') }}"> 7 nights hotel
-                                            accommodations</li>
-                                        <li> <img src="{{ asset('web/assets/images/tick-circle.svg') }}"> All breakfasts +
-                                            1 lunch</li>
-                                        <li> <img src="{{ asset('web/assets/images/tick-circle.svg') }}"> Multilingual
-                                            English-speaking guide during
+                                        <li> <img src="images/tick-circle.svg"> 7 nights hotel accommodations</li>
+                                        <li> <img src="images/tick-circle.svg"> All breakfasts + 1 lunch</li>
+                                        <li> <img src="images/tick-circle.svg"> Multilingual English-speaking guide during
                                             the tours</li>
-                                        <li> <img src="{{ asset('web/assets/images/tick-circle.svg') }}"> Three-hours
-                                            whale
-                                            watching boat tour</li>
-                                        <li> <img src="{{ asset('web/assets/images/tick-circle.svg') }}"> All taxes, fees,
-                                            and OPC</li>
+                                        <li> <img src="images/tick-circle.svg"> Three-hours whale watching boat tour</li>
+                                        <li> <img src="images/tick-circle.svg"> All taxes, fees, and OPC</li>
                                     </ul>
 
                                     <h2>EXCLUDES</h2>
                                     <ul>
-                                        <li> <img src="{{ asset('web/assets/images/tick-circle.svg') }}"> Travel insurance
+                                        <li> <img src="images/tick-circle.svg"> Travel insurance</li>
+                                        <li> <img src="images/tick-circle.svg"> Fees for checked baggage</li>
+                                        <li> <img src="images/tick-circle.svg"> Tips: Guides, bus drivers and hotel staff
                                         </li>
-                                        <li> <img src="{{ asset('web/assets/images/tick-circle.svg') }}"> Fees for checked
-                                            baggage</li>
-                                        <li> <img src="{{ asset('web/assets/images/tick-circle.svg') }}"> Tips: Guides,
-                                            bus drivers and hotel staff
-                                        </li>
-                                        <li> <img src="{{ asset('web/assets/images/tick-circle.svg') }}"> Meals and
-                                            beverages unless otherwise
+                                        <li> <img src="images/tick-circle.svg"> Meals and beverages unless otherwise
                                             mentioned</li>
-                                        <li> <img src="{{ asset('web/assets/images/tick-circle.svg') }}"> Personal
-                                            expenses and optional activities
+                                        <li> <img src="images/tick-circle.svg"> Personal expenses and optional activities
                                         </li>
                                     </ul>
                                 </div>
@@ -742,7 +703,7 @@
                             <div class="tab-pane fade" id="pills-Map" role="tabpanel" aria-labelledby="pills-Map-tab"
                                 tabindex="0">
                                 <div class="map-image">
-                                    <img src="{{ asset('web/assets/images/map-image.jpg') }}">
+                                    <img src="./images/map-image.jpg">
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="pills-FAQ" role="tabpanel" aria-labelledby="pills-FAQ-tab"
@@ -890,7 +851,7 @@
                                 <div class="guests-wapper">
                                     <div class="guests-wapper-head">
                                         <figure>
-                                            <img src="{{ asset('web/assets/images/experience-one.png') }}">
+                                            <img src="images/experience-one.png">
                                         </figure>
                                         <h2>Yuvraj sharma</h2>
                                     </div>
@@ -903,7 +864,7 @@
                                 <div class="guests-wapper">
                                     <div class="guests-wapper-head">
                                         <figure>
-                                            <img src="{{ asset('web/assets/images/experience-two.png') }}">
+                                            <img src="images/experience-two.png">
                                         </figure>
                                         <h2>Suraj sharma</h2>
                                     </div>
@@ -951,10 +912,10 @@
                             {{-- <div class="col-sm-6 col-md-4">
                                 <div class="hotels-wapper">
                                     <figure>
-                                        <img src="{{ asset('web/assets/images/hotel-two.png') }}">
+                                        <img src="images/hotel-two.png">
                                     </figure>
                                     <div class="hotels-content">
-                                        <a href="#">
+                                        <a href="package-single.php">
                                             <h3>Highlights of Norway</h3>
                                         </a>
                                         <p>Per night before taxes and fees</p>
@@ -966,10 +927,10 @@
                             {{-- <div class="col-sm-6 col-md-4">
                                 <div class="hotels-wapper">
                                     <figure>
-                                        <img src="{{ asset('web/assets/images/hotel-three.png') }}">
+                                        <img src="images/hotel-three.png">
                                     </figure>
                                     <div class="hotels-content">
-                                        <a href="#">
+                                        <a href="package-single.php">
                                             <h3>Japan Great discovery</h3>
                                         </a>
                                         <p>Per night before taxes and fees</p>
@@ -977,10 +938,176 @@
                                     </div>
                                 </div>
                             </div> --}}
+
+
+
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-    </div>   
+
+    </div>
+
+
+
+    <div class="enquiry-popuo-section">
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Request A Booking</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h2>Azores Escape</h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Departure City</label>
+                                    <input type="text" class="form-control" id="exampleFormControlInput1"
+                                        placeholder="Los Angeles">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Date</label>
+                                    <input type="date" class="form-control" id="exampleFormControlInput1"
+                                        >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="select-data-popup">
+                            <h2>How many passengers are you?</h2>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="Destination-form-data mb-3">
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option value="1" selected>1 adult</option>
+                                            <option value="2">6-9 Days</option>
+                                            <option value="3">10-15 Days</option>
+                                            <option value="4">16-21 Days</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <div class="Destination-form-data mb-3">
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option value="1" selected>0 child (2-11)</option>
+                                            <option value="2">6-9 Days</option>
+                                            <option value="3">10-15 Days</option>
+                                            <option value="4">16-21 Days</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <div class="Destination-form-data mb-3">
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option value="1" selected>0 infant (<2)</option>
+                                            <option value="2">6-9 Days</option>
+                                            <option value="3">10-15 Days</option>
+                                            <option value="4">16-21 Days</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <div class="Destination-form-data mb-3">
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option value="1" selected>1 ROOM (1 Double)</option>
+                                            <option value="2">6-9 Days</option>
+                                            <option value="3">10-15 Days</option>
+                                            <option value="4">16-21 Days</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <h2>Your contact information</h2>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="exampleFormControlInput1"
+                                        placeholder="Enter your name">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Mobile Number</label>
+                                    <div class="mobile-number-inner">
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option value="1" selected>+91</option>
+                                            <option value="2">+55</option>
+                                            <option value="3">+81</option>
+                                            <option value="4">+82</option>
+                                        </select>
+                                        <input type="text" class="form-control" id="exampleFormControlInput1"
+                                            placeholder="Enter mobile number">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Email Address</label>
+                                    <input type="text" class="form-control" id="exampleFormControlInput1"
+                                        placeholder="Enter email address">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="body-footer-data">
+                            <p>You will receive a detailed quote, to which you will be able to reply with any questions or
+                                requests you may have. An agent will be assigned to you.</p>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    I agree to be contacted by email with a follow-up to my request and receive other great
+                                    deals.
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="travel-btn btn" type="button">Submit Request</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="photo-slider-section">
+        <!-- Button trigger modal -->
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">All Photos</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body owl-carousel owl-theme pop-images ">
+                                                @foreach($data['packageImages'] as $image)
+                        <div class="item">
+                            <img src="{{asset('storage').'/'.$image->images}}">
+                        </div>
+                        @endforeach
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

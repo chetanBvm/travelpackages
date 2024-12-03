@@ -22,7 +22,7 @@ class PackagesController extends Controller
      */
     public function packageDetail(int $id)
     {
-        $packages = Package::findOrFail($id);
+        $packages = Package::with('images')->findOrFail($id);
         $data['packageImages'] = PackageImages::where('package_id',$id)->get();
         $data['packages'] = Package::get()->take(3);
         $data['feature'] = Package::get()->take(10);

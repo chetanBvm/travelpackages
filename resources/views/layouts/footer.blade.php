@@ -97,3 +97,23 @@
       $('.form-select').select2();
     });
 </script>
+<script type="text/javascript">
+    $(".pop-images").owlCarousel({
+        loop: true,
+        margin: 0,
+        nav: true,
+        stagePadding: 50,
+        dots: false,
+        responsive: {
+            0: {
+                items: 1,
+            },
+            600: {
+                items: 2,
+            },
+            1000: {
+                items: 1,
+            },
+        },
+    });
+</script>
