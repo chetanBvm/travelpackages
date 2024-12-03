@@ -15,9 +15,11 @@
     @endphp
     <div class="main">
         <section class="travel-banner"
-            @if (isset($data['homeBanner']) && $data['homeBanner']->type == 'home_banner') style="background-image: url({{ asset('storage') . '/' . $data['homeBanner']->image }})"
-            @else
-                style="background-image: url('{{ asset('web/assets/images/home-background-img.jpg') }}')" @endif>
+            @if (isset($data['homeBanner']) && $data['homeBanner']->type == 'home_banner') @if (!empty($data['homeBanner']->image))
+             style="background-image: url({{ asset('storage') . '/' . $data['homeBanner']->image }})"
+             @else
+             style="background-image: url('{{ asset('web/assets/images/home-background-img.jpg') }}')" @endif
+        @else style="background-image: url('{{ asset('web/assets/images/home-background-img.jpg') }}')" @endif>
             <div class="container">
                 <div class="bannr-inner">
                     <div class="row justify-content-center">
@@ -371,9 +373,9 @@
                                                 <a href="{{ route('web.packageDetails', $packages->id) }}">
                                                     <h3>{{ $packages->name }}</h3>
                                                 </a>
-                                                <p>{{ $packages->sub_title ?? 'Per night before taxes and fees'}}</p>
+                                                <p>{{ $packages->sub_title ?? 'Per night before taxes and fees' }}</p>
                                                 @php $currency = $packages->destination->country->currency_symbol @endphp
-                                                <span class="inr">{{$currency}} {{ $packages->price }}</span>
+                                                <span class="inr">{{ $currency }} {{ $packages->price }}</span>
                                             </div>
                                         </div>
                                     </div>

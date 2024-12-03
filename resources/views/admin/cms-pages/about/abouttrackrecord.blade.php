@@ -1,6 +1,6 @@
 @php
     $title = 'My Vacay Host';
-    $filename = 'Home Banner';
+    $filename = 'About Track Record';
 @endphp
 @extends('admin.layouts.app')
 @section('title', $title)
@@ -20,45 +20,44 @@
         @endif
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Create Home Banner</h4>
+                <h4 class="card-title">Create About Track Record</h4>
 
             </div>
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form form-vertical" action="{{ route('home-banner.save') }}" method="post"
-                        enctype="multipart/form-data" id="createDrawHomeBanner">
+                    <form class="form form-vertical" action="{{ route('about-trackrecord.save') }}" method="post"
+                        enctype="multipart/form-data" id="createDrawHomeDestination">
                         @csrf
                         <div class="form-body">
                             <div class="row">
-
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="heading-vertical">Button Title</label>
+                                        <label for="heading-vertical">Title</label>
                                         <input type="text" id="heading-vertical"
                                             class="form-control @error('title') is-invalid @enderror" name="title"
                                             placeholder="title" value="{{ old('title', $info->title ?? '') }}" required
-                                            data-validation-required-message="This button title field is required">
+                                            data-validation-required-message="This title field is required">
                                     </div>
                                     @error('title')
                                         <span class="text-danger" role="alert">{{ $message }}</span>
                                     @enderror
                                 </div>
-
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="sub-heading-vertical">Heading</label>
-                                        <input type="text" id="sub-heading-vertical"
+                                        <label for="heading-vertical">Sub Title</label>
+                                        <input type="text" id="heading-vertical"
                                             class="form-control @error('subtitle') is-invalid @enderror" name="subtitle"
-                                            placeholder="Heading" value="{{ old('subtitle', $info->subtitle ?? '') }}"
-                                            required data-validation-required-message="This heading field is required">
+                                            placeholder="Enter subtitle" value="{{ old('subtitle', $info->subtitle ?? '') }}" required
+                                            data-validation-required-message="This subtitle field is required">
                                     </div>
                                     @error('subtitle')
                                         <span class="text-danger" role="alert">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                
                                 <div class="col-12">
+                                    <label>Image <span class="text-danger">*</span></label>
                                     <div class="form-group">
-                                        <label>Image <span class="text-danger">*</span></label>
                                         <input type="file" name="image" id="main_image"
                                             class="form-control @error('image') is-invalid @enderror"
                                             value="{{ old('image') }}">
@@ -75,9 +74,10 @@
                                                 width="100px" height="auto" />
                                         @else
                                         @endif
-
                                     </div>
                                 </div>
+                         
+
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
                                     <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
@@ -91,11 +91,20 @@
     </div>
 @endsection
 @section('js')
+    <script src="{{ asset('admin/assets/vendors/tinymce/tinymce.min.js') }}"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-
     <script>
+        tinymce.init({
+            selector: '#default'
+        });
+        tinymce.init({
+            selector: '#dark',
+            toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
+            plugins: 'code'
+        });
+
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -114,7 +123,7 @@
         });
         //Validation script
         $(document).ready(function() {
-            $('#createDrawHomeBanner').validate({ // initialize the plugin
+            $('#createDrawHomeDestination').validate({ // initialize the plugin
                 rules: {
                     title: {
                         required: true,
@@ -122,21 +131,15 @@
                     subtitle: {
                         required: true
                     },
-                    // image: {
-                    //     required: true
-                    // },
                 },
                 // Customizing error messages
                 messages: {
                     title: {
-                        required: "This button title field is required."
+                        required: "This title field is required."
                     },
                     subtitle: {
-                        required: "This heading field is required."
+                        required: "This subtitle field is required."
                     },
-                    // image: {
-                    //     required: "This image field is required."
-                    // },
                 },
                 errorPlacement: function(error, element) {
                     var placement = $(element).data('error');

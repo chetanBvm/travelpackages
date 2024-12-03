@@ -122,7 +122,7 @@ class ContentManagementController extends Controller
                 $file = $request->file('image');
                 $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
 
-                    $asset_video = $file->storeAs('uploads/section', $tempName, 'public');
+                $asset_video = $file->storeAs('uploads/section', $tempName, 'public');
             } else {
                 $asset_video = ContentManagement::where('type', 'home_section')->value('image');
             }
@@ -220,4 +220,303 @@ class ContentManagementController extends Controller
     }
 
 
+    public function aboutBanner()
+    {
+        $info = ContentManagement::where('type', 'about_banner')->first();
+        return view('admin.cms-pages.about.aboutbanner', compact('info'));
+    }
+
+    public function aboutBannerSave(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required',
+            'subtitle' => 'required',
+            'image' => 'nullable|image|mimes:png,jpg,jpeg',
+        ]);
+        try {
+            $asset_image = null;
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
+                if ($file->getClientOriginalExtension() === 'jpg' || $file->getClientOriginalExtension() === 'jpeg' || $file->getClientOriginalExtension() === 'png') {
+                    $asset_image = $file->storeAs('uploads/about', $tempName, 'public');
+                }
+            } else {
+                $asset_image = ContentManagement::where('type', 'about_banner')->value('image');
+            }
+
+            ContentManagement::updateOrCreate(
+                ['type' => 'about_banner'],
+                [
+                    'title' => $request->title,
+                    'subtitle' => $request->subtitle,
+                    'image' => $asset_image,
+                ]
+            );
+
+            return redirect()->back()->with('success', 'About Banner Create successfully');
+        } catch (\Exception $exception) {
+            Log::error('Error creating about Banner: ' . $exception->getMessage());
+            return redirect()->back()->with('error', 'something went wrong while creating About Banner');
+        }
+    }
+
+    public function aboutWelcome()
+    {
+        $info = ContentManagement::where('type', 'about_welcome')->first();
+        return view('admin.cms-pages.about.aboutwelcome', compact('info'));
+    }
+
+    public function aboutWelcomeSave(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required',
+            'description' => 'required',
+            'image' => 'image|mimes:png,jpg,jpeg',
+            'image_1' => 'image|mimes:png,jpg,jpeg',
+            'image_2' => 'image|mimes:png,jpg,jpeg',
+        ]);
+
+        try {
+            $asset_image = [];
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
+                $asset_image[] = $file->storeAs('uploads/about/welcome', $tempName, 'public');
+            }
+            if ($request->hasFile('image_1')) {
+                $file = $request->file('image_2');
+                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
+                $asset_image[] = $file->storeAs('uploads/about/welcome', $tempName, 'public');
+            }
+            if ($request->hasFile('image_2')) {
+                $file = $request->file('image_2');
+                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
+                $asset_image[] = $file->storeAs('uploads/about/welcome', $tempName, 'public');
+            } else {
+                $asset_image = ContentManagement::where('type', 'about_welcome')->value('image', 'image_1', 'image_2');
+            }
+
+            ContentManagement::updateOrCreate(
+                ['type' => 'about_welcome'],
+                [
+                    'title' => $request->title,
+                    'description' => $request->description,
+                    'image' => json_encode($asset_image),
+                ]
+            );
+
+            return redirect()->back()->with('success', 'About welcome Create successfully');
+        } catch (\Exception $exception) {
+            Log::error('Error creating about welcome: ' . $exception->getMessage());
+            return redirect()->back()->with('error', 'something went wrong while creating About welcome');
+        }
+    }
+
+    public function aboutTravelService()
+    {
+        $info = ContentManagement::where('type', 'about_travelservice')->first();
+        return view('admin.cms-pages.about.abouttravelservice', compact('info'));
+    }
+
+    public function aboutTravelServiceSave(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required',
+            'header_title' => 'required',
+            'header_content' => 'required',
+            'image' => 'nullable|image|mimes:png,jpg,jpeg',
+            'icon' => 'nullable|image|mimes:png,jpg,jpeg',
+        ]);
+        try {
+            $asset_image = null;
+            $asset_icon = null;
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
+                if ($file->getClientOriginalExtension() === 'jpg' || $file->getClientOriginalExtension() === 'jpeg' || $file->getClientOriginalExtension() === 'png') {
+                    $asset_image = $file->storeAs('uploads/about/service', $tempName, 'public');
+                }
+            } else {
+                $asset_image = ContentManagement::where('type', 'about_travelservice')->value('image');
+            }
+            //save the icon image
+            if ($request->hasFile('icon')) {
+                $file = $request->file('icon');
+                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
+                if ($file->getClientOriginalExtension() === 'jpg' || $file->getClientOriginalExtension() === 'jpeg' || $file->getClientOriginalExtension() === 'png') {
+                    $asset_icon = $file->storeAs('uploads/about/service/icon', $tempName, 'public');
+                }
+            } else {
+                $asset_icon = ContentManagement::where('type', 'about_travelservice')->value('icon');
+            }
+
+
+            ContentManagement::updateOrCreate(
+                ['type' => 'about_travelservice'],
+                [
+                    'title' => $request->title,
+                    'header_title' => $request->header_title,
+                    'header_content' => $request->header_content,
+                    'image' => $asset_image,
+                    'icon' => $asset_icon,
+                ]
+            );
+
+            return redirect()->back()->with('success', 'About travel service Create successfully');
+        } catch (\Exception $exception) {
+            Log::error('Error creating about travel service: ' . $exception->getMessage());
+            return redirect()->back()->with('error', 'something went wrong while creating About travel service');
+        }
+    }
+
+    public function aboutTravelserviceContent()
+    {
+        $info = ContentManagement::where('type', 'about_travelservicecontent')->first();
+        return view('admin.cms-pages.about.abouttravelservicecontent', compact('info'));
+    }
+
+    public function aboutTravelserviceContentSave(Request $request)
+    {
+        $this->validate($request, [
+            'header_title' => 'required',
+            'header_content' => 'required',
+            'image' => 'nullable|image|mimes:png,jpg,jpeg',
+            'icon' => 'nullable|image|mimes:png,jpg,jpeg',
+        ]);
+        try {
+            $asset_image = null;
+            $asset_icon = null;
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
+                if ($file->getClientOriginalExtension() === 'jpg' || $file->getClientOriginalExtension() === 'jpeg' || $file->getClientOriginalExtension() === 'png') {
+                    $asset_image = $file->storeAs('uploads/about/service', $tempName, 'public');
+                }
+            } else {
+                $asset_image = ContentManagement::where('type', 'about_travelservicecontent')->value('image');
+            }
+            //save the icon image
+            if ($request->hasFile('icon')) {
+                $file = $request->file('icon');
+                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
+                if ($file->getClientOriginalExtension() === 'jpg' || $file->getClientOriginalExtension() === 'jpeg' || $file->getClientOriginalExtension() === 'png') {
+                    $asset_icon = $file->storeAs('uploads/about/service/icon', $tempName, 'public');
+                }
+            } else {
+                $asset_icon = ContentManagement::where('type', 'about_travelservicecontent')->value('icon');
+            }
+
+
+            ContentManagement::Create(
+                [
+                    'type' => 'about_travelservicecontent',
+                    'header_title' => $request->header_title,
+                    'header_content' => $request->header_content,
+                    'image' => $asset_image,
+                    'icon' => $asset_icon,
+                ]
+            );
+
+            return redirect()->back()->with('success', 'About travel service content Create successfully');
+        } catch (\Exception $exception) {
+            Log::error('Error creating about travel service content: ' . $exception->getMessage());
+            return redirect()->back()->with('error', 'something went wrong while creating About travel service content');
+        }
+    }
+    public function aboutTravelRecord()
+    {
+        $info = ContentManagement::where('type', 'about_travelrecord')->first();
+        return view('admin.cms-pages.about.abouttrackrecord', compact('info'));
+    }
+
+    public function aboutTravelRecordSave(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required',
+            'subtitle' => 'required',
+            'image' => 'nullable|image|mimes:png,jpg,jpeg',
+        ]);
+        try {
+            $asset_image = null;
+            $asset_icon = null;
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
+                if ($file->getClientOriginalExtension() === 'jpg' || $file->getClientOriginalExtension() === 'jpeg' || $file->getClientOriginalExtension() === 'png') {
+                    $asset_image = $file->storeAs('uploads/about/record', $tempName, 'public');
+                }
+            } else {
+                $asset_image = ContentManagement::where('type', 'about_travelrecord')->value('image');
+            }
+            //save the icon image
+            if ($request->hasFile('icon')) {
+                $file = $request->file('icon');
+                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
+                if ($file->getClientOriginalExtension() === 'jpg' || $file->getClientOriginalExtension() === 'jpeg' || $file->getClientOriginalExtension() === 'png') {
+                    $asset_icon = $file->storeAs('uploads/about/record/icon', $tempName, 'public');
+                }
+            } else {
+                $asset_icon = ContentManagement::where('type', 'about_travelrecord')->value('icon');
+            }
+
+
+            ContentManagement::updateOrCreate(
+                ['type' => 'about_travelrecord'],
+                [
+                    'title' => $request->title,
+                    'subtitle' => $request->subtitle,
+                    'image' => $asset_image,
+                ]
+            );
+
+            return redirect()->back()->with('success', 'About travel record Create successfully');
+        } catch (\Exception $exception) {
+            Log::error('Error creating about travel record: ' . $exception->getMessage());
+            return redirect()->back()->with('error', 'something went wrong while creating About travel record');
+        }
+    }
+
+    public function aboutTravelRecordWrapper()
+    {
+        return view('admin.cms-pages.about.abouttrackrecordwrapper');
+    }
+
+    public function aboutTravelRecordWrapperSave(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required',
+            'subtitle' => 'required',
+            'icon' => 'nullable|image|mimes:png,jpg,jpeg',
+        ]);
+        try {
+            $asset_icon = null;
+
+            //save the icon image
+            if ($request->hasFile('icon')) {
+                $file = $request->file('icon');
+                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
+                if ($file->getClientOriginalExtension() === 'jpg' || $file->getClientOriginalExtension() === 'jpeg' || $file->getClientOriginalExtension() === 'png') {
+                    $asset_icon = $file->storeAs('uploads/about/record/icon', $tempName, 'public');
+                }
+            } else {
+                $asset_icon = ContentManagement::where('type', 'about_travelrecordwrapper')->value('icon');
+            }
+
+
+            ContentManagement::create(
+                [
+                    'type' => 'about_travelrecordwrapper',
+                    'title' => $request->title,
+                    'subtitle' => $request->subtitle,
+                    'icon' => $asset_icon,
+                ]
+            );
+
+            return redirect()->back()->with('success', 'About travel record wrapper Create successfully');
+        } catch (\Exception $exception) {
+            Log::error('Error creating about travel record wrapper:  ' . $exception->getMessage());
+            return redirect()->back()->with('error', 'something went wrong while creating About travel record wrapper');
+        }
+    }
 }

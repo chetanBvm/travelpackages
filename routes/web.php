@@ -66,7 +66,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::resource('package', PackagesController::class);
 
         //Package Image
-        Route::resource('package-image',PackageImageController::class);
+        Route::resource('package-image', PackageImageController::class);
 
         //Destination
         Route::resource('destination', DestinationController::class);
@@ -88,32 +88,56 @@ Route::group(['prefix' => 'admin'], function () {
 
         //Itinerary
         Route::resource('itinerary', ItineraryController::class);
-        
+
         //Inclusion
-        Route::resource('inclusion',InclusionsController::class);
+        Route::resource('inclusion', InclusionsController::class);
 
         //Content Management
-        Route::group(['prefix' => 'content'],function(){
-            Route::get('home-banner',[ContentManagementController::class,'homeBanner'])->name('home-banner');
-            Route::post('home-banner/save',[ContentManagementController::class,'homeBannerSave'])->name('home-banner.save');
+        Route::group(['prefix' => 'content'], function () {
+            //home banner
+            Route::get('home-banner', [ContentManagementController::class, 'homeBanner'])->name('home-banner');
+            Route::post('home-banner/save', [ContentManagementController::class, 'homeBannerSave'])->name('home-banner.save');
+            //home destination
+            Route::get('home-destination', [ContentManagementController::class, 'homeDestination'])->name('home.destination');
+            Route::post('home-destination/save', [ContentManagementController::class, 'homeDestinationSave'])->name('home-destination.save');
+            //home stay
+            Route::get('home-stay', [ContentManagementController::class, 'homeStay'])->name('home.stay');
+            Route::post('home-stay/save', [ContentManagementController::class, 'homeStaySave'])->name('home-stay.save');
+            //home section
+            Route::get('home-section', [ContentManagementController::class, 'homeSection'])->name('home.section');
+            Route::post('home-section/save', [ContentManagementController::class, 'homeSectionSave'])->name('home-section.save');
+            //home airline
+            Route::get('home-airline', [ContentManagementController::class, 'homeAirline'])->name('home.airline');
+            Route::post('home-airline/save', [ContentManagementController::class, 'homeAirlineSave'])->name('home-airline.save');
+            //home package
+            Route::get('home-package', [ContentManagementController::class, 'homePackage'])->name('home.package');
+            Route::post('home-package/save', [ContentManagementController::class, 'homePackageSave'])->name('home-package.save');
+            //home travel experience
+            Route::get('home-travelexperience', [ContentManagementController::class, 'homeTravelExperience'])->name('home.travelExperience');
+            Route::post('home-travelexperience/save', [ContentManagementController::class, 'homeTravelExperienceSave'])->name('home-experience.save');
 
-            Route::get('home-destination',[ContentManagementController::class,'homeDestination'])->name('home.destination');
-            Route::post('home-destination/save',[ContentManagementController::class,'homeDestinationSave'])->name('home-destination.save');
+            //about banner
+            Route::get('about-banner', [ContentManagementController::class, 'aboutBanner'])->name('aboutbanner');
+            Route::post('about-banner/save', [ContentManagementController::class, 'aboutBannerSave'])->name('aboutbanner.save');
 
-            Route::get('home-stay',[ContentManagementController::class,'homeStay'])->name('home.stay');
-            Route::post('home-stay/save',[ContentManagementController::class,'homeStaySave'])->name('home-stay.save');
+            //about welcome
+            Route::get('about-welcome', [ContentManagementController::class, 'aboutWelcome'])->name('about.welcome');
+            Route::post('about-welcome/save', [ContentManagementController::class, 'aboutWelcomeSave'])->name('aboutwelcome.save');
 
-            Route::get('home-section',[ContentManagementController::class,'homeSection'])->name('home.section');
-            Route::post('home-section/save',[ContentManagementController::class,'homeSectionSave'])->name('home-section.save');
+            //about travel service
+            Route::get('about-travelservice', [ContentManagementController::class, 'aboutTravelService'])->name('about-travelservice');
+            Route::post('about-travelservice/save', [ContentManagementController::class, 'aboutTravelServiceSave'])->name('about-travelservice.save');
+            
+            //about travel service content
+            Route::get('about-travelservice-content',[ContentManagementController::class,'aboutTravelserviceContent'])->name('about-travelservicecontent');
+            Route::post('about-travelservice-content/save',[ContentManagementController::class,'aboutTravelserviceContentSave'])->name('about-travelservicecontent.save');
+            //about Track Record
+            Route::get('about-trackrecord', [ContentManagementController::class, 'aboutTravelRecord'])->name('about-trackrecord');
+            Route::post('about-trackrecord/save', [ContentManagementController::class, 'aboutTravelRecordSave'])->name('about-trackrecord.save');
 
-            Route::get('home-airline',[ContentManagementController::class,'homeAirline'])->name('home.airline');
-            Route::post('home-airline/save',[ContentManagementController::class,'homeAirlineSave'])->name('home-airline.save');
-
-            Route::get('home-package',[ContentManagementController::class,'homePackage'])->name('home.package');
-            Route::post('home-package/save',[ContentManagementController::class,'homePackageSave'])->name('home-package.save');
-
-            Route::get('home-travelexperience',[ContentManagementController::class,'homeTravelExperience'])->name('home.travelExperience');
-            Route::post('home-travelexperience/save',[ContentManagementController::class,'homeTravelExperienceSave'])->name('home-experience.save');
+            //about Track Record wrapper
+            Route::get('about-trackrecordwrapper', [ContentManagementController::class, 'aboutTravelRecordWrapper'])->name('about-trackrecordwrapper');
+            Route::post('about-trackrecordwrapper/save', [ContentManagementController::class, 'aboutTravelRecordWrapperSave'])->name('about-trackrecordwrapper.save');
         });
     });
 });

@@ -160,7 +160,27 @@
                     <li class="submenu-item ">
                         <a href="{{ route('home.travelExperience') }}">Home Travel Experience</a>
                     </li>
-                </ul>
+
+                    <li class="submenu-item">
+                        <a href="{{ route('aboutbanner') }}">About Banner</a>
+                    </li>
+
+                    <li class="submenu-item">
+                        <a href="{{ route('about.welcome') }}">About Welcome</a>
+                    </li>
+                    <li class="submenu-item">
+                        <a href="{{ route('about-travelservice') }}">About Travel Service</a>
+                    </li>
+                    <li class="submenu-item">
+                        <a href="{{ route('about-travelservicecontent') }}">About Travel Service Content</a>
+                    </li>
+                    <li class="submenu-item">
+                        <a href="{{ route('about-trackrecord') }}">About Track Record</a>
+                    </li>
+                    <li class="submenu-item">
+                        <a href="{{ route('about-trackrecordwrapper') }}">About Track Record wrapper</a>
+                    </li>
+                </ul>               
             </li>
         </ul>
     </div>
