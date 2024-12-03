@@ -17,4 +17,9 @@ class Package extends Model
     {
         return $this->hasOne(Destination::class,'id','destination_id');
     }
+
+    public function images()
+    {
+        return $this->hasMany(PackageImages::class);  
+    }
 }

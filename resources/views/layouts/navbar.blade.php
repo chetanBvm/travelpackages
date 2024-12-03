@@ -15,20 +15,20 @@
          <li class="nav-item">
            <a class="nav-link active" aria-current="page" href="{{route('dashboard')}}">Home</a>
          </li>
- 
+       
          <li class="nav-item our-service">
-            <a data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">
-            Packages <i class="fa-solid fa-angle-down"></i></a>
-             <div class="collapse service-menu" id="collapseExample1">
-           <div class="card card-body">
-             <ul class="inner-menu">
-               <li><a href="{{route('web.packages')}}"><img src="{{asset('web/assets/images/TourPackages.svg')}}"> Tour Packages</a></li>
-               <li><a href="#"><img src="{{asset('web/assets/images/RiverCruisePackages.svg')}}"> Ocean Cruise Packages</a></li>
-               <li><a href="#"><img src="{{asset('web/assets/images/OceanCruisePackages.svg')}}"> River Cruise Packages</a></li>
-             </ul>
-           </div>
+          <a data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">
+          Tour Packages <i class="fa-solid fa-angle-down"></i></a>
+           <div class="collapse service-menu" id="collapseExample1">
+         <div class="card card-body">
+           <ul class="inner-menu">
+             <!-- <li><a href="package.php"><img src="images/TourPackages.svg"> Tour Packages</a></li> -->
+             <li><a href="{{route('web.packages')}}"><img src="{{asset('web/assets/images/RiverCruisePackages.svg')}}"> Ocean Cruise Packages</a></li>
+             <li><a href="#"><img src="{{asset('web/assets/images/OceanCruisePackages.svg')}}"> River Cruise Packages</a></li>
+           </ul>
          </div>
-         </li>
+       </div>
+       </li>
  
  
          <li class="nav-item">
