@@ -6,7 +6,7 @@
  <header>
    <div class="container">
      <nav class="navbar navbar-expand-lg p-0">
-     <a class="navbar-brand p-0" href="index.php"><img src="{{asset('web/assets/images/logo1.png')}}"></a>
+     <a class="navbar-brand p-0" href="index.php"><img src="{{asset('web/assets/images/logo_line.png')}}"></a>
      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
        <span class="navbar-toggler-icon"></span>
      </button>

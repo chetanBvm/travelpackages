@@ -1,6 +1,6 @@
 @php
     $title = 'My Vacay Host';
-    $filename = 'Home Banner';
+    $filename = 'About Welcome';
 @endphp
 @extends('admin.layouts.app')
 @section('title', $title)
@@ -20,39 +20,35 @@
         @endif
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Create Home Banner</h4>
+                <h4 class="card-title">Create About Welcome</h4>
 
             </div>
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form form-vertical" action="{{ route('home-banner.save') }}" method="post"
-                        enctype="multipart/form-data" id="createDrawHomeBanner">
+                    <form class="form form-vertical" action="{{ route('aboutwelcome.save') }}" method="post"
+                        enctype="multipart/form-data" id="createDrawHomeDestination">
                         @csrf
                         <div class="form-body">
                             <div class="row">
-
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="heading-vertical">Button Title</label>
+                                        <label for="heading-vertical">Title</label>
                                         <input type="text" id="heading-vertical"
                                             class="form-control @error('title') is-invalid @enderror" name="title"
                                             placeholder="title" value="{{ old('title', $info->title ?? '') }}" required
-                                            data-validation-required-message="This button title field is required">
+                                            data-validation-required-message="This title field is required">
                                     </div>
                                     @error('title')
                                         <span class="text-danger" role="alert">{{ $message }}</span>
                                     @enderror
                                 </div>
 
-                                <div class="col-6">
+                                <div class="col-12">
                                     <div class="form-group">
-                                        <label for="sub-heading-vertical">Heading</label>
-                                        <input type="text" id="sub-heading-vertical"
-                                            class="form-control @error('subtitle') is-invalid @enderror" name="subtitle"
-                                            placeholder="Heading" value="{{ old('subtitle', $info->subtitle ?? '') }}"
-                                            required data-validation-required-message="This heading field is required">
+                                        <label for="sub-heading-vertical">Sub Title</label>
+                                        <textarea name="description" id="default" cols="30" rows="10" placeholder="Enter description">{{ old('description', $info->description ?? '') }}</textarea>
                                     </div>
-                                    @error('subtitle')
+                                    @error('description')
                                         <span class="text-danger" role="alert">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -68,16 +64,37 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div>
-                                        @if ($info && isset($info->image))
-                                            <img id="imagePreview" class="profile-image"
-                                                src="{{ asset('storage') . '/' . $info->image }}" alt="your image"
-                                                width="100px" height="auto" />
-                                        @else
-                                        @endif
+                                </div>
 
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Image <span class="text-danger">*</span></label>
+                                        <input type="file" name="image_1" id="main_image_1"
+                                            class="form-control @error('image_1') is-invalid @enderror"
+                                            value="{{ old('image_1') }}">
+                                        @error('image_1')
+                                            <span class="invalid-feedback d-block" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Image <span class="text-danger">*</span></label>
+                                        <input type="file" name="image_2" id="main_image_2"
+                                            class="form-control @error('image_2') is-invalid @enderror"
+                                            value="{{ old('image_2') }}">
+                                        @error('image_2')
+                                            <span class="invalid-feedback d-block" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                
+
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
                                     <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
@@ -91,11 +108,19 @@
     </div>
 @endsection
 @section('js')
-
+    <script src="{{ asset('admin/assets/vendors/tinymce/tinymce.min.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-
     <script>
+        tinymce.init({
+            selector: '#default'
+        });
+        tinymce.init({
+            selector: '#dark',
+            toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
+            plugins: 'code'
+        });
+
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -114,29 +139,23 @@
         });
         //Validation script
         $(document).ready(function() {
-            $('#createDrawHomeBanner').validate({ // initialize the plugin
+            $('#createDrawHomeDestination').validate({ // initialize the plugin
                 rules: {
                     title: {
                         required: true,
                     },
-                    subtitle: {
+                    description: {
                         required: true
                     },
-                    // image: {
-                    //     required: true
-                    // },
                 },
                 // Customizing error messages
                 messages: {
                     title: {
-                        required: "This button title field is required."
+                        required: "This title field is required."
                     },
-                    subtitle: {
-                        required: "This heading field is required."
+                    description: {
+                        required: "This description is required."
                     },
-                    // image: {
-                    //     required: "This image field is required."
-                    // },
                 },
                 errorPlacement: function(error, element) {
                     var placement = $(element).data('error');
