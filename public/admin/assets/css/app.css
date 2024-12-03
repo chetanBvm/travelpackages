@@ -1405,3 +1405,13 @@ input[type="file"]{
     border-color: #d7d7d7 !important;
     border-radius: 7px !important;
 }
+
+.sidebar-wrapper .menu .submenu .submenu-item a {
+    color: #203638;
+    text-decoration: none;
+
+}
+
+.sidebar-wrapper .menu .submenu .submenu-item a {
+    padding: 0.7rem 1rem;
+}
