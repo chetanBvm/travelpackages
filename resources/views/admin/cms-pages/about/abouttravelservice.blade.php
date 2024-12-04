@@ -41,9 +41,9 @@
                                     @error('title')
                                         <span class="text-danger" role="alert">{{ $message }}</span>
                                     @enderror
-                                </div>         
+                                </div>
 
-                                
+
 
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
@@ -61,7 +61,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <script>
-       
+
 
         //Validation script
         $(document).ready(function() {
@@ -69,13 +69,13 @@
                 rules: {
                     title: {
                         required: true,
-                    },                    
+                    },
                 },
                 // Customizing error messages
                 messages: {
                     title: {
                         required: "This title field is required."
-                    },                   
+                    },
                 },
                 errorPlacement: function(error, element) {
                     var placement = $(element).data('error');

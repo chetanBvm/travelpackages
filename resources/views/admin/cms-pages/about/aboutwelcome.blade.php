@@ -30,7 +30,7 @@
                         @csrf
                         <div class="form-body">
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-12">
                                     <div class="form-group">
                                         <label for="heading-vertical">Title</label>
                                         <input type="text" id="heading-vertical"
@@ -93,7 +93,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                
+
 
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
