@@ -115,6 +115,12 @@
                     <span>Inclusion</span>
                 </a>
             </li>
+            <li class="sidebar-item {{ request()->routeIs('airport.index') ? 'active' : '' }}">
+                <a href="{{ route('airport.index') }}" class='sidebar-link'>
+                    <i class="bi bi-grid-fill"></i>
+                    <span>Airport</span>
+                </a>
+            </li>
             <li class="sidebar-item has-sub">
                 <a href="" class='sidebar-link'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-houses-fill" viewBox="0 0 16 16">

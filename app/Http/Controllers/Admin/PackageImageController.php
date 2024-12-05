@@ -7,6 +7,7 @@ use App\Models\Package;
 use App\Models\PackageImages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class PackageImageController extends Controller
@@ -111,30 +112,30 @@ class PackageImageController extends Controller
 
         $request->validate([
             'package_id' => 'required',
-            'images' => 'nullable|array',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validate each image
         ]);
 
         try {
-            // Initialize an empty array to store the file paths
-            $existingImages = json_decode($packageImage->images, true) ?: [];
-
-
-            // Loop through the uploaded images
+           
             if ($request->hasFile('images')) {
-                foreach ($request->file('images') as $image) {
-                    // Generate a unique file name
-                    $imageName = uniqid('image_', true) . '.' . $image->getClientOriginalExtension();
-                    // Store the image and get the file path
-                    $imagePath = $image->storeAs('uploads/packages/images', $imageName, 'public');
-                    // Add the image path to the array
-                    $existingImages[] = $imagePath;
+
+                // Validate the image file (optional, add size/extension validation if necessary)
+                $request->validate([
+                    'images' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                ]);
+
+                $file = $request->file('images');
+                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
+                $oldFilePath = 'uploads/packages' . $packageImage->images;
+                if (Storage::disk('public')->exists($oldFilePath)) {
+                    Storage::disk('public')->delete($oldFilePath);
                 }
+
+                $asset_image = $file->storeAs('uploads/packages', $tempName, 'public');
+                $packageImage->update([
+                    'images' => $asset_image,
+                    'package_id' => $request->package_id,
+                ]);
             }
-            $packageImage->update([
-                'package_id' => $request->package_id,
-                'images' => json_encode($existingImages)
-            ]);
 
             return redirect()->route('package-image.index')->with('success', 'Images uploaded successfully!');
         } catch (\Exception $exception) {

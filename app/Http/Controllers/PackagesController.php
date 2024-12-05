@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Airport;
 use App\Models\Banner;
 use App\Models\Itinerary;
 use App\Models\Package;
@@ -27,6 +28,7 @@ class PackagesController extends Controller
         $data['packages'] = Package::get()->take(3);
         $data['feature'] = Package::get()->take(10);
         $data['itinerary'] = Itinerary::where('package_id',$id)->first();
+        $data['airport'] = Airport::get();
         return view('web.packages.packagedetail',compact('packages','data'));
     }
 }

@@ -60,7 +60,7 @@
                                 <div id="imagePreviews" style="display: flex; flex-wrap: wrap;">
                                     @if(isset($packageData) && $packageData->images)
                                     @php
-                                        $images = json_decode($packageData->images);
+                                        $images = $packageData->images;
                                     @endphp
                                     @foreach ($images as $image)
                                         <img src="{{ asset('storage/' . $image) }}" alt="image" style="width: 150px; margin: 10px; border: 2px solid #ccc;">

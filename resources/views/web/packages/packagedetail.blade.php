@@ -14,7 +14,9 @@
                                         <div class="col-md-8">
                                             <div class="package-single-left-img">
                                                 <figure>
+                                                    @if($packages->images && count($packages->images) > 0)
                                                     <img src="{{asset('storage').'/'.$packages->images[0]->images}}" />
+                                                    @endif
                                                 </figure>
                                             </div>
                                         </div>
@@ -22,17 +24,21 @@
                                         <div class="col-md-4 mt-md-0 mt-4">
                                             <div class="package-single-left-img">
                                                 <figure>
-                                                    <img src="{{asset('storage').'/'.$packages->images[1]->images}}">
-                                                    {{-- <img src="images/pool-two.png" /> --}}
+                                                    @if($packages->images && count($packages->images) > 0)
+                                                    <img src="{{asset('storage').'/'.$packages->images[1]->images}}" />
+                                                    @endif
+                                                    {{-- <img src="{{asset('web/assets/images/pool-two.png')}}" /> --}}
                                                 </figure>
                                                 <div class="tree-img">
                                                     <figure>
+                                                        @if(count($packages->images) > 0)
                                                         <img src="{{asset('storage').'/'.$packages->images[2]->images }}">
+                                                        @endif
                                                         {{-- <img src="images/pool-three.png" /> --}}
                                                     </figure>
                                                     <a href="#" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal2">
-                                                        <figcaption>{{$packages->images->count()}} photos <i
+                                                        <figcaption>{{$packages->images->count() ?? ''}} photos <i
                                                                 class="fa-solid fa-circle-arrow-right"></i></figcaption>
                                                     </a>
                                                 </div>
@@ -618,21 +624,27 @@
                                                 in well-maintained rooms with thoughtful amenities, savor a variety of
                                                 breakfast choices, and benefit from attentive service to enhance your travel
                                                 experience.</p>
-                                            {{-- <p>• 7 nights in Ponta Delgada at the Sao Miguel Park 4* hotel (or similar) in a
-                                                standard room</p> --}}
+                                            <p>• 7 nights in Ponta Delgada at the Sao Miguel Park 4* hotel (or similar) in a
+                                                standard room</p>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="accommodation-images">
                                                 <figure>
-                                                    <img src="images/Accommodation1.jpg">
+                                                    @if(count($packages->images) > 0)
+                                                    <img src="{{asset('storage').'/'.$packages->images[0]->images ?? ''}}" />
+                                                    @endif
+                                                    {{-- <img src="images/Accommodation1.jpg"> --}}
                                                 </figure>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="accommodation-images">
                                                 <figure>
+                                                    {{-- @if(count($packages->images) > 0)
+                                                    <img src="{{asset('storage').'/'.$packages->images[1]->images ?? ''}}" />
+                                                    @endif --}}
                                                     <img src="images/Accommodation2.jpg">
                                                 </figure>
                                             </div>
@@ -640,6 +652,9 @@
                                         <div class="col-md-3">
                                             <div class="accommodation-images">
                                                 <figure>
+                                                    {{-- @if(count($packages->images) > 0)
+                                                    <img src="{{asset('storage').'/'.$packages->images[2]->images ?? ''}}" />
+                                                    @endif --}}
                                                     <img src="images/Accommodation3.jpg">
                                                 </figure>
                                             </div>
@@ -647,10 +662,13 @@
                                         <div class="col-md-3">
                                             <div class="tree-img accommodation-images">
                                                 <figure>
+                                                    {{-- @if(count($packages->images) > 0)
+                                                    <img src="{{asset('storage').'/'.$packages->images[3]->images ?? ''}}" />
+                                                    @endif --}}
                                                     <img src="images/Accommodation4.jpg">
                                                 </figure>
                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-                                                    <figcaption>+21 photos <i class="fa-solid fa-circle-arrow-right"></i>
+                                                    <figcaption>+{{$packages->images->count() ?? ''}} photos <i class="fa-solid fa-circle-arrow-right"></i>
                                                     </figcaption>
                                                 </a>
 
@@ -892,15 +910,12 @@
                                 <div class="hotels-wapper">
                                     <figure>
                                         <img src="{{asset('storage').'/'.$package->thumbnail}}">
-                                        {{-- <img src="{{ asset('web/assets/images/hotel-one.png') }}"> --}}
                                     </figure>
                                     <div class="hotels-content">
                                         <a href="{{route('web.packageDetails',$package->id)}}">
                                             <h3>{{$package->name}}</h3>
-                                            {{-- <h3>Croatia Land & Sea</h3> --}}
                                         </a>
                                         <p>{{$package->sub_title ?? 'Per night before taxes and fees'}}</p>
-                                        {{-- <p>Per night before taxes and fees</p> --}}
                                         @php $currency =  $package->destination->country->currency_symbol @endphp
                                         <span class="inr">{{$currency}} {{$package->price}}</span> 
                                         {{-- <span class="inr">$ 4,403.29</span> --}}
@@ -948,166 +963,7 @@
         </section>
 
     </div>
-
-
-
-    <div class="enquiry-popuo-section">
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Request A Booking</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <h2>Azores Escape</h2>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="exampleFormControlInput1" class="form-label">Departure City</label>
-                                    <input type="text" class="form-control" id="exampleFormControlInput1"
-                                        placeholder="Los Angeles">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="exampleFormControlInput1" class="form-label">Date</label>
-                                    <input type="date" class="form-control" id="exampleFormControlInput1"
-                                        >
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="select-data-popup">
-                            <h2>How many passengers are you?</h2>
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <div class="Destination-form-data mb-3">
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option value="1" selected>1 adult</option>
-                                            <option value="2">6-9 Days</option>
-                                            <option value="3">10-15 Days</option>
-                                            <option value="4">16-21 Days</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-3">
-                                    <div class="Destination-form-data mb-3">
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option value="1" selected>0 child (2-11)</option>
-                                            <option value="2">6-9 Days</option>
-                                            <option value="3">10-15 Days</option>
-                                            <option value="4">16-21 Days</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-3">
-                                    <div class="Destination-form-data mb-3">
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option value="1" selected>0 infant (<2)</option>
-                                            <option value="2">6-9 Days</option>
-                                            <option value="3">10-15 Days</option>
-                                            <option value="4">16-21 Days</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-3">
-                                    <div class="Destination-form-data mb-3">
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option value="1" selected>1 ROOM (1 Double)</option>
-                                            <option value="2">6-9 Days</option>
-                                            <option value="3">10-15 Days</option>
-                                            <option value="4">16-21 Days</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                        <h2>Your contact information</h2>
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="mb-3">
-                                    <label for="exampleFormControlInput1" class="form-label">Full Name</label>
-                                    <input type="text" class="form-control" id="exampleFormControlInput1"
-                                        placeholder="Enter your name">
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="mb-3">
-                                    <label for="exampleFormControlInput1" class="form-label">Mobile Number</label>
-                                    <div class="mobile-number-inner">
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option value="1" selected>+91</option>
-                                            <option value="2">+55</option>
-                                            <option value="3">+81</option>
-                                            <option value="4">+82</option>
-                                        </select>
-                                        <input type="text" class="form-control" id="exampleFormControlInput1"
-                                            placeholder="Enter mobile number">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="mb-3">
-                                    <label for="exampleFormControlInput1" class="form-label">Email Address</label>
-                                    <input type="text" class="form-control" id="exampleFormControlInput1"
-                                        placeholder="Enter email address">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="body-footer-data">
-                            <p>You will receive a detailed quote, to which you will be able to reply with any questions or
-                                requests you may have. An agent will be assigned to you.</p>
-
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    I agree to be contacted by email with a follow-up to my request and receive other great
-                                    deals.
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="travel-btn btn" type="button">Submit Request</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="photo-slider-section">
-        <!-- Button trigger modal -->
-
-
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">All Photos</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body owl-carousel owl-theme pop-images ">
-                                                @foreach($data['packageImages'] as $image)
-                        <div class="item">
-                            <img src="{{asset('storage').'/'.$image->images}}">
-                        </div>
-                        @endforeach
-                   </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<!--Modal form -->   
+@include('web.packages.modal.requestenquiry')
+@include('web.packages.modal.photoslider')
 @endsection

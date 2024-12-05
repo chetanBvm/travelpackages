@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AirlinesController;
+use App\Http\Controllers\Admin\AirportController;
 use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\ContentManagementController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\StayController;
 use App\Http\Controllers\Admin\TravelExperienceController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\DashboardController as ControllersDashboardController;
 use App\Http\Controllers\PackagesController as ControllersPackagesController;
 use App\Http\Controllers\PagesController;
@@ -92,6 +94,9 @@ Route::group(['prefix' => 'admin'], function () {
         //Inclusion
         Route::resource('inclusion', InclusionsController::class);
 
+        //Airport
+        Route::resource('airport',AirportController::class);
+        
         //Content Management
         Route::group(['prefix' => 'content'], function () {
             //home banner
@@ -153,3 +158,6 @@ Route::get('package-detail/{id}', [ControllersPackagesController::class, 'packag
 
 //Pages
 Route::get('about-us', [PagesController::class, 'aboutUs'])->name('pages.about');
+
+//Booking 
+Route::post('/booking/store',[BookingController::class,'store'])->name('booking.store');

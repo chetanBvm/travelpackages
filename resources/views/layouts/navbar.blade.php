@@ -1,12 +1,21 @@
 <div class="offer-news">
     <span>BLACK FRIDAY AT My Vacay Host:  Additional $100 OFF / person on all packages. Book by Dec 4th</span>
  </div>
- 
+ <div class="offer-news offer-news-2">
+  <span>Come See the world with Us</span>
+  <ul class="social-icon">
+             <li><a href="javascript::"><i class="fa-brands fa-instagram"></i></a></li>
+             <li><a href="javascript::"><i class="fa-brands fa-facebook"></i></a></li>
+             <li><a href="javascript::"><i class="fa-brands fa-twitter"></i></a></li>
+             <li><a href="javascript::"><i class="fa-brands fa-linkedin"></i></a></li>
+             <li><a href="javascript::"><i class="fa-brands fa-youtube"></i></a></li>
+           </ul>
+</div> 
  
  <header>
    <div class="container">
      <nav class="navbar navbar-expand-lg p-0">
-     <a class="navbar-brand p-0" href="index.php"><img src="{{asset('web/assets/images/logo_line.png')}}"></a>
+     <a class="navbar-brand p-0" href="index.php"><img src="{{asset('web/assets/images/logo.png')}}"></a>
      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
        <span class="navbar-toggler-icon"></span>
      </button>
