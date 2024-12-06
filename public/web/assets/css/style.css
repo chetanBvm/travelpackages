@@ -3038,3 +3038,25 @@ color: var(--gray);
 .accordion-button:focus{
   border-color: none;
 }
+
+.Destination-form-data.selection-country {
+  width: 100%; 
+}
+.offer-news.offer-news-2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.offer-news.offer-news-2 .social-icon{
+  position: absolute;
+  right: 30px;
+}
+.offer-news.offer-news-2 {
+	background-color: var(--secondary);
+
+}
+.offer-news.offer-news-2 .social-icon li a:hover {
+  color: var(--dark);
+}

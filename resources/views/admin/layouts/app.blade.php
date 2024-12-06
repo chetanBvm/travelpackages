@@ -21,7 +21,8 @@
     <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
     <link rel="stylesheet" href="{{ asset('admin/assets/vendors/sweetalert2/sweetalert2.min.css') }}">
-
+    <!-- toastify -->
+    <link rel="stylesheet" href="{{asset('admin/assets/vendors/toastify/toastify.css')}}">
 </head>
 
 <body>

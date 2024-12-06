@@ -51,7 +51,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="package-vertical">Images</label>
-                                        <input type="file" class="form-control" name="images[]" id="imageInput"
+                                        <input type="file" class="form-control" name="images" id="imageInput"
                                             accept="image/jpeg, image/png, image/gif, image/jpg"
                                             onchange="previewImages(event)" multiple>
                                     </div>
@@ -73,16 +73,16 @@
                                 <div id="imagePreviews" style="display: flex; flex-wrap: wrap;">
                                     @if (isset($packageImage->images) && $packageImage->images)
                                         @php
-                                            $images = json_decode($packageImage->images);
+                                            $images = $packageImage->images;
                                         @endphp
-                                        @foreach ($images as $image)
+                                        
                                             <div class="image-preview" style="position: relative; margin: 10px;">
-                                                <img src="{{ asset('storage/' . $image) }}" alt="image" style="width: 150px; border: 2px solid #ccc;">
+                                                <img src="{{ asset('storage/' . $images) }}" alt="image" style="width: 150px; border: 2px solid #ccc;">
                                                 <button type="button" class="btn btn-danger btn-sm" style="position: absolute; top: 0; right: 0;" onclick="removeImagePreview(this)">
                                                     &times;
                                                 </button>
                                             </div>
-                                        @endforeach
+                                        
                                     @endif
                                 </div>
                                 <div class="col-12 d-flex justify-content-end">
@@ -109,9 +109,9 @@
                     package_id: {
                         required: true,
                     },
-                    images: {
-                        required: true
-                    },
+                    // images: {
+                    //     required: true
+                    // },
 
                 },
                 // Customizing error messages

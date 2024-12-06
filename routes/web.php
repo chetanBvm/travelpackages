@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\AirlinesController;
+use App\Http\Controllers\Admin\AirportController;
 use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\BookingsController;
 use App\Http\Controllers\Admin\ContentManagementController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DestinationController;
@@ -14,6 +16,7 @@ use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\StayController;
 use App\Http\Controllers\Admin\TravelExperienceController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\DashboardController as ControllersDashboardController;
 use App\Http\Controllers\PackagesController as ControllersPackagesController;
 use App\Http\Controllers\PagesController;
@@ -92,6 +95,13 @@ Route::group(['prefix' => 'admin'], function () {
         //Inclusion
         Route::resource('inclusion', InclusionsController::class);
 
+        //Airport
+        Route::resource('airport', AirportController::class);
+
+        //Bookings
+        Route::resource('bookings', BookingsController::class);
+        Route::post('bookings/{id}',[BookingsController::class,'update'])->name('admin.bookings.update');
+
         //Content Management
         Route::group(['prefix' => 'content'], function () {
             //home banner
@@ -127,10 +137,10 @@ Route::group(['prefix' => 'admin'], function () {
             //about travel service
             Route::get('about-travelservice', [ContentManagementController::class, 'aboutTravelService'])->name('about-travelservice');
             Route::post('about-travelservice/save', [ContentManagementController::class, 'aboutTravelServiceSave'])->name('about-travelservice.save');
-            
+
             //about travel service content
-            Route::get('about-travelservice-content',[ContentManagementController::class,'aboutTravelserviceContent'])->name('about-travelservicecontent');
-            Route::post('about-travelservice-content/save',[ContentManagementController::class,'aboutTravelserviceContentSave'])->name('about-travelservicecontent.save');
+            Route::get('about-travelservice-content', [ContentManagementController::class, 'aboutTravelserviceContent'])->name('about-travelservicecontent');
+            Route::post('about-travelservice-content/save', [ContentManagementController::class, 'aboutTravelserviceContentSave'])->name('about-travelservicecontent.save');
             //about Track Record
             Route::get('about-trackrecord', [ContentManagementController::class, 'aboutTravelRecord'])->name('about-trackrecord');
             Route::post('about-trackrecord/save', [ContentManagementController::class, 'aboutTravelRecordSave'])->name('about-trackrecord.save');
@@ -153,3 +163,10 @@ Route::get('package-detail/{id}', [ControllersPackagesController::class, 'packag
 
 //Pages
 Route::get('about-us', [PagesController::class, 'aboutUs'])->name('pages.about');
+Route::get('contact-us', [PagesController::class, 'contactUs'])->name('pages.contactus');
+Route::get('blog', [PagesController::class, 'blogs'])->name('pages.blog');
+Route::get('terms-and-condition', [PagesController::class, 'termAndCondition'])->name('pages.terms');
+Route::get('privacy-policy', [PagesController::class, 'privacyPolicy'])->name('pages.policy');
+
+//Booking 
+Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
