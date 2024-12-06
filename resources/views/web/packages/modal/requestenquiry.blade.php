@@ -15,7 +15,7 @@
                     <input type="hidden" name="c_formName" value="booking">
                     <input type="hidden" name="c_currency" id="c_currency" value="{{ $currency }}">
                     <input type="hidden" name="departure_date" id="departure_date">
-                   
+
                     <div class="modal-body">
                         <h2>{{ $package->name }}</h2>
                         <div class="row">
@@ -86,11 +86,11 @@
                                     <div class="Destination-form-data mb-3">
                                         <select class="form-select" name="passengers_infant"id="passengers_infant"
                                             aria-label="Default select example">
-                                            <option value="0" selected>0 infant (<2)</option>
-                                            <option value="1">1 infant (<2)</option>
-                                            <option value="2">2 infants (<2)</option>
-                                            <option value="3">3 infants (<2)</option>
-                                            <option value="4">4 infants (<2)</option>
+                                            <option value="0" selected>0 infant (<2)< /option>
+                                            <option value="1">1 infant (<2)< /option>
+                                            <option value="2">2 infants (<2)< /option>
+                                            <option value="3">3 infants (<2)< /option>
+                                            <option value="4">4 infants (<2)< /option>
                                         </select>
                                     </div>
                                 </div>
@@ -98,9 +98,8 @@
                                 <div class="col-lg-3">
                                     <div class="Destination-form-data mb-3">
                                         <select class="form-select" name="room_occupancy"
-                                            id="room_occupancy"aria-label="Default select example">
+                                            id="room_occupancy"aria-label="Default select example"> 
                                             <option value="1" selected>1 ROOM (1 Double)</option>
-
                                         </select>
                                     </div>
                                 </div>
@@ -112,21 +111,22 @@
                             <div class="col-lg-4">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Full Name</label>
-                                    <input type="text" class="form-control" name="passenger_name" id="exampleFormControlInput1"
-                                        placeholder="Enter your name" required>
+                                    <input type="text" class="form-control" name="passenger_name"
+                                        id="exampleFormControlInput1" placeholder="Enter your name" required>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Mobile Number</label>
                                     <div class="mobile-number-inner">
-                                        <select class="form-select" aria-label="Default select example" name="phone" id="phone">
-                                            <option value="1" selected>+91</option>
-                                            <option value="2">+55</option>
-                                            <option value="3">+81</option>
-                                            <option value="4">+82</option>
+                                        <select class="form-select" aria-label="Default select example"
+                                            name="phone_code" id="phone">
+                                            <option value="+91" selected>+91</option>
+                                            <option value="+55">+55</option>
+                                            <option value="+81">+81</option>
+                                            <option value="+82">+82</option>
                                         </select>
-                                        <input type="text" class="form-control" id="exampleFormControlInput1"
+                                        <input type="text" class="form-control" id="exampleFormControlInput1" name="phone"
                                             placeholder="Enter mobile number">
                                     </div>
                                 </div>
@@ -134,8 +134,8 @@
                             <div class="col-lg-4">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Email Address</label>
-                                    <input type="text" class="form-control" name="c_email" id="exampleFormControlInput1"
-                                        placeholder="Enter email address">
+                                    <input type="text" class="form-control" name="c_email"
+                                        id="exampleFormControlInput1" placeholder="Enter email address">
                                 </div>
                             </div>
                         </div>
@@ -144,10 +144,10 @@
                             <p>You will receive a detailed quote, to which you will be able to reply with any questions
                                 or
                                 requests you may have. An agent will be assigned to you.</p>
-                          <div id="terms-error" style="font-size:14px;padding-bottom:5px;"></div>      
+                            <div id="terms-error" style="font-size:14px;padding-bottom:5px;"></div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" checked
-                                    id="signup" name="signup" value="1">
+                                <input class="form-check-input" type="checkbox" checked id="signup"
+                                    name="signup" value="1">
                                 <label class="form-check-label" for="signup">
                                     I agree to be contacted by email with a follow-up to my request and receive other
                                     great

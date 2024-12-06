@@ -44,7 +44,7 @@ class BookingController extends Controller
             $booking->passengers_infant = $request->passengers_infant;
             $booking->room_occupancy = $request->room_occupancy;
             $booking->passenger_name = $request->passenger_name;
-            $booking->phone = $request->phone;
+            $booking->phone = $request->phone_code.$request->phone;
             $booking->c_email = $request->c_email;
             $booking->signup = $request->signup;
             $booking->package_id = $request->package_id;
@@ -55,21 +55,16 @@ class BookingController extends Controller
             $booking->save();
 
             DB::commit();
-            Log::info($booking);
-            
-            // Mail::send('email.booking', compact('booking'), function ($message) use ($booking) {
-            //     $message->to($booking->c_email)->subject('Booking Inquiry:' . $booking->package_name);
-            //     $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-            // });
 
-      Mail::send('email.booking',compact('booking'), function($message) use($booking) {
-        $message->to($booking->c_email, 'Tutorials Point')->subject
-           ('Booking Inquiry:' . $booking->package_name);
-        $message->from('xyz@gmail.com');
-     });
-   
+
+            Mail::send('email.booking', compact('booking'), function ($message) use ($booking) {
+                $message->to($booking->c_email, $booking->passenger_name)->subject('Booking Inquiry:' . $booking->package_name);
+                $message->from('xyz@myvacayhost.com','My Vacay Host');
+            });
+
             return response()->json([
                 'success' => true,
+                // 'modalContent' => view('web.packages.modal.requestbooking')->render(),
                 'message' => 'Booking request submitted successfully.',
             ], 200);
         } catch (\Exception $exception) {

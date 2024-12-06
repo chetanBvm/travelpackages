@@ -66,8 +66,8 @@ class PackagesController extends Controller
             $validated = $request->validated();
             $asset_image = null;
             //Check if the request has an image file
-            if ($request->hasFile('images')) {
-                $file = $request->file('images');
+            if ($request->hasFile('thumbnail')) {
+                $file = $request->file('thumbnail');
                 $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
                 $asset_image = $file->storeAs('uploads/packages', $tempName, 'public');
             }
@@ -75,7 +75,7 @@ class PackagesController extends Controller
                 'name' => $validated['name'],
                 'description' => $validated['description'],
                 'price' => $validated['price'],
-                'images' => $asset_image,
+                'thumbnail' => $asset_image,
                 'days' => $validated['days'],
                 'status' => $validated['status'],
                 'destination_id' => $validated['destination_id'],
@@ -138,23 +138,23 @@ class PackagesController extends Controller
             ]);
 
             //Check if the request has an image file
-            if ($request->hasFile('images')) {
+            if ($request->hasFile('thumbnail')) {
 
                 // Validate the image file (optional, add size/extension validation if necessary)
                 $request->validate([
-                    'images' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                    'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 ]);
 
-                $file = $request->file('images');
+                $file = $request->file('thumbnail');
                 $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
-                $oldFilePath = 'uploads/packages' . $package->images;
+                $oldFilePath = 'uploads/packages' . $package->thumbnail;
                 if (Storage::disk('public')->exists($oldFilePath)) {
                     Storage::disk('public')->delete($oldFilePath);
                 }
 
                 $asset_image = $file->storeAs('uploads/packages', $tempName, 'public');
                 $package->update([
-                    'images' => $asset_image,
+                    'thumbnail' => $asset_image,
                 ]);
             }
 

@@ -101,7 +101,7 @@
                                         <img id="imagePreview" class="profile-image" src="{{asset('admin/assets/images/faces/1.jpg')}}"  alt="your image" width="100px" height="auto" />
                                         </div>
                                         <label class="image" for="">Image</label>
-                                        <input type="file" class="form-control" name="images" id="main_image" accept="image/jpeg, image/png, image/gif, image/jpg">
+                                        <input type="file" class="form-control" name="thumbnail" id="main_image" accept="image/jpeg, image/png, image/gif, image/jpg">
                                     </div>
                                 </div>
                                 <div class="col-12">

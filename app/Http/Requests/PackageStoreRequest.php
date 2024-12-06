@@ -26,7 +26,7 @@ class PackageStoreRequest extends FormRequest
             'description' => 'nullable|string',
             'days' => 'required|numeric|min:0',
             'price' => 'numeric|min:0',
-            'images' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'string',
             'destination_id' => 'string|exists:destinations,id',
             'sub_title' => 'required|string',

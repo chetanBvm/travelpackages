@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('c_formName');
             $table->string('c_currency');
             $table->string('departure_date');
-            $table->string('departure_city');
+            $table->foreignId('departure_city')->references('id')->on('airports')->onDelete('cascade')->onUpdate('cascade');
             $table->string('passengers_adult');
             $table->string('passengers_children')->nullable();
             $table->string('passengers_infant')->nullable();
@@ -29,7 +29,9 @@ return new class extends Migration
             $table->string('package_name');
             $table->string('transaction_id');
             $table->string('special_requests')->nullable();
-            $table->enum('status',['Booking','Approved','Cancel','Pending'])->default('Pending');
+            $table->enum('status',['Booking','Approved','Cancel','Pending','rejected'])->default('Pending');
+            $table->longText('reject_reason')->nullable();
+            $table->string('payment_gateway_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

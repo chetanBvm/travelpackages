@@ -26,10 +26,10 @@
 						<ul class="footer-menu">
 							<li><a class="active" href="javascript::">Home</a></li>
 							<li><a href="{{route('pages.about')}}">About Us</a></li>
-							<li><a href="javascript::">Contact Us</a></li>
-							<li><a href="blog.php">Blogs</a></li>
-							<li><a href="privacy-policy.php">Privacy Policy</a></li>
-							<li><a href="terms-condition.php">Terms and Condition</a></li>
+							<li><a href="{{route('pages.contactus')}}">Contact Us</a></li>
+							<li><a href="{{route('pages.blog')}}">Blogs</a></li>
+							<li><a href="{{route('pages.policy')}}">Privacy Policy</a></li>
+							<li><a href="{{route('pages.terms')}}">Terms and Condition</a></li>
 						</ul>
 					</div>
 
@@ -38,9 +38,9 @@
 					<div class="footer-content">
 						<h2>Packages</h2>
 						<ul class="footer-menu">
-							<li><a href="javascript::">Tour Packages</a></li>
-							<li><a href="javascript::">Ocean Cruise Packages</a></li>
-							<li><a href="javascript::">River Cruise Packages</a></li>
+							<li><a href="{{route('web.packages')}}">Tour Packages</a></li>
+							<li><a href="{{route('web.packages')}}">Ocean Cruise Packages</a></li>
+							<li><a href="{{route('web.packages')}}">River Cruise Packages</a></li>
 						</ul>
 					</div>
 				</div>
@@ -116,4 +116,76 @@
             },
         },
     });
+
+	//contact slider
+	$('.contact-slider').owlCarousel({
+            loop: true,
+            margin: 0,
+            center: true,
+            nav: false,
+            dots: false,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                450: {
+                    items: 2
+                },
+                550: {
+                    items: 3
+                },
+                1000: {
+                    items: 4.75
+                }
+            }
+        })
+
+		//gallery slider
+		$('.gallery-one-slider').owlCarousel({
+            loop: true,
+            margin: 24,
+            center: true,
+            nav: false,
+            dots: false,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 4.75
+                }
+            }
+        });
+
+		$('.gallery-two-slider').owlCarousel({
+            loop: true,
+            margin: 24,
+            center: true,
+            nav: false,
+            dots: false,
+            rtl: true,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 4.75
+                }
+            }
+        });
 </script>
