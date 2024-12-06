@@ -1,0 +1,1 @@
+<h2>Hello, <br> Your enquiry rejected due to some issues.</h2>
