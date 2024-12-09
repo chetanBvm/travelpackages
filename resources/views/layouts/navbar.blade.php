@@ -58,12 +58,20 @@
                     </li>
                 </ul>
                 <div class="login-sec">
-                    <span class="search"><img src="{{ asset('web/assets/images/search-icon.svg') }}"></span>
+                    <span class="search search-toggle"><img src="{{ asset('web/assets/images/search-icon.svg') }}"></span>
                     <button class="login-btn"><img
                             src="{{ asset('web/assets/images/call-calling.svg') }}"><span>Toll-Free</span>
                         1234-567-890</button>
                 </div>
             </div>
         </nav>
+        <div class="search-box">
+            <div class="wrap">
+              <lable>
+                <input type="search" class="search-field" placeholder="Search...">
+                </label>
+                <button class="travel-btn"><i class="fas fa-search"></i> Search</button>
+            </div>
+          </div>
     </div>
 </header>

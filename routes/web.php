@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\DestinationController;
 use App\Http\Controllers\Admin\InclusionsController;
 use App\Http\Controllers\Admin\ItineraryController;
 use App\Http\Controllers\Admin\PackageImageController;
+use App\Http\Controllers\Admin\PackageReviewsController;
 use App\Http\Controllers\Admin\PackagesController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\StayController;
@@ -71,6 +72,9 @@ Route::group(['prefix' => 'admin'], function () {
         //Package Image
         Route::resource('package-image', PackageImageController::class);
 
+        //Package Reviews
+        Route::resource('package-review',PackageReviewsController::class);
+        
         //Destination
         Route::resource('destination', DestinationController::class);
 

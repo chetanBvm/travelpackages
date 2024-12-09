@@ -119,9 +119,9 @@
                     package_id: {
                         required: "Please select the package."
                     },
-                    images: {
-                        required: "Please choose the 1 and more image."
-                    },
+                    // images: {
+                    //     required: "Please choose the 1 and more image."
+                    // },
                 },
                 errorPlacement: function(error, element) {
                     var placement = $(element).data('error');

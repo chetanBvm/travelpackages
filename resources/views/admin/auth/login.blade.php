@@ -11,7 +11,7 @@
         <div class="col-lg-5 col-12">
             <div id="auth-left">
                 <div class="auth-logo">
-                    <a href="index.html"><img src="{{asset('admin/assets/images/logo/logo4.png')}}" alt="Logo"></a>
+                    <a href="index.html"><img src="{{asset('admin/assets/images/logo/logo.png')}}" alt="Logo"></a>
                 </div>
                 <h1 class="auth-title">Log in.</h1>
                 <p class="auth-subtitle mb-5">Log in with your data that you entered during registration.</p>
@@ -19,7 +19,7 @@
                 <form id="loginform" name="loginform"action="{{route('admin.login.check')}}" method="POST">
                     @csrf
                     <div class="form-group position-relative has-icon-left mb-4">
-                        <input type="text" class="form-control form-control-xl @error('email') is-invalid @enderror" name="email" placeholder="email" value="{{ old('email') }}"  autocomplete="email" autofocus>
+                        <input type="text" class="form-control form-control-xl @error('email') is-invalid @enderror" name="email" placeholder="email" value="@if(old('email')){{ old('email')}}@elseif(\App\Helpers\Admin::getRememberMeCookie()['email']){{ (\App\Helpers\Admin::getRememberMeCookie())['email'] }}@endif" autocomplete="email" autofocus>
                         <div class="form-control-icon">
                             <i class="bi bi-person"></i>
                         </div>
@@ -63,6 +63,8 @@
         </div>
     </div>
    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             @if(Session::has('flash-message'))

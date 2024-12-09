@@ -2,7 +2,7 @@
     <div class="sidebar-header">
         <div class="d-flex justify-content-between">
             <div class="logo">
-                <a href="{{ route('admin.dashboard') }}"><img src="{{ asset('admin/assets/images/logo/logo4.png') }}"
+                <a href="{{ route('admin.dashboard') }}"><img src="{{ asset('admin/assets/images/logo/logo.png') }}"
                         alt="Logo" srcset=""></a>
             </div>
             <div class="toggler">
@@ -62,6 +62,9 @@
                     </li>
                     <li class="submenu-item {{ request()->routeIs('package.image') ? 'active' : '' }}">
                         <a href="{{ route('package-image.index') }}">Package Images</a>
+                    </li>
+                    <li class="submenu-item {{ request()->routeIs('package.image') ? 'active' : '' }}">
+                        <a href="{{ route('package-review.index') }}">Pacakge Reviews</a>
                     </li>
                 </ul>
             </li>

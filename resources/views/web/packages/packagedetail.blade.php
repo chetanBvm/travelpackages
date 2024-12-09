@@ -14,8 +14,10 @@
                                         <div class="col-md-8">
                                             <div class="package-single-left-img">
                                                 <figure>
-                                                    @if($packages->images && count($packages->images) > 0)
-                                                    <img src="{{asset('storage').'/'.$packages->images[0]->images}}" />
+                                                    {{-- @php dd($packages->images[0]->images);@endphp --}}
+                                                    @if ($packages->images[0] && count($packages->images) > 0)
+                                                        <img
+                                                            src="{{ asset('storage') . '/' . $packages->images[0]->images }}" />
                                                     @endif
                                                 </figure>
                                             </div>
@@ -23,22 +25,24 @@
 
                                         <div class="col-md-4 mt-md-0 mt-4">
                                             <div class="package-single-left-img">
-                                                <figure>
-                                                    @if($packages->images && count($packages->images) > 0)
-                                                    <img src="{{asset('storage').'/'.$packages->images[1]->images}}" />
-                                                    @endif
-                                                    {{-- <img src="{{asset('web/assets/images/pool-two.png')}}" /> --}}
-                                                </figure>
-                                                <div class="tree-img">
+                                                @if (isset($packages->images[1]))
                                                     <figure>
-                                                        @if(count($packages->images) > 0)
-                                                        <img src="{{asset('storage').'/'.$packages->images[2]->images }}">
-                                                        @endif
-                                                        {{-- <img src="images/pool-three.png" /> --}}
+                                                        <img
+                                                            src="{{ asset('storage') . '/' . $packages->images[1]->images }}" />
                                                     </figure>
+                                                @endif
+                                                {{-- <img src="{{asset('web/assets/images/pool-two.png')}}" /> --}}
+                                                <div class="tree-img">
+                                                    @if (isset($packages->images[2]))
+                                                        <figure>
+                                                            <img
+                                                                src="{{ asset('storage') . '/' . $packages->images[2]->images }}">
+                                                            {{-- <img src="images/pool-three.png" /> --}}
+                                                        </figure>
+                                                    @endif
                                                     <a href="#" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal2">
-                                                        <figcaption>{{$packages->images->count() ?? ''}} photos <i
+                                                        <figcaption>{{ $packages->images->count() ?? '' }} photos <i
                                                                 class="fa-solid fa-circle-arrow-right"></i></figcaption>
                                                     </a>
                                                 </div>
@@ -80,7 +84,7 @@
                                                 $currency = $packages->destination->country->currency_symbol;
                                             @endphp
                                             <h4>{{ $currency }} {{ $packages->price }}</h4>
-                                            <p><span>+₹</span>409 taxes & fees</p>
+                                            <p><span>+</span>{{ floor($packages->tax_rate) ?? '' }} taxes & fees</p>
                                             <p><span>1 Room</span> per night</p>
                                             <p class="free">Free Cancellation till 22- May-2024</p>
                                         </div>
@@ -496,109 +500,21 @@
                                 aria-labelledby="pills-Itinerary-tab" tabindex="0">
                                 <div class="heading-main">
                                     <div class="heading-inner">
-                                        <h2>AZORES ESCAPE</h2>
-                                        <p>11 Days</p>
+                                        <h2>{{ $data['itinerary']->name }}</h2>
+                                        <p>{{ $packages->days }} Days</p>
                                     </div>
                                     <div class="heading-main-right">
                                         <div class="download-data">
-                                            <img src="{{asset('web/assets/images/download.svg')}}">
+                                            <img src="{{ asset('web/assets/images/download.svg') }}">
                                             <span>Package Details</span>
                                         </div>
                                         <a class="travel-btn btn" href="javascript::">See Dates and Prices</a>
                                     </div>
                                 </div>
-
-
-
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="itinerary-inner">
-                                            <h2>Day 1: Canada – Ponta Delgada (Azores, Portugal)</h2>
-                                            <p>Flight with a good itinerary.</p>
-                                            <h2>Day 2: Ponta Delgada</h2>
-                                            <p>Upon arrival at the airport in Ponta Delgada, transfer to your hotel. The
-                                                rest of the day is free for you to start your exploration of São Miguel, the
-                                                biggest island of the volcanic archipelago of the Azores. Sao Miguel is also
-                                                known as the ‘Green Island’ thanks to its diverse scenery. Overnight at your
-                                                hotel in Ponta Delgada.</p>
-                                            <h2>Day 3: Ponta Delgada – Whale Watching tour*</h2>
-                                            <p>Breakfast at the hotel before making your way to the pier of Picos de
-                                                Aventura, located at approx. 15 min walk from your hotel. Upon your arrival
-                                                at the pier, you will embark on a beautiful experience to see some whales in
-                                                the Atlantic Ocean. The Azores archipelago is an oasis of sea life, as 27
-                                                species of cetaceans can be observed throughout the year. While on board,
-                                                you will be accompanied by a professional team of marine biologist, and
-                                                learn about the animals you see, their yearly migration routes and much
-                                                more. You will return to the pier at the end of the tour and will have the
-                                                rest of the day at your leisure. Overnight at your hotel in Ponta Delgada.
-                                                (Breakfast)</p>
-                                            <p>*Please be advised that we cannot guarantee the sighting of whales during the
-                                                excursion.</p>
-                                            <h2>Day 4: Ponta Delgada</h2>
-                                            <p>Breakfast at the hotel. Day at leisure in the heart of Ponta Delgada. Ponta
-                                                Delgada, the main city of the island of Sao Miguel, is known for its
-                                                charming cobblestone streets, old architecture, colorful houses and coffee
-                                                shops. You can stroll the Avenida Infante Dom Henrique, the harbor front
-                                                promenade and discover the historical quarter, before heading to the chapel
-                                                of Nossa Senhora da Esperança, one of the most visited places in Ponta
-                                                Delgada. On the same square, you can visit a little old gem: The church of
-                                                Igreja de São José. During this day, you can also discover Portas da Cidade,
-                                                the Largo da Matriz, the museum of Carlos Machado and Sao Sebastiao parish
-                                                church. Overnight at your hotel in Ponta Delgada. (Breakfast)</p>
-                                            <h2>Day 5: Ponta Delgada – Lagoa do Fogo & Ribeira Grande</h2>
-                                            <p>Following breakfast at the hotel, you will be embarking on a half-day tour
-                                                towards the south coast. Your first stop will be Pica da Barrosa where you
-                                                will have a beautiful view of Lagoa do Fogo, the ‘Lake of Fire’. This is the
-                                                highest elevated lake on Sao Miguel Island and is a crater lake within the
-                                                Agua de Pau Massif stratovolcano in the center of the island. You will then
-                                                take the direction of Ribeira Grande, where you can admire the local
-                                                architecture and get the chance to taste some of their traditional liquors.
-                                                At the end of the tour, you will head back to your hotel. You will enjoy the
-                                                rest of your day visiting the city. the city. Overnight in Ponta Delgada.
-                                                (Breakfast)</p>
-                                            <h2>Day 6: Ponta Delgada & Sete Cidades</h2>
-                                            <p>Following breakfast at your hotel, you will start your tour with a visit to a
-                                                pineapple plantation and a tasting of its liquor. You will then continue
-                                                towards Pico do Carvão, where you will see the central part of the island
-                                                and simultaneously see the north and south coasts of São Miguel. Upon
-                                                reaching the parish of Sete Cidades, you will stop on the edge of Lagoa das
-                                                Sete Cidades where you can enjoy a beautiful view of the blue lagoon. On the
-                                                way up to the Vista do Rei viewpoint, you will admire Lagoa de Santiago,
-                                                known for its peacefulness. You will then finally reach the viewpoint, where
-                                                you will have a different perspective on the volcanic crater of Sete
-                                                Cidades. You will then return to your hotel and have the rest of the day at
-                                                leisure. Overnight at your hotel in Ponta Delgada. (Breakfast)</p>
-                                            <h2>Day 7: Ponta Delgada - Furnas</h2>
-                                            <p>Breakfast at your hotel. Today you will depart toward the southern part of
-                                                the island to reach the first capital of Sao Miguel: Vila Franca do Campo.
-                                                You will then continue to the interior of the Furnas valley, where you will
-                                                visit Terra Nostra Park, a must-see on the island. While walking through the
-                                                park, you will encounter various species of vegetation from all over the
-                                                world, before relaxing in the geothermal pool of the park. Once the visit is
-                                                over, you will head to Lagoa das Furnas for a truly unique experience. You
-                                                will witness a traditional meal called ‘the Cozido das Furnas ‘cooked by a
-                                                volcano before heading for lunch at a local restaurant to taste it. You will
-                                                continue your tour with a walk on the site where we can find fumaroles and
-                                                taste carbonated mineral waters (Água Azeda). The return to Ponta Delgada
-                                                will be made by the north coast, passing through the Pico do Ferro
-                                                viewpoint. On your way to Ponta Delgada, you will stop by the Gorreana tea
-                                                factory to visit the oldest tea plantation in Europe. Evening at leisure and
-                                                overnight at your hotel in Ponta Delgada. (Breakfast - Lunch)</p>
-                                            <p>*Please note that the Thermal Tank at Park Terra Nostra is under construction
-                                                until February 2025. All other areas and experiences remain accessible.</p>
-                                            <h2>Day 8: Ponta Delgada</h2>
-                                            <p>Breakfast at the hotel. Day at leisure to continue your exploration of Ponta
-                                                Delgada. You can go discover the Gruta do Carvao, a geological formation of
-                                                volcanic origin with a local guide, or opt for one of the optional tours
-                                                available at the hotel desk. Overnight at your hotel in Ponta Delgada.
-                                                (Breakfast)</p>
-                                            <h2>Day 9: Ponta Delgada - Canada</h2>
-                                            <p>After breakfast at the hotel, enjoy some free time to wander around Ponta
-                                                Delgada before the transfer to the airport for your flight home. (Breakfast)
-                                            </p>
-                                            <p>-End of services-  </p>
-                                            <p>*Please note*  </p>
-                                            <p>The order of the excursions is subject to change.</p>
+                                            {!! $data['itinerary']->description !!}
                                         </div>
                                     </div>
                                 </div>
@@ -632,17 +548,14 @@
                                         <div class="col-md-3">
                                             <div class="accommodation-images">
                                                 <figure>
-                                                    @if(count($packages->images) > 0)
-                                                    <img src="{{asset('storage').'/'.$packages->images[0]->images ?? ''}}" />
-                                                    @endif
-                                                    {{-- <img src="images/Accommodation1.jpg"> --}}
+                                                    <img src="images/Accommodation1.jpg">
                                                 </figure>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="accommodation-images">
                                                 <figure>
-                                                    {{-- @if(count($packages->images) > 0)
+                                                    {{-- @if (count($packages->images) > 0)
                                                     <img src="{{asset('storage').'/'.$packages->images[1]->images ?? ''}}" />
                                                     @endif --}}
                                                     <img src="images/Accommodation2.jpg">
@@ -652,7 +565,7 @@
                                         <div class="col-md-3">
                                             <div class="accommodation-images">
                                                 <figure>
-                                                    {{-- @if(count($packages->images) > 0)
+                                                    {{-- @if (count($packages->images) > 0)
                                                     <img src="{{asset('storage').'/'.$packages->images[2]->images ?? ''}}" />
                                                     @endif --}}
                                                     <img src="images/Accommodation3.jpg">
@@ -662,13 +575,14 @@
                                         <div class="col-md-3">
                                             <div class="tree-img accommodation-images">
                                                 <figure>
-                                                    {{-- @if(count($packages->images) > 0)
+                                                    {{-- @if (count($packages->images) > 0)
                                                     <img src="{{asset('storage').'/'.$packages->images[3]->images ?? ''}}" />
                                                     @endif --}}
                                                     <img src="images/Accommodation4.jpg">
                                                 </figure>
                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-                                                    <figcaption>+{{$packages->images->count() ?? ''}} photos <i class="fa-solid fa-circle-arrow-right"></i>
+                                                    <figcaption>+{{ $packages->images->count() ?? '' }} photos <i
+                                                            class="fa-solid fa-circle-arrow-right"></i>
                                                     </figcaption>
                                                 </a>
 
@@ -865,32 +779,26 @@
                     <h2>See what guests loved the most:</h2>
                     <div class="guests-inner">
                         <div class="owl-carousel owl-theme guests-slider">
-                            <div class="item">
-                                <div class="guests-wapper">
-                                    <div class="guests-wapper-head">
-                                        <figure>
-                                            <img src="images/experience-one.png">
-                                        </figure>
-                                        <h2>Yuvraj sharma</h2>
-                                    </div>
-                                    <p>I went for my honeymoon with Travel Agency. I discussed about my destination with
+                            @foreach ($data['review'] as $review)
+                                <div class="item">
+                                    <div class="guests-wapper">
+                                        <div class="guests-wapper-head">
+                                            <figure>
+                                                @if ($review->images)
+                                                    <img src="{{ asset('storage') . '/' . $review->images }}">
+                                                @else
+                                                    <img src="images/experience-one.png">
+                                                @endif
+                                            </figure>
+                                            <h2>{{ $review->name }}</h2>
+                                        </div>
+                                        <p>{!! $review->description !!}</p>
+                                        {{-- <p>I went for my honeymoon with Travel Agency. I discussed about my destination with
                                         akash and he shared an amazing itinerary which covered all the places of Goa which
-                                        were a must visit during month of december. </p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="guests-wapper">
-                                    <div class="guests-wapper-head">
-                                        <figure>
-                                            <img src="images/experience-two.png">
-                                        </figure>
-                                        <h2>Suraj sharma</h2>
+                                        were a must visit during month of december. </p> --}}
                                     </div>
-                                    <p>I went for my honeymoon with Travel Agency. I discussed about my destination with
-                                        akash and he shared an amazing itinerary which covered all the places of Goa which
-                                        were a must visit during month of december. </p>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -905,23 +813,23 @@
 
                     <div class="hotels-bottom">
                         <div class="row">
-                            @foreach($data['packages'] as $package)
-                            <div class="col-sm-6 col-md-4">
-                                <div class="hotels-wapper">
-                                    <figure>
-                                        <img src="{{asset('storage').'/'.$package->thumbnail}}">
-                                    </figure>
-                                    <div class="hotels-content">
-                                        <a href="{{route('web.packageDetails',$package->id)}}">
-                                            <h3>{{$package->name}}</h3>
-                                        </a>
-                                        <p>{{$package->sub_title ?? 'Per night before taxes and fees'}}</p>
-                                        @php $currency =  $package->destination->country->currency_symbol @endphp
-                                        <span class="inr">{{$currency}} {{$package->price}}</span> 
-                                        {{-- <span class="inr">$ 4,403.29</span> --}}
+                            @foreach ($data['packages'] as $package)
+                                <div class="col-sm-6 col-md-4">
+                                    <div class="hotels-wapper">
+                                        <figure>
+                                            <img src="{{ asset('storage') . '/' . $package->thumbnail }}">
+                                        </figure>
+                                        <div class="hotels-content">
+                                            <a href="{{ route('web.packageDetails', $package->id) }}">
+                                                <h3>{{ $package->name }}</h3>
+                                            </a>
+                                            <p>{{ $package->sub_title ?? 'Per night before taxes and fees' }}</p>
+                                            @php $currency =  $package->destination->country->currency_symbol @endphp
+                                            <span class="inr">{{ $currency }} {{ $package->price }}</span>
+                                            {{-- <span class="inr">$ 4,403.29</span> --}}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             @endforeach
 
                             {{-- <div class="col-sm-6 col-md-4">
@@ -963,7 +871,7 @@
         </section>
 
     </div>
-<!--Modal form -->   
-@include('web.packages.modal.requestenquiry')
-@include('web.packages.modal.photoslider')
+    <!--Modal form -->
+    @include('web.packages.modal.requestenquiry')
+    @include('web.packages.modal.photoslider')
 @endsection

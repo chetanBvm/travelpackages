@@ -8,7 +8,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 {{-- <div class="padding30" id="errorBooking">Error</div> --}}
-                <form name="modal-form" id="modal-form" method="post">
+                <form name="modal-form" id="modal-form" method="post" action="{{route('booking.store')}}">
                     @csrf()
                     <input type="hidden" id="package_name" name="package_name" value="{{ $package->name }}">
                     <input type="hidden" id="package_id" name="package_id" value="{{ $package->id }}">

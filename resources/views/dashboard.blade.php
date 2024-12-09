@@ -14,108 +14,135 @@
         }
     @endphp
     <div class="main">
-        <section class="travel-banner"
-            @if (isset($data['homeBanner']) && $data['homeBanner']->type == 'home_banner') @if (!empty($data['homeBanner']->image))
-             style="background-image: url({{ asset('storage') . '/' . $data['homeBanner']->image }})"
-             @else
-             style="background-image: url('{{ asset('web/assets/images/home-background-img.jpg') }}')" @endif
-        @else style="background-image: url('{{ asset('web/assets/images/home-background-img.jpg') }}')" @endif>
-            <div class="container">
-                <div class="bannr-inner">
-                    <div class="row justify-content-center">
-                        <div class="col-md-12">
-                            <div class="banner-left text-center">
-                                @if ($data['homeBanner'] && $data['homeBanner']->type == 'home_banner')
-                                    <span class="explore">{{ $data['homeBanner']->title }} <i
-                                            class="fa-solid fa-compass"></i></span>
-                                    <h1> {!! $data['homeBanner']->subtitle !!}</h1>
-                                @else
-                                    <span class="explore">Explore the world! <i class="fa-solid fa-compass"></i></span>
-                                    <h1>From Southeast Asia to<br> the <span class="world">World.</span> </h1>
-                                @endif
+        <section class="travel-banner">
+            <div class="container-fluid">
+                <div class="home-travel-inner">
+                    <figure class="home-slider-images">
+                        @if ($data['homeBanner']->image)
+                            @php
+                                $welImages = json_decode($data['homeBanner']->image);
+                            @endphp
+                            @if (is_array($welImages))
+                                @foreach ($welImages as $image)
+                                    <img src="{{ asset('storage' . '/' . $image) }}">
+                                @endforeach
+                            @else
+                                <img src="{{ asset('web/assets/images/wel-one.png') }}">
+                            @endif
+                        @else
+                            <img src="{{ asset('web/assets/images/home-background-img.jpg') }}">
+                        @endif
+                    </figure>
+
+
+                    <div class="bannr-inner">
+                        <div class="row justify-content-center">
+                            <div class="col-md-12">
+                                <div class="banner-left text-center">
+                                    @if ($data['homeBanner'] && $data['homeBanner']->type == 'home_banner')
+                                        <a class="explore"
+                                            href="{{ route('web.packages') }}">{{ $data['homeBanner']->title }} <i
+                                                class="fa-solid fa-compass"></i></a>
+                                        <h1> {!! $data['homeBanner']->subtitle !!}</h1>
+                                    @else
+                                        <a class="explore" href="{{ route('web.packages') }}">Explore the world! <i
+                                                class="fa-solid fa-compass"></i></a>
+                                        <h1>From Southeast Asia to<br> the <span class="world">World.</span> </h1>
+                                    @endif
+                                </div>
                             </div>
+
                         </div>
-                    </div>
-                    <div class="Destination-form">
-                        <div class="row justify-content-between">
-                            <div class="col-12">
-                                <form class="Destination-form-main">
-                                    <div class="Destination-form-data">
-                                        <label for="mySelect" class="form-label">
-                                            <div class="form-label-img"><img
-                                                    src="{{ asset('web/assets/images/location.svg') }}"></div> Destination
-                                        </label>
-                                        <select class="form-select" id="mySelect" aria-label="Default select example">
-                                            @foreach ($data['country'] as $countries)
-                                                <option value="{{ $countries->id }}">{{ $countries->name }}</option>
-                                            @endforeach
-                                            {{-- <option value="1"> All destinations</option>
-                                            <option selected>Central America</option>
-                                            <option value="2">Africa / Middle East</option>
-                                            <option value="3">Asia</option> --}}
-                                        </select>
-                                    </div>
 
-                                    <div class="Destination-form-data">
-                                        <label for="mySelectDeparture" class="form-label">
-                                            <div class="form-label-img"><img
-                                                    src="{{ asset('web/assets/images/calendar.svg') }}"
-                                                    class="form-label-img"></div> Departure Month
-                                        </label>
-                                        <select class="form-select" id="mySelectDeparture" name="departure_month"
-                                            aria-label="Default select example">
-                                            <option value="all">All</option>
-                                            @foreach ($months as $index => $month)
-                                                <option value="{{ $index + 1 }}"
-                                                    {{ old('departure_month') == $index + 1 ? 'selected' : '' }}>
-                                                    {{ $month }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                        <div class="Destination-form">
 
-                                    <div class="Destination-form-data">
-                                        <label for="mySelectLength" class="form-label">
-                                            <div class="form-label-img"><img
-                                                    src="{{ asset('web/assets/images/timer.svg') }}"
-                                                    class="form-label-img">
-                                            </div> Length
-                                        </label>
-                                        <select class="form-select" id="mySelectLength" aria-label="Default select example">
-                                            <option>All</option>
-                                            <option value="1" selected>6-9 Days</option>
-                                            <option value="2">10-15 Days</option>
-                                            <option value="3">16-21 Days</option>
-                                            <option value="4">22+ Days</option>
-                                        </select>
+                            <div class="row justify-content-between">
+                                <div class="col-12">
+                                    <form class="Destination-form-main">
+                                        <div class="Destination-form-inner">
+                                            <div class="Destination-form-data">
+                                                <label for="mySelect" class="form-label">
+                                                    <div class="form-label-img"><img
+                                                            src="{{ 'web/assets/images/location.svg' }}"></div>
+                                                    Destination
+                                                </label>
+                                                <select class="form-select" id="mySelect"
+                                                    aria-label="Default select example">
+                                                    @foreach ($data['country'] as $countries)
+                                                        <option value="{{ $countries->id }}">{{ $countries->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
 
 
-                                    </div>
 
-                                    <div class="Destination-form-data">
-                                        <label for="mySelectPackage" class="form-label">
-                                            <div class="form-label-img"><img src="{{ asset('web/assets/images/map.svg') }}"
-                                                    class="form-label-img"></div> Package Type
-                                        </label>
-                                        <select class="form-select" id="mySelectPackage"
-                                            aria-label="Default select example">
-                                            <option>All Packages</option>
-                                            <option value="1" selected>Tour Packages</option>
-                                            <option value="2">Ocean Cruise Packages</option>
-                                            <option value="3">River Cruise Packages</option>
-                                        </select>
-                                    </div>
+                                            <div class="Destination-form-data">
+                                                <label for="mySelectDeparture" class="form-label">
+                                                    <div class="form-label-img"><img
+                                                            src="{{ 'web/assets/images/calendar.svg' }}"
+                                                            class="form-label-img"></div> Duration
+                                                </label>
+                                                <select name="departure_month" class="form-select" id="mySelectDeparture"
+                                                    aria-label="Default select example">
+                                                    <option value="all">All</option>
+                                                    @foreach ($months as $index => $month)
+                                                        <option value="{{ $index + 1 }}"
+                                                            {{ old('departure_month') == $index + 1 ? 'selected' : '' }}>
+                                                            {{ $month }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
 
-                                    <div class="btn-wrapper">
-                                        <button class="select-form-btn">Find your trip</button>
-                                    </div>
-                                </form>
+                                            <div class="Destination-form-data">
+                                                <label for="mySelectLength" class="form-label">
+                                                    <div class="form-label-img"><img
+                                                            src="{{ asset('web/assets/images/timer.svg') }}"
+                                                            class="form-label-img"></div> Month of Departure
+                                                </label>
+                                                <select class="form-select" id="mySelectLength"
+                                                    aria-label="Default select example">
+                                                    <option>All</option>
+                                                    <option value="1" selected>5-10 Days</option>
+                                                    <option value="2">11-15 Days</option>
+                                                    <option value="3">16 days or more</option>
+                                                </select>
+
+
+                                            </div>
+
+                                            <div class="Destination-form-data">
+                                                <label for="mySelectPackage" class="form-label">
+                                                    <div class="form-label-img"><img
+                                                            src="{{ asset('web/assets/images/map.svg') }}"
+                                                            class="form-label-img"></div> Package Type
+                                                </label>
+                                                <select class="form-select" id="mySelectPackage"
+                                                    aria-label="Default select example">
+
+                                                    <option value="1" selected>Tour Packages</option>
+                                                    <!-- <option value="2">Ocean Cruise Packages</option>
+                                                  <option value="3">River Cruise Packages</option> -->
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="btn-wrapper">
+                                            <button class="select-form-btn">Find your trip</button>
+                                        </div>
+                                    </form>
+
+                                </div>
                             </div>
+
+
                         </div>
+
                     </div>
+
+
+
                 </div>
             </div>
         </section>
-
         <!-- Tranding -->
         <section class="tranding">
             <div class="container">
@@ -311,36 +338,6 @@
                                         <h3>{{ $airline->name }}</h3>
                                     </li>
                                 @endforeach
-                                {{-- <li>
-                                <figure class="air-india">
-                                    <img src="{{ asset('web/assets/images/popular-two.png') }}">
-                                </figure>
-                                <h3>Air India</h3>
-                            </li>
-                            <li>
-                                <figure class="india-express">
-                                    <img src="{{ asset('web/asset/images/popular-three.png') }}">
-                                </figure>
-                                <h3>Air India Express</h3>
-                            </li>
-                            <li>
-                                <figure class="akasa-air">
-                                    <img src="{{ asset('web/assets/images/popular-four.png') }}">
-                                </figure>
-                                <h3>Akasa Air</h3>
-                            </li>
-                            <li>
-                                <figure class="vistara">
-                                    <img src="{{ asset('web/assets/images/popular-five.png') }}">
-                                </figure>
-                                <h3>Vistara</h3>
-                            </li>
-                            <li>
-                                <figure class="spicejet">
-                                    <img src="{{ asset('web/assets/images/popular-six.png') }}">
-                                </figure>
-                                <h3>SpiceJet</h3>
-                            </li> --}}
                             </ul>
                         @else
                             <p class="nodata-para">No Airlines available</p>
@@ -374,8 +371,15 @@
                                                     <h3>{{ $packages->name }}</h3>
                                                 </a>
                                                 <p>{{ $packages->sub_title ?? 'Per night before taxes and fees' }}</p>
-                                                @php $currency = $packages->destination->country->currency_symbol @endphp
-                                                <span class="inr">{{ $currency }} {{ $packages->price }}</span>
+                                                @php
+                                                    $currency = $packages->destination->country->currency_symbol;
+                                                    $price = $packages->price;
+                                                    $formattedPrice =
+                                                        floor($price) == $price
+                                                            ? number_format($price, 0)
+                                                            : number_format($price, 2);
+                                                @endphp
+                                                <span class="inr">{{ $currency }} {{ $formattedPrice }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -383,96 +387,6 @@
                             @else
                                 <p class="nodata-para">No Packages Available.</p>
                             @endif
-                            {{-- <div class="col-sm-6 col-md-4 col-lg-3">
-                                <div class="hotels-wapper">
-                                    <figure>
-                                        <img src="{{ asset('web/assets/images/hotel-two.png') }}">
-                                    </figure>
-                                    <div class="hotels-content">
-                                        <h3>Highlights of Norway</h3>
-                                        <p>Per night before taxes and fees</p>
-                                        <span class="inr">INR 1,937.53</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 col-md-4 col-lg-3">
-                                <div class="hotels-wapper">
-                                    <figure>
-                                        <img src="{{ asset('web/assets/images/hotel-three.png') }}">
-                                    </figure>
-                                    <div class="hotels-content">
-                                        <h3>Japan Great discovery</h3>
-                                        <p>Per night before taxes and fees</p>
-                                        <span class="inr">INR 1,417.86</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 col-md-4 col-lg-3">
-                                <div class="hotels-wapper">
-                                    <figure>
-                                        <img src="{{ asset('web/assets/images/hotel-four.png') }}">
-                                    </figure>
-                                    <div class="hotels-content">
-                                        <h3>Tunisia Beach Stay</h3>
-                                        <p>Per night before taxes and fees</p>
-                                        <span class="inr">INR 1,663.15</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 col-md-4 col-lg-3">
-                                <div class="hotels-wapper">
-                                    <figure>
-                                        <img src="{{ asset('web/assets/images/hotel-five.png') }}">
-                                    </figure>
-                                    <div class="hotels-content">
-                                        <h3>Central Europe Discovery Cruise</h3>
-                                        <p>Per night before taxes and fees</p>
-                                        <span class="inr">INR 3,012</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 col-md-4 col-lg-3">
-                                <div class="hotels-wapper">
-                                    <figure>
-                                        <img src="{{ asset('web/assets/images/hotel-six.png') }}">
-                                    </figure>
-                                    <div class="hotels-content">
-                                        <h3>The Aldott, Cyber City</h3>
-                                        <p>Per night before taxes and fees</p>
-                                        <span class="inr">INR 3,778</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 col-md-4 col-lg-3">
-                                <div class="hotels-wapper">
-                                    <figure>
-                                        <img src="{{ asset('web/assets/images/hotel-seven.png') }}">
-                                    </figure>
-                                    <div class="hotels-content">
-                                        <h3>Charming Portugal</h3>
-                                        <p>Per night before taxes and fees</p>
-                                        <span class="inr">INR 4,010</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 col-md-4 col-lg-3">
-                                <div class="hotels-wapper">
-                                    <figure>
-                                        <img src="{{ asset('web/assets/images/hotel-eight.png') }}">
-                                    </figure>
-                                    <div class="hotels-content">
-                                        <h3>Best of Ireland</h3>
-                                        <p>Per night before taxes and fees</p>
-                                        <span class="inr">INR 1,462</span>
-                                    </div>
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
                 </div>

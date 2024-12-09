@@ -18,6 +18,8 @@
     <link href="{{asset('web/assets/css/style.css')}}" rel="stylesheet" />
     <link href="{{asset('web/assets/css/responsive.css')}}" rel="stylesheet" />
     <link href="{{asset('web/assets/css/perfect-scrollbar.css')}}" rel="stylesheet" />   
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.8/slick-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.8/slick.css">
 </head>
 
 <body>

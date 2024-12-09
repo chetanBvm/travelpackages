@@ -20,18 +20,20 @@ class ContentManagementController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'subtitle' => 'required',
-            'image' => 'nullable|image|mimes:png,jpg,jpeg',
+            'image.*' => 'nullable|image|mimes:png,jpg,jpeg|min:2',
         ]);
+        
         try {
-            $asset_image = null;
+            $asset_images = [];
             if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
-                if ($file->getClientOriginalExtension() === 'jpg' || $file->getClientOriginalExtension() === 'jpeg' || $file->getClientOriginalExtension() === 'png') {
-                    $asset_image = $file->storeAs('uploads/home', $tempName, 'public');
+                foreach ($request->file('image') as $file) {
+                    $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();                           
+                    $path = $file->storeAs('uploads/home', $tempName, 'public');
+                    $asset_images[] = $path; 
                 }
             } else {
-                $asset_image = ContentManagement::where('type', 'home_banner')->value('image');
+                $existing_images = ContentManagement::where('type', 'home_banner')->value('image');
+                $asset_images = $existing_images ? json_decode($existing_images, true) : [];
             }
 
             ContentManagement::updateOrCreate(
@@ -39,7 +41,7 @@ class ContentManagementController extends Controller
                 [
                     'title' => $request->title,
                     'subtitle' => $request->subtitle,
-                    'image' => $asset_image,
+                    'image' => json_encode($asset_images),
                 ]
             );
 
@@ -110,7 +112,6 @@ class ContentManagementController extends Controller
 
     public function homeSectionSave(Request $request)
     {
-        // dd($request->all());
         $this->validate($request, [
             'title' => 'required',
             'subtitle' => 'required',

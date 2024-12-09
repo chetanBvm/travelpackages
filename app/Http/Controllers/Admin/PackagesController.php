@@ -7,6 +7,7 @@ use App\Http\Requests\PackageStoreRequest;
 use App\Models\Destination;
 use App\Models\Package;
 use App\Models\PackageImages;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -71,15 +72,23 @@ class PackagesController extends Controller
                 $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
                 $asset_image = $file->storeAs('uploads/packages', $tempName, 'public');
             }
+            $price = $validated['price'];
+            $taxPercentage = $validated['tax'];
+            // $taxAmount = ($price * $taxPercentage) / 100;
+            // $totalPrice = $price + $taxAmount;
+            
             Package::create([
                 'name' => $validated['name'],
                 'description' => $validated['description'],
-                'price' => $validated['price'],
+                'price' => $price,
                 'thumbnail' => $asset_image,
                 'days' => $validated['days'],
                 'status' => $validated['status'],
                 'destination_id' => $validated['destination_id'],
                 'sub_title' => $validated['sub_title'],
+                'tax' => $taxPercentage,
+                'tax_rate' => $validated['tax_rate'],
+                'total_price' => $validated['total_price'],
             ]);
             DB::commit();  //commit the transaction
 
@@ -135,6 +144,9 @@ class PackagesController extends Controller
                 'days' => $validated['days'],
                 'status' => $validated['status'],
                 'sub_title' => $validated['sub_title'],
+                'tax' => $validated['tax'],
+                'tax_rate' => $validated['tax_rate'],
+                'total_price' => $validated['total_price'],
             ]);
 
             //Check if the request has an image file
@@ -165,9 +177,7 @@ class PackagesController extends Controller
             DB::rollBack(); //Roll back the data if something goes wrong
 
             // Log the entire exception for better debugging (with stack trace)
-            Log::error('Error updating package: ' . $exception->getMessage(), [
-                'exception' => $exception,
-            ]);
+            Log::error('Error updating package: ' . $exception->getMessage());
 
             return redirect()->back()->with('error', 'something went wrong while updating the package');
         }

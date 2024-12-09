@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use App\Models\Package;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -70,18 +72,20 @@ class BookingsController extends Controller
     {
         $bookings = Booking::findOrFail($id);
         
+        $package = Package::findOrfail($bookings->package_id);
+                
         if($request->formData == 'Approved'){
             $bookings->status = 'approved';
             $bookings->save();
     
             // $paymentLink = route('payment.link', ['bookingId' => $bookings->id]);
 
-            $mailData = [
-                'name' => $bookings->passenger_name,
-                // 'link' => $paymentLink,
-            ];
+            // $mailData = [
+            //     'name' => $bookings->passenger_name,
+            //     // 'link' => $paymentLink,
+            // ];
     
-            Mail::send('email.approve_booking', $mailData, function ($message) use ($bookings) {
+            Mail::send('email.approve_booking', compact('bookings','package'), function ($message) use ($bookings) {
                 $message->to($bookings->c_email)->subject('Booking Approved');
             });
             
@@ -108,8 +112,23 @@ class BookingsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request,string $id)
     {
-        //
+        $booking = Booking::findOrFail($id);
+
+        $reason = $request->input('reason');
+
+        // $booking->delete();
+
+        $booking->status = 'Cancel';
+        $booking->cancellation_reason = $reason;
+        $booking->update();
+
+        //Sending the mail after the update the status cancel 
+        Mail::send('email.cancel_booking',compact('booking','reason'), function ($message) use ($booking) {
+            $message->to($booking->c_email)->subject('Booking Cancel');
+        });
+
+        return response()->json(['success','Booking Cancel successfully']);
     }
 }

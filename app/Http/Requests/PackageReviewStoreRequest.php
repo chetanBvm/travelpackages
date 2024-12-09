@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PackageStoreRequest extends FormRequest
+class PackageReviewStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,17 +22,11 @@ class PackageStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'days' => 'required|numeric|min:0',
-            'price' => 'numeric|min:0',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'package_id' => 'required|string',
+            'name' => 'required|string',
+            'description' =>  'required|string',
+            'images' =>  'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'string',
-            'destination_id' => 'string|exists:destinations,id',
-            'sub_title' => 'required|string',
-            'tax' => 'required|numeric|min:0',
-            'tax_rate' => 'numeric',
-            'total_price' => 'numeric',
         ];
     }
 
@@ -44,10 +38,9 @@ class PackageStoreRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'package_id.required' => 'Package name is required.Please select the package',
             'name.required' => 'name is required.',
-            'days.required' => 'days is required.',
-            'sub_title' => 'Please enter the sub title.',
-            'tax' => 'tax is required',
+            'description.required' => 'description is required.',
         ];
     }
 }
