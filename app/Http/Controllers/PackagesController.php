@@ -8,6 +8,8 @@ use App\Models\Country;
 use App\Models\Itinerary;
 use App\Models\Package;
 use App\Models\PackageImages;
+use App\Models\PackageReview;
+use App\Models\Promotion;
 use Illuminate\Http\Request;
 
 class PackagesController extends Controller
@@ -16,6 +18,7 @@ class PackagesController extends Controller
     {
         $data['package'] = Package::with('destination.country')->paginate(20);
         $data['banner'] = Banner::where('type','Packages')->first();
+        $data['country'] = Country::get();
         return view('web.packages.tourpackages', compact('data'));
     }
     /**
@@ -31,6 +34,8 @@ class PackagesController extends Controller
         $data['itinerary'] = Itinerary::where('package_id',$id)->first();
         $data['airport'] = Airport::get();
         $data['country'] = Country::get();
+        $data['coupon'] = Promotion::get();
+        $data['review'] = PackageReview::where('package_id',$id)->get();
         return view('web.packages.packagedetail',compact('packages','data'));
     }
 }

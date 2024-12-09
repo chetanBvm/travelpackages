@@ -1,6 +1,6 @@
 @php
     $title = 'My Vacay Host';
-    $filename = 'Create Packages';
+    $filename = 'Create Package Reviews';
 @endphp
 @extends('admin.layouts.app')
 @section('title', $title)
@@ -20,42 +20,33 @@
         @endif
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Create Packages</h4>
-                <a href="{{ route('package.index') }}" type="button" class="btn btn-info gray-btn d-lg-block m-l-15"><i
+                <h4 class="card-title">Create Package Reviews</h4>
+                <a href="{{ route('package-review.index') }}" type="button" class="btn btn-info gray-btn d-lg-block m-l-15"><i
                         class="bi bi-caret-left-fill"></i><span>Back</span></a>
 
             </div>
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form form-vertical" action="{{ route('package.store') }}" method="post"
+                    <form class="form form-vertical" action="{{ route('package-review.store') }}" method="post"
                         enctype="multipart/form-data" id="createDrawPackages">
                         @csrf
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="destination-vertical">Destination</label>
-                                        <select class="form-select" id="basicSelect" name="destination_id">
+                                        <label for="package-vertical">Package</label>
+                                        <select class="form-select" id="basicSelect" name="package_id">
                                             <option value="">---</option>
-                                            @foreach ($destination as $value)
-                                                <option value="{{ $value->id }}">{{ $value['country']->name }}</option>
+                                            @foreach ($package as $value)
+                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    @error('destination_id')
+                                    @error('pacakge_id')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="name-vertical">sub Title</label>
-                                        <input type="text" id="name-vertical" class="form-control" name="sub_title"
-                                            placeholder="sub title">
-                                    </div>
-                                    @error('sub_title')
-                                        <span class="text-danger" role="alert">*{{ $message }}</span>
-                                    @enderror
-                                </div>
+                              
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name</label>
@@ -65,57 +56,8 @@
                                     @error('name')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="price">Price</label>
-                                        <input type="text" id="price" class="form-control" name="price"
-                                            placeholder="price">
-                                    </div>
-                                    @error('price')
-                                        <span class="text-danger" role="alert">*{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="price">Tax(%)</label>
-                                        <input type="text" id="tax" class="form-control" name="tax"
-                                            placeholder="tax">
-                                    </div>
-                                    @error('tax')
-                                        <span class="text-danger" role="alert">*{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="price">Tax Amount</label>
-                                        <input type="text" id="tax_rate" class="form-control" name="tax_rate"
-                                            placeholder="tax rate" disabled>
-                                    </div>
-                                    @error('tax_rate')
-                                        <span class="text-danger" role="alert">*{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="price">Total Price</label>
-                                        <input type="text" id="total_price" class="form-control" name="total_price"
-                                            placeholder="total price" disabled>
-                                    </div>
-                                    @error('total_price')
-                                        <span class="text-danger" role="alert">*{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="days">Days</label>
-                                        <input type="text" id="days" class="form-control" name="days"
-                                            placeholder="days">
-                                    </div>
-                                    @error('days')
-                                        <span class="text-danger" role="alert">*{{ $message }}</span>
-                                    @enderror
-                                </div>
+                                </div>  
+                             
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="days">Status</label>
@@ -133,7 +75,7 @@
                                                 width="100px" height="auto" />
                                         </div>
                                         <label class="image" for="">Image</label>
-                                        <input type="file" class="form-control" name="thumbnail" id="main_image"
+                                        <input type="file" class="form-control" name="images" id="main_image"
                                             accept="image/jpeg, image/png, image/gif, image/jpg">
                                     </div>
                                 </div>
@@ -192,58 +134,39 @@
         $(document).ready(function() {
             $('#createDrawPackages').validate({ // initialize the plugin
                 rules: {
-                    destination_id: {
+                    package_id: {
                         required: true,
-                    },
-                    sub_title: {
-                        required: true
-                    },
+                    },                    
                     name: {
                         required: true
-                    },
-                    price: {
-                        required: true
-                    },
-                    days: {
-                        required: true
-                    },
+                    },                    
                     description: {
                         required: true
                     },
+                    images:{
+                        required:true
+                    },
                     status: {
                         required: true
-                    },
-
-                    tax: {
-                        required: true
-                    },
+                    },                    
                 },
                 // Customizing error messages
                 messages: {
-                    destination_id: {
-                        required: "Please select the destination."
-                    },
-                    sub_title: {
-                        required: "Please enter the sub title."
+                    package_id: {
+                        required: "Please select the package."
                     },
                     name: {
-                        required: "Please enter the name of the package."
-                    },
-                    price: {
-                        required: "Please enter the price."
-                    },
-                    days: {
-                        required: "Please specify the number of days."
+                        required: "Please enter the name."
                     },
                     description: {
                         required: "Please provide a description."
                     },
+                    images:{
+                        required:"Please select the image."
+                    },
                     status: {
                         required: "Please select the status."
                     },
-                    tax: {
-                        required: 'Please enter the tax.'
-                    }
                 },
                 errorPlacement: function(error, element) {
                     var placement = $(element).data('error');
@@ -257,21 +180,6 @@
                 errorClass: 'invalid', // Assign a custom class to the error message
                 validClass: 'valid' // Optionally, define a class for valid inputs
             });
-        });
-
-        $(document).ready(function() {
-            $('#price, #tax').on('keyup', function() {
-                const price = parseFloat($('#price').val()) || 0;
-                const taxPercentage = parseFloat($('#tax').val()) || 0;
-
-                // Calculate the tax amount and total price
-                const taxAmount = (price * taxPercentage) / 100;
-                const totalPrice = price + taxAmount;
-
-                // Set the values in the respective input fields
-                $('#tax_rate').val(taxAmount.toFixed(2));
-                $('#total_price').val(totalPrice.toFixed(2));
-            });
-        })
+        });       
     </script>
 @endsection

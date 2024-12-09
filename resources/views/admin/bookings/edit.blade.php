@@ -31,7 +31,7 @@
                                             <option value="{{ $bookings->status }}">{{ $bookings->status }}</option>
                                             <option value="Booking">Booking</option>
                                             <option value="Approved">Approved</option>
-                                            <option value="Cancel">Cancelled</option>
+                                            {{-- <option value="Cancel">Cancelled</option> --}}
                                             <option value="rejected">Rejected</option>
                                         </select>
                                     </div>

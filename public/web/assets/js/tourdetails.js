@@ -84,10 +84,10 @@ $('#modal-form').submit(function (event) {
     var thisConfirmation = $('input[name="c_email"]', this);
     var thisPhone = $('input[name="phone"]', this);
 
-    $url = "/booking/store";
+    $url = $('#modal-form').attr('action');
     $.ajax({
         method: 'POST',
-        url: "/booking/store",
+        url: $url,
         timeout: 20000,
         data: vars,
         success: function (response) {

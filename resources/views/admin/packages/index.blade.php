@@ -50,6 +50,7 @@
                                     <th>Name</th>
                                     {{-- <th>image</th> --}}
                                     <th>Price</th>
+                                    <th>Total Price</th>
                                     <th>Days</th>
                                     <th>Status</th>
                                     <th width="100px">Action</th>
@@ -85,6 +86,10 @@
                     {
                         data: 'price',
                         name: 'price'
+                    },
+                    {
+                        data:'total_price',
+                        name: 'total_price'
                     },
                     {
                         data: 'days',

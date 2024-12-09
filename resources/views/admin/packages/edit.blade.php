@@ -60,9 +60,39 @@
                                     <div class="form-group">
                                         <label for="days">Price</label>
                                         <input type="text" id="price" class="form-control" name="price"
-                                            value="{{ $package->price }}" placeholder="price">
+                                            value="{{ floor($package->price) }}" placeholder="price">
                                     </div>
                                     @error('price')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="price">Tax(%)</label>
+                                        <input type="text" id="tax" class="form-control" name="tax"
+                                            placeholder="tax" value="{{floor($package->tax)}}"> 
+                                    </div>
+                                    @error('tax')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="price">Tax Amount</label>
+                                        <input type="text" id="tax_rate" class="form-control" name="tax_rate"
+                                            placeholder="tax rate" value="{{floor($package->tax_rate) ?? ''}}" readonly>
+                                    </div>
+                                    @error('tax_rate')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="price">Total Price</label>
+                                        <input type="text" id="total_price" class="form-control" name="total_price"
+                                            placeholder="total price" value="{{floor($package->total_price) ?? ''}}" readonly>
+                                    </div>
+                                    @error('total_price')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -93,9 +123,9 @@
                                     <div class="form-group">
                                         <label class="image" for="">Image</label>
                                         <!-- Display the existing image if available -->
-                                        @if ($package->images)
+                                        @if ($package->thumbnail)
                                             <div>
-                                                <img id="imagePreview" src="{{ asset('storage/' . $package->images) }}"
+                                                <img id="imagePreview" src="{{ asset('storage/' . $package->thumbnail) }}"
                                                     alt="Current Image" width="100" height="100">
                                             </div>
                                         @endif
@@ -179,6 +209,9 @@
                     status: {
                         required: true
                     },
+                    tax: {
+                        required: true
+                    },
                 },
                 // Customizing error messages
                 messages: {
@@ -199,6 +232,9 @@
                     },
                     status: {
                         required: "Please select the status."
+                    },
+                    tax: {
+                        required: 'Please enter the tax.'
                     }
                 },
                 errorPlacement: function(error, element) {
@@ -214,5 +250,20 @@
                 validClass: 'valid' // Optionally, define a class for valid inputs
             });
         });
+
+        $(document).ready(function() {
+            $('#price, #tax').on('keyup', function() {
+                const price = parseFloat($('#price').val()) || 0;
+                const taxPercentage = parseFloat($('#tax').val()) || 0;
+
+                // Calculate the tax amount and total price
+                const taxAmount = (price * taxPercentage) / 100;
+                const totalPrice = price + taxAmount;
+                
+                // Set the values in the respective input fields
+                $('#tax_rate').val(taxAmount.toFixed(2));
+                $('#total_price').val(totalPrice.toFixed(2));
+            });
+        })
     </script>
 @endsection

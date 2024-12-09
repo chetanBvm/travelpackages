@@ -10,7 +10,7 @@
 
         // Generate the months for the current year
         for ($i = 0; $i <= 12; $i++) {
-            $months[] = $currentYear->copy()->addMonths($i)->format('M Y'); 
+            $months[] = $currentYear->copy()->addMonths($i)->format('M Y');
         }
     @endphp
     <div class="main">
@@ -52,10 +52,14 @@
 
                                         <div class="Destination-form-data">
                                             <select class="form-select" id="mySelect" aria-label="Default select example">
-                                                <option value="1" selected> Duration</option>
-                                                <option value="2">6-9 Days</option>
-                                                <option value="3">10-15 Days</option>
-                                                <option value="4">16-21 Days</option>
+                                                <option value="0" selected> Destination</option>
+                                                @foreach ($data['country'] as $countries)
+                                                    <option value="{{ $countries->id }}">{{ $countries->name }}</option>
+                                                @endforeach
+                                                {{-- <option value="2">Africa / Middle East</option>
+                                                <option value="3">Asia</option>
+                                                <option value="4">Central America</option>
+                                                <option value="5"> Europe</option> --}}
                                             </select>
                                         </div>
 
@@ -64,7 +68,9 @@
                                                 aria-label="Default select example">
                                                 <option selected disabled>Departure Month</option>
                                                 @foreach ($months as $index => $month)
-                                                    <option value="{{ $index + 1 }}" {{ old('departure_month') == ($index + 1) ? 'selected' : '' }}>{{ $month }}</option>
+                                                    <option value="{{ $index + 1 }}"
+                                                        {{ old('departure_month') == $index + 1 ? 'selected' : '' }}>
+                                                        {{ $month }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -79,7 +85,6 @@
                                                 <option value="4">22+ Days</option>
                                             </select>
 
-
                                         </div>
 
                                         <div class="Destination-form-data">
@@ -87,11 +92,9 @@
                                                 aria-label="Default select example">
                                                 <option selected>Package Type</option>
                                                 <option value="1">Tour Packages</option>
-                                                <option value="2">Ocean Cruise Packages</option>
-                                                <option value="3">River Cruise Packages</option>
+                                                {{-- <option value="2">Ocean Cruise Packages</option>
+                                                <option value="3">River Cruise Packages</option> --}}
                                             </select>
-
-
                                         </div>
 
 
@@ -117,17 +120,27 @@
 
                     <div class="sort-package-filters">
                         <div class="row align-items-center">
-                            <div class="col-lg-4">
+                            <div class="col-lg-5">
                                 <div class="sort-by-main">
                                     <span class="sort-by">Sort By :</span>
 
+                                    <div class="Destination-form-data">
+                                        <select class="form-select" id="myfilters"
+                                            aria-label="Default select example">
+                                            <option selected>Duration</option>
+                                            <option value="1">Shortest to Longest</option>
+                                            <option value="2" >Longest to Shortest</option>
+                               
+                                        </select>
+
+
+                                    </div>
 
                                     <div class="Destination-form-data">
-                                        <select class="form-select" id="myfilters" aria-label="Default select example">
-                                            <option selected>Price: (Lowest)</option>
-                                            <option value="1">Price: (Medium)</option>
-                                            <option value="2">Price: (Highest)</option>
-
+                                        <select class="form-select" id="myduration" aria-label="Default select example">
+                                            <option selected>Price</option>
+                                            <option value="1">Low to High</option>
+                                            <option value="2">High to Low</option>
                                         </select>
 
 
@@ -135,13 +148,13 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-8">
+                            <div class="col-lg-7">
                                 <div class="select-package">
                                     <span>Package type :</span>
                                     <div class="package-select-data">
 
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="exampleRadios1"
+                                            <input class="form-check-input" type="checkbox" name="exampleRadios1"
                                                 id="exampleRadios1" value="option1">
                                             <label class="form-check-label" for="exampleRadios1">
                                                 24 Semi-organized
@@ -150,7 +163,7 @@
                                     </div>
                                     <div class="package-select-data">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="exampleRadios2"
+                                            <input class="form-check-input" type="checkbox" name="exampleRadios2"
                                                 id="exampleRadios2" value="option2">
                                             <label class="form-check-label" for="exampleRadios2">
                                                 12 Freedom
@@ -159,7 +172,7 @@
                                     </div>
                                     <div class="package-select-data">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="exampleRadios3"
+                                            <input class="form-check-input" type="checkbox" name="exampleRadios3"
                                                 id="exampleRadios3" value="option3">
                                             <label class="form-check-label" for="exampleRadios3">
                                                 14 Organized
@@ -194,21 +207,27 @@
                                             </li>
                                             <li>
                                                 @php
-                                                    $currency = $packages->destination->country->currency_symbol
+                                                    $currency = $packages->destination->country->currency_symbol;
                                                 @endphp
-                                                <h3> {{$currency}} {{ $packages->price }}</h3>
+                                                <h3> {{ $currency }} {{ $packages->price }}</h3>
                                                 <span class="start-price">Starting Price</span>
                                             </li>
                                         </ul>
                                         <div class="package-left-middle">
-                                            <p>{!! $packages->description !!}</p>
-                                            {{-- <p> On the western coast, Goa is known for its endless beaches, stellar
-                                                nightlife, eclectic seafood, world-heritage listed architecture. Spread
-                                                across jus...</p> --}}
-                                            {{-- <a class="view-more-btn" href="package-single.php">View More</a> --}}
+                                            @php
+                                                $truncatedDescription = Str::limit(
+                                                    strip_tags($packages->description),
+                                                    200,
+                                                    '...',
+                                                );
+                                            @endphp
+                                            <p>{!! $truncatedDescription !!}</p>
+                                            <a class="view-more-btn"
+                                                href="{{ route('web.packageDetails', $packages->id) }}">View More</a>
                                         </div>
 
-                                        <a class="travel-btn" href="{{ route('web.packageDetails', $packages->id) }}">Send
+                                        <a class="travel-btn"
+                                            href="{{ route('web.packageDetails', $packages->id) }}">Send
                                             Enquiry</a>
                                     </div>
                                 </div>

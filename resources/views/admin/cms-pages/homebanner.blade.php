@@ -59,23 +59,30 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label>Image <span class="text-danger">*</span></label>
-                                        <input type="file" name="image" id="main_image"
+                                        <input type="file" name="image[]" id="main_image"
                                             class="form-control @error('image') is-invalid @enderror"
-                                            value="{{ old('image') }}">
+                                            value="{{ old('image') }}" multiple>
                                         @error('image')
                                             <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
-                                    <div>
+                                    <div class="mt-3">
                                         @if ($info && isset($info->image))
-                                            <img id="imagePreview" class="profile-image"
-                                                src="{{ asset('storage') . '/' . $info->image }}" alt="your image"
-                                                width="100px" height="auto" />
+                                            @php
+                                                $images = json_decode($info->image, true);
+                                            @endphp
+                                            @if ($images && is_array($images))
+                                                @foreach ($images as $image)
+                                                    <img id="imagePreview" class="profile-image"
+                                                        src="{{ asset('storage/' . $image) }}" alt="your image"
+                                                        width="100px" height="auto" style="margin-right: 10px;" />
+                                                @endforeach
+                                            @endif
                                         @else
+                                            <p class="text-muted">No images Uploded yet</p>
                                         @endif
-
                                     </div>
                                 </div>
                                 <div class="col-12 d-flex justify-content-end">

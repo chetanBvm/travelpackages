@@ -108,6 +108,7 @@ class PackageImageController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        
         $packageImage = PackageImages::findOrFail($id);
 
         $request->validate([
@@ -115,7 +116,10 @@ class PackageImageController extends Controller
         ]);
 
         try {
-           
+            $packageImage->update([
+                'package_id' => $request->package_id,               
+            ]);
+            
             if ($request->hasFile('images')) {
 
                 // Validate the image file (optional, add size/extension validation if necessary)
@@ -132,8 +136,8 @@ class PackageImageController extends Controller
 
                 $asset_image = $file->storeAs('uploads/packages', $tempName, 'public');
                 $packageImage->update([
-                    'images' => $asset_image,
                     'package_id' => $request->package_id,
+                    'images' => $asset_image,
                 ]);
             }
 
