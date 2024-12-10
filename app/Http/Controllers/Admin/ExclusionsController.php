@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\InclusionStoreRequests;
-use App\Models\Inclusions;
+use App\Http\Requests\ExclusionsStoreRequest;
+use App\Models\Exclusions;
 use App\Models\Package;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
-class InclusionsController extends Controller
+class ExclusionsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,19 +19,19 @@ class InclusionsController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Inclusions::with('package');
+            $data = Exclusions::with('package');
 
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $urlpath = url('admin/inclusion');
+                    $urlpath = url('admin/exclusion');
                     return '<a href="' . $urlpath . '/' . $row->id . '/edit' . '" class="edit"><i class="material-icons">edit</i></a><a href="javascript:void(0);" onClick="deleteFunc(' . $row->id . ')" class="delete"><i class="material-icons">delete</i></a>';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
 
-        return view('admin.inclusion.index');
+        return view('admin.exclusion.index');
     }
 
     /**
@@ -50,19 +50,19 @@ class InclusionsController extends Controller
         // Get package if they exist
         $package = Package::get();
         // Return the view with itinerary;
-        return view('admin.inclusion.create', compact('package'));
+        return view('admin.exclusion.create', compact('package'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(InclusionStoreRequests $request)
+    public function store(ExclusionsStoreRequest $request)
     {
         DB::beginTransaction();
         try {
             $validated = $request->validated();
 
-            Inclusions::create([
+            Exclusions::create([
                 'package_id' => $validated['package_id'],
                 'name' => $validated['name'],
                 'type' => 'inclusion',
@@ -71,14 +71,14 @@ class InclusionsController extends Controller
             ]);
             DB::commit();  //commit the transaction
 
-            return redirect()->route('inclusion.index')->with('success', 'Inclusion Created Successfully!');
+            return redirect()->route('exclusion.index')->with('message', 'Exclusion Created Successfully!');
         } catch (\Exception $exception) {
             DB::rollBack(); //Roll back the data if something goes wrong
 
             // Log the entire exception for better debugging (with stack trace)
-            Log::error('Error creating inclusion: ' . $exception->getMessage());
+            Log::error('Error creating exclusion: ' . $exception->getMessage());
 
-            return redirect()->back()->with('error', 'something went wrong while creating the inclusion');
+            return redirect()->back()->with('error', 'something went wrong while creating the exclusion');
         }
     }
 
@@ -95,18 +95,18 @@ class InclusionsController extends Controller
      */
     public function edit(string $id)
     {
-        $inclusion = Inclusions::findOrFail($id);
+        $exclusion = Exclusions::findOrFail($id);
         $package = Package::get();
-        return view('admin.inclusion.edit', compact('inclusion', 'package'));
+        return view('admin.exclusion.edit', compact('exclusion', 'package'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(InclusionStoreRequests $request, string $id)
+    public function update(ExclusionsStoreRequest $request, string $id)
     {
         //find the itinerary by its ID
-        $inclusion = Inclusions::findOrFail($id);
+        $inclusion = Exclusions::findOrFail($id);
         DB::beginTransaction();
         try {
             // Validate the incoming request data
@@ -122,14 +122,14 @@ class InclusionsController extends Controller
 
             DB::commit(); //commit the transaction
 
-            return redirect()->route('inclusion.index')->with('success', 'Inclusion updated successfully!');
+            return redirect()->route('exclusion.index')->with('message', 'Exclusion updated successfully!');
         } catch (\Exception $exception) {
             DB::rollBack(); //Roll back the data if something goes wrong
 
             // Log the entire exception for better debugging (with stack trace)
-            Log::error('Error updating inclusion: ' . $exception->getMessage());
+            Log::error('Error updating exclusion: ' . $exception->getMessage());
 
-            return redirect()->back()->with('error', 'something went wrong while updating the inclusion');
+            return redirect()->back()->with('error', 'something went wrong while updating the exclusion');
         }
     }
 
@@ -138,8 +138,8 @@ class InclusionsController extends Controller
      */
     public function destroy(string $id)
     {
-        Inclusions::find($id)->delete();
+        Exclusions::find($id)->delete();
 
-        return response()->json(['success' => 'Inclusion deleted successfully!']);
+        return response()->json(['success' => 'Exclusion deleted successfully!']);
     }
 }

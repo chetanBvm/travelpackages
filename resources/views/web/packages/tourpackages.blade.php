@@ -52,14 +52,10 @@
 
                                         <div class="Destination-form-data">
                                             <select class="form-select" id="mySelect" aria-label="Default select example">
-                                                <option value="0" selected> Destination</option>
+                                                <option> Destination</option>
                                                 @foreach ($data['country'] as $countries)
                                                     <option value="{{ $countries->id }}">{{ $countries->name }}</option>
-                                                @endforeach
-                                                {{-- <option value="2">Africa / Middle East</option>
-                                                <option value="3">Asia</option>
-                                                <option value="4">Central America</option>
-                                                <option value="5"> Europe</option> --}}
+                                                @endforeach                                    
                                             </select>
                                         </div>
 
@@ -91,17 +87,13 @@
                                             <select class="form-select" id="mySelectPackage"
                                                 aria-label="Default select example">
                                                 <option selected>Package Type</option>
-                                                <option value="1">Tour Packages</option>
-                                                {{-- <option value="2">Ocean Cruise Packages</option>
-                                                <option value="3">River Cruise Packages</option> --}}
+                                                @foreach ($data['packageType'] as $packagetype)
+                                                    <option value="{{ $packagetype->id }}">{{ $packagetype->name }}</option>
+                                                @endforeach
+
                                             </select>
                                         </div>
-
-
-
-
                                     </div>
-
                                 </div>
 
                                 <div class="col-lg-2 col-md-12">
@@ -114,10 +106,6 @@
                         </div>
                     </div>
 
-
-
-
-
                     <div class="sort-package-filters">
                         <div class="row align-items-center">
                             <div class="col-lg-5">
@@ -125,12 +113,11 @@
                                     <span class="sort-by">Sort By :</span>
 
                                     <div class="Destination-form-data">
-                                        <select class="form-select" id="myfilters"
-                                            aria-label="Default select example">
+                                        <select class="form-select" id="myfilters" aria-label="Default select example">
                                             <option selected>Duration</option>
                                             <option value="1">Shortest to Longest</option>
-                                            <option value="2" >Longest to Shortest</option>
-                               
+                                            <option value="2">Longest to Shortest</option>
+
                                         </select>
 
 
@@ -185,7 +172,60 @@
                     </div>
                 </div>
 
+                @if($filteredPackages->isNotEmpty())
+                <div class="package-bottom">
+                    @foreach ($filteredPackages as $packages)
+                        <div class="package-wapper">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="package-left">
+                                        <figure>
+                                            <img src="{{ asset('storage') . '/' . $packages->thumbnail }}">
+                                            {{-- <img src="images/package-one.png"> --}}
+                                        </figure>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="package-left">
+                                        <ul class="package-left-head">
+                                            <li>
+                                                <h2>{{ $packages->name }}</h2>
+                                                <span class="day-night">{{ $packages->days }} Days</span>
+                                            </li>
+                                            <li>
+                                                @php
+                                                    $currency = $packages->destination->country->currency_symbol;
+                                                @endphp
+                                                <h3> {{ $currency }} {{ $packages->price }}</h3>
+                                                <span class="start-price">Starting Price</span>
+                                            </li>
+                                        </ul>
+                                        <div class="package-left-middle">
+                                            @php
+                                                $truncatedDescription = Str::limit(
+                                                    strip_tags($packages->description),
+                                                    200,
+                                                    '...',
+                                                );
+                                            @endphp
+                                            <p>{!! $truncatedDescription !!}</p>
+                                            <a class="view-more-btn"
+                                                href="{{ route('web.packageDetails', $packages->id) }}">View More</a>
+                                        </div>
 
+                                        <a class="travel-btn"
+                                            href="{{ route('web.packageDetails', $packages->id) }}">Send
+                                            Enquiry</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                @elseif (request()->hasAny(['destination', 'duration', 'package_type']))
+                <p>No Packages Found</p>
+                @else
+                
                 <div class="package-bottom">
                     @foreach ($data['package'] as $packages)
                         <div class="package-wapper">
@@ -360,6 +400,7 @@
                         <button class="next-btn">Next <i class="fa-solid fa-angle-right"></i></button>
                     </div> --}}
                 </div>
+                @endif
             </div>
     </div>
     </section>

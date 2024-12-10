@@ -1,6 +1,6 @@
 @php
     $title = 'My Vacay Host';
-    $filename = 'Inclusion';
+    $filename = 'Package Type';
 @endphp
 @extends('admin.layouts.app')
 @section('title', $title)
@@ -20,14 +20,14 @@
             @endif
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Inclusion</h3>
+                    <h3>Package Type</h3>
                     <p class="text-subtitle text-muted">For user to check they list</p>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Inclusion</li>
+                            <li class="breadcrumb-item active" aria-current="page">Package Type</li>
                         </ol>
                     </nav>
                 </div>
@@ -36,21 +36,21 @@
         <section>
             <div class="card">
                 <div class="card-header">
-                    <span>Inclusion</span>
-                    <a href="{{ route('inclusion.create') }}" type="button"
-                        class="btn btn-info d-none d-lg-block m-l-15">&#x002B; Add New</a>
+                    <span>Package Type</span>
+                    <a href="{{ route('package-type.create') }}" type="button"
+                    class="btn btn-info d-none d-lg-block m-l-15">&#x002B; Add New</a>
                 </div>
 
                 <div class="card-body">
                     <table class="table table-striped data-table">
                         <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Package Name</th>
-                                <th>Type</th>
-                                <th>Status</th>
-                                <th width="100px">Action</th>
-                            </tr>
+                                <tr>
+                                    <th>No</th>
+                                  
+                                    <th>Name</th>
+                                    <th>Status</th>
+                                    <th width="100px">Action</th>
+                                </tr>
                         </thead>
                         <tbody>
                         </tbody>
@@ -66,22 +66,18 @@
             var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('inclusion.index') }}",
+                ajax: "{{ route('package-type.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'
-                    },
+                    },                    
                     {
-                        data: 'package.name',
-                        name: 'package.name'
-                    },
+                        data: 'name',
+                        name: 'name'
+                    },                    
                     {
-                        data: 'type',
-                        name: 'type'
-                    },                               
-                    {
-                        data: 'status',
-                        name: 'status'
+                        data:'status',
+                        name:'status'
                     },
                     {
                         data: 'action',
@@ -93,7 +89,7 @@
             });
 
         });
-        //Delete the Inclusion
+        //Delete the Package type
         function deleteFunc(id) {
             Swal.fire({
                 title: 'Are you sure?',
@@ -108,7 +104,7 @@
                     // ajax
                     $.ajax({
                         method: "DELETE",
-                        url: "{{ route('inclusion.destroy', ':id') }}".replace(':id', id),
+                        url: "{{ route('package-type.destroy', ':id') }}".replace(':id', id),
                         data: {
                             id: id,
                             "_token": "{{ csrf_token() }}"
@@ -118,7 +114,7 @@
                             console.log(res);
                             Swal.fire(
                                 'Deleted!',
-                                'Inclusion delete successfully!',
+                                'Package type delete successfully!',
                                 'success'
                             )
                             var oTable = $('.data-table').dataTable();

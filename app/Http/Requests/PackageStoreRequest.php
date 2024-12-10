@@ -33,6 +33,8 @@ class PackageStoreRequest extends FormRequest
             'tax' => 'required|numeric|min:0',
             'tax_rate' => 'numeric',
             'total_price' => 'numeric',
+            'packagetype_id' => 'required|string|exists:package_types,id',
+            'accommodation' => 'required|string|min:1',
         ];
     }
 
@@ -46,8 +48,10 @@ class PackageStoreRequest extends FormRequest
         return [
             'name.required' => 'name is required.',
             'days.required' => 'days is required.',
-            'sub_title' => 'Please enter the sub title.',
-            'tax' => 'tax is required',
+            'sub_title.required' => 'Please enter the sub title.',
+            'tax.required' => 'tax is required.',
+            'packagetype_id.required' => 'Please select the package type.',
+            'accommodation.required' => 'Please provide the accommodation description',
         ];
     }
 }

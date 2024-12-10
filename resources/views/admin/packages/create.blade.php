@@ -48,6 +48,16 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
+                                        <label for="first-name-vertical">Name</label>
+                                        <input type="text" id="first-name-vertical" class="form-control" name="name"
+                                            placeholder="Name" value="{{old('name')}}">
+                                    </div>
+                                    @error('name')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
                                         <label for="name-vertical">sub Title</label>
                                         <input type="text" id="name-vertical" class="form-control" name="sub_title"
                                             placeholder="sub title">
@@ -56,16 +66,7 @@
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="first-name-vertical">Name</label>
-                                        <input type="text" id="first-name-vertical" class="form-control" name="name"
-                                            placeholder="Name">
-                                    </div>
-                                    @error('name')
-                                        <span class="text-danger" role="alert">*{{ $message }}</span>
-                                    @enderror
-                                </div>
+                                
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="price">Price</label>
@@ -90,7 +91,7 @@
                                     <div class="form-group">
                                         <label for="price">Tax Amount</label>
                                         <input type="text" id="tax_rate" class="form-control" name="tax_rate"
-                                            placeholder="tax rate" disabled>
+                                            placeholder="tax rate" readonly>
                                     </div>
                                     @error('tax_rate')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -100,9 +101,22 @@
                                     <div class="form-group">
                                         <label for="price">Total Price</label>
                                         <input type="text" id="total_price" class="form-control" name="total_price"
-                                            placeholder="total price" disabled>
+                                            placeholder="total price" readonly>
                                     </div>
                                     @error('total_price')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="days">Package Type</label>
+                                        <select class="form-select" id="basicSelect" name="packagetype_id">
+                                            @foreach ($packagetype as $value)
+                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('packagetype_id')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -116,7 +130,7 @@
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Status</label>
                                         <select class="form-select" id="basicSelect" name="status">
@@ -140,9 +154,19 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="default">Description</label>
-                                        <textarea name="description" id="default" cols="30" rows="10"></textarea>
+                                        <textarea name="description" id="default" cols="30" rows="10">{{old('description')}}</textarea>
                                     </div>
                                     @error('description')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="default-acc">Accommodation Description<span class="text-danger">*</span></label>
+                                        <textarea name="accommodation" id="default-acc" cols="30" rows="10">{{old('accommodation')}}</textarea>
+                                    </div>
+                                    @error('accommodation')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -167,6 +191,9 @@
     <script>
         tinymce.init({
             selector: '#default'
+        });
+        tinymce.init({
+            selector: '#default-acc'
         });
         tinymce.init({
             selector: '#dark',
@@ -217,6 +244,9 @@
                     tax: {
                         required: true
                     },
+                    packagetype_id:{
+                        required: true
+                    },
                 },
                 // Customizing error messages
                 messages: {
@@ -243,6 +273,9 @@
                     },
                     tax: {
                         required: 'Please enter the tax.'
+                    },
+                    packagetype_id:{
+                        required: 'Please select the Package type'
                     }
                 },
                 errorPlacement: function(error, element) {

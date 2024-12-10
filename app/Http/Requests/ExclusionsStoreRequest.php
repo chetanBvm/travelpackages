@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class InclusionStoreRequests extends FormRequest
+class ExclusionsStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,7 +30,7 @@ class InclusionStoreRequests extends FormRequest
         ];
     }
 
-     /**
+    /**
      * Get the error messages for the defined validation rules.
      *
      * @return array<string, string>

@@ -500,21 +500,22 @@
                                 aria-labelledby="pills-Itinerary-tab" tabindex="0">
                                 <div class="heading-main">
                                     <div class="heading-inner">
-                                        <h2>{{ $data['itinerary']->name }}</h2>
+                                        <h2>{{ $data['itinerary']->name ?? '' }}</h2>
                                         <p>{{ $packages->days }} Days</p>
                                     </div>
                                     <div class="heading-main-right">
                                         <div class="download-data">
-                                            <img src="{{ asset('web/assets/images/download.svg') }}">
+                                            <a href="{{ route('download.pdf', $packages->id) }}"><img
+                                                    src="{{ asset('web/assets/images/download.svg') }}"></a>
                                             <span>Package Details</span>
                                         </div>
-                                        <a class="travel-btn btn" href="javascript::">See Dates and Prices</a>
+                                        <a class="travel-btn btn" onclick="dates();">See Dates and Prices</a>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="itinerary-inner">
-                                            {!! $data['itinerary']->description !!}
+                                            {!! $data['itinerary']->description ?? '' !!}
                                         </div>
                                     </div>
                                 </div>
@@ -524,62 +525,75 @@
                                 aria-labelledby="pills-Accommodation-tab" tabindex="0">
                                 <div class="heading-main">
                                     <div class="heading-inner">
-                                        <h2>AZORES ESCAPE</h2>
-
+                                        <h2>{{ $data['itinerary']->name ?? '' }}</h2>
                                     </div>
                                     <div class="heading-main-right">
-                                        <a class="travel-btn btn" href="javascript::">See Dates and Prices</a>
+                                        <a class="travel-btn btn" onclick="dates();">See Dates and Prices</a>
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="itinerary-inner">
-                                            <p>Experience a comfortable stay in our Classic Hotels, carefully chosen for
+                                            {!! $packages->accommodation !!}
+                                            {{-- <p>Experience a comfortable stay in our Classic Hotels, carefully chosen for
                                                 their value, convenient locations, and proximity to major attractions. Relax
                                                 in well-maintained rooms with thoughtful amenities, savor a variety of
                                                 breakfast choices, and benefit from attentive service to enhance your travel
                                                 experience.</p>
                                             <p>• 7 nights in Ponta Delgada at the Sao Miguel Park 4* hotel (or similar) in a
-                                                standard room</p>
+                                                standard room</p> --}}
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="accommodation-images">
                                                 <figure>
-                                                    <img src="images/Accommodation1.jpg">
+                                                    @if ($packages->images[0] && count($packages->images) > 0)
+                                                        <img
+                                                            src="{{ asset('storage') . '/' . $packages->images[0]->images }}" />
+                                                    @endif
+                                                    {{-- <img src="images/Accommodation1.jpg"> --}}
                                                 </figure>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="accommodation-images">
-                                                <figure>
-                                                    {{-- @if (count($packages->images) > 0)
-                                                    <img src="{{asset('storage').'/'.$packages->images[1]->images ?? ''}}" />
-                                                    @endif --}}
-                                                    <img src="images/Accommodation2.jpg">
-                                                </figure>
+                                                @if (isset($packages->images[1]))
+                                                    <figure>
+                                                        @if ($packages->images[1] && count($packages->images) > 0)
+                                                            <img
+                                                                src="{{ asset('storage') . '/' . $packages->images[1]->images }}" />
+                                                        @endif
+
+                                                        {{-- <img src="images/Accommodation2.jpg"> --}}
+                                                    </figure>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="accommodation-images">
-                                                <figure>
-                                                    {{-- @if (count($packages->images) > 0)
-                                                    <img src="{{asset('storage').'/'.$packages->images[2]->images ?? ''}}" />
-                                                    @endif --}}
-                                                    <img src="images/Accommodation3.jpg">
-                                                </figure>
+                                                @if (isset($packages->images[2]))
+                                                    <figure>
+                                                        @if ($packages->images[2] && count($packages->images) > 0)
+                                                            <img
+                                                                src="{{ asset('storage') . '/' . $packages->images[2]->images }}" />
+                                                        @endif
+                                                        {{-- <img src="images/Accommodation3.jpg"> --}}
+                                                    </figure>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="tree-img accommodation-images">
-                                                <figure>
-                                                    {{-- @if (count($packages->images) > 0)
-                                                    <img src="{{asset('storage').'/'.$packages->images[3]->images ?? ''}}" />
-                                                    @endif --}}
-                                                    <img src="images/Accommodation4.jpg">
-                                                </figure>
+                                                @if (isset($packages->images[3]))
+                                                    <figure>
+                                                        @if ($packages->images[3] && count($packages->images) > 0)
+                                                            <img
+                                                                src="{{ asset('storage') . '/' . $packages->images[3]->images }}" />
+                                                        @endif
+                                                        {{-- <img src="images/Accommodation4.jpg"> --}}
+                                                    </figure>
+                                                @endif
                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2">
                                                     <figcaption>+{{ $packages->images->count() ?? '' }} photos <i
                                                             class="fa-solid fa-circle-arrow-right"></i>
@@ -601,13 +615,18 @@
 
                                     </div>
                                     <div class="heading-main-right">
-                                        <a class="travel-btn btn" href="javascript::">See Dates and Prices</a>
+                                        <a class="travel-btn btn" onclick="dates();">See Dates and Prices</a>
                                     </div>
                                 </div>
 
                                 <div class="inclusions-data">
+
                                     <ul>
-                                        <li> <img src="images/tick-circle.svg">Round-trip international flights between
+                                        <li>
+                                            {{-- <img src="{{asset('web/assets/images/tick-circle.svg')}}"> --}}
+                                            {!! $data['inclusion']->description ?? '' !!}
+                                        </li>
+                                        {{-- <li> <img src="images/tick-circle.svg">Round-trip international flights between
                                             Canada / Ponta Delgada with a good itinerary</li>
                                         <li> <img src="images/tick-circle.svg"> Welcome and transfers between the airports
                                             and the hotel in Ponta Delgada</li>
@@ -616,19 +635,21 @@
                                         <li> <img src="images/tick-circle.svg"> Multilingual English-speaking guide during
                                             the tours</li>
                                         <li> <img src="images/tick-circle.svg"> Three-hours whale watching boat tour</li>
-                                        <li> <img src="images/tick-circle.svg"> All taxes, fees, and OPC</li>
+                                        <li> <img src="images/tick-circle.svg"> All taxes, fees, and OPC</li> --}}
                                     </ul>
 
                                     <h2>EXCLUDES</h2>
                                     <ul>
-                                        <li> <img src="images/tick-circle.svg"> Travel insurance</li>
-                                        <li> <img src="images/tick-circle.svg"> Fees for checked baggage</li>
+                                        <li>
+                                            {{-- <img src="images/tick-circle.svg">  --}}
+                                            {!! $data['exclusion']->description ?? '' !!}</li>
+                                        {{-- <li> <img src="images/tick-circle.svg"> Fees for checked baggage</li>
                                         <li> <img src="images/tick-circle.svg"> Tips: Guides, bus drivers and hotel staff
                                         </li>
                                         <li> <img src="images/tick-circle.svg"> Meals and beverages unless otherwise
                                             mentioned</li>
                                         <li> <img src="images/tick-circle.svg"> Personal expenses and optional activities
-                                        </li>
+                                        </li> --}}
                                     </ul>
                                 </div>
                             </div>
@@ -874,4 +895,10 @@
     <!--Modal form -->
     @include('web.packages.modal.requestenquiry')
     @include('web.packages.modal.photoslider')
+
+    <script>
+        function dates() {
+            $('#pills-dateprice-tab').click();
+        }
+    </script>
 @endsection

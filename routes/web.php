@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AccommodationController;
 use App\Http\Controllers\Admin\AirlinesController;
 use App\Http\Controllers\Admin\AirportController;
 use App\Http\Controllers\Admin\Auth\AuthController;
@@ -8,11 +9,13 @@ use App\Http\Controllers\Admin\BookingsController;
 use App\Http\Controllers\Admin\ContentManagementController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DestinationController;
+use App\Http\Controllers\Admin\ExclusionsController;
 use App\Http\Controllers\Admin\InclusionsController;
 use App\Http\Controllers\Admin\ItineraryController;
 use App\Http\Controllers\Admin\PackageImageController;
 use App\Http\Controllers\Admin\PackageReviewsController;
 use App\Http\Controllers\Admin\PackagesController;
+use App\Http\Controllers\Admin\PackageTypeController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\StayController;
 use App\Http\Controllers\Admin\TravelExperienceController;
@@ -74,7 +77,10 @@ Route::group(['prefix' => 'admin'], function () {
 
         //Package Reviews
         Route::resource('package-review',PackageReviewsController::class);
-        
+
+        //Package Type
+        Route::resource('package-type', PackageTypeController::class);
+
         //Destination
         Route::resource('destination', DestinationController::class);
 
@@ -99,6 +105,9 @@ Route::group(['prefix' => 'admin'], function () {
         //Inclusion
         Route::resource('inclusion', InclusionsController::class);
 
+        //Exclusion
+        Route::resource('exclusion', ExclusionsController::class);
+        
         //Airport
         Route::resource('airport', AirportController::class);
 
@@ -159,10 +168,12 @@ Route::group(['prefix' => 'admin'], function () {
 //Web
 
 Route::get('/', [ControllersDashboardController::class, 'index'])->name('dashboard');
-
+Route::get('all-packages',[ControllersDashboardController::class,'homeFilter'])->name('dashboard.filter');
 //Packages
 Route::get('tour-packages', [ControllersPackagesController::class, 'tourPackages'])->name('web.packages');
 Route::get('package-detail/{id}', [ControllersPackagesController::class, 'packageDetail'])->name('web.packageDetails');
+Route::get('/download-pdf/{id}', [ControllersPackagesController::class, 'downloadPdf'])->name('download.pdf');
+
 
 
 //Pages

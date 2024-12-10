@@ -99,6 +99,22 @@
 
                                 <div class="col-6">
                                     <div class="form-group">
+                                        <label for="days">Package Type</label>
+                                        <select class="form-select" id="basicSelect" name="packagetype_id">
+                                            @foreach ($packageType as $value)
+                                                <option value="{{ $value->id }}"
+                                                    {{ $value->id == $package->packagetype_id ? 'selected' : '' }}>
+                                                    {{ $value->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('packagetype_id')
+                                    <span class="text-danger" role="alert">*{{ $message }}</span>
+                                @enderror
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group">
                                         <label for="days">Days</label>
                                         <input type="text" id="days" class="form-control" name="days"
                                             value="{{ $package->days }}" placeholder="days">
@@ -108,7 +124,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Status</label>
                                         <select class="form-select" id="basicSelect" name="status">
@@ -143,6 +159,16 @@
                                     @enderror
                                 </div>
 
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="default-acc">Accommodation Description<span class="text-danger">*</span></label>
+                                        <textarea name="accommodation" id="default-acc" cols="30" rows="10">{{old('accommodation',strip_tags($package->accommodation) ?? '')}}</textarea>
+                                    </div>
+                                    @error('accommodation')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
+
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
                                     <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
@@ -165,6 +191,9 @@
         tinymce.init({
             selector: '#default'
         });
+        tinymce.init({
+            selector: '#default-acc'
+        });        
         tinymce.init({
             selector: '#dark',
             toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
@@ -212,6 +241,12 @@
                     tax: {
                         required: true
                     },
+                    packagetype_id:{
+                        required:true
+                    },
+                    accommodation:{
+                        required: true
+                    },
                 },
                 // Customizing error messages
                 messages: {
@@ -235,6 +270,12 @@
                     },
                     tax: {
                         required: 'Please enter the tax.'
+                    },
+                    packagetype_id:{
+                        required: 'Please select the package type.'
+                    },
+                    accommodation:{
+                        required: 'Please provide the accommodation.'
                     }
                 },
                 errorPlacement: function(error, element) {
