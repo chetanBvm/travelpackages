@@ -39,6 +39,6 @@
     </ul>
 
     <h2>Accommodation</h2>
-    <p>{{ $package->accommodation->details ?? 'No details available' }}</p>
+    <p>{!! $package->accommodation ?? 'No details available' !!}</p>
 </body>
 </html>
