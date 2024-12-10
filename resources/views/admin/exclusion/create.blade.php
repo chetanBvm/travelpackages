@@ -1,6 +1,6 @@
 @php
     $title = 'My Vacay Host';
-    $filename = 'Edit Inclusion';
+    $filename = 'Create Exclusion';
 @endphp
 @extends('admin.layouts.app')
 @section('title', $title)
@@ -8,37 +8,48 @@
 @section('content')
 
     <div class="col-md-12 col-12">
+        @if (session()->has('message'))
+            <div class="alert alert-success">
+                {{ session()->get('message') }}
+            </div>
+        @endif
+        @if (session()->has('error'))
+            <div class="alert alert-danger">
+                {{ session()->get('error') }}
+            </div>
+        @endif
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Edit Inclusion</h4>
-                <a href="{{ route('inclusion.index') }}" type="button" class="btn btn-info gray-btn d-lg-block m-l-15"><i
+                <h4 class="card-title">Create Exclusion</h4>
+                <a href="{{ route('exclusion.index') }}" type="button" class="btn btn-info gray-btn d-lg-block m-l-15"><i
                         class="bi bi-caret-left-fill"></i><span>Back</span></a>
-
             </div>
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form form-vertical" action="{{ route('inclusion.update', $inclusion->id) }}" method="post"
-                        enctype="multipart/form-data" id="createDrawDestination">
+                    <form class="form form-vertical" action="{{ route('exclusion.store') }}" method="post"
+                        enctype="multipart/form-data" id="createDrawItinerary">
                         @csrf
-                        {{ method_field('PUT') }}
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="days">Package</label>
+                                        <label for="package-vertical">Pacakge</label>
                                         <select class="form-select" id="basicSelect" name="package_id">
+                                            <option value="">---</option>
                                             @foreach ($package as $value)
-                                                <option value="{{ $value->id }}" {{ $value->id == $inclusion->package_id ? 'selected' : '' }}>
-                                                    {{ $value->name }}</option>
+                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                    @error('package_id')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>                              
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name</label>
                                         <input type="text" id="name-vertical" class="form-control" name="name"
-                                            value="{{ $inclusion->name }}" placeholder="Name">
+                                            value="{{ old('name') }}" placeholder="Name">
                                     </div>
                                     @error('name')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -46,22 +57,22 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="days">Status</label>
-                                        <select class="form-select" id="basicSelect" name="status">
-                                            <option value="{{ $inclusion->status }}">{{ $inclusion->status }}</option>
-                                            <option value="Active">Active</option>
-                                            <option value="InActive">InActive</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="">Description</label>
-                                        <textarea name="description" id="default" cols="30" rows="10">{{ old('description', strip_tags($inclusion->description) ?? '') }}</textarea>
+                                        <label for="description">Description</label>
+                                        <textarea name="description" id="default" cols="30" rows="10" placeholder="Enter the description"></textarea>
                                     </div>
                                     @error('description')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="days">Status</label>
+                                        <select class="form-select" id="basicSelect" name="status">
+                                            <option value="Active">Active</option>
+                                            <option value="InActive">InActive</option>
+                                        </select>
+                                    </div>
                                 </div>
 
                                 <div class="col-12 d-flex justify-content-end">
@@ -78,7 +89,6 @@
 @endsection
 @section('js')
     <script src="{{ asset('admin/assets/vendors/tinymce/tinymce.min.js') }}"></script>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 
@@ -91,37 +101,14 @@
             toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
             plugins: 'code'
         });
-
-        //preview Image
-        function previewImage() {
-            const file = document.getElementById('image').files[0];
-            const reader = new FileReader();
-
-            reader.onloadend = function() {
-                document.getElementById('imagePreview').src = reader.result;
-            }
-
-            if (file) {
-                reader.readAsDataURL(file); // This will trigger the onloadend event
-            } else {
-                document.getElementById('imagePreview').src = "#"; // Reset the preview if no file is selected
-            }
-        }
-
         //Validation script
         $(document).ready(function() {
-            $('#createDrawDestination').validate({ // initialize the plugin
+            $('#createDrawItinerary').validate({ // initialize the plugin
                 rules: {
-                    name: {
-                        required: true
-                    },
-                    price: {
-                        required: true
-                    },
-                    days: {
-                        required: true
-                    },
-                    description: {
+                    package_id: {
+                        required: true,
+                    },                    
+                   description: {
                         required: true
                     },
                     status: {
@@ -130,15 +117,9 @@
                 },
                 // Customizing error messages
                 messages: {
-                    name: {
-                        required: "Please enter the name of the package."
-                    },
-                    price: {
-                        required: "Please enter the price."
-                    },
-                    days: {
-                        required: "Please specify the number of days."
-                    },
+                    package_id: {
+                        required: "Please select the package."
+                    },                  
                     description: {
                         required: "Please provide a description."
                     },

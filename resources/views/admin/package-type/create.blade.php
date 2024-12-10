@@ -1,6 +1,6 @@
 @php
     $title = 'My Vacay Host';
-    $filename = 'Create Inclusion';
+    $filename = 'Create Package Type';
 @endphp
 @extends('admin.layouts.app')
 @section('title', $title)
@@ -20,52 +20,29 @@
         @endif
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Create Inclusion</h4>
-                <a href="{{ route('inclusion.index') }}" type="button" class="btn btn-info gray-btn d-lg-block m-l-15"><i
+                <h4 class="card-title">Create Package Type</h4>
+                <a href="{{ route('package-type.index') }}" type="button" class="btn btn-info gray-btn d-lg-block m-l-15"><i
                         class="bi bi-caret-left-fill"></i><span>Back</span></a>
+
             </div>
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form form-vertical" action="{{ route('inclusion.store') }}" method="post"
-                        enctype="multipart/form-data" id="createDrawItinerary">
+                    <form class="form form-vertical" action="{{ route('package-type.store') }}" method="post"
+                        enctype="multipart/form-data" id="createDrawPackages">
                         @csrf
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="package-vertical">Pacakge</label>
-                                        <select class="form-select" id="basicSelect" name="package_id">
-                                            <option value="">---</option>
-                                            @foreach ($package as $value)
-                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    @error('package_id')
-                                        <span class="text-danger" role="alert">*{{ $message }}</span>
-                                    @enderror
-                                </div>                              
-                                <div class="col-6">
-                                    <div class="form-group">
                                         <label for="first-name-vertical">Name</label>
-                                        <input type="text" id="name-vertical" class="form-control" name="name"
-                                            value="{{ old('name') }}" placeholder="Name">
+                                        <input type="text" id="first-name-vertical" class="form-control" name="name"
+                                            placeholder="Name" value="{{old('name')}}">
                                     </div>
                                     @error('name')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="description">Description</label>
-                                        <textarea name="description" id="default" cols="30" rows="10" placeholder="Enter the description"></textarea>
-                                    </div>
-                                    @error('description')
-                                        <span class="text-danger" role="alert">*{{ $message }}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Status</label>
                                         <select class="form-select" id="basicSelect" name="status">
@@ -73,7 +50,7 @@
                                             <option value="InActive">InActive</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div>        
 
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
@@ -88,27 +65,18 @@
     </div>
 @endsection
 @section('js')
-    <script src="{{ asset('admin/assets/vendors/tinymce/tinymce.min.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 
     <script>
-        tinymce.init({
-            selector: '#default'
-        });
-        tinymce.init({
-            selector: '#dark',
-            toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
-            plugins: 'code'
-        });
+
+
         //Validation script
         $(document).ready(function() {
-            $('#createDrawItinerary').validate({ // initialize the plugin
+            $('#createDrawPackages').validate({ // initialize the plugin
                 rules: {
-                    package_id: {
-                        required: true,
-                    },                    
-                   description: {
+
+                    name: {
                         required: true
                     },
                     status: {
@@ -117,15 +85,13 @@
                 },
                 // Customizing error messages
                 messages: {
-                    package_id: {
-                        required: "Please select the package."
-                    },                  
-                    description: {
-                        required: "Please provide a description."
+
+                    name: {
+                        required: "Please enter the name of the package."
                     },
                     status: {
                         required: "Please select the status."
-                    }
+                    },
                 },
                 errorPlacement: function(error, element) {
                     var placement = $(element).data('error');

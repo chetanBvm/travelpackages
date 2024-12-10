@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inclusions', function (Blueprint $table) {
+        Schema::create('exclusions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('package_id')->references('id')->on('packages')->onDelete('cascade')->onUpdate('cascade');   
             $table->string('name')->nullable();         
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('inclusions');
+        Schema::dropIfExists('exclusions');
     }
 };

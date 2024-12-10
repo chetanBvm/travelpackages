@@ -58,7 +58,7 @@
 
                             <div class="row justify-content-between">
                                 <div class="col-12">
-                                    <form class="Destination-form-main">
+                                    <form class="Destination-form-main" method="get" action="{{route('dashboard.filter')}}">
                                         <div class="Destination-form-inner">
                                             <div class="Destination-form-data">
                                                 <label for="mySelect" class="form-label">
@@ -67,9 +67,9 @@
                                                     Destination
                                                 </label>
                                                 <select class="form-select" id="mySelect"
-                                                    aria-label="Default select example">
-                                                    @foreach ($data['country'] as $countries)
-                                                        <option value="{{ $countries->id }}">{{ $countries->name }}</option>
+                                                    aria-label="Default select example" name="destination">
+                                                    @foreach ($data['destinations'] as $destination)
+                                                        <option value="{{ $destination->id }}">{{ $destination->country->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -100,11 +100,11 @@
                                                             class="form-label-img"></div> Month of Departure
                                                 </label>
                                                 <select class="form-select" id="mySelectLength"
-                                                    aria-label="Default select example">
-                                                    <option>All</option>
-                                                    <option value="1" selected>5-10 Days</option>
-                                                    <option value="2">11-15 Days</option>
-                                                    <option value="3">16 days or more</option>
+                                                    aria-label="Default select example" name="departure_days">
+                                                    <option value="all">All</option>
+                                                    <option value="5-10" {{ request('departure_days') == '5-10' ? 'selected' : '' }}>5-10 Days</option>
+                                                    <option value="11-15" {{ request('departure_days') == '11-15' ? 'selected' : '' }}>11-15 Days</option>
+                                                    <option value="16-30" {{ request('departure_days') == '16-30' ? 'selected' : '' }}>16 days or more</option>
                                                 </select>
 
 
@@ -117,9 +117,10 @@
                                                             class="form-label-img"></div> Package Type
                                                 </label>
                                                 <select class="form-select" id="mySelectPackage"
-                                                    aria-label="Default select example">
-
-                                                    <option value="1" selected>Tour Packages</option>
+                                                    aria-label="Default select example" name="package_type">
+                                                        @foreach($data['packageType'] as $packagetype)
+                                                        <option value="{{$packagetype->id}}">{{$packagetype->name}}</option>
+                                                        @endforeach
                                                     <!-- <option value="2">Ocean Cruise Packages</option>
                                                   <option value="3">River Cruise Packages</option> -->
                                                 </select>
@@ -291,6 +292,7 @@
                 </figure>
             </div>
         </section>
+
         <!-- Campaign -->
         <section class="campaign">
             <div class="container-fluid">
@@ -316,6 +318,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Popular -->
         <section class="popular">
             <div class="container">
@@ -346,6 +349,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Hotels -->
         <section class="hotels">
             <div class="container">
@@ -392,6 +396,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Experiences -->
         <section class="experience">
             <div class="container">
@@ -454,6 +459,31 @@
                 </div>
             </div>
         </section>
+
+        <!-- Newsletter-->
+        <section class="newsletter ">
+            <div class="container">
+              <div class="news-letter-inner">
+                <div class="row align-items-center justify-content-center text-center">
+                  <div class="col-xl-6 col-md-8">
+                    <div class="experience-head">
+                      <h2 class="main-heading my-2">Subscribe To Our Newsletter</h2>
+                      <p class="content my-2">Lorem Ipsum passages, and more recently with desktop publishing </p>
+                      <div class="content">
+                        <form class="subscription">
+                          <input type="email" name="Email" class="form-control" placeholder="Enter email address">
+                          <button class="travel-btn" type="button">
+                            Subscribe
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+      
+                </div>
+              </div>
+            </div>
+          </section>
     </div>
 @endsection
 @section('js')

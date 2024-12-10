@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class InclusionStoreRequests extends FormRequest
+class PackageTypeStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,15 +22,12 @@ class InclusionStoreRequests extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => 'string',
-            'name' => 'required|string',
-            'description' => 'required',
-            'package_id' => 'required|exists:packages,id',
+            'name' => 'required|string|max:255',
             'status' => 'string',
         ];
     }
 
-     /**
+    /**
      * Get the error messages for the defined validation rules.
      *
      * @return array<string, string>
@@ -38,9 +35,7 @@ class InclusionStoreRequests extends FormRequest
     public function messages(): array
     {
         return [
-            'package_id.required' => 'Please select package',
-            'description.required' => 'description is required',
-            'name.required' => 'name is required',
+            'name.required' => 'name is required.',
         ];
     }
 }

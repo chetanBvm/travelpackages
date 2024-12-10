@@ -1,6 +1,6 @@
 @php
     $title = 'My Vacay Host';
-    $filename = 'Edit Inclusion';
+    $filename = 'Edit Exclusion';
 @endphp
 @extends('admin.layouts.app')
 @section('title', $title)
@@ -10,14 +10,14 @@
     <div class="col-md-12 col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Edit Inclusion</h4>
-                <a href="{{ route('inclusion.index') }}" type="button" class="btn btn-info gray-btn d-lg-block m-l-15"><i
+                <h4 class="card-title">Edit Exclusion</h4>
+                <a href="{{ route('exclusion.index') }}" type="button" class="btn btn-info gray-btn d-lg-block m-l-15"><i
                         class="bi bi-caret-left-fill"></i><span>Back</span></a>
 
             </div>
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form form-vertical" action="{{ route('inclusion.update', $inclusion->id) }}" method="post"
+                    <form class="form form-vertical" action="{{ route('exclusion.update', $exclusion->id) }}" method="post"
                         enctype="multipart/form-data" id="createDrawDestination">
                         @csrf
                         {{ method_field('PUT') }}
@@ -28,7 +28,7 @@
                                         <label for="days">Package</label>
                                         <select class="form-select" id="basicSelect" name="package_id">
                                             @foreach ($package as $value)
-                                                <option value="{{ $value->id }}" {{ $value->id == $inclusion->package_id ? 'selected' : '' }}>
+                                                <option value="{{ $value->id }}" {{ $value->id == $exclusion->package_id ? 'selected' : '' }}>
                                                     {{ $value->name }}</option>
                                             @endforeach
                                         </select>
@@ -38,7 +38,7 @@
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name</label>
                                         <input type="text" id="name-vertical" class="form-control" name="name"
-                                            value="{{ $inclusion->name }}" placeholder="Name">
+                                            value="{{ $exclusion->name }}" placeholder="Name">
                                     </div>
                                     @error('name')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -48,7 +48,7 @@
                                     <div class="form-group">
                                         <label for="days">Status</label>
                                         <select class="form-select" id="basicSelect" name="status">
-                                            <option value="{{ $inclusion->status }}">{{ $inclusion->status }}</option>
+                                            <option value="{{ $exclusion->status }}">{{ $exclusion->status }}</option>
                                             <option value="Active">Active</option>
                                             <option value="InActive">InActive</option>
                                         </select>
@@ -57,7 +57,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="">Description</label>
-                                        <textarea name="description" id="default" cols="30" rows="10">{{ old('description', strip_tags($inclusion->description) ?? '') }}</textarea>
+                                        <textarea name="description" id="default" cols="30" rows="10">{{ old('description', strip_tags($exclusion->description) ?? '') }}</textarea>
                                     </div>
                                     @error('description')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>

@@ -902,7 +902,7 @@ line-height: 17.64px;
 
 .exprerience-wapper figure {
   position: relative;
-  width: 87px;
+  /* width: 87px; */
   border-radius: 50%;
 }
 
@@ -912,7 +912,7 @@ line-height: 17.64px;
   left: 0;
   top: 0;
   width: 100%;
-  background: background: linear-gradient(180deg, rgba(242, 84, 29, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(180deg, rgba(242, 84, 29, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
   background: linear-gradient(180deg, rgba(242, 84, 29, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
   height: 100%;
   border-radius: 50%;
@@ -2350,7 +2350,7 @@ h2.package-single-right-head {}
   left: 0;
   top: 0;
   width: 63px;
-  background: background: linear-gradient(180deg, rgba(242, 84, 29, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(180deg, rgba(242, 84, 29, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
   background: linear-gradient(180deg, rgba(242, 84, 29, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
   height: 63px;
   border-radius: 50%;

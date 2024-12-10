@@ -7,6 +7,7 @@ use App\Http\Requests\PackageStoreRequest;
 use App\Models\Destination;
 use App\Models\Package;
 use App\Models\PackageImages;
+use App\Models\PackageType;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -53,8 +54,9 @@ class PackagesController extends Controller
 
         // Get destinations if they exist
         $destination = Destination::with('country')->get();
+        $packagetype  = PackageType::get();
         // Return the view with destinations
-        return view('admin.packages.create', compact('destination'));
+        return view('admin.packages.create', compact('destination','packagetype'));
     }
 
     /**
@@ -74,9 +76,7 @@ class PackagesController extends Controller
             }
             $price = $validated['price'];
             $taxPercentage = $validated['tax'];
-            // $taxAmount = ($price * $taxPercentage) / 100;
-            // $totalPrice = $price + $taxAmount;
-            
+           
             Package::create([
                 'name' => $validated['name'],
                 'description' => $validated['description'],
@@ -89,6 +89,8 @@ class PackagesController extends Controller
                 'tax' => $taxPercentage,
                 'tax_rate' => $validated['tax_rate'],
                 'total_price' => $validated['total_price'],
+                'packagetype_id' => $validated['packagetype_id'],
+                'accommodation' => $validated['accommodation'],
             ]);
             DB::commit();  //commit the transaction
 
@@ -121,7 +123,8 @@ class PackagesController extends Controller
         //Find the package by its ID
         $package = Package::findOrFail($id);
         $destination = Destination::with('country')->get();
-        return view('admin.packages.edit', compact('package', 'destination'));
+        $packageType = PackageType::get();
+        return view('admin.packages.edit', compact('package', 'destination','packageType'));
     }
 
     /**
@@ -147,6 +150,8 @@ class PackagesController extends Controller
                 'tax' => $validated['tax'],
                 'tax_rate' => $validated['tax_rate'],
                 'total_price' => $validated['total_price'],
+                'packagetype_id' => $validated['packagetype_id'],
+                'accommodation' => $validated['accommodation'],
             ]);
 
             //Check if the request has an image file
