@@ -13,6 +13,7 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="package-single-left-img">
+                                                @if (isset($packages->images[0]))
                                                 <figure>
                                                     {{-- @php dd($packages->images[0]->images);@endphp --}}
                                                     @if ($packages->images[0] && count($packages->images) > 0)
@@ -20,6 +21,7 @@
                                                             src="{{ asset('storage') . '/' . $packages->images[0]->images }}" />
                                                     @endif
                                                 </figure>
+                                                @endif
                                             </div>
                                         </div>
 
@@ -547,6 +549,7 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="accommodation-images">
+                                                @if (isset($packages->images[0]))
                                                 <figure>
                                                     @if ($packages->images[0] && count($packages->images) > 0)
                                                         <img
@@ -554,6 +557,7 @@
                                                     @endif
                                                     {{-- <img src="images/Accommodation1.jpg"> --}}
                                                 </figure>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-md-3">
