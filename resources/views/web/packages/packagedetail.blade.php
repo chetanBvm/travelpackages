@@ -1,5 +1,18 @@
 @extends('layouts.app')
 @section('content')
+@php
+        use Carbon\Carbon;
+        // Get the current year
+        $currentYear = Carbon::now();
+
+        // Array to hold the months
+        $months = [];
+
+        // Generate the months for the current year
+        for ($i = 0; $i <= 12; $i++) {
+            $months[] = $currentYear->copy()->addMonths($i)->format('M Y');
+        }
+    @endphp
     <div class="main">
         <!-- Package-Single -->
         <section class="package-single">
@@ -14,13 +27,13 @@
                                         <div class="col-md-8">
                                             <div class="package-single-left-img">
                                                 @if (isset($packages->images[0]))
-                                                <figure>
-                                                    {{-- @php dd($packages->images[0]->images);@endphp --}}
-                                                    @if ($packages->images[0] && count($packages->images) > 0)
-                                                        <img
-                                                            src="{{ asset('storage') . '/' . $packages->images[0]->images }}" />
-                                                    @endif
-                                                </figure>
+                                                    <figure>
+                                                        {{-- @php dd($packages->images[0]->images);@endphp --}}
+                                                        @if ($packages->images[0] && count($packages->images) > 0)
+                                                            <img
+                                                                src="{{ asset('storage') . '/' . $packages->images[0]->images }}" />
+                                                        @endif
+                                                    </figure>
                                                 @endif
                                             </div>
                                         </div>
@@ -91,8 +104,9 @@
                                             <p class="free">Free Cancellation till 22- May-2024</p>
                                         </div>
                                     </div>
-                                    <a class="travel-btn" href="javascript::" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal">Send Enquiry</a>
+                                    <a class="travel-btn request">Send Enquiry</a>
+                                    {{-- <a class="travel-btn" href="javascript::" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">Send Enquiry</a> --}}
                                 </div>
 
 
@@ -100,12 +114,15 @@
                                 <div class="Package-Includes-main">
                                     <h2>Package Includes</h2>
                                     <ul>
+                                        {!! $packages->package_includes !!}
+                                    </ul>
+                                    {{-- <ul>
                                         <li> <img src="images/tick-circle.svg" /> INTERNATIONAL FLIGHTS</li>
                                         <li> <img src="images/tick-circle.svg" /> WELCOME & TRANSFERS</li>
                                         <li> <img src="images/tick-circle.svg" /> HOTEL 4*</li>
                                         <li> <img src="images/tick-circle.svg" /> ALL BREAKFASTS + 1 LUNCH</li>
                                         <li> <img src="images/tick-circle.svg" /> EXCURSIONS</li>
-                                    </ul>
+                                    </ul> --}}
 
                                     <div class="coupon-main">
                                         <div class="coupon-left">
@@ -133,12 +150,10 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="tab-content" id="pills-tabContent">
-
                             <div class="package-details-tabs">
-
                                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                     <li class="nav-item" role="presentation">
-                                        <button class="nav-link active" id="pills-dateprice-tab" data-bs-toggle="pill"
+                                        <button class="nav-link tab priceTab active" id="pills-dateprice-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-dateprice" type="button" role="tab"
                                             aria-controls="pills-dateprice" aria-selected="true">Dates & Prices</button>
                                     </li>
@@ -180,166 +195,52 @@
 
                                 <div class="package-details-filters">
                                     <form action="" class="row">
-
                                         <div class="col-lg-7">
-
                                             <div class="Destination-form">
-
-
-
-                                                <div class="Destination-form-data">
-                                                    <label class="form-label">Departure City :</label>
-                                                    <select class="form-select" id="mySelect"
-                                                        aria-label="Default select example">
-                                                        <option value="1" selected>Los Angeles</option>
-                                                        <option value="2">6-9 Days</option>
-                                                        <option value="3">10-15 Days</option>
-                                                        <option value="4">16-21 Days</option>
-                                                    </select>
+                                                <div class="col-lg-3">
+                                                    <div class="Destination-form-data">
+                                                        <label class="form-label">Departure City :</label>
+                                                        <select class="form-select action_rates" id="mySelect"
+                                                            aria-label="Default select example">
+                                                            <option selected>SELECT A CITY</option>
+                                                            @foreach($data['destination'] as $destinations)
+                                                            <option value="{{$destinations->id}}" >{{$destinations->country->name}}</option>
+                                                            @endforeach
+                                                            <option value="other" class="open_other_modal">Other</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
-
-
-
-                                                <div class="Destination-form-data">
+                                                <div class="Destination-form-data month_prices d-none">
                                                     <label class="form-label">Month:</label>
-                                                    <select class="form-select" id="mySelectDeparture"
+                                                    <select class="form-select" name="" id="month_prices"
                                                         aria-label="Default select example">
-                                                        <option selected>All Months</option>
-                                                        <option value="1">Nov 2024</option>
-                                                        <option value="2">Dec 2024</option>
-                                                        <option value="3">Jan 2025</option>
-                                                        <option value="4">Feb 2025</option>
-                                                        <option value="5">Mar 2025</option>
-                                                        <option value="6">Apr 2025</option>
-                                                        <option value="7">May 2025</option>
+                                                        <option seleted value="all">All Months</option>
+                                                        @foreach ($months as $index => $month)
+                                                            <option value="{{ $index + 1 }}">
+                                                                {{ $month }}</option>
+                                                        @endforeach
                                                     </select>
-
-
                                                 </div>
 
-                                                <div class="Destination-form-data">
+                                                <div class="Destination-form-data cat_prices d-none">
                                                     <label class="form-label">Accommodation Category :</label>
-                                                    <select class="form-select" id="mySelectLength"
+                                                    <select class="form-select" id="cat_prices"
                                                         aria-label="Default select example">
-                                                        <option selected>Main Deck</option>
-                                                        <option value="1">6-9 Days</option>
-                                                        <option value="2">10-15 Days</option>
-                                                        <option value="3">16-21 Days</option>
-                                                        <option value="4">22+ Days</option>
+                                                        <option value="classic-hotels">Classic Hotels</option>
+                                                        <option value="superior-hotels">Superior Hotels</option>
                                                     </select>
-
-
                                                 </div>
-
-
                                             </div>
-
                                         </div>
-
                                     </form>
                                 </div>
 
 
-
-                                <div class="ticket-details-main">
-                                    <div class="ticket-date-name">
-                                        <h3>April 2025</h3>
-                                        <span>Ms. Renoir - Premium ship</span>
-                                    </div>
-
-                                    <div class="ticket-details-bottom-main">
-                                        <div class="ticket-details-bottom-inner">
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/airplane.svg">Departure Date</span>
-                                                <h4>Fri Apr 11</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/aroplan-bt.svg">Departure Date</span>
-                                                <h4>Fri Apr 11</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/starting-price.svg">Departure Date</span>
-                                                <div class="price-details-data">
-                                                    <span>$3698</span>
-                                                    <h4>$3,598<span>/person</span></h4>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                        <div class="ticket-details-right-data">
-                                            <div class="offers-data">
-                                                <span>100$ off</span>
-                                            </div>
-                                            <div class="enquiry-btn">
-                                                <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal">Send Enquiry</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ticket-details-bottom-main">
-                                        <div class="ticket-details-bottom-inner">
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/airplane.svg">Departure Date</span>
-                                                <h4>Sat Apr 13</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/aroplan-bt.svg">Departure Date</span>
-                                                <h4>Mon Apr 28</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/starting-price.svg">Departure Date</span>
-                                                <div class="price-details-data">
-                                                    <span>$3698</span>
-                                                    <h4>$3,598<span>/person</span></h4>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                        <div class="ticket-details-right-data">
-                                            <div class="offers-data">
-                                                <span>100$ off</span>
-                                            </div>
-                                            <div class="enquiry-btn">
-                                                <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal">Send Enquiry</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ticket-details-bottom-main">
-                                        <div class="ticket-details-bottom-inner">
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/airplane.svg">Departure Date</span>
-                                                <h4>Fri Apr 11</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/aroplan-bt.svg">Departure Date</span>
-                                                <h4>Fri Apr 11</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/starting-price.svg">Departure Date</span>
-                                                <div class="price-details-data">
-                                                    <span>$3698</span>
-                                                    <h4>$3,598<span>/person</span></h4>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                        <div class="ticket-details-right-data">
-                                            <div class="offers-data">
-                                                <span>100$ off</span>
-                                            </div>
-                                            <div class="enquiry-btn">
-                                                <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal">Send Enquiry</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="ticket-details-main" id="flightsContainer">
+                                                                   
                                 </div>
-
-                                <div class="ticket-details-main">
+                                                               
+                                {{-- <div class="ticket-details-main">
                                     <div class="ticket-date-name">
                                         <h3>July 2025</h3>
                                         <span>MS Seine Princess - Standard ship</span>
@@ -377,11 +278,11 @@
                                     </div>
 
 
-                                </div>
+                                </div> --}}
 
 
 
-                                <div class="ticket-details-main">
+                                {{-- <div class="ticket-details-main">
                                     <div class="ticket-date-name">
                                         <h3>September 2025</h3>
                                         <span>MS Botticelli - Standard ship</span>
@@ -448,11 +349,11 @@
                                         </div>
                                     </div>
 
-                                </div>
+                                </div> --}}
 
 
-
-                                <div class="ticket-details-main">
+ 
+                                {{-- <div class="ticket-details-main">
                                     <div class="ticket-date-name">
                                         <h3>October 2025</h3>
                                         <span>MS Botticelli - Standard ship</span>
@@ -490,7 +391,7 @@
                                     </div>
 
 
-                                </div>
+                                </div>  --}}
                                 <div class="bottom-para">
                                     <p>*The advertised starting rate is available from Toronto on Jan 2025</p>
                                     <p>**All prices are subject to change without notice</p>
@@ -537,26 +438,18 @@
                                     <div class="col-md-12">
                                         <div class="itinerary-inner">
                                             {!! $packages->accommodation !!}
-                                            {{-- <p>Experience a comfortable stay in our Classic Hotels, carefully chosen for
-                                                their value, convenient locations, and proximity to major attractions. Relax
-                                                in well-maintained rooms with thoughtful amenities, savor a variety of
-                                                breakfast choices, and benefit from attentive service to enhance your travel
-                                                experience.</p>
-                                            <p>• 7 nights in Ponta Delgada at the Sao Miguel Park 4* hotel (or similar) in a
-                                                standard room</p> --}}
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="accommodation-images">
                                                 @if (isset($packages->images[0]))
-                                                <figure>
-                                                    @if ($packages->images[0] && count($packages->images) > 0)
-                                                        <img
-                                                            src="{{ asset('storage') . '/' . $packages->images[0]->images }}" />
-                                                    @endif
-                                                    {{-- <img src="images/Accommodation1.jpg"> --}}
-                                                </figure>
+                                                    <figure>
+                                                        @if ($packages->images[0] && count($packages->images) > 0)
+                                                            <img
+                                                                src="{{ asset('storage') . '/' . $packages->images[0]->images }}" />
+                                                        @endif
+                                                    </figure>
                                                 @endif
                                             </div>
                                         </div>
@@ -568,8 +461,6 @@
                                                             <img
                                                                 src="{{ asset('storage') . '/' . $packages->images[1]->images }}" />
                                                         @endif
-
-                                                        {{-- <img src="images/Accommodation2.jpg"> --}}
                                                     </figure>
                                                 @endif
                                             </div>
@@ -582,7 +473,6 @@
                                                             <img
                                                                 src="{{ asset('storage') . '/' . $packages->images[2]->images }}" />
                                                         @endif
-                                                        {{-- <img src="images/Accommodation3.jpg"> --}}
                                                     </figure>
                                                 @endif
                                             </div>
@@ -595,7 +485,6 @@
                                                             <img
                                                                 src="{{ asset('storage') . '/' . $packages->images[3]->images }}" />
                                                         @endif
-                                                        {{-- <img src="images/Accommodation4.jpg"> --}}
                                                     </figure>
                                                 @endif
                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2">

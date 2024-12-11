@@ -171,6 +171,16 @@
                                     @enderror
                                 </div>
 
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="default-inc">Package Includes<span class="text-danger">*</span></label>
+                                        <textarea name="package_includes" id="default-inc" cols="30" rows="10">{{old('package_includes')}}</textarea>
+                                    </div>
+                                    @error('package_includes')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
+
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
                                     <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
@@ -194,6 +204,9 @@
         });
         tinymce.init({
             selector: '#default-acc'
+        });
+        tinymce.init({
+            selector: '#default-inc'
         });
         tinymce.init({
             selector: '#dark',
@@ -240,13 +253,18 @@
                     status: {
                         required: true
                     },
-
                     tax: {
                         required: true
                     },
                     packagetype_id:{
                         required: true
                     },
+                    package_includes:{
+                        required: true
+                    },
+                    accommodation:{
+                        required:true
+                    }
                 },
                 // Customizing error messages
                 messages: {
@@ -276,6 +294,12 @@
                     },
                     packagetype_id:{
                         required: 'Please select the Package type'
+                    },
+                    accommodation:{
+                        required: 'Please enter the accommodation.'
+                    },
+                    package_includes:{
+                        required: 'Please enter the package includes'
                     }
                 },
                 errorPlacement: function(error, element) {

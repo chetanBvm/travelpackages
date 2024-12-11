@@ -91,6 +91,7 @@ class PackagesController extends Controller
                 'total_price' => $validated['total_price'],
                 'packagetype_id' => $validated['packagetype_id'],
                 'accommodation' => $validated['accommodation'],
+                'package_includes' => $validated['package_includes'],
             ]);
             DB::commit();  //commit the transaction
 
@@ -152,6 +153,7 @@ class PackagesController extends Controller
                 'total_price' => $validated['total_price'],
                 'packagetype_id' => $validated['packagetype_id'],
                 'accommodation' => $validated['accommodation'],
+                'package_includes' => $validated['package_includes'],
             ]);
 
             //Check if the request has an image file
