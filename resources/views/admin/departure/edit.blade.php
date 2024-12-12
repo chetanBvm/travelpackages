@@ -74,8 +74,8 @@
                                 
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="return_date">Price</label>
-                                        <input type="text" id="price" class="form-control" name="price" value="{{old('price',floor($departureFlight->price)) ?? ''}}"
+                                        <label for="price">Price</label>
+                                        <input type="text" id="price" class="form-control" name="price" value="{{$departureFlight->price ?? ''}}"
                                             placeholder="price">
                                     </div>
                                     @error('price')
@@ -130,9 +130,9 @@
                     return_date:{
                         required: true
                     },
-                    price:{
-                        required: true
-                    },
+                    // price:{
+                    //     required: true
+                    // },
                     status: {
                         required: true
                     },
@@ -151,9 +151,9 @@
                     return_date:{
                         required: "Please enter the return date."
                     },
-                    price:{
-                        required: "Please enter the price."
-                    },
+                    // price:{
+                    //     required: "Please enter the price."
+                    // },
                     status: {
                         required: "Please select the status."
                     }

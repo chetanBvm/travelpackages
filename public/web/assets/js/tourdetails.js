@@ -1,4 +1,5 @@
 var selectedCategory = '';
+var selectedCity = false;
 
 $('.travel-btn.request').click(function () {
     $('.priceTab').trigger('click');
@@ -28,14 +29,14 @@ if ($(".action_rates option:selected").text() == 'Select a city' || $(".action_r
 
 $('#month_prices').parent().click(function () {
     if ($(".action_rates option:selected").text() == 'Select a city' || $(".action_rates option:selected").text() == 'SÃ©lectionnez une ville') {
-        $(".action_rates").css({border: '1px solid red'});
+        $(".action_rates").css({ border: '1px solid red' });
     }
 })
 
 //On change to the departure city drop down, show list price
 $('.action_rates').change(function () {
 
-    let depCityId = $(this).val();
+    var depCityId = $(this).val();
 
     if (depCityId !== '') {
         $(".action_rates").css({ border: '1px solid #CCC' });
@@ -45,65 +46,97 @@ $('.action_rates').change(function () {
         $(".action_rates").css({ border: '1px solid #CCC' });
         $(".cat_prices").removeClass('d-none').show();
     }
-    
-    $.ajax({
-        url: '/departure-flights/year',
-        type: 'post',
-        data: {
-            DEPC: depCityId, 
-            _token: $('meta[name="csrf-token"]').attr('content'),
-        },
-        success: function (response) {
-            if (response.success) {
-                renderFlights(response.data);
-            } else {
-                alert('No flights found for this destination.');
+        thisDepc = '';
+        $.ajax({
+            url: '/departure-flights/year',
+            type: 'post',
+            data: {
+                DEPC: depCityId,
+                _token: $('meta[name="csrf-token"]').attr('content'),
+            },
+            success: function (response) {
+                if (response.success) {
+                    renderFlights(response.data);
+                } else {
+                    alert('No flights found for this destination.');
+                }
             }
-            
-            
-            // $('.departure_date').html(response);
-        }
-    });
+        });
+});
+
+
+$('html').on('change', '#month_prices', function () {
+    var depCityId = $('.action_rates').val();
+    let selectedMonth = $('#month_prices').val();
+    
+    if (depCityId && selectedMonth) {
+        fetchFlightsByCityAndMonth(depCityId, selectedMonth);
+    }    
 });
 
 function renderFlights(data) {
     let container = $('#flightsContainer');
     container.empty();
 
-    if (data.length > 0) {
-        console.log(data);
-        
-        data.forEach(yearData => {
-            container.append(`<div class="ticket-date-name">
-                <h3>${yearData.month}</h3><h3>${yearData.year}</h3></div>`);
+    if (data && Object.keys(data).length > 0) {
+
+        Object.values(data).forEach(yearData => {
+            container.append(`<div class="ticket-date-name date_table_wrap">
+                <h3 class="monthPriceRow">${yearData.month} ${yearData.year}</h3></div>`);
 
             yearData.flights.forEach(flight => {
+                
+                //convert the departure and return dates
+                const departureDate = new Date(flight.departure_date);
+                const returnDate = new Date(flight.return_date);
+
+                // Format the dates to "Day Month Date"
+                const formattedDepartureDate = departureDate.toLocaleDateString('en-US', {
+                    weekday: 'short', // Fri
+                    month: 'short', // Apr
+                    day: 'numeric' // 11
+                });
+
+                const formattedReturnDate = returnDate.toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric'
+                });
+
+                // Set the image paths dynamically or use defaults
+                let airplaneImg = airplaneIcon;
+                let returnImg = returnIcon;
+                let priceImg = priceIcon;
+               
+                const flightPrice = flight.price ? `<h4>${flight.price}<span>/person</span></h4>`: `<h4>On Request</h4>`; 
+                const priceClass = flight.status === 'Sold Out' ? 'blurred-price' : '';
+                const enquiryButton = flight.status === 'Sold Out' 
+                ? `<div class="status-label"> <a class="travel-btn btn" href="javascript::" >Sold Out</a></div>` 
+                : `<div class="enquiry-btn">
+                        <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal" data-bs-target="#exampleModal">Send Enquiry</a>
+                   </div>`;
                 container.append(
                     `<div class='ticket-details-bottom-main'>
                                         <div class="ticket-details-bottom-inner">
                                             <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/airplane.svg">Departure Date</span>
-                                                <h4>${flight.departure_date}</h4>
+                                                <span><img src="${airplaneImg}">Departure Date</span>
+                                                <h4>${formattedDepartureDate}</h4>
                                                 </div>
                                                 <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/aroplan-bt.svg">Return Date</span>
-                                                <h4>${flight.return_date}</h4>
+                                                <span><img src="${returnImg}">Return Date</span>
+                                                <h4>${formattedReturnDate}</h4>
                                             </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/starting-price.svg">Departure Date</span>
+                                            <div class="ticket-detail-bottom-data ${priceClass}">
+                                                <span><img src="${priceImg}">Starting Price</span>
                                                 <div class="price-details-data">
-                                                    
-                                                    <h4>${flight.price}<span>/person</span></h4>
+                                                    ${flightPrice}
                                                 </div>
                                             </div>
                                             <div class="ticket-details-right-data">
                                             <div class="offers-data">
                                                 <span>100$ off</span>
                                             </div>
-                                            <div class="enquiry-btn">
-                                                <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal">Send Enquiry</a>
-                                            </div>
+                                            ${enquiryButton}
                                         </div>
                     </div>
                 `);
@@ -112,7 +145,26 @@ function renderFlights(data) {
     } else {
         container.append('<p>No flights available.</p>');
     }
-} 
+}
+
+function fetchFlightsByCityAndMonth(cityId, month) {
+    $.ajax({
+        url: '/departure-flights/year', 
+        type: 'POST',
+        data: {
+            DEPC: cityId,
+            month: month,
+            _token: $('meta[name="csrf-token"]').attr('content'),
+        },
+        success: function(response) {
+            if (response.success) {
+                renderFlights(response.data);  
+            } else {
+                $('#flightsContainer').html('<p>No flights found for the selected city and month.</p>');
+            }
+        }
+    });
+}
 // departure date 
 $(".departure_date").change(function () {
     var defaultdate = $(this).val();

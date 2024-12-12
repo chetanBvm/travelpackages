@@ -57,7 +57,7 @@ class DepartureFlightsController extends Controller
                     'year' => $validated['year'],
                     'departure_date' => $departureDate,
                     'return_date' => $validated['return_date'][$index],
-                    'price' => $validated['price'][$index],
+                    'price' => $validated['price'][$index], 
                     'status' => $validated['status'][$index],
                 ]);
             }

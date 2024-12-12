@@ -145,7 +145,7 @@
                                                     alt="Current Image" width="100" height="100">
                                             </div>
                                         @endif
-                                        <input type="file" class="form-control" name="images" id="image">
+                                        <input type="file" class="form-control" name="thumbnail" id="image">
                                     </div>
                                 </div>
 

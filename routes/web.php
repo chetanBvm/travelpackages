@@ -179,7 +179,7 @@ Route::get('package-detail/{id}', [ControllersPackagesController::class, 'packag
 Route::get('/download-pdf/{id}', [ControllersPackagesController::class, 'downloadPdf'])->name('download.pdf');
 Route::post('/departure-flights/year', [ControllersPackagesController::class, 'getDepartureFlight'])->name('departure-flights.year-details');
 
-
+Route::post('departure-flights/get-flights-by-city-and-month', [ControllersPackagesController::class, 'getFlightsByCityAndMonth']);
 
 
 //Pages

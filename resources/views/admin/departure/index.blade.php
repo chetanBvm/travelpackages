@@ -38,7 +38,7 @@
                 <div class="card-header">
                     <span> Departure Flights </span>
                     <a href="{{ route('departure-flights.create') }}" type="button"
-                            class="btn btn-info d-none d-lg-block m-l-15">&#x002B; Add New</a>
+                        class="btn btn-info d-none d-lg-block m-l-15">&#x002B; Add New</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-striped data-table">
@@ -78,20 +78,24 @@
                         name: 'package.name'
                     },
                     {
-                        data:'departure_date',
-                        name:'departure_date'
+                        data: 'departure_date',
+                        name: 'departure_date'
                     },
                     {
                         data: 'return_date',
                         name: 'return_date'
                     },
                     {
-                        data:'year',
-                        name:'year',
+                        data: 'year',
+                        name: 'year',
                     },
                     {
                         data: 'price',
-                        name:'price'
+                        name: 'price',
+                        render: function(data, type, row) {
+                            // Check if the price is null or empty, and display "On Request" if so
+                            return data ? `${data}` : 'On Request';
+                        }
                     },
                     {
                         data: 'status',
@@ -107,7 +111,7 @@
             });
 
         });
-        
+
         //Delete the departure flight
         function deleteFunc(id) {
             Swal.fire({

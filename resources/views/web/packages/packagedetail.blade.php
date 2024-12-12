@@ -10,7 +10,7 @@
 
         // Generate the months for the current year
         for ($i = 0; $i <= 12; $i++) {
-            $months[] = $currentYear->copy()->addMonths($i)->format('M Y');
+            $months[] = $currentYear->copy()->addMonths($i)->format('F Y');
         }
     @endphp
     <div class="main">
@@ -216,7 +216,7 @@
                                                         aria-label="Default select example">
                                                         <option seleted value="all">All Months</option>
                                                         @foreach ($months as $index => $month)
-                                                            <option value="{{ $index + 1 }}">
+                                                            <option value="{{ $month}}">
                                                                 {{ $month }}</option>
                                                         @endforeach
                                                     </select>
@@ -236,8 +236,9 @@
                                 </div>
 
 
-                                <div class="ticket-details-main" id="flightsContainer">
-                                                                   
+                                <div class="ticket-details-main">
+                                   <div id="flightsContainer">
+                                    </div>                                     
                                 </div>
                                                                
                                 {{-- <div class="ticket-details-main">
@@ -793,5 +794,10 @@
         function dates() {
             $('#pills-dateprice-tab').click();
         }
+    </script>
+    <script>
+        const airplaneIcon = "{{ asset('web/assets/images/airplane.svg') }}";
+        const returnIcon = "{{ asset('web/assets/images/aroplan-bt.svg') }}";
+        const priceIcon = "{{ asset('web/assets/images/starting-price.svg') }}";
     </script>
 @endsection

@@ -116,7 +116,12 @@ header {
 }
 
 .select2-results {
-  padding-top: 8px !important;
+  border: none;
+  background: var(--white);
+  padding: 20px 16px;
+  padding-top: 20px;
+  z-index: 999;
+  border-radius: 10px;
 }
 
 /* .main-menu > li > a:after {
@@ -196,9 +201,12 @@ header {
   font-family: 'Plus Jakarta Sans';
   font-size: 14px;
   font-weight: 600;
-  line-height: 17.64px;
+  line-height: 14.64px;
   text-align: center;
   color: var(--white);
+  display: flex;
+  align-items: center;
+  transition: 0.5s ease-out;
 }
 
 .login-btn span {
@@ -280,12 +288,13 @@ header {
   line-height: 82.18px;
   text-align: center;
   color: var(--white);
+  width: 80%;
 }
 
 .banner-left h1 span {
   -webkit-text-stroke: 1.5px var(--white);
   color: transparent;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 
 .the {
@@ -430,21 +439,6 @@ line-height: 17.64px;
   color: white;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .btn-wrapper {
   margin-top: 23px;
 }
@@ -479,7 +473,7 @@ line-height: 17.64px;
   column-gap: 10px;
 }
 
-.form-label-img {
+.form-label-img img {
   padding-right: 6px;
 }
 
@@ -724,6 +718,7 @@ line-height: 17.64px;
   line-height: 17.64px;
   text-align: center;
   border: 1px solid var(--secondary);
+  transition: 0.5s ease-out;
 }
 
 .campaign-content {
@@ -781,27 +776,27 @@ line-height: 17.64px;
   max-height: 90px;
 }
 
-.indigo {
+.popular .popular-content li:nth-child(1) figure {
   border: 4px solid rgba(53, 65, 166, .6);
 }
 
-.air-india {
+.popular .popular-content li:nth-child(2) figure {
   border: 4px solid rgba(253, 0, 0, .6);
 }
 
-.india-express {
+.popular .popular-content li:nth-child(3) figure {
   border: 4px solid rgba(255, 100, 37, .6);
 }
 
-.akasa-air {
+.popular .popular-content li:nth-child(4) figure {
   border: 4px solid rgba(105, 4, 202, .6);
 }
 
-.vistara {
+.popular .popular-content li:nth-child(5) figure {
   border: 4px solid rgba(64, 21, 46, .6);
 }
 
-.spicejet {
+.popular .popular-content li:nth-child(6) figure {
   border: 4px solid rgba(198, 10, 42, .6);
 }
 
@@ -907,16 +902,14 @@ line-height: 17.64px;
 }
 
 .exprerience-wapper figure:after {
-  position: absolute;
   content: "";
-  left: 0;
-  top: 0;
-  width: 100%;
+  width: 95px;
   background: linear-gradient(180deg, rgba(242, 84, 29, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
-  background: linear-gradient(180deg, rgba(242, 84, 29, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
-  height: 100%;
+  height: 95px;
   border-radius: 50%;
-  border: 1.09px solid rgba(242, 84, 29, 0.5);
+  left: -4px;
+  top: -4px;
+  border: 1.09px solid #F9EDDE;
 }
 
 .exprerience-wapper h4 {
@@ -1823,6 +1816,7 @@ footer {
   width: 100%;
   border-radius: 20px;
   height: 100%;
+  object-fit: cover;
 }
 
 .package-left figure {
@@ -2720,14 +2714,14 @@ h2.package-single-right-head {}
 
 .coupon-main::before {
   content: "";
-	top: -10px;
-	left: 0px;
-	position: absolute;
-	width: 371px;
-	height: 110px;
+  top: -10px;
+  left: 0px;
+  position: absolute;
+  width: 371px;
+  height: 110px;
   z-index: -1;
-	background-image: url('../images/cart-img.png');
-	background-repeat: no-repeat;
+  background-image: url('../images/cart-img.png');
+  background-repeat: no-repeat;
 }
 
 .coupon-top {
@@ -2875,7 +2869,10 @@ h2.package-single-right-head {}
   color: #7B7979;
 }
 
-.package-details-filters, .itinerary-inner, .inclusions-data, .faq-data{
+.package-details-filters,
+.itinerary-inner,
+.inclusions-data,
+.faq-data {
   margin-top: 14px;
 }
 
@@ -3563,4 +3560,58 @@ h2.package-single-right-head {}
 
 .view-more-btn:hover {
   color: var(--dark);
+}
+
+.status-label .travel-btn {
+  padding: 16px 77px;
+  background: var(--white);
+  border-radius: 30px;
+  color: var(--secondary);
+  font-family: Plus Jakarta Sans;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 17.64px;
+  text-align: center;
+  border: 1px solid var(--secondary);
+
+}
+
+.status-label .travel-btn:hover {
+  border: 1px solid var(--secondary);
+  color: var(--secondary);
+  background: var(--white);
+}
+
+.blurred-price {
+  filter: blur(4px);
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.experience .experience-bottom .owl-carousel .owl-item img {
+  display: block;
+  /* width: 100%; */
+  height: 87px;
+  width: 87px;
+  border-radius: 50%;
+}
+
+.experience .content {
+  margin-top: 10px;
+}
+
+.login-btn:hover {
+  color: var(--white);
+  border-color: var(--secondary);
+  background-color: var(--secondary);
+}
+
+.login-btn:hover span {
+  color: var(--white);
+}
+
+.btn-wrapper .select-form-btn:hover {
+  color: var(--white);
+  background: var(--secondary);
+  border-color: var(--secondary);
 }

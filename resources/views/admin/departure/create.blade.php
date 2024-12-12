@@ -13,7 +13,6 @@
                 <h4 class="card-title">Create Departure Flight</h4>
                 <a href="{{ route('departure-flights.index') }}" type="button"
                     class="btn btn-info gray-btn d-lg-block m-l-15"><i class="bi bi-caret-left-fill"></i><span>Back</span></a>
-
             </div>
             <div class="card-content">
                 <div class="card-body">
@@ -122,9 +121,9 @@
                     return_date:{
                         required: true
                     },
-                    price:{
-                        required: true
-                    },
+                    // price:{
+                    //     required: true
+                    // },
                     status: {
                         required: true
                     },
@@ -143,9 +142,9 @@
                     return_date:{
                         required: "Please enter the return date."
                     },
-                    price:{
-                        required: "Please enter the price."
-                    },
+                    // price:{
+                    //     required: "Please enter the price."
+                    // },
                     status: {
                         required: "Please select the status."
                     }

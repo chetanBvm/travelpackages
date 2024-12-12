@@ -26,8 +26,8 @@ class DepartureFlightStoreRequest extends FormRequest
             'departure_date.*' => 'required|date',
             'return_date.*' => 'required|date',
             'year' => 'required|string',
-            'price.*' => 'required|numeric',
-            'status.*' => 'string|in:Active,InActive'
+            'price.*' => 'nullable',
+            'status.*' => 'string|in:Active,InActive,Sold Out'
         ];
     }
 
@@ -43,7 +43,7 @@ class DepartureFlightStoreRequest extends FormRequest
             'departure_date.required' => 'departure date is required',
             'return_date.required' => 'return date is required',
             'year.required' => 'year is required.',
-            'price.required' => 'price is required.',
+            // 'price.required' => 'price is required.',
         ];
     }
 
