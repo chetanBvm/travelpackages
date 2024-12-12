@@ -1,3 +1,170 @@
+var selectedCategory = '';
+var selectedCity = false;
+
+$('.travel-btn.request').click(function () {
+    $('.priceTab').trigger('click');
+    $('html, body').animate({
+        scrollTop: $(".package-details-tabs").offset().top - 100 // Adjust offset as needed
+    }, 500);
+});
+
+// $('.tab').click(function () {
+//     $('.requestBtn').fadeIn();
+//     var tabIndex = $(this).index();
+//     $('.tab').removeClass('active');
+//     $(this).addClass('active');
+//     $('.tabContent').addClass('none');
+//     $('.tabContent').eq(tabIndex).removeClass('none');
+//     if ($(this).hasClass('priceTab')) {
+//         if ($(window).width() < 1024) {
+//             $('.requestBtn').fadeOut();
+//         }
+//     }
+// });
+
+
+if ($(".action_rates option:selected").text() == 'Select a city' || $(".action_rates option:selected").text() == 'SÃ©lectionnez une ville') {
+    $("#month_prices").prop('disabled', true);
+}
+
+$('#month_prices').parent().click(function () {
+    if ($(".action_rates option:selected").text() == 'Select a city' || $(".action_rates option:selected").text() == 'SÃ©lectionnez une ville') {
+        $(".action_rates").css({ border: '1px solid red' });
+    }
+})
+
+//On change to the departure city drop down, show list price
+$('.action_rates').change(function () {
+
+    var depCityId = $(this).val();
+
+    if (depCityId !== '') {
+        $(".action_rates").css({ border: '1px solid #CCC' });
+        $(".month_prices").removeClass('d-none').show();
+    }
+    if (depCityId !== '') {
+        $(".action_rates").css({ border: '1px solid #CCC' });
+        $(".cat_prices").removeClass('d-none').show();
+    }
+        thisDepc = '';
+        $.ajax({
+            url: '/departure-flights/year',
+            type: 'post',
+            data: {
+                DEPC: depCityId,
+                _token: $('meta[name="csrf-token"]').attr('content'),
+            },
+            success: function (response) {
+                if (response.success) {
+                    renderFlights(response.data);
+                } else {
+                    alert('No flights found for this destination.');
+                }
+            }
+        });
+});
+
+
+$('html').on('change', '#month_prices', function () {
+    var depCityId = $('.action_rates').val();
+    let selectedMonth = $('#month_prices').val();
+    
+    if (depCityId && selectedMonth) {
+        fetchFlightsByCityAndMonth(depCityId, selectedMonth);
+    }    
+});
+
+function renderFlights(data) {
+    let container = $('#flightsContainer');
+    container.empty();
+
+    if (data && Object.keys(data).length > 0) {
+
+        Object.values(data).forEach(yearData => {
+            container.append(`<div class="ticket-date-name date_table_wrap">
+                <h3 class="monthPriceRow">${yearData.month} ${yearData.year}</h3></div>`);
+
+            yearData.flights.forEach(flight => {
+                
+                //convert the departure and return dates
+                const departureDate = new Date(flight.departure_date);
+                const returnDate = new Date(flight.return_date);
+
+                // Format the dates to "Day Month Date"
+                const formattedDepartureDate = departureDate.toLocaleDateString('en-US', {
+                    weekday: 'short', // Fri
+                    month: 'short', // Apr
+                    day: 'numeric' // 11
+                });
+
+                const formattedReturnDate = returnDate.toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric'
+                });
+
+                // Set the image paths dynamically or use defaults
+                let airplaneImg = airplaneIcon;
+                let returnImg = returnIcon;
+                let priceImg = priceIcon;
+               
+                const flightPrice = flight.price ? `<h4>${flight.price}<span>/person</span></h4>`: `<h4>On Request</h4>`; 
+                const priceClass = flight.status === 'Sold Out' ? 'blurred-price' : '';
+                const enquiryButton = flight.status === 'Sold Out' 
+                ? `<div class="status-label"> <a class="travel-btn btn" href="javascript::" >Sold Out</a></div>` 
+                : `<div class="enquiry-btn">
+                        <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal" data-bs-target="#exampleModal">Send Enquiry</a>
+                   </div>`;
+                container.append(
+                    `<div class='ticket-details-bottom-main'>
+                                        <div class="ticket-details-bottom-inner">
+                                            <div class="ticket-detail-bottom-data">
+                                                <span><img src="${airplaneImg}">Departure Date</span>
+                                                <h4>${formattedDepartureDate}</h4>
+                                                </div>
+                                                <div class="ticket-detail-bottom-data">
+                                                <span><img src="${returnImg}">Return Date</span>
+                                                <h4>${formattedReturnDate}</h4>
+                                            </div>
+                                            <div class="ticket-detail-bottom-data ${priceClass}">
+                                                <span><img src="${priceImg}">Starting Price</span>
+                                                <div class="price-details-data">
+                                                    ${flightPrice}
+                                                </div>
+                                            </div>
+                                            <div class="ticket-details-right-data">
+                                            <div class="offers-data">
+                                                <span>100$ off</span>
+                                            </div>
+                                            ${enquiryButton}
+                                        </div>
+                    </div>
+                `);
+            });
+        });
+    } else {
+        container.append('<p>No flights available.</p>');
+    }
+}
+
+function fetchFlightsByCityAndMonth(cityId, month) {
+    $.ajax({
+        url: '/departure-flights/year', 
+        type: 'POST',
+        data: {
+            DEPC: cityId,
+            month: month,
+            _token: $('meta[name="csrf-token"]').attr('content'),
+        },
+        success: function(response) {
+            if (response.success) {
+                renderFlights(response.data);  
+            } else {
+                $('#flightsContainer').html('<p>No flights found for the selected city and month.</p>');
+            }
+        }
+    });
+}
 // departure date 
 $(".departure_date").change(function () {
     var defaultdate = $(this).val();
@@ -79,7 +246,7 @@ $('#modal-form').submit(function (event) {
     $("#sbmBooking").fadeOut();
     $("#loadBooking").fadeIn();
     var vars = $(this).serialize();
-    
+
     var thisEmail = $('input[name="email"]', this);
     var thisConfirmation = $('input[name="c_email"]', this);
     var thisPhone = $('input[name="phone"]', this);
@@ -397,3 +564,5 @@ $(document).ready(function () {
         displayRoomOptions(roomOptions);
     });
 });
+
+// requestBtn dealRequest request uppercase topRequestBtn bbox desktop

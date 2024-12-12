@@ -35,6 +35,7 @@ class PackageStoreRequest extends FormRequest
             'total_price' => 'numeric',
             'packagetype_id' => 'required|string|exists:package_types,id',
             'accommodation' => 'required|string|min:1',
+            'package_includes' => 'required|string|min:1',
         ];
     }
 
@@ -52,6 +53,7 @@ class PackageStoreRequest extends FormRequest
             'tax.required' => 'tax is required.',
             'packagetype_id.required' => 'Please select the package type.',
             'accommodation.required' => 'Please provide the accommodation description',
+            'package_includes.required' => 'Please provide the package includes.',  
         ];
     }
 }

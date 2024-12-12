@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BookingsController;
 use App\Http\Controllers\Admin\ContentManagementController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DepartureFlightsController;
 use App\Http\Controllers\Admin\DestinationController;
 use App\Http\Controllers\Admin\ExclusionsController;
 use App\Http\Controllers\Admin\InclusionsController;
@@ -80,6 +81,9 @@ Route::group(['prefix' => 'admin'], function () {
 
         //Package Type
         Route::resource('package-type', PackageTypeController::class);
+
+        //Departure
+        Route::resource('departure-flights',DepartureFlightsController::class);
 
         //Destination
         Route::resource('destination', DestinationController::class);
@@ -173,7 +177,9 @@ Route::get('all-packages',[ControllersDashboardController::class,'homeFilter'])-
 Route::get('tour-packages', [ControllersPackagesController::class, 'tourPackages'])->name('web.packages');
 Route::get('package-detail/{id}', [ControllersPackagesController::class, 'packageDetail'])->name('web.packageDetails');
 Route::get('/download-pdf/{id}', [ControllersPackagesController::class, 'downloadPdf'])->name('download.pdf');
+Route::post('/departure-flights/year', [ControllersPackagesController::class, 'getDepartureFlight'])->name('departure-flights.year-details');
 
+Route::post('departure-flights/get-flights-by-city-and-month', [ControllersPackagesController::class, 'getFlightsByCityAndMonth']);
 
 
 //Pages

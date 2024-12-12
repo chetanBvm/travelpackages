@@ -12,7 +12,7 @@ class Package extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'description', 'price', 'days', 'thumbnail','status','destination_id','sub_title','tax','tax_rate','total_price','packagetype_id','accommodation'];
+    protected $fillable = ['name', 'description', 'price', 'days', 'thumbnail','status','destination_id','sub_title','tax','tax_rate','total_price','packagetype_id','accommodation','package_includes'];
     
     public function destination(): HasOne
     {

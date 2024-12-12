@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('packages', function (Blueprint $table) {
             $table->foreignId('packagetype_id')->references('id')->on('package_types')->onDelete('cascade')->onUpdate('cascade')->after('destination_id'); 
             $table->longText('accommodation')->nullable()->after('description');
+            $table->longText('package_includes')->nullable()->after('accommodation');
         });
     }
 

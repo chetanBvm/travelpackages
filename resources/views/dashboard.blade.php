@@ -150,7 +150,7 @@
                 <div class="tranding-inner">
                     <div class="tranding-head">
                         @if ($data['homeDestination'] && $data['homeDestination']->type == 'home_destination')
-                            <h2>{{ $data['homeDestination']->title }}</h2>
+                            <h2 class="main-heading">{{ $data['homeDestination']->title }}</h2>
                             <p class="content">{{ $data['homeDestination']->subtitle }}</p>
                         @else
                             <h2 class="main-heading">Trending Destinations</h2>
@@ -161,7 +161,7 @@
                         <div class="row">
                             @if ($data['destination']->count() > 0)
                                 @foreach ($data['destination'] as $destinations)
-                                    <div class="col-sm-6 col-md-6">
+                                    <div class="col-sm-6 col-md-4">
                                         <div class="tranding-content">
                                             <figure class="city">
                                                 <img src="{{ asset('storage/') . '/' . $destinations->image }}">
@@ -421,10 +421,8 @@
                                                 {{-- <img src="{{ asset('web/assets/images/experience-one.png') }}"> --}}
                                             </figure>
                                             <h4>{{ $experience->name }}</h4>
-                                            <p>{!! $experience->description !!}</p>
-                                            {{-- <P>I went for my honeymoon with Travel Agency. I discussed about my destination with
-                                        akash and he shared an amazing itinerary which covered all the places of Kashmir
-                                        which were a must visit during month of december. </P> --}}
+                                            {!! $experience->description !!}
+                                           
                                         </div>
                                     </div>
                                 @endforeach

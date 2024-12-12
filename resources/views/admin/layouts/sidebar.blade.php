@@ -75,6 +75,9 @@
                     <li class="submenu-item {{ request()->routeIs('exclusion.index') ? 'active' : '' }}">
                         <a href="{{ route('exclusion.index') }}">Exclusion</a>
                     </li>
+                    <li class="submenu-item {{ request()->routeIs('departure-flights.index') ? 'active' : '' }}">
+                        <a href="{{ route('departure-flights.index') }}">Departure Flights</a>
+                    </li>
                 </ul>
             </li>
             <li class="sidebar-item {{ request()->routeIs('promotion.index') ? 'active' : '' }}">
