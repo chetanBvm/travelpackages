@@ -2145,7 +2145,6 @@ h2.package-single-right-head {}
   line-height: 16.44px;
   margin: 0;
   color: #77CA7E !important;
-  max-width: 160px;
 }
 
 .package-single-right-middle {
@@ -2990,6 +2989,7 @@ h2.package-single-right-head {}
   display: flex;
   align-items: center;
   column-gap: 30px;
+  width: 100%;
   justify-content: space-between;
 }
 
@@ -2997,7 +2997,7 @@ h2.package-single-right-head {}
   position: relative;
 }
 
-.offers-data::before {
+/* .offers-data::before {
   content: "";
   top: -6px;
   left: -16px;
@@ -3006,7 +3006,7 @@ h2.package-single-right-head {}
   height: 38px;
   background-image: url('../images/Subtract.png');
   background-repeat: no-repeat;
-}
+} */
 
 .offers-data span {
   font-family: Plus Jakarta Sans;
@@ -3070,9 +3070,7 @@ h2.package-single-right-head {}
   border: 1px solid var(--secondary);
 }
 
-.itinerary-inner {
-  padding-top: 40px;
-}
+
 
 .itinerary-inner h2 {
   font-family: Raleway;
@@ -3104,9 +3102,7 @@ h2.package-single-right-head {}
   border-radius: 15px;
 }
 
-.inclusions-data {
-  padding-top: 40px;
-}
+
 
 .inclusions-data ul li {
   color: #666666;
@@ -3664,8 +3660,3 @@ h2.package-single-right-head {}
   color: var(--gray);
 }
 
-.include-point {
-  display: flex;
-  align-items: flex-start;
-  column-gap: 6px;
-}

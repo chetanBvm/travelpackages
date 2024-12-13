@@ -8,20 +8,6 @@ $('.travel-btn.request').click(function () {
     }, 500);
 });
 
-// $('.tab').click(function () {
-//     $('.requestBtn').fadeIn();
-//     var tabIndex = $(this).index();
-//     $('.tab').removeClass('active');
-//     $(this).addClass('active');
-//     $('.tabContent').addClass('none');
-//     $('.tabContent').eq(tabIndex).removeClass('none');
-//     if ($(this).hasClass('priceTab')) {
-//         if ($(window).width() < 1024) {
-//             $('.requestBtn').fadeOut();
-//         }
-//     }
-// });
-
 
 if ($(".action_rates option:selected").text() == 'Select a city' || $(".action_rates option:selected").text() == 'SÃ©lectionnez une ville') {
     $("#month_prices").prop('disabled', true);
@@ -155,14 +141,14 @@ function renderFlights(data) {
                 } else if (flight.status === 'Show Price') {
                     priceLabel = 'Price';
                 }
-                          
+                                       
                 const flightPriceDisplay = (flight.status === 'On Request' || flight.status === 'Sold Out')
                     ? `<h4>${priceLabel}</h4>`
                     : `<h4>${totalPrice}<span>/person</span></h4>`;
                 const enquiryButton = flight.status === 'Sold Out' 
                 ? `<div class="status-label"> <a class="travel-btn btn" href="javascript::" >Sold Out</a></div>` 
                 : `<div class="enquiry-btn">
-                        <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal" data-bs-target="#exampleModal">Send Enquiry</a>
+                        <a class="travel-btn btn book_by_date" href="javascript::" data-bs-toggle="modal" data-bs-target="#exampleModal" data-date="${formattedDepartureDate}" data-category="${flight.category}">Send Enquiry</a>
                    </div>`;
                 container.append(
                     `<div class='ticket-details-bottom-main'>
@@ -196,8 +182,13 @@ function renderFlights(data) {
     }
 }
 
+$('html').on('click','book_by_date',function(){
+    const departureCity = $(this).data('city');
+    const category = $(this).data('category');
 
+    $('.departure_city').val(departureCity);
 
+});
 // departure date 
 $(".departure_date").change(function () {
     var defaultdate = $(this).val();
