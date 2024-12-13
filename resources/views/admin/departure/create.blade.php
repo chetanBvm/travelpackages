@@ -76,10 +76,19 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
+                                        <label for="days">Accommodation Category</label>
+                                        <select class="form-select" id="basicSelect" name="category[]">
+                                            <option value="classic Hotels">classic Hotels</option>
+                                            <option value="superior Hotels">superior Hotels</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
                                         <label for="days">Status</label>
                                         <select class="form-select" id="basicSelect" name="status[]">
-                                            <option value="Active">Active</option>
-                                            <option value="InActive">InActive</option>
+                                            <option value="On Request">On Request</option>
+                                            <option value="Show Price">Show Price</option>
                                             <option value="Sold Out">Sold Out</option>
                                         </select>
                                     </div>
@@ -115,10 +124,10 @@
                     year: {
                         required: true
                     },
-                    departure_date:{
+                    departure_date: {
                         required: true
                     },
-                    return_date:{
+                    return_date: {
                         required: true
                     },
                     // price:{
@@ -127,6 +136,9 @@
                     status: {
                         required: true
                     },
+                    category: {
+                        required: true
+                    }
                 },
                 // Customizing error messages
                 messages: {
@@ -136,10 +148,10 @@
                     year: {
                         required: "Pease Enter Month or year"
                     },
-                    departure_date:{
+                    departure_date: {
                         required: "Please enter the departure date."
                     },
-                    return_date:{
+                    return_date: {
                         required: "Please enter the return date."
                     },
                     // price:{
@@ -147,6 +159,9 @@
                     // },
                     status: {
                         required: "Please select the status."
+                    },
+                    category: {
+                        required: 'Please select the accommodation category'
                     }
                 },
                 errorPlacement: function(error, element) {
@@ -217,13 +232,22 @@
                                 <input type="text" class="form-control" name="price[]" placeholder="Price">
                             </div>
                         </div>
+                         <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="days">Accommodation Category</label>
+                                        <select class="form-select" id="basicSelect" name="category[]">
+                                            <option value="classic Hotels">classic Hotels</option>
+                                            <option value="superior Hotels">superior Hotels</option>
+                                        </select>
+                                    </div>
+                                </div>
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="status">Status</label>
                                 <select class="form-select" name="status[]">
-                                    <option value="Active">Active</option>
-                                    <option value="InActive">InActive</option>
-                                    <option value="Sold Out">Sold Out</option>
+                                    <option value="On Request">On Request</option>
+                                            <option value="Show Price">Show Price</option>
+                                            <option value="Sold Out">Sold Out</option>
                                 </select>
                             </div>
                         </div>

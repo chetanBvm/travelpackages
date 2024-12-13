@@ -69,15 +69,6 @@
 
                                     <div class="itinerary-inner">
                                         <p>{!! $packages->description !!}</p>
-                                        {{-- <p>On the western coast, Goa is known for its endless beaches, stellar nightlife,
-                                            eclectic seafood, world-heritage listed architecture. Spread across just
-                                            Experience a comfortable stay in our Classic Hotels, carefully chosen for their
-                                            value, convenient locations, and proximity to major attractions. Relax in
-                                            well-maintained rooms with thoughtful amenities, savor a variety of breakfast
-                                            choices, and benefit from attentive service to enhance your travel experience.
-                                        </p> --}}
-                                        {{-- <p>• 7 nights in Ponta Delgada at the Sao Miguel Park 4* hotel (or similar) in a
-                                            standard room</p> --}}
                                     </div>
                                 </div>
                             </div>
@@ -85,15 +76,12 @@
                                 <div class="package-single-right">
                                     <div class="package-single-right-head">
                                         <h2>{{ $packages->name }}</h2>
-                                        {{-- <h2>Paris & Normandy Cruise</h2> --}}
                                         <div class="guest">
                                             <img src="{{ asset('web/assets/images/timer.svg') }}" /><span>{{ $packages->days }}
                                                 Days</span>
-                                            {{-- <img src="images/timer.svg" /><span>11 Days</span> --}}
                                         </div>
                                     </div>
                                     <div class="package-single-right-middle">
-
                                         <div class="texes">
                                             @php
                                                 $currency = $packages->destination->country->currency_symbol;
@@ -105,25 +93,12 @@
                                         </div>
                                     </div>
                                     <a class="travel-btn request">Send Enquiry</a>
-                                    {{-- <a class="travel-btn" href="javascript::" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal">Send Enquiry</a> --}}
                                 </div>
-
-
-
                                 <div class="Package-Includes-main">
                                     <h2>Package Includes</h2>
                                     <ul>
                                         {!! $packages->package_includes !!}
                                     </ul>
-                                    {{-- <ul>
-                                        <li> <img src="images/tick-circle.svg" /> INTERNATIONAL FLIGHTS</li>
-                                        <li> <img src="images/tick-circle.svg" /> WELCOME & TRANSFERS</li>
-                                        <li> <img src="images/tick-circle.svg" /> HOTEL 4*</li>
-                                        <li> <img src="images/tick-circle.svg" /> ALL BREAKFASTS + 1 LUNCH</li>
-                                        <li> <img src="images/tick-circle.svg" /> EXCURSIONS</li>
-                                    </ul> --}}
-
                                     <div class="coupon-main">
                                         <div class="coupon-left">
                                             <div class="coupon-top">
@@ -226,15 +201,14 @@
                                                     <label class="form-label">Accommodation Category :</label>
                                                     <select class="form-select" id="cat_prices"
                                                         aria-label="Default select example">
-                                                        <option value="classic-hotels">Classic Hotels</option>
-                                                        <option value="superior-hotels">Superior Hotels</option>
+                                                        <option value="classic Hotels">Classic Hotels</option>
+                                                        <option value="superior Hotels">Superior Hotels</option>
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
-
 
                                 <div class="ticket-details-main">
                                    <div id="flightsContainer">
@@ -280,8 +254,6 @@
 
 
                                 </div> --}}
-
-
 
                                 {{-- <div class="ticket-details-main">
                                     <div class="ticket-date-name">
@@ -351,8 +323,6 @@
                                     </div>
 
                                 </div> --}}
-
-
  
                                 {{-- <div class="ticket-details-main">
                                     <div class="ticket-date-name">
@@ -517,8 +487,11 @@
 
                                     <ul>
                                         <li>
+                                            <div class="include-point"> 
+                                                <img src="{{asset('web/assets/images/tick-circle.svg')}}">
+                                               {!! $data['inclusion']->description ?? '' !!}
+                                            </div>
                                             {{-- <img src="{{asset('web/assets/images/tick-circle.svg')}}"> --}}
-                                            {!! $data['inclusion']->description ?? '' !!}
                                         </li>
                                         {{-- <li> <img src="images/tick-circle.svg">Round-trip international flights between
                                             Canada / Ponta Delgada with a good itinerary</li>
@@ -535,8 +508,13 @@
                                     <h2>EXCLUDES</h2>
                                     <ul>
                                         <li>
+                                            <div class="include-point"> 
+                                                <img src="{{asset('web/assets/images/tick-circle.svg')}}">
+                                                {!! $data['exclusion']->description ?? '' !!}
+                                            </div>
+                                        </li>
+                                            {{-- <p>International flights between Canada / Mumbai and New Delhi / Canada with good itineraries</p> --}}
                                             {{-- <img src="images/tick-circle.svg">  --}}
-                                            {!! $data['exclusion']->description ?? '' !!}</li>
                                         {{-- <li> <img src="images/tick-circle.svg"> Fees for checked baggage</li>
                                         <li> <img src="images/tick-circle.svg"> Tips: Guides, bus drivers and hotel staff
                                         </li>
@@ -550,7 +528,7 @@
                             <div class="tab-pane fade" id="pills-Map" role="tabpanel" aria-labelledby="pills-Map-tab"
                                 tabindex="0">
                                 <div class="map-image">
-                                    <img src="./images/map-image.jpg">
+                                    <img src="{{asset('web/assets/images/map-image.jpg')}}">
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="pills-FAQ" role="tabpanel" aria-labelledby="pills-FAQ-tab"
@@ -707,10 +685,7 @@
                                             </figure>
                                             <h2>{{ $review->name }}</h2>
                                         </div>
-                                        <p>{!! $review->description !!}</p>
-                                        {{-- <p>I went for my honeymoon with Travel Agency. I discussed about my destination with
-                                        akash and he shared an amazing itinerary which covered all the places of Goa which
-                                        were a must visit during month of december. </p> --}}
+                                        {!! $review->description !!}
                                     </div>
                                 </div>
                             @endforeach
@@ -720,7 +695,6 @@
 
             </div>
         </section>
-
         <section class="hotels-section">
             <div class="container">
                 <div class="hotels-inner">

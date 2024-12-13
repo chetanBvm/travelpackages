@@ -37,6 +37,7 @@ $('#month_prices').parent().click(function () {
 $('.action_rates').change(function () {
 
     var depCityId = $(this).val();
+    var cur_cat = $('#cat_prices').val();
 
     if (depCityId !== '') {
         $(".action_rates").css({ border: '1px solid #CCC' });
@@ -46,12 +47,14 @@ $('.action_rates').change(function () {
         $(".action_rates").css({ border: '1px solid #CCC' });
         $(".cat_prices").removeClass('d-none').show();
     }
+        
         thisDepc = '';
         $.ajax({
             url: '/departure-flights/year',
             type: 'post',
             data: {
                 DEPC: depCityId,
+                CAT: cur_cat,
                 _token: $('meta[name="csrf-token"]').attr('content'),
             },
             success: function (response) {
@@ -64,15 +67,44 @@ $('.action_rates').change(function () {
         });
 });
 
-
-$('html').on('change', '#month_prices', function () {
+$('#month_prices').change(function(){
     var depCityId = $('.action_rates').val();
     let selectedMonth = $('#month_prices').val();
-    
-    if (depCityId && selectedMonth) {
-        fetchFlightsByCityAndMonth(depCityId, selectedMonth);
+    var cur_cat = $('#cat_prices').val();
+
+    if (selectedMonth == 'all') {
+        fetchFlightsByCityAndMonth(depCityId, selectedMonth,cur_cat);
+    }else if (depCityId && selectedMonth && cur_cat) {
+        fetchFlightsByCityAndMonth(depCityId, selectedMonth,cur_cat);
     }    
 });
+
+$('#cat_prices').change(function(){
+    var depCityId = $('.action_rates').val();
+    let selectedMonth = $('#month_prices').val();
+    var cur_cat = $('#cat_prices').val();
+    fetchFlightsByCityAndMonth(depCityId,selectedMonth,cur_cat);
+})
+
+function fetchFlightsByCityAndMonth(cityId, month,cur_cat) {
+    $.ajax({
+        url: '/departure-flights/year', 
+        type: 'POST',
+        data: {
+            DEPC: cityId,
+            month: month,
+            CAT: cur_cat,
+            _token: $('meta[name="csrf-token"]').attr('content'),
+        },
+        success: function(response) {
+            if (response.success) {
+                renderFlights(response.data);  
+            } else {
+                $('#flightsContainer').html('<p>No flights found for the selected city and month.</p>');
+            }
+        }
+    });
+}
 
 function renderFlights(data) {
     let container = $('#flightsContainer');
@@ -81,7 +113,8 @@ function renderFlights(data) {
     if (data && Object.keys(data).length > 0) {
 
         Object.values(data).forEach(yearData => {
-            container.append(`<div class="ticket-date-name date_table_wrap">
+                       
+            container.append(`<div class="ticket-date-name">
                 <h3 class="monthPriceRow">${yearData.month} ${yearData.year}</h3></div>`);
 
             yearData.flights.forEach(flight => {
@@ -107,9 +140,25 @@ function renderFlights(data) {
                 let airplaneImg = airplaneIcon;
                 let returnImg = returnIcon;
                 let priceImg = priceIcon;
-               
-                const flightPrice = flight.price ? `<h4>${flight.price}<span>/person</span></h4>`: `<h4>On Request</h4>`; 
-                const priceClass = flight.status === 'Sold Out' ? 'blurred-price' : '';
+                var price = flight.package.price;
+
+                let flightPrice = flight.price ? flight.price : 0;
+                let totalPrice = flightPrice;
+
+                let priceLabel = 'Starting Price';
+                let priceClass = '';
+                if (flight.status === 'Sold Out') {
+                    priceLabel = 'Sold Out';
+                    priceClass = 'blurred-price';
+                } else if (flight.status === 'On Request') {
+                    priceLabel = 'On Request';
+                } else if (flight.status === 'Show Price') {
+                    priceLabel = 'Price';
+                }
+                          
+                const flightPriceDisplay = (flight.status === 'On Request' || flight.status === 'Sold Out')
+                    ? `<h4>${priceLabel}</h4>`
+                    : `<h4>${totalPrice}<span>/person</span></h4>`;
                 const enquiryButton = flight.status === 'Sold Out' 
                 ? `<div class="status-label"> <a class="travel-btn btn" href="javascript::" >Sold Out</a></div>` 
                 : `<div class="enquiry-btn">
@@ -129,7 +178,7 @@ function renderFlights(data) {
                                             <div class="ticket-detail-bottom-data ${priceClass}">
                                                 <span><img src="${priceImg}">Starting Price</span>
                                                 <div class="price-details-data">
-                                                    ${flightPrice}
+                                                    ${flightPriceDisplay}
                                                 </div>
                                             </div>
                                             <div class="ticket-details-right-data">
@@ -147,24 +196,8 @@ function renderFlights(data) {
     }
 }
 
-function fetchFlightsByCityAndMonth(cityId, month) {
-    $.ajax({
-        url: '/departure-flights/year', 
-        type: 'POST',
-        data: {
-            DEPC: cityId,
-            month: month,
-            _token: $('meta[name="csrf-token"]').attr('content'),
-        },
-        success: function(response) {
-            if (response.success) {
-                renderFlights(response.data);  
-            } else {
-                $('#flightsContainer').html('<p>No flights found for the selected city and month.</p>');
-            }
-        }
-    });
-}
+
+
 // departure date 
 $(".departure_date").change(function () {
     var defaultdate = $(this).val();

@@ -18,7 +18,8 @@ return new class extends Migration
             $table->date('return_date')->nullable();
             $table->string('year')->nullable();
             $table->decimal('price',8,2)->nullable();
-            $table->enum('status',['Active','InActive','Sold Out']);
+            $table->enum('category',['classic Hotels','superior Hotels']);
+            $table->enum('status',['On Request','Show Price','Sold Out']);
             $table->timestamps();
             $table->softDeletes();
         });

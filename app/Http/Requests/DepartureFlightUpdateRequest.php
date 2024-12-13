@@ -27,7 +27,8 @@ class DepartureFlightUpdateRequest extends FormRequest
             'return_date' => 'required|date',
             'year' => 'required|string',
             'price' => 'nullable',
-            'status' => 'string|in:Active,InActive,Sold Out'
+            'status' => 'string|in:On Request,Show Price,Sold Out',
+            'category' => 'string|in:classic Hotels,superior Hotels'
         ];
     }
 
