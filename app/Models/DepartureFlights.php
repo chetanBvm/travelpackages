@@ -10,7 +10,7 @@ class DepartureFlights extends Model
 {
     use HasFactory,SoftDeletes;
 
-    protected $fillable= ['package_id','departure_date','return_date','year','price','status'];
+    protected $fillable= ['package_id','departure_date','return_date','year','price','status','category'];
 
     public function package(){
         return $this->belongsTo(Package::class);

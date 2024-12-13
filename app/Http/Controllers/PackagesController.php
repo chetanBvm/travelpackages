@@ -19,6 +19,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class PackagesController extends Controller
@@ -78,23 +79,26 @@ class PackagesController extends Controller
        
         $depCityId = $request->DEPC;  // The selected city ID
         $selectedMonth = $request->month ?? null;  // Optional: The selected month
-    
+        $category = $request->CAT;
+        
         // Fetch flights for the selected city
         $flightsQuery = DepartureFlights::whereHas('package.destination', function ($query) use ($depCityId) {
             $query->where('id', $depCityId);
         })->with(['package' => function ($query) {
-            $query->select('id', 'price'); // Fetch only the package id and price
+            $query->select('id', 'price'); 
         }]);
         
-        // If a month is selected, filter flights by the month
-        if ($selectedMonth) {
-            $monthNumber = date('m', strtotime($selectedMonth)); // Convert month name to numeric
-            $flightsQuery->whereMonth('departure_date', $monthNumber)
-                         ->orWhereMonth('return_date', $monthNumber);
+        if ($selectedMonth && strtolower($selectedMonth) !== 'all') {
+            $monthNumber = date('m', strtotime($selectedMonth));            $flightsQuery->whereMonth('departure_date', $monthNumber);
+            $flightsQuery->whereMonth('return_date', $monthNumber);
         }
-    
+        
+        if ($category) {
+            $flightsQuery->where('category', $category);
+        }
+
         $flights = $flightsQuery->get();
-    
+        
         // Group flights by year and month
         $data = [];
         foreach ($flights as $flight) {

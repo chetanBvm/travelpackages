@@ -85,18 +85,27 @@
 
                                 <div class="col-6">
                                     <div class="form-group">
+                                        <label for="days">Accommodation Category</label>
+                                        <select class="form-select" id="basicSelect" name="category">
+                                            <option value="{{ $departureFlight->category }}">{{ $departureFlight->category }}</option>
+                                            <option value="classic Hotels">classic Hotels</option>
+                                            <option value="superior Hotels">superior Hotels</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group">
                                         <label for="days">Status</label>
                                         <select class="form-select" id="basicSelect" name="status">
                                             <option value="{{ $departureFlight->status }}">{{ $departureFlight->status }}</option>
-                                            <option value="Active">Active</option>
-                                            <option value="InActive">InActive</option>
+                                            <option value="On request">On Request</option>
+                                            <option value="Show Price">Show Price</option>
                                             <option value="Sold Out">Sold Out</option>
                                         </select>
                                     </div>
                                 </div>
-                                                        
-                     
-                                                    
+                                                                                  
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
                                     <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
