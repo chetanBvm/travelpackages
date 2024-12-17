@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BookingsController;
 use App\Http\Controllers\Admin\ContentManagementController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DepartureCityController;
 use App\Http\Controllers\Admin\DepartureFlightsController;
 use App\Http\Controllers\Admin\DestinationController;
 use App\Http\Controllers\Admin\ExclusionsController;
@@ -82,8 +83,11 @@ Route::group(['prefix' => 'admin'], function () {
         //Package Type
         Route::resource('package-type', PackageTypeController::class);
 
-        //Departure
+        //Departure Flights
         Route::resource('departure-flights',DepartureFlightsController::class);
+
+        //Departure City
+        Route::resource('departure-city',DepartureCityController::class);
 
         //Destination
         Route::resource('destination', DestinationController::class);
@@ -142,7 +146,11 @@ Route::group(['prefix' => 'admin'], function () {
             //home travel experience
             Route::get('home-travelexperience', [ContentManagementController::class, 'homeTravelExperience'])->name('home.travelExperience');
             Route::post('home-travelexperience/save', [ContentManagementController::class, 'homeTravelExperienceSave'])->name('home-experience.save');
-
+            
+            //home Top Bar
+            Route::get('home-topbar', [ContentManagementController::class, 'homeTopBar'])->name('home.topbar');
+            Route::post('home-topbar/save', [ContentManagementController::class, 'homeTopBarSave'])->name('home-topbar.save');
+            
             //about banner
             Route::get('about-banner', [ContentManagementController::class, 'aboutBanner'])->name('aboutbanner');
             Route::post('about-banner/save', [ContentManagementController::class, 'aboutBannerSave'])->name('aboutbanner.save');

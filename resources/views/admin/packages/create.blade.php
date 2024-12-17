@@ -132,6 +132,28 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
+                                        <label for="min_age">Min Age Limitation</label>
+                                        <input type="text" id="min-age" class="form-control" name="min_age"
+                                            placeholder="Min Age">
+                                    </div>
+                                    <span class="text-danger" id="min-age-error"></span>
+                                    @error('min_age')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="max_age">Max Age Limitation</label>
+                                        <input type="text" id="max-age" class="form-control" name="max_age"
+                                            placeholder="max age">
+                                    </div>
+                                    <span class="text-danger" id="max-age-error"></span>
+                                    @error('max_age')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
                                         <label for="days">Status</label>
                                         <select class="form-select" id="basicSelect" name="status">
                                             <option value="Active">Active</option>
@@ -330,5 +352,31 @@
                 $('#total_price').val(totalPrice.toFixed(2));
             });
         })
+    </script>
+    <script>
+        document.getElementById('max-age').addEventListener('change', function() {
+            const maxAge = parseInt(this.value);
+            const minAge = parseInt(document.getElementById('min-age').value);
+            const minAgeError = document.getElementById('min-age-error');
+            const maxAgeError = document.getElementById('max-age-error');
+
+            minAgeError.textContent = '';
+            maxAgeError.textContent = '';
+
+            if (maxAge < minAge) {
+                maxAgeError.textContent = 'Max Age should be greater than or equal to Min Age.';
+                this.value = ''; // Clear the invalid value
+            }
+        });
+    
+        document.getElementById('min-age').addEventListener('change', function() {
+            const minAge = parseInt(this.value);
+            const maxAge = parseInt(document.getElementById('max-age').value);
+    
+            if (minAge > maxAge) {
+                minAgeError.textContent = 'Min Age should be less than or equal to Max Age.';
+                this.value = ''; // Clear the invalid value
+            }
+        });
     </script>
 @endsection

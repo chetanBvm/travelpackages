@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-@php
+    @php
         use Carbon\Carbon;
         // Get the current year
         $currentYear = Carbon::now();
@@ -114,6 +114,22 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="side-contry-section">
+                                    <h2>Starting Rates</h2>
+                                    <ul>
+                                        @foreach($data['departureCity'] as $city)
+                                        <li>
+                                            <a href="#" class="side-contry-left">
+                                                <h3> {{$city->name}}</h3> <span>CAD ${{$city->price}}</span> <a class="travel-btn btn"
+                                                    href="javascript::" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal">See Dates</a>
+                                            </a>
+                                        </li>
+                                        @endforeach                                        
+                                    </ul>
+                                    <a class="travel-btn" href="javascript::" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">Select Another City</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -128,9 +144,10 @@
                             <div class="package-details-tabs">
                                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                     <li class="nav-item" role="presentation">
-                                        <button class="nav-link tab priceTab active" id="pills-dateprice-tab" data-bs-toggle="pill"
-                                            data-bs-target="#pills-dateprice" type="button" role="tab"
-                                            aria-controls="pills-dateprice" aria-selected="true">Dates & Prices</button>
+                                        <button class="nav-link tab priceTab active" id="pills-dateprice-tab"
+                                            data-bs-toggle="pill" data-bs-target="#pills-dateprice" type="button"
+                                            role="tab" aria-controls="pills-dateprice" aria-selected="true">Dates &
+                                            Prices</button>
                                     </li>
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link" id="pills-Itinerary-tab" data-bs-toggle="pill"
@@ -140,7 +157,8 @@
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link" id="pills-Accommodation-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-Accommodation" type="button" role="tab"
-                                            aria-controls="pills-Accommodation" aria-selected="false">Accommodation</button>
+                                            aria-controls="pills-Accommodation"
+                                            aria-selected="false">Accommodation</button>
                                     </li>
 
                                     <li class="nav-item" role="presentation">
@@ -178,8 +196,9 @@
                                                         <select class="form-select action_rates" id="mySelect"
                                                             aria-label="Default select example">
                                                             <option selected>SELECT A CITY</option>
-                                                            @foreach($data['destination'] as $destinations)
-                                                            <option value="{{$destinations->id}}" >{{$destinations->country->name}}</option>
+                                                            @foreach ($data['destination'] as $destinations)
+                                                                <option value="{{ $destinations->id }}">
+                                                                    {{ $destinations->country->name }}</option>
                                                             @endforeach
                                                             <option value="other" class="open_other_modal">Other</option>
                                                         </select>
@@ -191,7 +210,7 @@
                                                         aria-label="Default select example">
                                                         <option seleted value="all">All Months</option>
                                                         @foreach ($months as $index => $month)
-                                                            <option value="{{ $month}}">
+                                                            <option value="{{ $month }}">
                                                                 {{ $month }}</option>
                                                         @endforeach
                                                     </select>
@@ -211,10 +230,10 @@
                                 </div>
 
                                 <div class="ticket-details-main">
-                                   <div id="flightsContainer">
-                                    </div>                                     
+                                    <div id="flightsContainer">
+                                    </div>
                                 </div>
-                                                               
+
                                 {{-- <div class="ticket-details-main">
                                     <div class="ticket-date-name">
                                         <h3>July 2025</h3>
@@ -323,7 +342,7 @@
                                     </div>
 
                                 </div> --}}
- 
+
                                 {{-- <div class="ticket-details-main">
                                     <div class="ticket-date-name">
                                         <h3>October 2025</h3>
@@ -487,9 +506,9 @@
 
                                     <ul>
                                         <li>
-                                            <div class="include-point"> 
-                                                <img src="{{asset('web/assets/images/tick-circle.svg')}}">
-                                               {!! $data['inclusion']->description ?? '' !!}
+                                            <div class="include-point">
+                                                <img src="{{ asset('web/assets/images/tick-circle.svg') }}">
+                                                {!! $data['inclusion']->description ?? '' !!}
                                             </div>
                                             {{-- <img src="{{asset('web/assets/images/tick-circle.svg')}}"> --}}
                                         </li>
@@ -508,13 +527,13 @@
                                     <h2>EXCLUDES</h2>
                                     <ul>
                                         <li>
-                                            <div class="include-point"> 
-                                                <img src="{{asset('web/assets/images/tick-circle.svg')}}">
+                                            <div class="include-point">
+                                                <img src="{{ asset('web/assets/images/tick-circle.svg') }}">
                                                 {!! $data['exclusion']->description ?? '' !!}
                                             </div>
                                         </li>
-                                            {{-- <p>International flights between Canada / Mumbai and New Delhi / Canada with good itineraries</p> --}}
-                                            {{-- <img src="images/tick-circle.svg">  --}}
+                                        {{-- <p>International flights between Canada / Mumbai and New Delhi / Canada with good itineraries</p> --}}
+                                        {{-- <img src="images/tick-circle.svg">  --}}
                                         {{-- <li> <img src="images/tick-circle.svg"> Fees for checked baggage</li>
                                         <li> <img src="images/tick-circle.svg"> Tips: Guides, bus drivers and hotel staff
                                         </li>
@@ -528,7 +547,7 @@
                             <div class="tab-pane fade" id="pills-Map" role="tabpanel" aria-labelledby="pills-Map-tab"
                                 tabindex="0">
                                 <div class="map-image">
-                                    <img src="{{asset('web/assets/images/map-image.jpg')}}">
+                                    <img src="{{ asset('web/assets/images/map-image.jpg') }}">
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="pills-FAQ" role="tabpanel" aria-labelledby="pills-FAQ-tab"

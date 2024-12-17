@@ -56,7 +56,8 @@
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Date</label>
-                                    <input type="date" class="form-control departure_date" id="date">
+                                    <select disabled class="uppercase form_fill flex_select departure_date " required></select>
+                                    {{-- <input type="date" class="form-control departure_date" id="date"> --}}
                                 </div>
                             </div>
                         </div>

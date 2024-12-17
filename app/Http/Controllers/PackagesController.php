@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Airport;
 use App\Models\Banner;
+use App\Models\ContentManagement;
 use App\Models\Country;
+use App\Models\DepartureCity;
 use App\Models\DepartureFlights;
 use App\Models\Destination;
 use App\Models\Exclusions;
@@ -30,6 +32,8 @@ class PackagesController extends Controller
         $data['banner'] = Banner::where('type', 'Packages')->first();
         $data['country'] = Country::get();
         $data['packageType'] = PackageType::get();
+        $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();
+        $data['social_links'] = ContentManagement::where('type', 'home_topbar')->where('keywords','!=','main_title')->get();
         return view('web.packages.tourpackages', compact('data'))->with('filteredPackages', collect());
     }
     /**
@@ -51,7 +55,9 @@ class PackagesController extends Controller
         $data['exclusion'] = Exclusions::where('package_id', $id)->where('status', 'Active')->first();
         $data['destination'] = Destination::with('country')->get();
         $data['departureFlight'] = DepartureFlights::with('package.destination')->get();
-
+        $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();
+        $data['social_links'] = ContentManagement::where('type', 'home_topbar')->where('keywords','!=','main_title')->get();
+        $data['departureCity'] = DepartureCity::get()->take(5);
         return view('web.packages.packagedetail', compact('packages', 'data'));
     }
 

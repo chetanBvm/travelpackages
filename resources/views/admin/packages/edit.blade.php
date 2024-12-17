@@ -123,7 +123,27 @@
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
-
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="min_age">Min Age Limitation</label>
+                                        <input type="text" id="min_age" class="form-control" name="min_age" value="{{$package->min_age}}"
+                                            placeholder="Min Age">
+                                    </div>
+                                    @error('min_age')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="max_age">Max Age Limitation</label>
+                                        <input type="text" id="max_age" class="form-control" name="max_age" value="{{$package->max_age}}"
+                                            placeholder="max age">
+                                    </div>
+                                    @error('max_age')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
+               
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Status</label>

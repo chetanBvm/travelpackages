@@ -3660,3 +3660,84 @@ h2.package-single-right-head {}
   color: var(--gray);
 }
 
+.package-details-tabs {
+  max-width: 65%;
+}
+.tab-result-section .heading-main{
+  max-width: 65%;
+}
+
+.side-contry-section{
+  margin-top: 20px;
+  border: 1px solid #7B79791A;
+  background: var(--white);
+  padding: 24px 16px;
+  box-shadow: 0px 6px 20px 0px #0000001A;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+}
+.side-contry-section li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.side-contry-left{
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+}
+
+.side-contry-left h3{
+  font-family: Plus Jakarta Sans;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 20.16px;
+  color: var(--dark);
+  margin-left: 30px;
+}
+.side-contry-left span {
+  font-family: Plus Jakarta Sans;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #203638;
+}
+.side-contry-section h2{
+  font-family: Raleway;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28.18px;
+  text-align: left;
+}
+
+.side-contry-section .travel-btn {
+	padding: 10px 34px;
+
+}
+.side-contry-left{
+  position: relative;
+}
+.side-contry-left::before {
+	content: "";
+	position: absolute;
+	left: 0px;
+	background-image: url(../images/right-arop.svg);
+	width: 24px;
+	z-index: 1;
+	height: 24px;
+	top: 0px;
+	background-size: 24px;
+}
+.tab-result-section {
+  margin-top: -314px;
+}
+#pills-Accommodation .itinerary-inner {
+  padding-top: 40px;
+  max-width: 65%;
+}
+#pills-Inclusions .inclusions-data{
+  max-width: 65%;
+}

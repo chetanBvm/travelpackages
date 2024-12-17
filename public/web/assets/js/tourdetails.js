@@ -126,11 +126,11 @@ function renderFlights(data) {
                 let airplaneImg = airplaneIcon;
                 let returnImg = returnIcon;
                 let priceImg = priceIcon;
-                var price = flight.package.price;
+                var price = parseFloat(flight.package.price) || 0;
 
-                let flightPrice = flight.price ? flight.price : 0;
-                let totalPrice = flightPrice;
-
+                let flightPrice = parseFloat(flight.price) || 0;
+                let totalPrice = flightPrice + price;
+                
                 let priceLabel = 'Starting Price';
                 let priceClass = '';
                 if (flight.status === 'Sold Out') {
@@ -148,7 +148,7 @@ function renderFlights(data) {
                 const enquiryButton = flight.status === 'Sold Out' 
                 ? `<div class="status-label"> <a class="travel-btn btn" href="javascript::" >Sold Out</a></div>` 
                 : `<div class="enquiry-btn">
-                        <a class="travel-btn btn book_by_date" href="javascript::" data-bs-toggle="modal" data-bs-target="#exampleModal" data-date="${formattedDepartureDate}" data-category="${flight.category}">Send Enquiry</a>
+                        <a class="travel-btn btn book_by_date" href="javascript::" data-bs-toggle="modal" data-bs-target="#exampleModal"  data-tourstartdate="${formattedDepartureDate}" data-date="${formattedDepartureDate}" data-onrequest="1" data-category="Classic Hotels" data-catid="1" data-price="${price}" data-longdate="Wed Jan 08">Send Enquiry</a>
                    </div>`;
                 container.append(
                     `<div class='ticket-details-bottom-main'>
@@ -185,14 +185,26 @@ function renderFlights(data) {
 $('html').on('click','book_by_date',function(){
     const departureCity = $(this).data('city');
     const category = $(this).data('category');
+    let tour_start_date = $(this).data('tourstartdate');
 
     $('.departure_city').val(departureCity);
 
 });
+
 // departure date 
+// $(".departure_date").change(function () {
+//     var defaultdate = $(this).val();
+//     $("#departure_date").val(defaultdate);
+// });
+
 $(".departure_date").change(function () {
     var defaultdate = $(this).val();
+    var tour_start_date = $(this).find(":selected").data('landdate');
+    $('#tour_start_date').val(tour_start_date);
     $("#departure_date").val(defaultdate);
+    $('#earliest_date').val(defaultdate);
+    $('#return_date').val(defaultdate);
+
 });
 
 function validateFields(elm) {

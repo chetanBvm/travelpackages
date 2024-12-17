@@ -36,6 +36,8 @@ class PackageStoreRequest extends FormRequest
             'packagetype_id' => 'required|string|exists:package_types,id',
             'accommodation' => 'required|string|min:1',
             'package_includes' => 'required|string|min:1',
+            'min_age' => 'required|integer|lt:max_age',
+            'max_age' => 'required|integer|gt:min_age',
         ];
     }
 

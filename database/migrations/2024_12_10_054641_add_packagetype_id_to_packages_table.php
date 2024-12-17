@@ -12,9 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('packages', function (Blueprint $table) {
-            $table->foreignId('packagetype_id')->references('id')->on('package_types')->onDelete('cascade')->onUpdate('cascade')->after('destination_id'); 
+            $table->foreignId('packagetype_id')->references('id')->on('package_types')->onDelete('cascade')->onUpdate('cascade')->after('destination_id');
             $table->longText('accommodation')->nullable()->after('description');
             $table->longText('package_includes')->nullable()->after('accommodation');
+            $table->string('min_age')->nullable()->after('package_includes');
+            $table->string('max_age')->nullable()->after('min_age');
         });
     }
 
