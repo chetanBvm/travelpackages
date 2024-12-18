@@ -55,6 +55,7 @@ class PackagesController extends Controller
         $data['exclusion'] = Exclusions::where('package_id', $id)->where('status', 'Active')->first();
         $data['destination'] = Destination::with('country')->get();
         $data['departureFlight'] = DepartureFlights::with('package.destination')->get();
+        $data['departureCities'] = DepartureCity::get();
         $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();
         $data['social_links'] = ContentManagement::where('type', 'home_topbar')->where('keywords','!=','main_title')->get();
         $data['departureCity'] = DepartureCity::get()->take(5);
@@ -86,6 +87,9 @@ class PackagesController extends Controller
         $depCityId = $request->DEPC;  // The selected city ID
         $selectedMonth = $request->month ?? null;  // Optional: The selected month
         $category = $request->CAT;
+        
+        $cityData = Destination::with('country')->where('id',$depCityId)->first();
+        $countryName = $cityData && $cityData->country ? $cityData->country->name : null;
         
         // Fetch flights for the selected city
         $flightsQuery = DepartureFlights::whereHas('package.destination', function ($query) use ($depCityId) {
@@ -129,7 +133,33 @@ class PackagesController extends Controller
     
         return response()->json([
             'success' => true,
+            'cityName' => $countryName,
             'data' => $formattedData,
         ]);
     }
+
+    public function getDepartureFlightDates(Request $request){
+        $depCityId = $request->DEPC;
+        
+        $flights = DepartureFlights::whereHas('package.destination', function ($query) use ($depCityId) {
+            $query->where('id', $depCityId);
+        })
+        ->orderBy('departure_date', 'asc')
+        ->get();
+    
+        // Format dates with sold-out status
+        $dateList = [];
+        foreach ($flights as $flight) {
+            $dateList[] = [
+                'date' => Carbon::parse($flight->departure_date)->format('Y-m-d'),
+                'status' => $flight->status,
+            ];
+        }
+    
+        // Return response with the date listing
+        return response()->json([
+            'success' => true,
+            'dates' => $dateList,
+        ]);
+    } 
 }

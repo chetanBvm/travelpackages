@@ -15,7 +15,7 @@
                     <input type="hidden" name="c_formName" value="booking">
                     <input type="hidden" name="c_currency" id="c_currency" value="{{ $currency }}">
                     <input type="hidden" name="departure_date" id="departure_date">
-
+                    <input type="hidden" name="departure_city" id="departure_city" >
                     <div class="modal-body">
                         <h2>{{ $package->name }}</h2>
                         <div class="row">
@@ -27,7 +27,8 @@
                                     placeholder="Los Angeles"> --}}
                                     <label for="exampleFormControlInput1" class="form-label">Departure City</label>
                                     <div class="Destination-form-data selection-country">
-                                        <input type="text" class="form-control departure_city" placeholder="" value="" name="departure_city">
+                                        <input type="text" class="form-control form_fill getAirport departure_city" placeholder="" value="" name="departure_city" disabled>
+                                        <div id="results_frame"></div>
                                         {{-- <select class="form-select" aria-label="Default select example"
                                             name="departure_city" id="airport_code"> --}}
                                             {{-- @foreach ($data['airport'] as $airport)
@@ -56,7 +57,7 @@
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Date</label>
-                                    <select disabled class="uppercase form_fill flex_select departure_date " required></select>
+                                    <select disabled class="form-control uppercase form_fill flex_select departure_date " required></select>
                                     {{-- <input type="date" class="form-control departure_date" id="date"> --}}
                                 </div>
                             </div>

@@ -68,7 +68,7 @@
                                     <!-- tab-section -->
 
                                     <div class="itinerary-inner">
-                                        <p>{!! $packages->description !!}</p>
+                                        {!! $packages->description !!}
                                     </div>
                                 </div>
                             </div>

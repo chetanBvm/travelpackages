@@ -34,17 +34,17 @@
               </td>
             </tr>
             <tr>
-            <td colspan="2"><img src="{{asset('web/assets/images/home-slider2.jpg')}}" style="width: 100%; "></td>
+            <td colspan="2"><img src="{{asset('storage'.'/'.$package->thumbnail)}}" style="width: 100%; "></td>
             </tr>
             <tr>
-             <td colspan="2"><span style="font-size: 22px; font-weight: 600; padding: 20px 0px; color: #000000;">COSTA RICA ESCAPE</span></td>
+             <td colspan="2"><span style="font-size: 22px; font-weight: 600; padding: 20px 0px; color: #000000;">{{$package->name}}</span></td>
             </tr>
 
 
 
             <tr class="heading" >
                 <td><span style="font-weight: 600; font-size: 16px;">Itinerary</span>
-                  <span style="font-weight: 500; font-size: 14px;">7 NIGHTS / 8 DAYS</span>
+                  <span style="font-weight: 500; font-size: 14px;">{{$package->days}}</span>
                 </td>
                 <td></td>
             </tr> 

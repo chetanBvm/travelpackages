@@ -1,6 +1,6 @@
 var selectedCategory = '';
 var selectedCity = false;
-
+var departureCity;
 $('.travel-btn.request').click(function () {
     $('.priceTab').trigger('click');
     $('html, body').animate({
@@ -33,48 +33,54 @@ $('.action_rates').change(function () {
         $(".action_rates").css({ border: '1px solid #CCC' });
         $(".cat_prices").removeClass('d-none').show();
     }
-        
-        thisDepc = '';
-        $.ajax({
-            url: '/departure-flights/year',
-            type: 'post',
-            data: {
-                DEPC: depCityId,
-                CAT: cur_cat,
-                _token: $('meta[name="csrf-token"]').attr('content'),
-            },
-            success: function (response) {
-                if (response.success) {
+
+    thisDepc = '';
+    $.ajax({
+        url: '/departure-flights/year',
+        type: 'post',
+        data: {
+            DEPC: depCityId,
+            CAT: cur_cat,
+            _token: $('meta[name="csrf-token"]').attr('content'),
+        },
+        success: function (response) {
+            if (response.success) {
+                if (response.data && response.data.length > 0) {
+                    departureCity = response.cityName;
                     renderFlights(response.data);
                 } else {
-                    alert('No flights found for this destination.');
+                    showOtherModal();
                 }
+            } else {
+                alert('No flights found for this destination.');
+                showOtherModal();
             }
-        });
+        }
+    });
 });
 
-$('#month_prices').change(function(){
+$('#month_prices').change(function () {
     var depCityId = $('.action_rates').val();
     let selectedMonth = $('#month_prices').val();
     var cur_cat = $('#cat_prices').val();
 
     if (selectedMonth == 'all') {
-        fetchFlightsByCityAndMonth(depCityId, selectedMonth,cur_cat);
-    }else if (depCityId && selectedMonth && cur_cat) {
-        fetchFlightsByCityAndMonth(depCityId, selectedMonth,cur_cat);
-    }    
+        fetchFlightsByCityAndMonth(depCityId, selectedMonth, cur_cat);
+    } else if (depCityId && selectedMonth && cur_cat) {
+        fetchFlightsByCityAndMonth(depCityId, selectedMonth, cur_cat);
+    }
 });
 
-$('#cat_prices').change(function(){
+$('#cat_prices').change(function () {
     var depCityId = $('.action_rates').val();
     let selectedMonth = $('#month_prices').val();
     var cur_cat = $('#cat_prices').val();
-    fetchFlightsByCityAndMonth(depCityId,selectedMonth,cur_cat);
+    fetchFlightsByCityAndMonth(depCityId, selectedMonth, cur_cat);
 })
 
-function fetchFlightsByCityAndMonth(cityId, month,cur_cat) {
+function fetchFlightsByCityAndMonth(cityId, month, cur_cat) {
     $.ajax({
-        url: '/departure-flights/year', 
+        url: '/departure-flights/year',
         type: 'POST',
         data: {
             DEPC: cityId,
@@ -82,9 +88,9 @@ function fetchFlightsByCityAndMonth(cityId, month,cur_cat) {
             CAT: cur_cat,
             _token: $('meta[name="csrf-token"]').attr('content'),
         },
-        success: function(response) {
+        success: function (response) {
             if (response.success) {
-                renderFlights(response.data);  
+                renderFlights(response.data);
             } else {
                 $('#flightsContainer').html('<p>No flights found for the selected city and month.</p>');
             }
@@ -96,15 +102,16 @@ function renderFlights(data) {
     let container = $('#flightsContainer');
     container.empty();
 
+
     if (data && Object.keys(data).length > 0) {
 
         Object.values(data).forEach(yearData => {
-                       
+
             container.append(`<div class="ticket-date-name">
                 <h3 class="monthPriceRow">${yearData.month} ${yearData.year}</h3></div>`);
 
             yearData.flights.forEach(flight => {
-                
+
                 //convert the departure and return dates
                 const departureDate = new Date(flight.departure_date);
                 const returnDate = new Date(flight.return_date);
@@ -130,7 +137,7 @@ function renderFlights(data) {
 
                 let flightPrice = parseFloat(flight.price) || 0;
                 let totalPrice = flightPrice + price;
-                
+
                 let priceLabel = 'Starting Price';
                 let priceClass = '';
                 if (flight.status === 'Sold Out') {
@@ -141,14 +148,14 @@ function renderFlights(data) {
                 } else if (flight.status === 'Show Price') {
                     priceLabel = 'Price';
                 }
-                                       
+
                 const flightPriceDisplay = (flight.status === 'On Request' || flight.status === 'Sold Out')
                     ? `<h4>${priceLabel}</h4>`
                     : `<h4>${totalPrice}<span>/person</span></h4>`;
-                const enquiryButton = flight.status === 'Sold Out' 
-                ? `<div class="status-label"> <a class="travel-btn btn" href="javascript::" >Sold Out</a></div>` 
-                : `<div class="enquiry-btn">
-                        <a class="travel-btn btn book_by_date" href="javascript::" data-bs-toggle="modal" data-bs-target="#exampleModal"  data-tourstartdate="${formattedDepartureDate}" data-date="${formattedDepartureDate}" data-onrequest="1" data-category="Classic Hotels" data-catid="1" data-price="${price}" data-longdate="Wed Jan 08">Send Enquiry</a>
+                const enquiryButton = flight.status === 'Sold Out'
+                    ? `<div class="status-label"> <a class="travel-btn btn" href="javascript::" >Sold Out</a></div>`
+                    : `<div class="enquiry-btn">
+                        <a class="travel-btn btn book_by_date" href="javascript::" data-bs-toggle="modal" data-bs-target="#exampleModal"  data-tourstartdate="${formattedDepartureDate}" data-date="${formattedDepartureDate}" data-city="${departureCity}"data-category="${flight.category}" data-price="${price}">Send Enquiry</a>
                    </div>`;
                 container.append(
                     `<div class='ticket-details-bottom-main'>
@@ -182,13 +189,93 @@ function renderFlights(data) {
     }
 }
 
-$('html').on('click','book_by_date',function(){
-    const departureCity = $(this).data('city');
-    const category = $(this).data('category');
-    let tour_start_date = $(this).data('tourstartdate');
 
-    $('.departure_city').val(departureCity);
+function showOtherModal() {
+    $('#exampleModal').modal('show');
+    console.log(('#modal-form .form_fill'));
+    
+    //  $('.main_modal').hide();
+    //  $('.other_modal').show();
+    //  $('#tour_price').val('');
+    //  $('#tour_price').removeAttr('required');
+    //  //$('#hotel_category').val('');
+    //  $('#departure_city').html('');
+    //  $('.departure_date').val('');
+    //  $('#modal-form .form_fill').not('.departure_city,input[type="hidden"]').css({opacity: 0.5});
+    $('#modal-form .form_fill').prop('disabled', false);
 
+     $('#modal-form .form_fill').not('.departure_city,.departure_date').prop('disabled', true);
+    //  $('#modal-form input[type="submit"]').prop('disabled', true);
+    //  //var tour_no = $('#modal').data('tour');
+    //  $('html, body').animate({scrollTop: 0}, 'slow');
+    //  $('#modal').fadeIn();
+
+    //  if (selectedCity) { 
+    //      $(".action_rates").val(thisDepc);
+    //  } else {
+    //      $(".action_rates option:first").removeAttr('disabled');
+    //      $(".action_rates").prop("selectedIndex", 0);
+    //      $(".action_rates option:first").attr('disabled', 'disabled');
+    //  }
+}
+
+var insert_counter = false;
+$('.getAirport').keydown(function (e) {
+
+    var code = e.keyCode || e.which;
+    if (code == 9 && $('#results_frame').html() != '') {
+        //get first value
+        $('#results_frame .q_result > p:eq(0)').click();
+    }
+
+});
+
+$('.getAirport').keyup(function(e){
+    $("#airport_code").val('');
+    var accInput = $(this);
+    var q = $(accInput).val();
+    if(q!= ''){
+        var result = getAirports(data_int_na.airports, q);
+        if(result == ""){
+            if(!insert_counter){
+               $('head').append("<script src=\"/web/assets/js/all_airports.js?v=456\"></script>");
+                insert_counter = true;
+            }
+            result = getAirports(data_all.airports, q);
+        }
+        $('#results_frame').html(result);
+    }else{
+        $('#results_frame').html('');
+    }
+})
+// $('html').on('click','book_by_date',function(){
+//     const departureCity = $(this).data('city');
+//     const category = $(this).data('category');
+//     let tour_start_date = $(this).data('tourstartdate');
+// });
+
+$('#exampleModal').on('show.bs.modal', function (event) {
+    $(this).find('input[name="departure_city"]').val(departureCity);
+    var departure = $('.action_rates').val();
+
+    $.ajax({
+        url: '/get-departure-dates',
+        type: 'GET',
+        data: {
+            DEPC: departure
+        },
+        success: function (response) {
+            if (response.success) {
+                let dateList = response.dates;
+                let html = '';
+
+                dateList.forEach(date => {
+                    html += `<option value="${date.date}" ${date.status == 'Sold Out' ? 'disabled' : ''}>${date.date} ${date.status == 'Sold Out' ? '(Sold Out)' : ''}</option>`;
+                });
+                $('.departure_date').html(html).prop('disabled', false);
+            }
+        }
+    });
 });
 
 // departure date 

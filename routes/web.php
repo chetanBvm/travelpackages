@@ -189,6 +189,7 @@ Route::post('/departure-flights/year', [ControllersPackagesController::class, 'g
 
 Route::post('departure-flights/get-flights-by-city-and-month', [ControllersPackagesController::class, 'getFlightsByCityAndMonth']);
 
+Route::get('get-departure-dates',[ControllersPackagesController::class,'getDepartureFlightDates']);
 
 //Pages
 Route::get('about-us', [PagesController::class, 'aboutUs'])->name('pages.about');

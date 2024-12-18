@@ -3741,3 +3741,21 @@ h2.package-single-right-head {}
 #pills-Inclusions .inclusions-data{
   max-width: 65%;
 }
+
+p.dropResDepCity {
+  padding: 8px 10px;
+  margin-bottom: 3px;
+  border-bottom: 1px solid #ffffff;
+}
+.q_result.packRes {
+  height: fit-content;
+  max-height: 274px;
+  background-color: var(--secondary);
+  position: relative;
+  z-index: 1;
+  color: #ffffff;
+  overflow: auto;
+}
+div#results_frame {
+  height: 10px;
+}
