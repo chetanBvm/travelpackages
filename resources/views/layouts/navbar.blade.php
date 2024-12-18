@@ -2,13 +2,13 @@
     <span>BLACK FRIDAY AT My Vacay Host: Additional $100 OFF / person on all packages. Book by Dec 4th</span>
 </div>
 <div class="offer-news offer-news-2">
-    <span>Come See the world with Us</span>
+    <span>{{ $data['social_link']->title ?? 'Come See the world with Us'}}</span>
     <ul class="social-icon">
-        <li><a href="javascript::"><i class="fa-brands fa-instagram"></i></a></li>
-        <li><a href="javascript::"><i class="fa-brands fa-facebook"></i></a></li>
-        <li><a href="javascript::"><i class="fa-brands fa-twitter"></i></a></li>
-        <li><a href="javascript::"><i class="fa-brands fa-linkedin"></i></a></li>
-        <li><a href="javascript::"><i class="fa-brands fa-youtube"></i></a></li>
+        @foreach ($data['social_links'] as $social)
+            <li><a href="{{ $social->social_link }}">
+                <i class="fa-brands fa-{{ strtolower($social->title) }}"></i>                    
+                </a></li>
+        @endforeach        
     </ul>
 </div>
 
@@ -37,11 +37,10 @@
                                 <ul class="inner-menu">
                                     <!-- <li><a href="package.php"><img src="images/TourPackages.svg"> Tour Packages</a></li> -->
                                     <li><a href="{{ route('web.packages') }}"><img
-                                                src="{{ asset('web/assets/images/RiverCruisePackages.svg') }}"> Ocean
-                                            Cruise Packages</a></li>
-                                    <li><a href="#"><img
+                                                src="{{ asset('web/assets/images/safari.svg') }}"> Safari</a></li>
+                                    {{-- <li><a href="#"><img
                                                 src="{{ asset('web/assets/images/OceanCruisePackages.svg') }}"> River
-                                            Cruise Packages</a></li>
+                                            Cruise Packages</a></li> --}}
                                 </ul>
                             </div>
                         </div>
@@ -58,7 +57,8 @@
                     </li>
                 </ul>
                 <div class="login-sec">
-                    <span class="search search-toggle"><img src="{{ asset('web/assets/images/search-icon.svg') }}"></span>
+                    <span class="search search-toggle"><img
+                            src="{{ asset('web/assets/images/search-icon.svg') }}"></span>
                     <button class="login-btn"><img
                             src="{{ asset('web/assets/images/call-calling.svg') }}"><span>Toll-Free</span>
                         1234-567-890</button>
@@ -67,11 +67,11 @@
         </nav>
         <div class="search-box">
             <div class="wrap">
-              <lable>
-                <input type="search" class="search-field" placeholder="Search...">
-                </label>
-                <button class="travel-btn"><i class="fas fa-search"></i> Search</button>
+                <lable>
+                    <input type="search" class="search-field" placeholder="Search...">
+                    </label>
+                    <button class="travel-btn"><i class="fas fa-search"></i> Search</button>
             </div>
-          </div>
+        </div>
     </div>
 </header>

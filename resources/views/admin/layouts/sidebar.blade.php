@@ -78,6 +78,9 @@
                     <li class="submenu-item {{ request()->routeIs('departure-flights.index') ? 'active' : '' }}">
                         <a href="{{ route('departure-flights.index') }}">Departure Flights</a>
                     </li>
+                    <li class="submenu-item {{ request()->routeIs('departure-city.index') ? 'active' : '' }}">
+                        <a href="{{ route('departure-city.index') }}">Departure City</a>
+                    </li>
                 </ul>
             </li>
             <li class="sidebar-item {{ request()->routeIs('promotion.index') ? 'active' : '' }}">
@@ -170,7 +173,9 @@
                     <li class="submenu-item ">
                         <a href="{{ route('home.travelExperience') }}">Home Travel Experience</a>
                     </li>
-
+                    <li class="submenu-item ">
+                        <a href="{{ route('home.topbar') }}">Home TopBar</a>
+                    </li>
                 </ul>
             </li>
             <li class="sidebar-item has-sub">

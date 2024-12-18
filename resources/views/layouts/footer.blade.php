@@ -73,6 +73,7 @@
 <script src="{{ asset('web/assets/js/owl.carousel.min.js') }}"></script>
 <script src="{{ asset('web/assets/js/perfect-scrollbar.min.js') }}"></script>
 <script src="{{ asset('web/assets/js/select2.min.js') }}"></script>
+<script src="{{asset('web/assets/js/airport_filter.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
 <script src="{{ asset('web/assets/js/tourdetails.js') }}"></script>

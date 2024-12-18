@@ -92,6 +92,8 @@ class PackagesController extends Controller
                 'packagetype_id' => $validated['packagetype_id'],
                 'accommodation' => $validated['accommodation'],
                 'package_includes' => $validated['package_includes'],
+                'min_age' => $validated['min_age'],
+                'max_age' => $validated['max_age'],
             ]);
             DB::commit();  //commit the transaction
 
@@ -147,6 +149,7 @@ class PackagesController extends Controller
                 'price' => $validated['price'],
                 'days' => $validated['days'],
                 'status' => $validated['status'],
+                'destination_id' => $validated['destination_id'],
                 'sub_title' => $validated['sub_title'],
                 'tax' => $validated['tax'],
                 'tax_rate' => $validated['tax_rate'],
@@ -154,6 +157,8 @@ class PackagesController extends Controller
                 'packagetype_id' => $validated['packagetype_id'],
                 'accommodation' => $validated['accommodation'],
                 'package_includes' => $validated['package_includes'],
+                'min_age' => $validated['min_age'],
+                'max_age' => $validated['max_age'],
             ]);
 
             //Check if the request has an image file

@@ -35,9 +35,26 @@
 .tree-img.accommodation-images::after {
 	width: 100%;
   }
+  .btn-wrapper .select-form-btn {
+    padding: 16px 34px;
+  }
+  .discover, .hotels, .experience{
+	padding-top:0px;
+  }
+/*-----------------------------*/    
+.side-contry-section .travel-btn {
+	padding: 10px 15px !important;
+  }
+  .side-contry-left {
+	column-gap: 9px;
+  }
 }
 
 @media (max-width:1199px){
+	
+	.contact-content .mobile-number-inner .form-control {
+		margin-left: -60px;
+	}
 	.ticket-detail-bottom-data {
 		padding-right: 4px;
 	  }
@@ -215,7 +232,40 @@
 
 
 @media (max-width:991px){
-	
+/*-----------------------------*/   
+	.tab-result-section{
+		margin-top: 0px;
+	}
+	.faq-data {
+		padding-top: 40px;
+	  }
+	  .package-details-tabs {
+		max-width: 100%;
+	  }
+	  .tab-result-section .heading-main{
+		max-width: 100%;
+	  }
+	  #pills-Accommodation .itinerary-inner {
+		max-width: 100%;
+	  }
+	  #pills-Inclusions .inclusions-data{
+		max-width: 100%;
+	  }
+/*-----------------------------*/   
+
+
+	.navbar-brand img {
+		max-width: 160px;
+	  }
+	.contact-content .mobile-number-inner .form-control {
+		margin-left: -31px;
+	  }
+	.mobile-number-inner .form-control {
+		margin-left: -162px;
+	  }
+	.footer-content img {
+		max-width: 159px;
+	  }
 	.offers-data::before {
 		left: 3px;
 	}
@@ -263,12 +313,13 @@
 	  }
 	.Destination-form-main {
 		justify-content: inherit;
+		flex-direction: column;
 	}
 	
 	.Destination-form-data {
-		width: 70%;
+		width: 100%;
 	  }
-	.Destination-form-main {
+	.Destination-form-inner {
 		display: grid;
 		grid-template-columns: auto auto;
 	  }
@@ -441,6 +492,16 @@
 }
 
 @media (max-width:767px){
+	.popular-content {
+		padding: 24px;
+
+	}
+	.tours-left img {
+		height: 100%;
+	}
+	.contact-content .mobile-number-inner .form-control {
+		margin-left: -14px;
+	}
 	.accommodation-images img {
 		width: 100%;
 		margin-top: 10px;
@@ -597,12 +658,26 @@
 	justify-content: center;
 	display: flex;
   }
+  .offer-news.offer-news-2 .social-icon {
+    position: inherit;
+    right: auto;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  .offer-news.offer-news-2 {
+	display: block;
+  }
 }
 
 @media(max-width:575px){
-	.tranding-bottom .col-sm-6.col-md-4:nth-child(1),.tranding-bottom .col-sm-6.col-md-4:nth-child(2) {
-        width: 100%;
-    }
+	.contact-content .mobile-number-inner .form-control {
+		margin-left: -54px;
+	}
+	.tab-result-section .Destination-form {
+        row-gap: 6px;
+		flex-direction: column;
+	}
 	.ticket-detail-bottom-data {
 		margin-top: 10px;
 	  }
@@ -644,8 +719,8 @@
 		width: 100% !important;
 	  }
 
-	.Destination-form-main {
-		grid-template-columns: auto auto;
+	  .Destination-form-inner {
+		grid-template-columns: auto;
 	  }
 
 
@@ -666,9 +741,9 @@
 	box-shadow: 0px 4px 10px 0px #8C8C8C1A;
 }
 .banner-left h1 {
-	font-size: 34px;
-	line-height: 43.18px;
-}
+    font-size: 27px;
+    line-height: 33.18px;
+  }
 .banner-left p {
 	font-family: Raleway;
 	font-size: 16px;
@@ -1002,9 +1077,37 @@ header {
 	text-align: left;
 	color: var(--gray);
 }
+
+.home-travel-inner .bannr-inner {
+	top: 49%;
+	row-gap: 5px;
+  }
+  .banner-left h1 {
+	font-size: 24px;
+	line-height: 29.18px;
+  }
+  .discover-content img {
+	height: 300px;
+  }
+  .hotels-wapper figure img {
+	height: 370px;
+}
+.banner-left {
+    row-gap: 6px;
+  }
+
 }
 @media(max-width:480px){
-
+	.bannr-inner .Destination-form {
+		padding: 8px 24px;
+	}
+	.contact-content .mobile-number-inner .form-control {
+		margin-left: -30px;
+	  }
+	.service-menu {
+		top: 27px;
+		left: -20px;
+	}
 	.ticket-details-bottom-main {
 		row-gap: 19px;
 	  }
@@ -1032,12 +1135,7 @@ header {
 	.navbar-brand img {
 		max-width: 126px;
 	  }
-	  
 
-	.home-travel-inner .bannr-inner {
-		top: 50%;
-		row-gap: 10px;
-	}
 	.travel-banner .btn-wrapper {
 		margin-top: 13px;
 	  }
@@ -1058,8 +1156,4 @@ header {
 		padding: 5px 10px;
 	}
 
-	  .banner-left h1 {
-		font-size: 24px;
-		line-height: 29.18px;
-	  }
 }

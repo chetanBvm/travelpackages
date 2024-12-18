@@ -15,11 +15,11 @@
                     <input type="hidden" name="c_formName" value="booking">
                     <input type="hidden" name="c_currency" id="c_currency" value="{{ $currency }}">
                     <input type="hidden" name="departure_date" id="departure_date">
-
+                    <input type="hidden" name="departure_city" id="departure_city" >
                     <div class="modal-body">
                         <h2>{{ $package->name }}</h2>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="mb-3">
                                     {{-- <label for="exampleFormControlInput1" class="form-label">Departure City</label>
 
@@ -27,23 +27,38 @@
                                     placeholder="Los Angeles"> --}}
                                     <label for="exampleFormControlInput1" class="form-label">Departure City</label>
                                     <div class="Destination-form-data selection-country">
-                                        <select class="form-select" aria-label="Default select example"
-                                            name="departure_city" id="airport_code">
-                                            @foreach ($data['airport'] as $airport)
+                                        <input type="text" class="form-control form_fill getAirport departure_city" placeholder="" value="" name="departure_city" disabled>
+                                        <div id="results_frame"></div>
+                                        {{-- <select class="form-select" aria-label="Default select example"
+                                            name="departure_city" id="airport_code"> --}}
+                                            {{-- @foreach ($data['airport'] as $airport)
                                                 <option value="{{ $airport->id }}">{{ $airport->name }}</option>
-                                            @endforeach
+                                            @endforeach --}}
                                             {{-- <option value="1" selected>1 adult</option>
                                             <option value="2">6-9 Days</option>
                                             <option value="3">10-15 Days</option>
                                             <option value="4">16-21 Days</option> --}}
-                                        </select>
+                                        {{-- </select> --}}
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Accommodation</label>
+                                    <select class="form-select" aria-label="Default select example" name="category">
+                                        <option value="classic Hotels">Classic Hotels</option>
+                                        <option value="superior Hotels">Superior Hotels</option>
+                                    </select>
+                                    {{-- <input type="date" class="form-control departure_date" id="date"> --}}
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Date</label>
-                                    <input type="date" class="form-control departure_date" id="date">
+                                    <select disabled class="form-control uppercase form_fill flex_select departure_date " required></select>
+                                    {{-- <input type="date" class="form-control departure_date" id="date"> --}}
                                 </div>
                             </div>
                         </div>

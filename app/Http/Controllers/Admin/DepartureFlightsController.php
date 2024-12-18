@@ -59,6 +59,7 @@ class DepartureFlightsController extends Controller
                     'return_date' => $validated['return_date'][$index],
                     'price' => $validated['price'][$index], 
                     'status' => $validated['status'][$index],
+                    'category' => $validated['category'][$index],
                 ]);
             }
             DB::commit();  //commit the transaction
@@ -110,6 +111,7 @@ class DepartureFlightsController extends Controller
                 'return_date' => $validated['return_date'],
                 'price' => $validated['price'],
                 'status' => $validated['status'],
+                'category' => $validated['category']
                 ]);
             DB::commit(); //commit the transaction
 

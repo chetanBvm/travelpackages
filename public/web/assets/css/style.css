@@ -2145,7 +2145,6 @@ h2.package-single-right-head {}
   line-height: 16.44px;
   margin: 0;
   color: #77CA7E !important;
-  max-width: 160px;
 }
 
 .package-single-right-middle {
@@ -2990,6 +2989,7 @@ h2.package-single-right-head {}
   display: flex;
   align-items: center;
   column-gap: 30px;
+  width: 100%;
   justify-content: space-between;
 }
 
@@ -2997,7 +2997,7 @@ h2.package-single-right-head {}
   position: relative;
 }
 
-.offers-data::before {
+/* .offers-data::before {
   content: "";
   top: -6px;
   left: -16px;
@@ -3006,7 +3006,7 @@ h2.package-single-right-head {}
   height: 38px;
   background-image: url('../images/Subtract.png');
   background-repeat: no-repeat;
-}
+} */
 
 .offers-data span {
   font-family: Plus Jakarta Sans;
@@ -3070,9 +3070,7 @@ h2.package-single-right-head {}
   border: 1px solid var(--secondary);
 }
 
-.itinerary-inner {
-  padding-top: 40px;
-}
+
 
 .itinerary-inner h2 {
   font-family: Raleway;
@@ -3104,9 +3102,7 @@ h2.package-single-right-head {}
   border-radius: 15px;
 }
 
-.inclusions-data {
-  padding-top: 40px;
-}
+
 
 .inclusions-data ul li {
   color: #666666;
@@ -3664,8 +3660,102 @@ h2.package-single-right-head {}
   color: var(--gray);
 }
 
-.include-point {
+.package-details-tabs {
+  max-width: 65%;
+}
+.tab-result-section .heading-main{
+  max-width: 65%;
+}
+
+.side-contry-section{
+  margin-top: 20px;
+  border: 1px solid #7B79791A;
+  background: var(--white);
+  padding: 24px 16px;
+  box-shadow: 0px 6px 20px 0px #0000001A;
+  border-radius: 25px;
   display: flex;
-  align-items: flex-start;
-  column-gap: 6px;
+  flex-direction: column;
+  row-gap: 24px;
+}
+.side-contry-section li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.side-contry-left{
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+}
+
+.side-contry-left h3{
+  font-family: Plus Jakarta Sans;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 20.16px;
+  color: var(--dark);
+  margin-left: 30px;
+}
+.side-contry-left span {
+  font-family: Plus Jakarta Sans;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #203638;
+}
+.side-contry-section h2{
+  font-family: Raleway;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28.18px;
+  text-align: left;
+}
+
+.side-contry-section .travel-btn {
+	padding: 10px 34px;
+
+}
+.side-contry-left{
+  position: relative;
+}
+.side-contry-left::before {
+	content: "";
+	position: absolute;
+	left: 0px;
+	background-image: url(../images/right-arop.svg);
+	width: 24px;
+	z-index: 1;
+	height: 24px;
+	top: 0px;
+	background-size: 24px;
+}
+.tab-result-section {
+  margin-top: -314px;
+}
+#pills-Accommodation .itinerary-inner {
+  padding-top: 40px;
+  max-width: 65%;
+}
+#pills-Inclusions .inclusions-data{
+  max-width: 65%;
+}
+
+p.dropResDepCity {
+  padding: 8px 10px;
+  margin-bottom: 3px;
+  border-bottom: 1px solid #ffffff;
+}
+.q_result.packRes {
+  height: fit-content;
+  max-height: 274px;
+  background-color: var(--secondary);
+  position: relative;
+  z-index: 1;
+  color: #ffffff;
+  overflow: auto;
+}
+div#results_frame {
+  height: 10px;
 }

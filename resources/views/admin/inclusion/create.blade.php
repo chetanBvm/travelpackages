@@ -99,7 +99,7 @@
         tinymce.init({
             selector: '#dark',
             toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
-            plugins: 'code'
+            plugins: 'code lists',
         });
         //Validation script
         $(document).ready(function() {

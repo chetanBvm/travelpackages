@@ -99,7 +99,7 @@
                                         <label for="days">Status</label>
                                         <select class="form-select" id="basicSelect" name="status">
                                             <option value="{{ $departureFlight->status }}">{{ $departureFlight->status }}</option>
-                                            <option value="On request">On Request</option>
+                                            <option value="On Request">On Request</option>
                                             <option value="Show Price">Show Price</option>
                                             <option value="Sold Out">Sold Out</option>
                                         </select>
