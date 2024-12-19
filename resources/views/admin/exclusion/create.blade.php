@@ -21,8 +21,7 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Create Exclusion</h4>
-                <a href="{{ route('exclusion.index') }}" type="button" class="btn btn-info gray-btn d-lg-block m-l-15"><i
-                        class="bi bi-caret-left-fill"></i><span>Back</span></a>
+
             </div>
             <div class="card-content">
                 <div class="card-body">
@@ -44,7 +43,7 @@
                                     @error('package_id')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
-                                </div>                              
+                                </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name</label>
@@ -77,7 +76,8 @@
 
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                    <a href="{{ route('exclusion.index') }}" type="button"
+                                        class="btn btn-light-secondary me-1 mb-1"><span>Back</span></a>
                                 </div>
                             </div>
                         </div>
@@ -88,27 +88,24 @@
     </div>
 @endsection
 @section('js')
-    <script src="{{ asset('admin/assets/vendors/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/vendors/ckeditor/ckeditor.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 
     <script>
-        tinymce.init({
-            selector: '#default'
-        });
-        tinymce.init({
-            selector: '#dark',
-            toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
-            plugins: 'code'
-        });
+        ClassicEditor
+            .create(document.querySelector('#default'))
+            .catch(error => {
+                console.error(error);
+            });
         //Validation script
         $(document).ready(function() {
             $('#createDrawItinerary').validate({ // initialize the plugin
                 rules: {
                     package_id: {
                         required: true,
-                    },                    
-                   description: {
+                    },
+                    description: {
                         required: true
                     },
                     status: {
@@ -119,7 +116,7 @@
                 messages: {
                     package_id: {
                         required: "Please select the package."
-                    },                  
+                    },
                     description: {
                         required: "Please provide a description."
                     },

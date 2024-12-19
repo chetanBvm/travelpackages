@@ -115,7 +115,10 @@ class ContentManagementController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'subtitle' => 'required',
-            'image' => 'nullable|mimes:mp4,avi,wmv,mov,webm,3gp|max:5048', //Add a max size limit 50 MB.
+            'image' => 'nullable|mimes:mp4,avi,wmv,mov,webm,3gp|max:10240', //max 10 MB
+        ],[
+            'image.mimes' => 'The uploaded file must be a video of type: mp4, avi, wmv, mov, webm, or 3gp.',
+            'image.max' => 'The video must not be larger than 10 MB.',
         ]);
         try {
             $asset_video = null;

@@ -20,10 +20,7 @@
         @endif
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Create Packages</h4>
-                <a href="{{ route('package.index') }}" type="button" class="btn btn-info gray-btn d-lg-block m-l-15"><i
-                        class="bi bi-caret-left-fill"></i><span>Back</span></a>
-
+                <h4 class="card-title">Create Packages</h4>               
             </div>
             <div class="card-content">
                 <div class="card-body">
@@ -34,7 +31,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="destination-vertical">Destination</label>
+                                        <label for="destination-vertical">Destination<span class="text-danger">*</span></label>
                                         <select class="form-select" id="basicSelect" name="destination_id">
                                             <option value="">---</option>
                                             @foreach ($destination as $value)
@@ -48,7 +45,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">Name</label>
+                                        <label for="first-name-vertical">Name<span class="text-danger">*</span></label>
                                         <input type="text" id="first-name-vertical" class="form-control" name="name"
                                             placeholder="Name" value="{{old('name')}}">
                                     </div>
@@ -58,7 +55,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="name-vertical">sub Title</label>
+                                        <label for="name-vertical">sub Title<span class="text-danger">*</span></label>
                                         <input type="text" id="name-vertical" class="form-control" name="sub_title"
                                             placeholder="sub title">
                                     </div>
@@ -69,7 +66,7 @@
                                 
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="price">Price</label>
+                                        <label for="price">Price<span class="text-danger">*</span></label>
                                         <input type="text" id="price" class="form-control" name="price"
                                             placeholder="price">
                                     </div>
@@ -79,7 +76,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="price">Tax(%)</label>
+                                        <label for="price">Tax(%)<span class="text-danger">*</span></label>
                                         <input type="text" id="tax" class="form-control" name="tax"
                                             placeholder="tax">
                                     </div>
@@ -109,7 +106,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="days">Package Type</label>
+                                        <label for="days">Package Type<span class="text-danger">*</span></label>
                                         <select class="form-select" id="basicSelect" name="packagetype_id">
                                             @foreach ($packagetype as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
@@ -122,7 +119,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="days">Days</label>
+                                        <label for="days">Days<span class="text-danger">*</span></label>
                                         <input type="text" id="days" class="form-control" name="days"
                                             placeholder="days">
                                     </div>
@@ -132,7 +129,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="min_age">Min Age Limitation</label>
+                                        <label for="min_age">Min Age Limitation<span class="text-danger">*</span></label>
                                         <input type="text" id="min-age" class="form-control" name="min_age"
                                             placeholder="Min Age">
                                     </div>
@@ -143,7 +140,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="max_age">Max Age Limitation</label>
+                                        <label for="max_age">Max Age Limitation<span class="text-danger">*</span></label>
                                         <input type="text" id="max-age" class="form-control" name="max_age"
                                             placeholder="max age">
                                     </div>
@@ -163,20 +160,15 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <div>
-                                            <img id="imagePreview" class="profile-image"
-                                                src="{{ asset('admin/assets/images/faces/1.jpg') }}" alt="your image"
-                                                width="100px" height="auto" />
-                                        </div>
-                                        <label class="image" for="">Image</label>
+                                        <label class="image" for="">Image<span class="text-danger">*</span></label>
                                         <input type="file" class="form-control" name="thumbnail" id="main_image"
                                             accept="image/jpeg, image/png, image/gif, image/jpg">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="default">Description</label>
-                                        <textarea name="description" id="default" cols="30" rows="10">{{old('description')}}</textarea>
+                                        <label for="default">Description<span class="text-danger">*</span></label>
+                                        <textarea name="description" id="editor2" cols="30" rows="10">{{old('description')}}</textarea>
                                     </div>
                                     @error('description')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -186,7 +178,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="default-acc">Accommodation Description<span class="text-danger">*</span></label>
-                                        <textarea name="accommodation" id="default-acc" cols="30" rows="10">{{old('accommodation')}}</textarea>
+                                        <textarea name="accommodation" id="editor" cols="50" rows="50">{{old('accommodation')}}</textarea>
                                     </div>
                                     @error('accommodation')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -196,7 +188,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="default-inc">Package Includes<span class="text-danger">*</span></label>
-                                        <textarea name="package_includes" id="default-inc" cols="30" rows="10">{{old('package_includes')}}</textarea>
+                                        <textarea name="package_includes" id="editor1" cols="30" rows="10">{{old('package_includes')}}</textarea>
                                     </div>
                                     @error('package_includes')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -205,7 +197,9 @@
 
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                    <a href="{{ route('package.index') }}" type="button" class="btn btn-light-secondary me-1 mb-1"><span>Back</span></a>
+                
+                                    {{-- <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button> --}}
                                 </div>
                             </div>
                         </div>
@@ -216,25 +210,26 @@
     </div>
 @endsection
 @section('js')
-    <script src="{{ asset('admin/assets/vendors/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/vendors/ckeditor/ckeditor.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 
     <script>
-        tinymce.init({
-            selector: '#default'
-        });
-        tinymce.init({
-            selector: '#default-acc'
-        });
-        tinymce.init({
-            selector: '#default-inc'
-        });
-        tinymce.init({
-            selector: '#dark',
-            toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
-            plugins: 'code'
-        });
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+            ClassicEditor
+            .create(document.querySelector('#editor1'))
+            .catch(error => {
+                console.error(error);
+            });
+            ClassicEditor
+            .create(document.querySelector('#editor2'))
+            .catch(error => {
+                console.error(error);
+            });
 
         function readURL(input) {
             if (input.files && input.files[0]) {
@@ -286,6 +281,12 @@
                     },
                     accommodation:{
                         required:true
+                    },
+                    max_age:{
+                        required: true
+                    },
+                    min_age:{
+                        required:true
                     }
                 },
                 // Customizing error messages
@@ -322,6 +323,12 @@
                     },
                     package_includes:{
                         required: 'Please enter the package includes'
+                    },
+                    max_age: {
+                        required: 'Please enter the max age.'
+                    },
+                    min_age:{
+                        required: 'Please enter the min age.'
                     }
                 },
                 errorPlacement: function(error, element) {

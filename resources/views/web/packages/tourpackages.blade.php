@@ -53,8 +53,8 @@
                                         <div class="Destination-form-data">
                                             <select class="form-select" id="mySelect" aria-label="Default select example">
                                                 <option> Destination</option>
-                                                @foreach ($data['country'] as $countries)
-                                                    <option value="{{ $countries->id }}">{{ $countries->name }}</option>
+                                                @foreach ($data['destination'] as $destination)
+                                                    <option value="{{ $destination->id }}">{{ $destination->country->name }}</option>
                                                 @endforeach                                    
                                             </select>
                                         </div>

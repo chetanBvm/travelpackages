@@ -77,7 +77,8 @@ class DashboardController extends Controller
 
         $data['country'] = Country::get();
         $data['packageType'] = PackageType::all();
-
+        $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();
+        $data['social_links'] = ContentManagement::where('type', 'home_topbar')->where('keywords','!=','main_title')->get();
         return view('web.packages.tourpackages', compact('filteredPackages', 'data'));
     }
 }

@@ -96,9 +96,9 @@
                                 </div>
                                 <div class="Package-Includes-main">
                                     <h2>Package Includes</h2>
-                                    <ul>
+                                                           
                                         {!! $packages->package_includes !!}
-                                    </ul>
+                                    
                                     <div class="coupon-main">
                                         <div class="coupon-left">
                                             <div class="coupon-top">
@@ -732,8 +732,8 @@
                                                 <h3>{{ $package->name }}</h3>
                                             </a>
                                             <p>{{ $package->sub_title ?? 'Per night before taxes and fees' }}</p>
-                                            @php $currency =  $package->destination->country->currency_symbol @endphp
-                                            <span class="inr">{{ $currency }} {{ $package->price }}</span>
+                                            @php $currency_1 =  $package->destination->country->currency_symbol @endphp
+                                            <span class="inr">{{ $currency_1 }} {{ $package->price }}</span>
                                             {{-- <span class="inr">$ 4,403.29</span> --}}
                                         </div>
                                     </div>

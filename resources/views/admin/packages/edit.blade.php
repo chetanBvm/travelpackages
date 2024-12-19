@@ -25,7 +25,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="days">Destination</label>
+                                        <label for="days">Destination<span class="text-danger">*</span></label>
                                         <select class="form-select" id="basicSelect" name="destination_id">
                                             @foreach ($destination as $value)
                                                 <option value="{{ $value->id }}"
@@ -37,7 +37,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">sub Title</label>
+                                        <label for="first-name-vertical">sub Title<span class="text-danger">*</span></label>
                                         <input type="text" id="name-vertical" class="form-control" name="sub_title"
                                             value="{{ $package->sub_title }}" placeholder="sub title">
                                     </div>
@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">Name</label>
+                                        <label for="first-name-vertical">Name<span class="text-danger">*</span></label>
                                         <input type="text" id="name-vertical" class="form-control" name="name"
                                             value="{{ $package->name }}" placeholder="Name">
                                     </div>
@@ -58,7 +58,7 @@
 
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="days">Price</label>
+                                        <label for="days">Price<span class="text-danger">*</span></label>
                                         <input type="text" id="price" class="form-control" name="price"
                                             value="{{ floor($package->price) }}" placeholder="price">
                                     </div>
@@ -68,7 +68,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="price">Tax(%)</label>
+                                        <label for="price">Tax(%)<span class="text-danger">*</span></label>
                                         <input type="text" id="tax" class="form-control" name="tax"
                                             placeholder="tax" value="{{floor($package->tax)}}"> 
                                     </div>
@@ -99,7 +99,7 @@
 
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="days">Package Type</label>
+                                        <label for="days">Package Type<span class="text-danger">*</span></label>
                                         <select class="form-select" id="basicSelect" name="packagetype_id">
                                             @foreach ($packageType as $value)
                                                 <option value="{{ $value->id }}"
@@ -115,7 +115,7 @@
 
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="days">Days</label>
+                                        <label for="days">Days<span class="text-danger">*</span></label>
                                         <input type="text" id="days" class="form-control" name="days"
                                             value="{{ $package->days }}" placeholder="days">
                                     </div>
@@ -125,7 +125,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="min_age">Min Age Limitation</label>
+                                        <label for="min_age">Min Age Limitation<span class="text-danger">*</span></label>
                                         <input type="text" id="min_age" class="form-control" name="min_age" value="{{$package->min_age}}"
                                             placeholder="Min Age">
                                     </div>
@@ -135,7 +135,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="max_age">Max Age Limitation</label>
+                                        <label for="max_age">Max Age Limitation<span class="text-danger">*</span></label>
                                         <input type="text" id="max_age" class="form-control" name="max_age" value="{{$package->max_age}}"
                                             placeholder="max age">
                                     </div>
@@ -157,7 +157,7 @@
 
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="image" for="">Image</label>
+                                        <label class="image" for="">Image<span class="text-danger">*</span></label>
                                         <!-- Display the existing image if available -->
                                         @if ($package->thumbnail)
                                             <div>
@@ -171,8 +171,8 @@
 
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="">Description</label>
-                                        <textarea name="description" id="default" cols="30" rows="10">{{ old('description', strip_tags($package->description) ?? '') }}</textarea>
+                                        <label for="">Description<span class="text-danger">*</span></label>
+                                        <textarea name="description" id="editor" cols="30" rows="10">{{ old('description', $package->description ?? '') }}</textarea>
                                     </div>
                                     @error('description')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -182,7 +182,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="default-acc">Accommodation Description<span class="text-danger">*</span></label>
-                                        <textarea name="accommodation" id="default-acc" cols="30" rows="10">{{old('accommodation',strip_tags($package->accommodation) ?? '')}}</textarea>
+                                        <textarea name="accommodation" id="editor1" cols="30" rows="10">{{old('accommodation',$package->accommodation ?? '')}}</textarea>
                                     </div>
                                     @error('accommodation')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -192,7 +192,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="default-inc">Package Includes<span class="text-danger">*</span></label>
-                                        <textarea name="package_includes" id="default-inc" cols="30" rows="10">{{old('package_includes',strip_tags($package->package_includes) ?? '')}}</textarea>
+                                        <textarea name="package_includes" id="editor2" cols="30" rows="10">{{old('package_includes',$package->package_includes ?? '')}}</textarea>
                                     </div>
                                     @error('package_includes')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -212,26 +212,26 @@
     </div>
 @endsection
 @section('js')
-    <script src="{{ asset('admin/assets/vendors/tinymce/tinymce.min.js') }}"></script>
-
+    <script src="{{ asset('admin/assets/vendors/ckeditor/ckeditor.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 
     <script>
-        tinymce.init({
-            selector: '#default'
-        });
-        tinymce.init({
-            selector: '#default-acc'
-        });        
-        tinymce.init({
-            selector: '#default-inc'
-        });
-        tinymce.init({
-            selector: '#dark',
-            toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
-            plugins: 'code'
-        });
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+            ClassicEditor
+            .create(document.querySelector('#editor1'))
+            .catch(error => {
+                console.error(error);
+            });
+            ClassicEditor
+            .create(document.querySelector('#editor2'))
+            .catch(error => {
+                console.error(error);
+            });
 
         //preview Image
         function previewImage() {

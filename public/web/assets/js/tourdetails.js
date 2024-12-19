@@ -33,7 +33,9 @@ $('.action_rates').change(function () {
         $(".action_rates").css({ border: '1px solid #CCC' });
         $(".cat_prices").removeClass('d-none').show();
     }
-
+    $('#modal_cat').prop('disabled', false);
+    $('#modal_cat').css({ opacity: 1 });
+    
     thisDepc = '';
     $.ajax({
         url: '/departure-flights/year',
@@ -192,31 +194,17 @@ function renderFlights(data) {
 
 function showOtherModal() {
     $('#exampleModal').modal('show');
-    console.log(('#modal-form .form_fill'));
-    
+
     //  $('.main_modal').hide();
     //  $('.other_modal').show();
     //  $('#tour_price').val('');
     //  $('#tour_price').removeAttr('required');
     //  //$('#hotel_category').val('');
-    //  $('#departure_city').html('');
-    //  $('.departure_date').val('');
+    // $('#departure_city').html('');
+    // $('.departure_date').val('');
     //  $('#modal-form .form_fill').not('.departure_city,input[type="hidden"]').css({opacity: 0.5});
     $('#modal-form .form_fill').prop('disabled', false);
-
-     $('#modal-form .form_fill').not('.departure_city,.departure_date').prop('disabled', true);
-    //  $('#modal-form input[type="submit"]').prop('disabled', true);
-    //  //var tour_no = $('#modal').data('tour');
-    //  $('html, body').animate({scrollTop: 0}, 'slow');
-    //  $('#modal').fadeIn();
-
-    //  if (selectedCity) { 
-    //      $(".action_rates").val(thisDepc);
-    //  } else {
-    //      $(".action_rates option:first").removeAttr('disabled');
-    //      $(".action_rates").prop("selectedIndex", 0);
-    //      $(".action_rates option:first").attr('disabled', 'disabled');
-    //  }
+   
 }
 
 var insert_counter = false;
@@ -224,35 +212,53 @@ $('.getAirport').keydown(function (e) {
 
     var code = e.keyCode || e.which;
     if (code == 9 && $('#results_frame').html() != '') {
-        //get first value
         $('#results_frame .q_result > p:eq(0)').click();
     }
-
 });
 
-$('.getAirport').keyup(function(e){
+$('.getAirport').keyup(function (e) {
     $("#airport_code").val('');
     var accInput = $(this);
     var q = $(accInput).val();
-    if(q!= ''){
+    if (q != '') {
         var result = getAirports(data_int_na.airports, q);
-        if(result == ""){
-            if(!insert_counter){
-               $('head').append("<script src=\"/web/assets/js/all_airports.js?v=456\"></script>");
+        if (result == "") {
+            if (!insert_counter) {
+                $('head').append("<script src=\"/web/assets/js/all_airports.js?v=456\"></script>");
                 insert_counter = true;
             }
             result = getAirports(data_all.airports, q);
         }
         $('#results_frame').html(result);
-    }else{
+
+    } else {
         $('#results_frame').html('');
     }
 })
-// $('html').on('click','book_by_date',function(){
-//     const departureCity = $(this).data('city');
-//     const category = $(this).data('category');
-//     let tour_start_date = $(this).data('tourstartdate');
-// });
+
+$('html').on('click', '.packRes p', function () {
+    var code = $(this).data('code');
+    var city = $(this).data('city');
+    var country = $(this).data('country');
+
+    $(".departure_city").val(city + ' (' + code + ')');
+    $("#departure_city").val(city);
+    $("#airport_code").val(code);
+
+    if ($('#modal_cat').length == 0) {
+        $('.departure_date').prop('disabled', false);
+        $('.departure_date').css({ opacity: 1 });
+    } else {
+        $('#modal_cat').prop('disabled', false);
+        $('#modal_cat').css({ opacity: 1 });
+    }
+
+    if ($('.departure_date').val() != '') {
+        $('.departure_date').change();
+    }
+    $('.q_result').remove();
+
+});
 
 $('#exampleModal').on('show.bs.modal', function (event) {
     $(this).find('input[name="departure_city"]').val(departureCity);
@@ -278,11 +284,30 @@ $('#exampleModal').on('show.bs.modal', function (event) {
     });
 });
 
-// departure date 
-// $(".departure_date").change(function () {
-//     var defaultdate = $(this).val();
-//     $("#departure_date").val(defaultdate);
-// });
+$('#modal_cat').change(function () {
+    let package = $('#package_id').val();
+
+    $.ajax({
+        url: '/get-departure-dates-airport',
+        type: 'GET',
+        data: {
+            pacakgeId: package
+        },
+        success: function (response) {
+            let dateList = response.dates;
+            let html = '';
+
+            dateList.forEach(date => {
+                html += `<option value="${date.date}" ${date.status == 'Sold Out' ? 'disabled' : ''}>${date.date} ${date.status == 'Sold Out' ? '(Sold Out)' : ''}</option>`;
+            });
+            $('.departure_date').html(html).prop('disabled', false);
+            let defaultDate = dateList.length > 0 ? dateList[0].date : '';
+            if (defaultDate) {
+                $('.departure_date').val(defaultDate).trigger('change'); // Update and trigger any change event listeners
+            }
+        }
+    });
+})
 
 $(".departure_date").change(function () {
     var defaultdate = $(this).val();
@@ -291,7 +316,6 @@ $(".departure_date").change(function () {
     $("#departure_date").val(defaultdate);
     $('#earliest_date').val(defaultdate);
     $('#return_date').val(defaultdate);
-
 });
 
 function validateFields(elm) {
@@ -366,8 +390,7 @@ $('#modal-form').submit(function (event) {
     multiple_requests = window.location.href;
 
     //loading
-    $("#sbmBooking").fadeOut();
-    $("#loadBooking").fadeIn();
+    $("#fullPageLoader").fadeIn();
     var vars = $(this).serialize();
 
     var thisEmail = $('input[name="email"]', this);
@@ -381,132 +404,61 @@ $('#modal-form').submit(function (event) {
         timeout: 20000,
         data: vars,
         success: function (response) {
-            console.log(response);
+            // $("#loadBooking").fadeOut();
+            // $("#sbmBooking").fadeIn();
+            $("#fullPageLoader").fadeOut();
             if (response.success == true) {
-
-                // $('#modal-form').fadeOut(); 
-                // $('#bookingModal').html(response.modalContent).fadeIn();
-                location.reload();
+                
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Your booking has been submitted successfully!',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    location.reload(); // Reload the page after user confirms
+                });
+            }else{
+                Swal.fire({
+                    title: 'Error!',
+                    text: response.message || 'An error occurred. Please try again later.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
             }
-            // response_a = response.split(":");
-
-            // switch (response_a[0]) {
-            //     case 'EE':
-            //         $(thisEmail).css({'border': '1px solid red'});
-            //         alert(response_a[1]);
-            //         $("#loadBooking").fadeOut();
-            //         $("#sbmBooking").fadeIn();
-            //         //$('#sentMsg p').html(response_a[1]);
-            //         //$('#sentMsg').fadeIn();
-            //         break;
-            //     case 'EM':
-            //         $(thisEmail).css({'border': '1px solid red'});
-            //         $(thisConfirmation).css({'border': '1px solid red'});
-            //         alert(response_a[1]);
-            //         $("#loadBooking").fadeOut();
-            //         $("#sbmBooking").fadeIn();
-            //         //$('#sentMsg p').html(response_a[1]);
-            //         //$('#sentMsg').fadeIn();
-            //         break;
-            //     case 'URL':
-            //     case 'SPAM':
-            //     case 'HE':
-            //         //$('#sentMsg p').html(response_a[1]);
-            //         //$('#sentMsg').fadeIn();
-            //         alert(response_a[1]);
-            //         $("#loadBooking").fadeOut();
-            //         $("#sbmBooking").fadeIn();
-            //         break;
-            //     case 'SENT':
-            //         //$('#modal').hide();
-            //         //$(thisSendBtn).hide();
-            //         //$('#sentMsg p').html(response_a[1]);
-            //         //$('#sentMsg').fadeIn();
-            //         //alert(response_a[1]);
-            //         $('html, body').animate({scrollTop: 0}, 500);
-            //         $('#request_form').css({'top': '50px'});
-            //         $("#loadBooking").fadeOut();
-            //         $('#modal-form').fadeOut();
-            //         $('#errorBooking').html(response_a[2]).fadeIn();
-            //         //Event snippet for Lead AW conversion page
-            //         gtag('event', 'conversion', {
-            //             'send_to': 'AW-366705215/WlA_CLDzoa4DEL_07a4B',
-            //             'value': 0,
-            //             'transaction_id': response_a[1],
-            //             'currency': 'CAD'
-            //         });
-            //         gtag('set', 'user_data', {
-            //             "email": thisConfirmation.val(),
-            //             "phone_number": thisPhone.val()
-            //         });
-
-            //         if (subdomain !== 'www') {
-            //             var pushHistory = subdomain + "/request_sent" + thisPage;
-            //             ga('send', 'pageview', pushHistory);
-            //         }
-            //         // Submit Rakuten leads
-            //         let clientId = response_a[1];
-            //         let orderId = Date.now() + '-' + clientId;
-            //         let tourPrice = parseInt($('#tour_price').val());
-            //         let orderCurrency = $('#c_currency').val();
-            //         let productName = $('#package_name').val();
-            //         let salesQuantity = parseInt($('#passengers_adult').val()) + parseInt($('#passengers_children').val());
-            //         let packageCountry = orderCurrency === 'CAD' ? 'C' : 'U';
-            //         let requestLang = $('#c_lang').val();
-            //         switch($('#packege_category_id').val()){
-            //             case 2:
-            //                 packageCategory = 'C';
-            //                 break;
-            //             case 3:
-            //                 packageCategory = 'R';
-            //                 break;
-            //             default:
-            //                 packageCategory = 'T';
-            //         }
-            //         let sku = 'WB-' + packageCategory + '-' + requestLang.toUpperCase() + $('#tour_no').val() + '-' + packageCountry;
-
-            //         let rm_trans = {
-            //             affiliateConfig: {ranMID: "53123", discountType: "item", includeStatus: "false", taxRate: 5, removeTaxFromDiscount: true, tagType: "mop"},
-            //             orderid : orderId,
-            //             currency: orderCurrency,
-            //             conversionType: "Sale",
-            //             customerID: clientId,
-            //             lineitems : [{
-            //                 quantity : salesQuantity,
-            //                 unitPrice : tourPrice,
-            //                 SKU: sku,
-            //                 productName: productName,
-            //             }]
-            //         };
-
-            //     default:
-            //         $('html, body').animate({scrollTop: 0}, 500);
-            //         $('#request_form').css({'top': '50px'});
-            //         $("#loadBooking").fadeOut();
-            //         $('#modal-form').fadeOut();
-            //         $('#errorBooking').html('FATAL ERROR. PLEASE CONTACT US').fadeIn();
-            //         break;
-            // }
+           
         }, error: function (jqXHR, textStatus, errorMessage) {
             // Handle error, including timeout error
+            $("#fullPageLoader").fadeOut();
             if (textStatus === 'timeout') {
-                $('html, body').animate({ scrollTop: 0 }, 500);
-                $('#request_form').css({ 'top': '50px' });
-                $("#loadBooking").fadeOut();
-                $('#modal-form').fadeOut();
-                var err = new Error('Booking Request Error - submission timed out:' + JSON.stringify(errorMessage) + ' Form Vars: ' + JSON.stringify(vars));
-                newrelic.noticeError(err);
-                $('#errorBooking').html('FATAL ERROR SERVER TIMEOUT. PLEASE CONTACT US').fadeIn();
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'The server took too long to respond. Please try again.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                // $('html, body').animate({ scrollTop: 0 }, 500);
+                // $('#request_form').css({ 'top': '50px' });
+                // $("#loadBooking").fadeOut();
+                // $('#modal-form').fadeOut();
+                // var err = new Error('Booking Request Error - submission timed out:' + JSON.stringify(errorMessage) + ' Form Vars: ' + JSON.stringify(vars));
+                // newrelic.noticeError(err);
+                // $('#errorBooking').html('FATAL ERROR SERVER TIMEOUT. PLEASE CONTACT US').fadeIn();
 
             } else {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'An error occurred: ' + errorMessage,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
                 // Display other error message
-                $('html, body').animate({ scrollTop: 0 }, 500);
-                $('#request_form').css({ 'top': '50px' });
-                $("#loadBooking").fadeOut();
-                $('#modal-form').fadeOut();
-                var err = new Error('Booking Request Error - other ajax submit error: ' + JSON.stringify(errorMessage) + ' Form Vars: ' + JSON.stringify(vars));
-                newrelic.noticeError(err);
-                $('#errorBooking').html('FATAL ERROR. PLEASE CONTACT US. ' + errorMessage).fadeIn();
+                // $('html, body').animate({ scrollTop: 0 }, 500);
+                // $('#request_form').css({ 'top': '50px' });
+                // $("#loadBooking").fadeOut();
+                // $('#modal-form').fadeOut();
+                // var err = new Error('Booking Request Error - other ajax submit error: ' + JSON.stringify(errorMessage) + ' Form Vars: ' + JSON.stringify(vars));
+                // newrelic.noticeError(err);
+                // $('#errorBooking').html('FATAL ERROR. PLEASE CONTACT US. ' + errorMessage).fadeIn();
             }
         }
 
