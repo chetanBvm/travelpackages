@@ -20,9 +20,6 @@ use App\Models\Promotion;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 
 class PackagesController extends Controller
 {
@@ -34,6 +31,7 @@ class PackagesController extends Controller
         $data['packageType'] = PackageType::get();
         $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();
         $data['social_links'] = ContentManagement::where('type', 'home_topbar')->where('keywords','!=','main_title')->get();
+        $data['destination'] = Destination::with('country')->get();
         return view('web.packages.tourpackages', compact('data'))->with('filteredPackages', collect());
     }
     /**
@@ -161,5 +159,24 @@ class PackagesController extends Controller
             'success' => true,
             'dates' => $dateList,
         ]);
-    } 
+    }
+    
+    public function getDepartureDatesAirport(Request $request){
+        $package = $request->pacakgeId;
+
+        $airportDates = DepartureFlights::where('package_id',$package)->orderBy('departure_date','asc')->get();
+        
+        $dateList = [];
+        foreach ($airportDates as $flight) {
+            $dateList[] = [
+                'date' => Carbon::parse($flight->departure_date)->format('Y-m-d'),
+                'status' => $flight->status,
+            ];
+        }
+
+        return response()->json([
+            'success' => true,
+            'dates' => $dateList,
+        ]);
+    }   
 }

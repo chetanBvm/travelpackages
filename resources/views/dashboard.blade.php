@@ -55,10 +55,9 @@
                         </div>
 
                         <div class="Destination-form">
-
                             <div class="row justify-content-between">
                                 <div class="col-12">
-                                    <form class="Destination-form-main" method="get" action="{{route('dashboard.filter')}}">
+                                    <form class="Destination-form-main" method="get" action="#">
                                         <div class="Destination-form-inner">
                                             <div class="Destination-form-data">
                                                 <label for="mySelect" class="form-label">
@@ -73,8 +72,6 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-
-
 
                                             <div class="Destination-form-data">
                                                 <label for="mySelectDeparture" class="form-label">
@@ -120,9 +117,7 @@
                                                     aria-label="Default select example" name="package_type">
                                                         @foreach($data['packageType'] as $packagetype)
                                                         <option value="{{$packagetype->id}}">{{$packagetype->name}}</option>
-                                                        @endforeach
-                                                    <!-- <option value="2">Ocean Cruise Packages</option>
-                                                  <option value="3">River Cruise Packages</option> -->
+                                                        @endforeach                             
                                                 </select>
                                             </div>
                                         </div>
@@ -130,17 +125,10 @@
                                             <button class="select-form-btn">Find your trip</button>
                                         </div>
                                     </form>
-
                                 </div>
                             </div>
-
-
                         </div>
-
                     </div>
-
-
-
                 </div>
             </div>
         </section>
@@ -175,44 +163,6 @@
                             @else
                                 <p class="nodata-para">No Destination available.</p>
                             @endif
-
-                            {{-- <div class="col-sm-6 col-md-6">
-                                <div class="tranding-content">
-                                    <figure class="city">
-                                        <img src="{{ asset('web/assets/images/trand-two.png') }}">
-                                    </figure>
-                                    <div class="flag-city">Japan<img src="{{ asset('web/assets/images/flag-2.png') }}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4 col-md-4">
-                                <div class="tranding-content">
-                                    <figure class="city">
-                                        <img src="{{ asset('web/assets/images/trand-three.png') }}">
-                                    </figure>
-                                    <div class="flag-city">Greece<img src="{{ asset('web/assets/images/flag-3.png') }}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4 col-md-4">
-                                <div class="tranding-content">
-                                    <figure class="city">
-                                        <img src="{{ asset('web/assets/images/trand-four.png') }}">
-                                    </figure>
-                                    <div class="flag-city">Mumbai<img src="{{ asset('web/assets/images/flag.png') }}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4 col-md-4">
-                                <div class="tranding-content">
-                                    <figure class="city">
-                                        <img src="{{ asset('web/assets/images/trand-five.png') }}">
-                                    </figure>
-                                    <div class="flag-city">Italy<img src="{{ asset('web/assets/images/flag-5.png') }}">
-                                    </div>
-                                </div>
-                            </div> --}}
-
                         </div>
                     </div>
                     <figure class="arrow-shape-second">
@@ -222,7 +172,6 @@
                 <figure class="arrow-shape">
                     <img src="{{ asset('web/assets/images/arrow-shape.png') }}">
                 </figure>
-
             </div>
         </section>
         <!-- Discover -->
@@ -418,38 +367,13 @@
                                         <div class="exprerience-wapper">
                                             <figure>
                                                 <img src="{{ asset('storage') . '/' . $experience->image }}">
-                                                {{-- <img src="{{ asset('web/assets/images/experience-one.png') }}"> --}}
                                             </figure>
                                             <h4>{{ $experience->name }}</h4>
                                             {!! $experience->description !!}
-                                           
                                         </div>
                                     </div>
                                 @endforeach
-
-                                {{-- <div class="item">
-                                <div class="exprerience-wapper">
-                                    <figure>
-                                        <img src="{{ asset('web/assets/images/experience-two.png') }}">
-                                    </figure>
-                                    <h4>Ashwani gupta</h4>
-                                    <P>I went for my honeymoon with Travel Agency. I discussed about my destination with
-                                        akash and he shared an amazing itinerary which covered all the places of Kashmir
-                                        which were a must visit during month of december. </P>
-                                </div>
-                            </div> --}}
-                                {{-- <div class="item">
-                                <div class="exprerience-wapper">
-                                    <figure>
-                                        <img src="{{ asset('web/assets/images/experience-three.png') }}">
-                                    </figure>
-                                    <h4>Dr. Priya khandelwal</h4>
-                                    <P>I went for my honeymoon with Travel Agency. I discussed about my destination with
-                                        akash and he shared an amazing itinerary which covered all the places of Kashmir
-                                        which were a must visit during month of december. </P>
-                                </div>
-                            </div> --}}
-                            </div>
+                             </div>
                         @else
                             <p class="nodata-para">No Experiences available.</p>
                         @endif
@@ -461,27 +385,26 @@
         <!-- Newsletter-->
         <section class="newsletter ">
             <div class="container">
-              <div class="news-letter-inner">
-                <div class="row align-items-center justify-content-center text-center">
-                  <div class="col-xl-6 col-md-8">
-                    <div class="experience-head">
-                      <h2 class="main-heading my-2">Subscribe To Our Newsletter</h2>
-                      <p class="content my-2">Lorem Ipsum passages, and more recently with desktop publishing </p>
-                      <div class="content">
-                        <form class="subscription">
-                          <input type="email" name="Email" class="form-control" placeholder="Enter email address">
-                          <button class="travel-btn" type="button">
-                            Subscribe
-                          </button>
-                        </form>
-                      </div>
+                <div class="news-letter-inner">
+                    <div class="row align-items-center justify-content-center text-center">
+                        <div class="col-xl-6 col-md-8">
+                            <div class="experience-head">
+                                <h2 class="main-heading my-2">Subscribe To Our Newsletter</h2>
+                                <p class="content my-2">Lorem Ipsum passages, and more recently with desktop publishing </p>
+                                <div class="content">
+                                    <form class="subscription">
+                                        <input type="email" name="Email" class="form-control" placeholder="Enter email address">
+                                        <button class="travel-btn" type="button">
+                                          Subscribe
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-      
                 </div>
-              </div>
             </div>
-          </section>
+        </section>
     </div>
 @endsection
 @section('js')

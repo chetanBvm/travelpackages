@@ -11,8 +11,7 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Edit Itinerary</h4>
-                <a href="{{ route('itinerary.index') }}" type="button" class="btn btn-info gray-btn d-lg-block m-l-15"><i
-                        class="bi bi-caret-left-fill"></i><span>Back</span></a>
+               
 
             </div>
             <div class="card-content">
@@ -59,7 +58,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="">Description</label>
-                                        <textarea name="description" id="default" cols="30" rows="10">{{ old('description', strip_tags($itinerary->description) ?? '') }}</textarea>
+                                        <textarea name="description" id="default" cols="30" rows="10">{{ old('description', $itinerary->description ?? '') }}</textarea>
                                     </div>
                                     @error('description')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -68,7 +67,8 @@
 
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                    <a href="{{ route('itinerary.index') }}" type="button" class="btn btn-light-secondary me-1 mb-1"><span>Back</span></a>
+                                    {{-- <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button> --}}
                                 </div>
                             </div>
                         </div>
@@ -79,21 +79,17 @@
     </div>
 @endsection
 @section('js')
-    <script src="{{ asset('admin/assets/vendors/tinymce/tinymce.min.js') }}"></script>
+<script src="{{ asset('admin/assets/vendors/ckeditor/ckeditor.js') }}"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 
     <script>
-        tinymce.init({
-            selector: '#default'
-        });
-        tinymce.init({
-            selector: '#dark',
-            toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
-            plugins: 'code'
-        });
-
+       ClassicEditor
+            .create(document.querySelector('#default'))
+            .catch(error => {
+                console.error(error);
+            }); 
         //preview Image
         function previewImage() {
             const file = document.getElementById('image').files[0];

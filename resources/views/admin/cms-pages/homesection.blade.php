@@ -61,7 +61,7 @@
                                         <label for="sub-heading-vertical">Video</label>
                                         <input type="file" id="sub-heading-vertical"
                                             class="form-control @error('image') is-invalid @enderror" name="image"
-                                            placeholder="Heading" value="{{ old('image', $info->image ?? '') }}">
+                                            placeholder="video" value="{{ old('image', $info->image ?? '') }}">
                                     </div>
                                     @error('image')
                                         <span class="text-danger" role="alert">{{ $message }}</span>

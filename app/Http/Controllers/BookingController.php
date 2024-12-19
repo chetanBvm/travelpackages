@@ -59,7 +59,7 @@ class BookingController extends Controller
 
             Mail::send('email.booking', compact('booking'), function ($message) use ($booking) {
                 $message->to($booking->c_email, $booking->passenger_name)->subject('Booking Inquiry:' . $booking->package_name);
-                $message->from('xyz@myvacayhost.com','My Vacay Host');
+                $message->from('employee@myvacayhost.com','My Vacay Host');
             });
 
             return response()->json([

@@ -1,3 +1,41 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+    /* Full-page overlay */
+    #fullPageLoader {
+        display: none; /* Hidden by default */
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+        z-index: 9999; /* Ensure it's on top of everything */
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Loader content */
+    #fullPageLoader .loader {
+        border: 16px solid #f3f3f3; /* Light grey */
+        border-top: 16px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        animation: spin 2s linear infinite; /* Spin animation */
+    }
+    
+    /* Spin animation */
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    </style>
+    
 <div class="enquiry-popuo-section">
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -10,14 +48,15 @@
                 {{-- <div class="padding30" id="errorBooking">Error</div> --}}
                 <form name="modal-form" id="modal-form" method="post" action="{{route('booking.store')}}">
                     @csrf()
-                    <input type="hidden" id="package_name" name="package_name" value="{{ $package->name }}">
-                    <input type="hidden" id="package_id" name="package_id" value="{{ $package->id }}">
+                    <input type="hidden" id="package_name" name="package_name" value="{{ $packages->name }}">
+                    <input type="hidden" id="package_id" name="package_id" value="{{ $packages->id }}">
                     <input type="hidden" name="c_formName" value="booking">
                     <input type="hidden" name="c_currency" id="c_currency" value="{{ $currency }}">
+                    <input type="hidden" name="airport_code" id="airport_code">
                     <input type="hidden" name="departure_date" id="departure_date">
                     <input type="hidden" name="departure_city" id="departure_city" >
                     <div class="modal-body">
-                        <h2>{{ $package->name }}</h2>
+                        <h2>{{ $packages->name }}</h2>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="mb-3">
@@ -46,7 +85,8 @@
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Accommodation</label>
-                                    <select class="form-select" aria-label="Default select example" name="category">
+                                    <select class="form-select" aria-label="Default select example" name="category"  id="modal_cat" style="opacity: 0.5;" disabled>
+                                        <option selected value="">select an option</option>
                                         <option value="classic Hotels">Classic Hotels</option>
                                         <option value="superior Hotels">Superior Hotels</option>
                                     </select>
@@ -101,11 +141,11 @@
                                     <div class="Destination-form-data mb-3">
                                         <select class="form-select" name="passengers_infant"id="passengers_infant"
                                             aria-label="Default select example">
-                                            <option value="0" selected>0 infant (<2)< /option>
-                                            <option value="1">1 infant (<2)< /option>
-                                            <option value="2">2 infants (<2)< /option>
-                                            <option value="3">3 infants (<2)< /option>
-                                            <option value="4">4 infants (<2)< /option>
+                                            <option value="0" selected>0 infant (<2)</option>
+                                            <option value="1">1 infant (<2)</option>
+                                            <option value="2">2 infants (<2)</option>
+                                            <option value="3">3 infants (<2)</option>
+                                            <option value="4">4 infants (<2)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -175,6 +215,12 @@
                         <input class="travel-btn btn" type="submit" id="submit_search" value="Submit Request">
                         {{-- <button class="travel-btn btn" type="button" id="submit_search">Submit Request</button> --}}
                     </div>
+                    <div id="fullPageLoader">
+                        <div class="loader"></div>
+                    </div>
+                    {{-- <div id="loadBooking">
+                        <i class="fa fa-spinner fa-pulse"></i>
+                    </div> --}}
                 </form>
             </div>
         </div>
