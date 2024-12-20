@@ -17,6 +17,11 @@ return new class extends Migration
             $table->longText('package_includes')->nullable()->after('accommodation');
             $table->string('min_age')->nullable()->after('package_includes');
             $table->string('max_age')->nullable()->after('min_age');
+            $table->longText('inclusion')->nullable()->after('max_age');
+            $table->longText('exclusion')->nullable()->after('max_age');
+            $table->string('map_image')->nullable()->after('thumbnail');
+            $table->longText('itinerary')->nullable()->after('map_image');
+            $table->longtext('departure_month')->nullable()->after('itinerary');
         });
     }
 

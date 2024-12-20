@@ -38,6 +38,10 @@ class PackageStoreRequest extends FormRequest
             'package_includes' => 'required|string|min:1',
             'min_age' => 'required|integer|lt:max_age',
             'max_age' => 'required|integer|gt:min_age',
+            'inclusion' => 'required|string|min:1',
+            'exclusion' => 'required|string|min:1',
+            'itinerary' => 'required|string',
+            'departure_month.*' => 'required',
         ];
     }
 
@@ -56,6 +60,10 @@ class PackageStoreRequest extends FormRequest
             'packagetype_id.required' => 'Please select the package type.',
             'accommodation.required' => 'Please provide the accommodation description',
             'package_includes.required' => 'Please provide the package includes.',  
+            'inclusion.required' => 'Please provide the inclusion.', 
+            'exclusion.required' => 'Please provide the exclusion.',
+            'itinerary' => 'Please provide the itinerary.',
+            'departure_month.required' => 'please select the at least one month.'
         ];
     }
 }

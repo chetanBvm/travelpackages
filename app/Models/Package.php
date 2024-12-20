@@ -12,7 +12,7 @@ class Package extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'description', 'price', 'days', 'thumbnail','status','destination_id','sub_title','tax','tax_rate','total_price','packagetype_id','accommodation','package_includes','min_age','max_age'];
+    protected $fillable = ['name', 'description', 'price', 'days', 'thumbnail','status','destination_id','sub_title','tax','tax_rate','total_price','packagetype_id','accommodation','package_includes','min_age','max_age','inclusion','exclusion','map_image','itinerary','departure_month'];
     
     public function destination(): HasOne
     {
@@ -33,9 +33,4 @@ class Package extends Model
     {
         return $this->hasMany(Exclusions::class,'package_id','id');
     }
-
-//     public function accommodation()
-// {
-//     return $this->hasOne(Accommodation::class);
-// }
 }

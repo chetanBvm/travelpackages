@@ -69,12 +69,6 @@
                     <li class="submenu-item {{ request()->routeIs('package-type.index') ? 'active' : '' }}">
                         <a href="{{ route('package-type.index') }}">Pacakge Type</a>
                     </li>
-                    <li class="submenu-item {{ request()->routeIs('inclusion.index') ? 'active' : '' }}">
-                        <a href="{{ route('inclusion.index') }}">Inclusion</a>
-                    </li>
-                    <li class="submenu-item {{ request()->routeIs('exclusion.index') ? 'active' : '' }}">
-                        <a href="{{ route('exclusion.index') }}">Exclusion</a>
-                    </li>
                     <li class="submenu-item {{ request()->routeIs('departure-flights.index') ? 'active' : '' }}">
                         <a href="{{ route('departure-flights.index') }}">Departure Flights</a>
                     </li>

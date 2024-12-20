@@ -45,18 +45,19 @@ class DashboardController extends Controller
     public function homeFilter(Request $request)
     {
         $destination  = $request->destination;
-        $duration = $request->departure_month;
-        $departure = $request->departure_days;
+        $month = $request->departure_month;
+        $days = $request->departure_days;
         $packageType = $request->package_type;
-
+        
         //Query the database filter
         $packages = Package::query();
-
-        if ($destination) {
+        
+        if ($destination != 'all') {
             $packages->where('destination_id', $destination);
         }
-        if ($departure) {
-            [$minDays, $maxDays] = explode('-', $departure . '-');
+        
+        if ($days != 'all') {
+            [$minDays, $maxDays] = explode('-', $days . '-');
             if ($minDays) {
                 $packages->where('days', '>=', $minDays);
             }
@@ -64,21 +65,56 @@ class DashboardController extends Controller
                 $packages->where('days', '<=', $maxDays);
             }
         }
+        
+        if ($month  && $month !== 'all') {
+            $packages->whereJsonContains('departure_month', (int) $month);
+        }
 
-        // if ($duration) {
-        //     $packages->whereMonth('departure_month', $duration);
-        // }
-
-        // if ($packageType) {
-        //     $packages->where('packagetype_id', $packageType);
-        // }
+        if ($packageType != 'all') {
+            $packages->where('packagetype_id', $packageType);
+        }
 
         $filteredPackages = $packages->get();
 
         $data['country'] = Country::get();
         $data['packageType'] = PackageType::all();
         $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();
-        $data['social_links'] = ContentManagement::where('type', 'home_topbar')->where('keywords','!=','main_title')->get();
+        $data['destination'] = Destination::with('country')->get();
         return view('web.packages.tourpackages', compact('filteredPackages', 'data'));
     }
+
+    //sortest packages
+    public function sortPackages(Request $request)
+    {
+        $sort = $request->get('sort'); // Get sort parameter
+        $price = $request->price;
+        
+        $packages = Package::query();
+
+        if ($sort === 'shortest') {
+            $packages = $packages->orderBy('days', 'asc'); // Sort by days descending
+        } elseif ($sort === 'longest') {
+            $packages = $packages->orderBy('days', 'desc'); // Sort by days ascending
+        }
+
+        if($price === 'shortest'){
+            $packages = $packages->orderBy('price', 'asc');
+        }elseif($price === 'highest'){
+            $packages = $packages->orderBy('price', 'desc');
+        }
+
+        $packageList = $packages->with('destination.country')->get();
+        
+        // Return a partial view or JSON response for AJAX
+        return view('web.partial.packages', compact('packageList'));
+    }
+
+    public function getPackageDetailCityWies($id){
+        $filteredPackages = Package::where('destination_id',$id)->get();
+        $data['packageType'] = PackageType::all();
+        $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();
+        $data['destination'] = Destination::with('country')->get();
+        
+        return view('web.packages.tourpackages',compact('filteredPackages','data'));
+    } 
 }
