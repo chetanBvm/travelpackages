@@ -23,29 +23,25 @@ class PagesController extends Controller
 
     public function contactUs()
     {
-        $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();
-        $data['social_links'] = ContentManagement::where('type', 'home_topbar')->where('keywords','!=','main_title')->get();
+        $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();        
         return view('web.pages.contactus',compact('data'));
     }
 
     public function blogs()
     {
-        $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();
-        $data['social_links'] = ContentManagement::where('type', 'home_topbar')->where('keywords','!=','main_title')->get();
+        $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();      
         return view('web.pages.blog',compact('data'));
     }
 
     public function termAndCondition()
     {
-        $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();
-        $data['social_links'] = ContentManagement::where('type', 'home_topbar')->where('keywords','!=','main_title')->get();
+        $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();      
         return view('web.pages.termsandcondition',compact('data'));
     }
 
     public function privacyPolicy()
     {
-        $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();
-        $data['social_links'] = ContentManagement::where('type', 'home_topbar')->where('keywords','!=','main_title')->get();
+        $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();     
         return view('web.pages.privacypolicy',compact('data'));
     }
 }

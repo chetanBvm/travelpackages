@@ -6,7 +6,19 @@
 @section('title', $title)
 @section('filename', $filename)
 @section('content')
+    @php
+        use Carbon\Carbon;
+        // Get the current year
+        $currentYear = Carbon::now();
 
+        // Array to hold the months
+        $months = [];
+
+        // Generate the months for the current year
+        for ($i = 0; $i <= 12; $i++) {
+            $months[] = $currentYear->copy()->addMonths($i)->format('M Y');
+        }
+    @endphp
     <div class="col-md-12 col-12">
         @if (session()->has('message'))
             <div class="alert alert-success">
@@ -20,7 +32,7 @@
         @endif
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Create Packages</h4>               
+                <h4 class="card-title">Create Packages</h4>
             </div>
             <div class="card-content">
                 <div class="card-body">
@@ -31,7 +43,8 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="destination-vertical">Destination<span class="text-danger">*</span></label>
+                                        <label for="destination-vertical">Destination<span
+                                                class="text-danger">*</span></label>
                                         <select class="form-select" id="basicSelect" name="destination_id">
                                             <option value="">---</option>
                                             @foreach ($destination as $value)
@@ -47,7 +60,7 @@
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name<span class="text-danger">*</span></label>
                                         <input type="text" id="first-name-vertical" class="form-control" name="name"
-                                            placeholder="Name" value="{{old('name')}}">
+                                            placeholder="Name" value="{{ old('name') }}">
                                     </div>
                                     @error('name')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -63,7 +76,7 @@
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
-                                
+
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="price">Price<span class="text-danger">*</span></label>
@@ -127,6 +140,23 @@
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="days">Month<span class="text-danger">*</span></label>
+                                        <select class="form-control choices multiple-remove" name="departure_month[]" multiple="multiple">
+                                            @foreach ($months as $index => $month)
+                                                <option value="{{ $index + 1 }}"
+                                                    {{ old('departure_month') == $index + 1 ? 'selected' : '' }}>
+                                                    {{ $month }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('departure_month')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="min_age">Min Age Limitation<span class="text-danger">*</span></label>
@@ -160,15 +190,26 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="image" for="">Image<span class="text-danger">*</span></label>
+                                        <label class="image" for="">Thumbnail<span
+                                                class="text-danger">*</span></label>
                                         <input type="file" class="form-control" name="thumbnail" id="main_image"
                                             accept="image/jpeg, image/png, image/gif, image/jpg">
                                     </div>
                                 </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="image" for="">Map Image<span
+                                                class="text-danger">*</span></label>
+                                        <input type="file" class="form-control" name="map_image" id="map_image"
+                                            accept="image/jpeg, image/png, image/gif, image/jpg">
+                                    </div>
+                                </div>
+
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="default">Description<span class="text-danger">*</span></label>
-                                        <textarea name="description" id="editor2" cols="30" rows="10">{{old('description')}}</textarea>
+                                        <textarea name="description" id="editor2" cols="30" rows="10">{{ old('description') }}</textarea>
                                     </div>
                                     @error('description')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -177,8 +218,9 @@
 
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="default-acc">Accommodation Description<span class="text-danger">*</span></label>
-                                        <textarea name="accommodation" id="editor" cols="50" rows="50">{{old('accommodation')}}</textarea>
+                                        <label for="default-acc">Accommodation Description<span
+                                                class="text-danger">*</span></label>
+                                        <textarea name="accommodation" id="editor" cols="50" rows="50">{{ old('accommodation') }}</textarea>
                                     </div>
                                     @error('accommodation')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -187,19 +229,45 @@
 
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="default-inc">Package Includes<span class="text-danger">*</span></label>
-                                        <textarea name="package_includes" id="editor1" cols="30" rows="10">{{old('package_includes')}}</textarea>
+                                        <label for="default-inc">Package Includes<span
+                                                class="text-danger">*</span></label>
+                                        <textarea name="package_includes" id="editor1" cols="30" rows="10">{{ old('package_includes') }}</textarea>
                                     </div>
                                     @error('package_includes')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
-
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="default-inc">Inclusion<span class="text-danger">*</span></label>
+                                        <textarea name="inclusion" id="editor3" cols="30" rows="10">{{ old('inclusion') }}</textarea>
+                                    </div>
+                                    @error('inclusion')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="default-inc">Exclusion<span class="text-danger">*</span></label>
+                                        <textarea name="exclusion" id="editor4" cols="30" rows="10">{{ old('exclusion') }}</textarea>
+                                    </div>
+                                    @error('exclusion')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="default-inc">Itinerary<span class="text-danger">*</span></label>
+                                        <textarea name="itinerary" id="editor5" cols="30" rows="10">{{ old('itinerary') }}</textarea>
+                                    </div>
+                                    @error('itinerary')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                    <a href="{{ route('package.index') }}" type="button" class="btn btn-light-secondary me-1 mb-1"><span>Back</span></a>
-                
-                                    {{-- <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button> --}}
+                                    <a href="{{ route('package.index') }}" type="button"
+                                        class="btn btn-light-secondary me-1 mb-1"><span>Back</span></a>
                                 </div>
                             </div>
                         </div>
@@ -220,13 +288,28 @@
             .catch(error => {
                 console.error(error);
             });
-            ClassicEditor
+        ClassicEditor
             .create(document.querySelector('#editor1'))
             .catch(error => {
                 console.error(error);
             });
-            ClassicEditor
+        ClassicEditor
             .create(document.querySelector('#editor2'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#editor3'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#editor4'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#editor5'))
             .catch(error => {
                 console.error(error);
             });
@@ -273,19 +356,31 @@
                     tax: {
                         required: true
                     },
-                    packagetype_id:{
+                    packagetype_id: {
                         required: true
                     },
-                    package_includes:{
+                    package_includes: {
                         required: true
                     },
-                    accommodation:{
-                        required:true
-                    },
-                    max_age:{
+                    accommodation: {
                         required: true
                     },
-                    min_age:{
+                    max_age: {
+                        required: true
+                    },
+                    min_age: {
+                        required: true
+                    },
+                    inclusion: {
+                        required: true
+                    },
+                    exclusion: {
+                        required: true
+                    },
+                    itinerary: {
+                        required: true
+                    },
+                    departure_month:{
                         required:true
                     }
                 },
@@ -315,20 +410,32 @@
                     tax: {
                         required: 'Please enter the tax.'
                     },
-                    packagetype_id:{
+                    packagetype_id: {
                         required: 'Please select the Package type'
                     },
-                    accommodation:{
+                    accommodation: {
                         required: 'Please enter the accommodation.'
                     },
-                    package_includes:{
+                    package_includes: {
                         required: 'Please enter the package includes'
                     },
                     max_age: {
                         required: 'Please enter the max age.'
                     },
-                    min_age:{
+                    min_age: {
                         required: 'Please enter the min age.'
+                    },
+                    inclusion: {
+                        required: 'Please enter the inclusion.'
+                    },
+                    exclusion: {
+                        required: 'Please enter the exclusion.'
+                    },
+                    itinerary: {
+                        required: 'Please enter the itinerary.'
+                    },
+                    departure_month:{
+                        required: 'please select the departure month.'
                     }
                 },
                 errorPlacement: function(error, element) {
@@ -375,11 +482,11 @@
                 this.value = ''; // Clear the invalid value
             }
         });
-    
+
         document.getElementById('min-age').addEventListener('change', function() {
             const minAge = parseInt(this.value);
             const maxAge = parseInt(document.getElementById('max-age').value);
-    
+
             if (minAge > maxAge) {
                 minAgeError.textContent = 'Min Age should be less than or equal to Max Age.';
                 this.value = ''; // Clear the invalid value

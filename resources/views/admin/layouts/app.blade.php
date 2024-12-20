@@ -21,6 +21,7 @@
     <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
     <link rel="stylesheet" href="{{ asset('admin/assets/vendors/sweetalert2/sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="{{asset('admin/assets/vendors/choices.js/choices.min.css')}}" />
     <!-- toastify -->
     <link rel="stylesheet" href="{{asset('admin/assets/vendors/toastify/toastify.css')}}">
 </head>
@@ -48,7 +49,7 @@
     <script src="{{ asset('admin/assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/extensions/sweetalert2.js') }}"></script>
     <script src="{{ asset('admin/assets/vendors/sweetalert2/sweetalert2.all.min.js') }}"></script>
-
+    <script src="{{asset('admin/assets/vendors/choices.js/choices.min.js')}}"></script>
     @yield('js')
     <script src="{{ asset('admin/assets/js/main.js') }}"></script>
 </body>

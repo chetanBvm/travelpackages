@@ -54,8 +54,7 @@ class PackagesController extends Controller
         $data['destination'] = Destination::with('country')->get();
         $data['departureFlight'] = DepartureFlights::with('package.destination')->get();
         $data['departureCities'] = DepartureCity::get();
-        $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();
-        $data['social_links'] = ContentManagement::where('type', 'home_topbar')->where('keywords','!=','main_title')->get();
+        $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();       
         $data['departureCity'] = DepartureCity::get()->take(5);
         return view('web.packages.packagedetail', compact('packages', 'data'));
     }
@@ -178,5 +177,52 @@ class PackagesController extends Controller
             'success' => true,
             'dates' => $dateList,
         ]);
-    }   
+    }
+    
+    public function PackagesDetailFilter(Request $request){
+        $destination = $request->destination;
+        $departureMonth = $request->departure_month;
+        $days = $request->days;
+        $packagetype = $request->packages_type;
+        
+        $query = Package::query();
+        
+
+        // Filter by Destination
+        if ($destination && $destination !== 'all') {
+            $query->where('destination_id', $destination);
+        }
+        
+        // // Filter by Departure Month
+        if ($departureMonth && $departureMonth !== 'all') {
+            $query->whereJsonContains('departure_month', (int) $departureMonth);
+        }
+    
+        // Filter by Days Range
+        if ($days != 'all') {
+            [$minDays, $maxDays] = explode('-', $days . '-');
+            if ($minDays) {
+                $query->where('days', '>=', $minDays);
+            }
+            if ($maxDays) {
+                $query->where('days', '<=', $maxDays);
+            }
+        }
+
+        // Filter by Package Type
+        if ($packagetype && $packagetype !== 'all') {
+            $query->where('packagetype_id', $packagetype);
+        }
+    
+        // Retrieve the filtered packages
+        $filteredPackages = $query->with('destination.country')->get();
+
+        $data['packageType'] = PackageType::all();
+        $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();
+        $data['social_links'] = ContentManagement::where('type', 'home_topbar')->where('keywords','!=','main_title')->get();
+        $data['destination'] = Destination::with('country')->get();
+
+        // Return a view with the filtered packages
+        return view('web.packages.tourpackages', compact('filteredPackages','data'));
+    } 
 }

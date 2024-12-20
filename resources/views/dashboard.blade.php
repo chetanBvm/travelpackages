@@ -1,5 +1,12 @@
 @extends('layouts.app')
 @section('content')
+<style>
+    mark {
+        background-color: yellow;
+        color: black;
+        font-weight: bold;
+    }
+</style>
     @php
         use Carbon\Carbon;
         // Get the current year
@@ -13,7 +20,7 @@
             $months[] = $currentYear->copy()->addMonths($i)->format('M Y');
         }
     @endphp
-    <div class="main">
+    <div class="main" id="content">
         <section class="travel-banner">
             <div class="container-fluid">
                 <div class="home-travel-inner">
@@ -57,7 +64,8 @@
                         <div class="Destination-form">
                             <div class="row justify-content-between">
                                 <div class="col-12">
-                                    <form class="Destination-form-main" method="get" action="#">
+                                    <form class="Destination-form-main" method="get"
+                                        action="{{ route('dashboard.filter') }}">
                                         <div class="Destination-form-inner">
                                             <div class="Destination-form-data">
                                                 <label for="mySelect" class="form-label">
@@ -67,8 +75,10 @@
                                                 </label>
                                                 <select class="form-select" id="mySelect"
                                                     aria-label="Default select example" name="destination">
+                                                    <option value="all">All Destination</option>
                                                     @foreach ($data['destinations'] as $destination)
-                                                        <option value="{{ $destination->id }}">{{ $destination->country->name }}</option>
+                                                        <option value="{{ $destination->id }}">
+                                                            {{ $destination->country->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -99,9 +109,15 @@
                                                 <select class="form-select" id="mySelectLength"
                                                     aria-label="Default select example" name="departure_days">
                                                     <option value="all">All</option>
-                                                    <option value="5-10" {{ request('departure_days') == '5-10' ? 'selected' : '' }}>5-10 Days</option>
-                                                    <option value="11-15" {{ request('departure_days') == '11-15' ? 'selected' : '' }}>11-15 Days</option>
-                                                    <option value="16-30" {{ request('departure_days') == '16-30' ? 'selected' : '' }}>16 days or more</option>
+                                                    <option value="5-10"
+                                                        {{ request('departure_days') == '5-10' ? 'selected' : '' }}>5-10
+                                                        Days</option>
+                                                    <option value="11-15"
+                                                        {{ request('departure_days') == '11-15' ? 'selected' : '' }}>11-15
+                                                        Days</option>
+                                                    <option value="16-30"
+                                                        {{ request('departure_days') == '16-30' ? 'selected' : '' }}>16
+                                                        days or more</option>
                                                 </select>
 
 
@@ -115,9 +131,10 @@
                                                 </label>
                                                 <select class="form-select" id="mySelectPackage"
                                                     aria-label="Default select example" name="package_type">
-                                                        @foreach($data['packageType'] as $packagetype)
-                                                        <option value="{{$packagetype->id}}">{{$packagetype->name}}</option>
-                                                        @endforeach                             
+                                                    @foreach ($data['packageType'] as $packagetype)
+                                                        <option value="{{ $packagetype->id }}">{{ $packagetype->name }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -151,9 +168,11 @@
                                 @foreach ($data['destination'] as $destinations)
                                     <div class="col-sm-6 col-md-4">
                                         <div class="tranding-content">
-                                            <figure class="city">
-                                                <img src="{{ asset('storage/') . '/' . $destinations->image }}">
-                                            </figure>
+                                            <a href="{{ route('packages.city', $destinations->id) }}">
+                                                <figure class="city">
+                                                    <img src="{{ asset('storage/') . '/' . $destinations->image }}">
+                                                </figure>
+                                            </a>
                                             <div class="flag-city">{{ $destinations->country->name }}
                                                 {{ $destinations->country->emoji }}
                                             </div>
@@ -299,7 +318,7 @@
             </div>
         </section>
 
-        <!-- Hotels -->
+        <!-- Packages -->
         <section class="hotels">
             <div class="container">
                 <div class="hotels-inner">
@@ -316,95 +335,98 @@
                                 @foreach ($data['package'] as $packages)
                                     <div class="col-sm-6 col-md-4 col-lg-3">
                                         <div class="hotels-wapper">
-                                            <figure>
-                                                <img src="{{ asset('storage') . '/' . $packages->thumbnail }}">
-                                            </figure>
-                                            <div class="hotels-content">
-                                                <a href="{{ route('web.packageDetails', $packages->id) }}">
+                                            <a href="{{ route('web.packageDetails', $packages->id) }}">
+                                                <figure>
+                                                    <img src="{{ asset('storage') . '/' . $packages->thumbnail }}">
+                                                </figure>
+                                                <div class="hotels-content">
+
                                                     <h3>{{ $packages->name }}</h3>
-                                                </a>
-                                                <p>{{ $packages->sub_title ?? 'Per night before taxes and fees' }}</p>
-                                                @php
-                                                    $currency = $packages->destination->country->currency_symbol;
-                                                    $price = $packages->price;
-                                                    $formattedPrice =
-                                                        floor($price) == $price
-                                                            ? number_format($price, 0)
-                                                            : number_format($price, 2);
-                                                @endphp
-                                                <span class="inr">{{ $currency }} {{ $formattedPrice }}</span>
-                                            </div>
+                                            </a>
+                                            <p>{{ $packages->sub_title ?? 'Per night before taxes and fees' }}</p>
+                                            @php
+                                                $currency = $packages->destination->country->currency_symbol;
+                                                $price = $packages->price;
+                                                $formattedPrice =
+                                                    floor($price) == $price
+                                                        ? number_format($price, 0)
+                                                        : number_format($price, 2);
+                                            @endphp
+                                            <span class="inr">{{ $currency }} {{ $formattedPrice }}</span>
                                         </div>
+                                        </a>
                                     </div>
-                                @endforeach
-                            @else
-                                <p class="nodata-para">No Packages Available.</p>
-                            @endif
                         </div>
+                        @endforeach
+                    @else
+                        <p class="nodata-para">No Packages Available.</p>
+                        @endif
                     </div>
                 </div>
             </div>
-        </section>
+    </div>
+    </section>
 
-        <!-- Experiences -->
-        <section class="experience">
-            <div class="container">
-                <div class="experience-inner">
-                    <div class="experience-head">
-                        @if ($data['homeExperience'] && $data['homeExperience']->type == 'home_travelexperience')
-                            <h2 class="main-heading">{{ $data['homeExperience']->title }}</h2>
-                            <p class="content">{{ $data['homeExperience']->subtitle }}</p>
-                        @else
-                            <h2 class="main-heading">Traveler’s Experiences</h2>
-                            <p class="content">Here some awesome feedback from our travelers</p>
-                        @endif
-                    </div>
-                    <div class="experience-bottom">
-                        @if ($data['experience']->count() > 0)
-                            <div class="owl-carousel owl-theme experience-slider">
-                                @foreach ($data['experience'] as $experience)
-                                    <div class="item">
-                                        <div class="exprerience-wapper">
-                                            <figure>
-                                                <img src="{{ asset('storage') . '/' . $experience->image }}">
-                                            </figure>
-                                            <h4>{{ $experience->name }}</h4>
-                                            {!! $experience->description !!}
-                                        </div>
+    <!-- Experiences -->
+    <section class="experience">
+        <div class="container">
+            <div class="experience-inner">
+                <div class="experience-head">
+                    @if ($data['homeExperience'] && $data['homeExperience']->type == 'home_travelexperience')
+                        <h2 class="main-heading">{{ $data['homeExperience']->title }}</h2>
+                        <p class="content">{{ $data['homeExperience']->subtitle }}</p>
+                    @else
+                        <h2 class="main-heading">Traveler’s Experiences</h2>
+                        <p class="content">Here some awesome feedback from our travelers</p>
+                    @endif
+                </div>
+                <div class="experience-bottom">
+                    @if ($data['experience']->count() > 0)
+                        <div class="owl-carousel owl-theme experience-slider">
+                            @foreach ($data['experience'] as $experience)
+                                <div class="item">
+                                    <div class="exprerience-wapper">
+                                        <figure>
+                                            <img src="{{ asset('storage') . '/' . $experience->image }}">
+                                        </figure>
+                                        <h4>{{ $experience->name }}</h4>
+                                        {!! $experience->description !!}
                                     </div>
-                                @endforeach
-                             </div>
-                        @else
-                            <p class="nodata-para">No Experiences available.</p>
-                        @endif
-                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="nodata-para">No Experiences available.</p>
+                    @endif
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Newsletter-->
-        <section class="newsletter ">
-            <div class="container">
-                <div class="news-letter-inner">
-                    <div class="row align-items-center justify-content-center text-center">
-                        <div class="col-xl-6 col-md-8">
-                            <div class="experience-head">
-                                <h2 class="main-heading my-2">Subscribe To Our Newsletter</h2>
-                                <p class="content my-2">Lorem Ipsum passages, and more recently with desktop publishing </p>
-                                <div class="content">
-                                    <form class="subscription">
-                                        <input type="email" name="Email" class="form-control" placeholder="Enter email address">
-                                        <button class="travel-btn" type="button">
-                                          Subscribe
-                                        </button>
-                                    </form>
-                                </div>
+    <!-- Newsletter-->
+    <section class="newsletter ">
+        <div class="container">
+            <div class="news-letter-inner">
+                <div class="row align-items-center justify-content-center text-center">
+                    <div class="col-xl-6 col-md-8">
+                        <div class="experience-head">
+                            <h2 class="main-heading my-2">Subscribe To Our Newsletter</h2>
+                            <p class="content my-2">Lorem Ipsum passages, and more recently with desktop publishing </p>
+                            <div class="content">
+                                <form class="subscription">
+                                    <input type="email" name="Email" class="form-control"
+                                        placeholder="Enter email address">
+                                    <button class="travel-btn" type="button">
+                                        Subscribe
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
     </div>
 @endsection
 @section('js')
@@ -456,4 +478,30 @@
             $('#mySelectPackage').select2();
         });
     </script>
+    <script>
+        document.getElementById('search-btn').addEventListener('click', function () {
+            const searchTerm = document.getElementById('search-field').value.trim();
+            const contentElement = document.getElementById('content');
+            const originalText = contentElement.innerHTML;
+    
+            // Reset previous highlights
+            contentElement.innerHTML = originalText.replace(/<mark>(.*?)<\/mark>/g, '$1');
+    
+            if (searchTerm === '') {
+                return; // Exit if the search term is empty
+            }
+    
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            const highlightedText = contentElement.innerHTML.replace(regex, '<mark>$1</mark>');
+    
+            contentElement.innerHTML = highlightedText;
+
+             // Scroll to the first occurrence
+        const firstHighlight = document.querySelector('mark');
+        if (firstHighlight) {
+            firstHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        });
+    </script>
+    
 @endsection

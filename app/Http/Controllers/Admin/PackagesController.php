@@ -74,6 +74,11 @@ class PackagesController extends Controller
                 $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
                 $asset_image = $file->storeAs('uploads/packages', $tempName, 'public');
             }
+            if ($request->hasFile('map_image')) {
+                $file = $request->file('map_image');
+                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
+                $asset_map = $file->storeAs('uploads/packages', $tempName, 'public');
+            }
             $price = $validated['price'];
             $taxPercentage = $validated['tax'];
            
@@ -94,6 +99,11 @@ class PackagesController extends Controller
                 'package_includes' => $validated['package_includes'],
                 'min_age' => $validated['min_age'],
                 'max_age' => $validated['max_age'],
+                'inclusion' => $validated['inclusion'],
+                'exclusion' => $validated['exclusion'],
+                'map_image' => $asset_map,
+                'itinerary' => $validated['itinerary'],
+                'departure_month' => json_encode($validated['departure_month']),
             ]);
             DB::commit();  //commit the transaction
 
@@ -127,7 +137,8 @@ class PackagesController extends Controller
         $package = Package::findOrFail($id);
         $destination = Destination::with('country')->get();
         $packageType = PackageType::get();
-        return view('admin.packages.edit', compact('package', 'destination','packageType'));
+        $selectedMonths = json_decode($package->departure_month, true);
+        return view('admin.packages.edit', compact('package', 'destination','packageType','selectedMonths'));
     }
 
     /**
@@ -135,6 +146,7 @@ class PackagesController extends Controller
      */
     public function update(PackageStoreRequest $request, string $id)
     {
+        
         //find the package by its ID
         $package = Package::findOrFail($id);
         DB::beginTransaction();
@@ -159,6 +171,10 @@ class PackagesController extends Controller
                 'package_includes' => $validated['package_includes'],
                 'min_age' => $validated['min_age'],
                 'max_age' => $validated['max_age'],
+                'inclusion' => $validated['inclusion'],
+                'exclusion' => $validated['exclusion'],
+                'itinerary' => $validated['itinerary'],
+                'departure_month' => json_encode($validated['departure_month']),
             ]);
 
             //Check if the request has an image file
@@ -181,7 +197,26 @@ class PackagesController extends Controller
                     'thumbnail' => $asset_image,
                 ]);
             }
+            if ($request->hasFile('map_image')) {
 
+                // Validate the image file (optional, add size/extension validation if necessary)
+                $request->validate([
+                    'map_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                ]);
+
+                $file = $request->file('map_image');
+                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
+                $oldFilePath = 'uploads/packages' . $package->thumbnail;
+                if (Storage::disk('public')->exists($oldFilePath)) {
+                    Storage::disk('public')->delete($oldFilePath);
+                }
+
+                $asset_map = $file->storeAs('uploads/packages', $tempName, 'public');
+                $package->update([
+                    'map_image' => $asset_map,
+                ]);
+            }
+            
             DB::commit(); //commit the transaction
 
             return redirect()->route('package.index')->with('success', 'Package updated successfully!');

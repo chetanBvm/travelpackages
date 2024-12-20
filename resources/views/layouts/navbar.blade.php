@@ -1,14 +1,45 @@
-<div class="offer-news">
-    <span>BLACK FRIDAY AT My Vacay Host: Additional $100 OFF / person on all packages. Book by Dec 4th</span>
-</div>
+@if (!empty($data['social_link']->header_title))
+    <div class="offer-news">
+        <span>{{ $data['social_link']->header_title }}</span>
+    </div>
+@else
+    <div class="offer-news">
+
+        <span>BLACK FRIDAY AT My Vacay Host: Additional $100 OFF / person on all packages. Book by Dec 4th</span>
+    </div>
+@endif
+
 <div class="offer-news offer-news-2">
-    <span>{{ $data['social_link']->title ?? 'Come See the world with Us'}}</span>
+    <span>{{ $data['social_link']->title ?? 'Come See the world with Us' }}</span>
     <ul class="social-icon">
-        @foreach ($data['social_links'] as $social)
-            <li><a href="{{ $social->social_link }}">
-                <i class="fa-brands fa-{{ strtolower($social->title) }}"></i>                    
+        @php
+            $socialLinks = json_decode($data['social_link']->social_link, true);
+
+        @endphp
+        @php
+            // Predefined mapping of platforms to font-awesome icon classes
+            $platformIcons = [
+                'facebook' => 'facebook',
+                'youtube' => 'youtube',
+                'twitter' => 'twitter',
+                'instagram' => 'instagram',
+                'linkedin' => 'linkedin',
+            ];
+        @endphp
+        @foreach ($socialLinks as $social)
+            @php
+                // Extract the platform name from the URL
+                $url = parse_url($social['url']);
+                $host = $url['host'] ?? ''; // Get the host (e.g., facebook.com)
+                $platform = explode('.', $host)[0]; // Extract the platform name (e.g., facebook)
+
+                // Get the corresponding icon class
+                $icon = $platformIcons[strtolower($platform)] ?? 'link'; // Default to 'link' if platform not found
+            @endphp
+            <li><a href="{{ $social['url'] }}">
+                    <i class="fa-brands fa-{{ $icon }}"></i>
                 </a></li>
-        @endforeach        
+        @endforeach
     </ul>
 </div>
 
@@ -68,9 +99,9 @@
         <div class="search-box">
             <div class="wrap">
                 <lable>
-                    <input type="search" class="search-field" placeholder="Search...">
+                    <input type="search" id="search-field" class="search-field" placeholder="Search...">
                     </label>
-                    <button class="travel-btn"><i class="fas fa-search"></i> Search</button>
+                    <button class="travel-btn" id="search-btn"><i class="fas fa-search"></i> Search</button>
             </div>
         </div>
     </div>

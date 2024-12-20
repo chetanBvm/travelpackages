@@ -408,7 +408,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="itinerary-inner">
-                                            {!! $data['itinerary']->description ?? '' !!}
+                                            {!! $packages->itinerary ?? '' !!}
                                         </div>
                                     </div>
                                 </div>
@@ -507,8 +507,7 @@
                                     <ul>
                                         <li>
                                             <div class="include-point">
-                                                <img src="{{ asset('web/assets/images/tick-circle.svg') }}">
-                                                {!! $data['inclusion']->description ?? '' !!}
+                                                {!! $packages->inclusion?? '' !!}
                                             </div>
                                             {{-- <img src="{{asset('web/assets/images/tick-circle.svg')}}"> --}}
                                         </li>
@@ -528,8 +527,7 @@
                                     <ul>
                                         <li>
                                             <div class="include-point">
-                                                <img src="{{ asset('web/assets/images/tick-circle.svg') }}">
-                                                {!! $data['exclusion']->description ?? '' !!}
+                                                {!! $packages->exclusion ?? '' !!}
                                             </div>
                                         </li>
                                         {{-- <p>International flights between Canada / Mumbai and New Delhi / Canada with good itineraries</p> --}}
@@ -547,7 +545,11 @@
                             <div class="tab-pane fade" id="pills-Map" role="tabpanel" aria-labelledby="pills-Map-tab"
                                 tabindex="0">
                                 <div class="map-image">
+                                    @if(!empty($packages->map_image))
+                                    <img src="{{asset('storage').'/'. $packages->map_image}}">
+                                    @else
                                     <img src="{{ asset('web/assets/images/map-image.jpg') }}">
+                                    @endif
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="pills-FAQ" role="tabpanel" aria-labelledby="pills-FAQ-tab"

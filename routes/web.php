@@ -181,6 +181,8 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::get('/', [ControllersDashboardController::class, 'index'])->name('dashboard');
 Route::get('all-packages',[ControllersDashboardController::class,'homeFilter'])->name('dashboard.filter');
+Route::get('/packages/sort',[ControllersDashboardController::class,'sortPackages']);
+
 //Packages
 Route::get('tour-packages', [ControllersPackagesController::class, 'tourPackages'])->name('web.packages');
 Route::get('package-detail/{id}', [ControllersPackagesController::class, 'packageDetail'])->name('web.packageDetails');
@@ -193,6 +195,9 @@ Route::get('get-departure-dates',[ControllersPackagesController::class,'getDepar
 
 Route::get('get-departure-dates-airport',[ControllersPackagesController::class,'getDepartureDatesAirport']);
 
+Route::post('get-packages-filter',[ControllersPackagesController::class,'PackagesDetailFilter'])->name('packages.filter');
+
+Route::get('get-packages-city-wise/{id}',[ControllersDashboardController::class,'getPackageDetailCityWies'])->name('packages.city');
 //Pages
 Route::get('about-us', [PagesController::class, 'aboutUs'])->name('pages.about');
 Route::get('contact-us', [PagesController::class, 'contactUs'])->name('pages.contactus');

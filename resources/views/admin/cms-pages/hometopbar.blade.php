@@ -30,7 +30,6 @@
                         @csrf
                         <div class="form-body">
                             <div class="row">
-
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="heading-vertical">Title</label>
@@ -44,31 +43,40 @@
                                     @enderror
                                 </div>
 
-                                {{-- <div class="col-6">
+                                <div class="col-6">
                                     <div class="form-group">
-                                        <label for="sub-heading-vertical">Sub Title</label>
+                                        <label for="sub-heading-vertical">Title Coupon Banner</label>
                                         <input type="text" id="sub-heading-vertical"
-                                            class="form-control @error('subtitle') is-invalid @enderror" name="subtitle"
-                                            placeholder="Heading" value="{{ old('subtitle', $info->subtitle ?? '') }}"
-                                            required data-validation-required-message="This sub title field is required">
+                                            class="form-control @error('header_title') is-invalid @enderror" name="header_title"
+                                            placeholder="Eg:BLACK FRIDAY AT My Vacay Host: Additional $100 OFF" value="{{ old('header_title', $info->header_title ?? '') }}"
+                                            required>
                                     </div>
-                                    @error('subtitle')
+                                    @error('header_title')
                                         <span class="text-danger" role="alert">{{ $message }}</span>
                                     @enderror
-                                </div> --}}
+                                </div>
 
                                 <!-- Social Links Section -->
-                                <div class="col-6"></div>
+                                {{-- <div class="col-6"></div> --}}
                                 <div class="col-6">
                                 <div class="form-group">
                                     <label>Social Links</label>
                                     <div id="social-links-container">
+                                        @if (!empty($socialLinks))
+                                        @foreach ($socialLinks as $index => $link)
+                                            <div class="social-link-item mb-2">
+                                                <input type="url" name="social_link[{{ $index }}][url]" 
+                                                       class="form-control" 
+                                                       value="{{ $link['url'] }}" 
+                                                       placeholder="URL (e.g., https://facebook.com)" required>
+                                            </div>
+                                        @endforeach
+                                    @else
                                         <div class="social-link-item">
-                                            <input type="text" name="social_link[0][name]" class="form-control mb-2"
-                                                placeholder="Name (e.g., Facebook)" required>
                                             <input type="url" name="social_link[0][url]" class="form-control mb-2"
                                                 placeholder="URL (e.g., https://facebook.com)" required>
                                         </div>
+                                        @endif
                                     </div>
                                     <button type="button" id="add-link" class="btn btn-primary mt-2">Add Another
                                         Link</button>
@@ -127,8 +135,7 @@
         document.getElementById('add-link').addEventListener('click', function() {
             const container = document.getElementById('social-links-container');
             const newLink = `
-                <div class="social-link-item">
-                    <input type="text" name="social_link[${linkCount}][name]" class="form-control mb-2" placeholder="Name (e.g., Twitter)" value="" required>
+                <div class="social-link-item">                    
                     <input type="url" name="social_link[${linkCount}][url]" class="form-control mb-2" value="" placeholder="URL (e.g., https://twitter.com)" required>
                 </div>
             `;

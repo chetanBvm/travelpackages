@@ -226,35 +226,26 @@ class ContentManagementController extends Controller
     public function homeTopBar()
     {
         $info = ContentManagement::where('type', 'home_topbar')->first();
-        $info_social =   ContentManagement::where('type', 'home_topbar')->where('keywords','!=','main_title')->get();
-        return view('admin.cms-pages.hometopbar', compact('info','info_social'));
+        $socialLinks = json_decode($info->social_link, true);
+        return view('admin.cms-pages.hometopbar', compact('info','socialLinks'));
     }
 
     public function homeTopBarSave(Request $request){
-           
         $this->validate($request, [
             'title' => 'required',
-            'social_link' => 'required|array',
-            'social_link.*.name' => 'required|string',
-            'social_link.*.url' => 'required|url'
-        ]);
+            'social_link.*' => 'required|array',
+            
+        ]);        
         try {
             ContentManagement::updateOrCreate(
-                ['type' => 'home_topbar','keywords'=>'main_title'],
-                ['title' => $request->title]
-            );
-            ContentManagement::where('type', 'home_topbar')
-            ->where('keywords', '!=', 'main_title')
-            ->delete();
-            
-            foreach($request->social_link as $link){
-                ContentManagement::create([
-                    'type' => 'home_topbar',
-                    'keywords' => $link['name'], 
-                    'title' => $link['name'], 
-                    'social_link' => $link['url'], 
+                ['type' => 'home_topbar'],
+                ['title' => $request->title,
+                'header_title' => $request->header_title,
+                'social_link' => json_encode($request->social_link),
                 ]);
-            }
+      
+            
+
             return redirect()->back()->with('success', 'Home Top Bar  Create successfully');
         } catch (\Exception $exception) {
             Log::error('Error creating Home top bar: ' . $exception->getMessage());

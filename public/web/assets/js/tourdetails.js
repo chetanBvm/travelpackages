@@ -194,17 +194,7 @@ function renderFlights(data) {
 
 function showOtherModal() {
     $('#exampleModal').modal('show');
-
-    //  $('.main_modal').hide();
-    //  $('.other_modal').show();
-    //  $('#tour_price').val('');
-    //  $('#tour_price').removeAttr('required');
-    //  //$('#hotel_category').val('');
-    // $('#departure_city').html('');
-    // $('.departure_date').val('');
-    //  $('#modal-form .form_fill').not('.departure_city,input[type="hidden"]').css({opacity: 0.5});
     $('#modal-form .form_fill').prop('disabled', false);
-   
 }
 
 var insert_counter = false;
@@ -640,4 +630,24 @@ $(document).ready(function () {
     });
 });
 
-// requestBtn dealRequest request uppercase topRequestBtn bbox desktop
+
+//Filter
+$(document).ready(function () {
+    $('.filter').on('change', function () {
+        const sortValue = $("#sort-days").val(); // Get selected value
+        const priceValue = $('#price-filter').val();
+        
+        $.ajax({
+            url: '/packages/sort',
+            type: 'GET',
+            data: { sort: sortValue ,price: priceValue},
+            success: function (response) {
+                // Update the package list with the response data
+                $('#package-list').html(response);
+            },
+            error: function () {
+                alert('Error fetching sorted packages.');
+            }
+        });
+    });
+});
