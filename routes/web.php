@@ -182,6 +182,7 @@ Route::group(['prefix' => 'admin'], function () {
 Route::get('/', [ControllersDashboardController::class, 'index'])->name('dashboard');
 Route::get('all-packages',[ControllersDashboardController::class,'homeFilter'])->name('dashboard.filter');
 Route::get('/packages/sort',[ControllersDashboardController::class,'sortPackages']);
+Route::get('/package-details/{id}', [ControllersDashboardController::class, 'getPackageDetails'])->name('package.details');
 
 //Packages
 Route::get('tour-packages', [ControllersPackagesController::class, 'tourPackages'])->name('web.packages');

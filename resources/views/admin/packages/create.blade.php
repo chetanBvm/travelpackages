@@ -46,7 +46,7 @@
                                         <label for="destination-vertical">Destination<span
                                                 class="text-danger">*</span></label>
                                         <select class="form-select" id="basicSelect" name="destination_id">
-                                            <option value="">---</option>
+                                            <option value="">Select Destination</option>
                                             @foreach ($destination as $value)
                                                 <option value="{{ $value->id }}">{{ $value['country']->name }}</option>
                                             @endforeach
@@ -68,7 +68,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="name-vertical">sub Title<span class="text-danger">*</span></label>
+                                        <label for="name-vertical">Sub Title<span class="text-danger">*</span></label>
                                         <input type="text" id="name-vertical" class="form-control" name="sub_title"
                                             placeholder="sub title">
                                     </div>
@@ -121,7 +121,7 @@
                                     <div class="form-group">
                                         <label for="days">Package Type<span class="text-danger">*</span></label>
                                         <select class="form-select" id="basicSelect" name="packagetype_id">
-                                            @foreach ($packagetype as $value)
+                                            @foreach ($packageType as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>

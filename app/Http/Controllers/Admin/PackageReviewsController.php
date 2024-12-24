@@ -21,7 +21,7 @@ class PackageReviewsController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = PackageReview::with('package');
+            $data = PackageReview::with('package')->orderBy('id','desc');
 
             return DataTables::of($data)
                 ->addIndexColumn()

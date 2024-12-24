@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PackageTypeStoreRequest extends FormRequest
+class DestinationUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,9 @@ class PackageTypeStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|unique:package_types,name',
-            'parent_id' => 'nullable|numeric',
-            'icon' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'countries_id' => 'required',          
+            'images' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status' => 'string',
         ];
     }
 
@@ -36,8 +36,7 @@ class PackageTypeStoreRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'name is required.',
-            'name.unique' => 'This package type already exists.',
+            'countries_id.required' => 'country name is required',  
         ];
     }
 }

@@ -25,10 +25,10 @@ class PackagesController extends Controller
 {
     public function tourPackages()
     {
-        $data['package'] = Package::with('destination.country')->paginate(20);
+        $data['package'] = Package::with('destination.country')->where('status','Active')->paginate(20);
         $data['banner'] = Banner::where('type', 'Packages')->first();
         $data['country'] = Country::get();
-        $data['packageType'] = PackageType::get();
+        $data['packageType'] = PackageType::whereNUll('parent_id')->where('status','Active')->get();
         $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();
         $data['social_links'] = ContentManagement::where('type', 'home_topbar')->where('keywords','!=','main_title')->get();
         $data['destination'] = Destination::with('country')->get();
@@ -42,21 +42,20 @@ class PackagesController extends Controller
     {
         $packages = Package::with('images')->findOrFail($id);
         $data['packageImages'] = PackageImages::where('package_id', $id)->get();
-        $data['packages'] = Package::get()->take(3);
+        $data['packages'] = Package::where('status','Active')->get()->take(3);
         $data['feature'] = Package::get()->take(10);
         $data['itinerary'] = Itinerary::where('package_id', $id)->first();
         $data['airport'] = Airport::get();
         $data['country'] = Country::get();
         $data['coupon'] = Promotion::get();
-        $data['review'] = PackageReview::where('package_id', $id)->get();
-        $data['inclusion'] = Inclusions::where('package_id', $id)->where('status', 'Active')->first();
-        $data['exclusion'] = Exclusions::where('package_id', $id)->where('status', 'Active')->first();
+        $data['review'] = PackageReview::where('package_id', $id)->get();       
         $data['destination'] = Destination::with('country')->get();
         $data['departureFlight'] = DepartureFlights::with('package.destination')->get();
         $data['departureCities'] = DepartureCity::get();
         $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();       
         $data['departureCity'] = DepartureCity::get()->take(5);
-        return view('web.packages.packagedetail', compact('packages', 'data'));
+        $packageTypes =  PackageType::with('subpackage')->whereNUll('parent_id')->get();
+        return view('web.packages.packagedetail', compact('packages', 'data','packageTypes'));
     }
 
     /**
@@ -221,8 +220,8 @@ class PackagesController extends Controller
         $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();
         $data['social_links'] = ContentManagement::where('type', 'home_topbar')->where('keywords','!=','main_title')->get();
         $data['destination'] = Destination::with('country')->get();
-
+        $packageTypes =  PackageType::with('subpackage')->whereNUll('parent_id')->get();
         // Return a view with the filtered packages
-        return view('web.packages.tourpackages', compact('filteredPackages','data'));
+        return view('web.packages.tourpackages', compact('filteredPackages','data','packageTypes'));
     } 
 }

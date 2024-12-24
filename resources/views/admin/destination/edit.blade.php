@@ -10,8 +10,7 @@
     <div class="col-md-12 col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Edit destination</h4>
-                
+                <h4 class="card-title">Edit destination</h4>       
 
             </div>
             <div class="card-content">
@@ -24,7 +23,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">Country Name</label>
+                                        <label for="first-name-vertical">Country Name<span class="text-danger">*</span></label>
                                         <select class="form-select" id="basicSelect" name="countries_id">
                                             @foreach ($country as $value)
                                                 <option value="{{ $value->id }}"
@@ -37,20 +36,9 @@
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
-
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="days">Type</label>
-                                        <input type="text" id="type" class="form-control" name="type"
-                                            value="{{ $destination->type }}" placeholder="type">
-                                    </div>
-                                    @error('type')
-                                        <span class="text-danger" role="alert">*{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="days">Status</label>
+                                        <label for="days">Status<span class="text-danger">*</span></label>
                                         <select class="form-select" id="basicSelect" name="status">
                                             <option value="{{ $destination->status }}">{{ $destination->status }}</option>
                                             <option value="Active">Active</option>
@@ -58,26 +46,24 @@
                                         </select>
                                     </div>
                                 </div>
-
-
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label class="image" for="">Image</label>
+                                        <label class="image" for="">Image<span class="text-danger">*</span></label>
+                                        <input type="file" class="form-control" name="image" id="image">
                                         <!-- Display the existing image if available -->
                                         @if ($destination->image)
                                             <div>
                                                 <img id="imagePreview" src="{{ asset('storage/' . $destination->image) }}"
                                                     alt="Current Image" width="100" height="100">
                                             </div>
-                                        @endif
-                                        <input type="file" class="form-control" name="image" id="image">
+                                        @endif                                       
                                     </div>
                                 </div>
+                                                              
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
                                     <a href="{{route('destination.index')}}" type="button"
-                class="btn btn-light-secondary me-1 mb-1"><span>Back</span></a>
-                                    {{-- <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button> --}}
+                class="btn btn-light-secondary me-1 mb-1"><span>Back</span></a>                                   
                                 </div>
                             </div>
                         </div>
@@ -114,10 +100,7 @@
                 rules: {
                     countries_id: {
                         required: true
-                    },
-                    type: {
-                        required: true
-                    },
+                    },                   
                     status: {
                         required: true
                     },
@@ -126,10 +109,7 @@
                 messages: {
                     countries_id: {
                         required: "Please select the country name of the destination."
-                    },
-                    type: {
-                        required: "Please enter the type."
-                    },
+                    },                  
                     status: {
                         required: "Please select the status."
                     }

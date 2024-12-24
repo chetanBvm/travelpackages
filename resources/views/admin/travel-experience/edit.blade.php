@@ -11,9 +11,6 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Edit Travel Experience</h4>
-                <a href="{{ route('travel-experience.index') }}" type="button"
-                    class="btn btn-info gray-btn d-lg-block m-l-15"><i class="bi bi-caret-left-fill"></i><span>Back</span></a>
-
             </div>
             <div class="card-content">
                 <div class="card-body">
@@ -26,7 +23,7 @@
 
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">Name</label>
+                                        <label for="first-name-vertical">Name<span class="text-danger">*</span></label>
                                         <input type="text" id="name-vertical" class="form-control" name="name"
                                             value="{{ $travel->name }}" placeholder="Name">
                                     </div>
@@ -39,10 +36,10 @@
 
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="image" for="">Image</label>
+                                        <label class="image" for="">Image<span class="text-danger">*</span></label>
                                         <div class="@error('image') error @enderror">
                                             <input type="file" name="image" id="image"
-                                                class="filestyle image_style" onchange="readURL(this);"
+                                                class="form-control filestyle image_style" onchange="readURL(this);"
                                                 accept="image/jpeg, image/png, image/gif, image/jpg">
                                         </div>
                                     </div>
@@ -65,7 +62,7 @@
 
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="">Description</label>
+                                        <label for="">Description<span class="text-danger">*</span></label>
                                         <textarea name="description" id="editor" cols="30" rows="10">{{ old('description', $travel->description ?? '') }}</textarea>
                                     </div>
                                     @error('description')
@@ -76,7 +73,8 @@
                             </div>
                             <div class="col-12 d-flex justify-content-end">
                                 <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                <a href="{{ route('travel-experience.index') }}" type="button"
+                                    class="btn btn-light-secondary me-1 mb-1"><span>Back</span></a>
                             </div>
                         </div>
                 </div>

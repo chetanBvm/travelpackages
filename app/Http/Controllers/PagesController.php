@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\ContentManagement;
-
+use App\Models\PackageType;
 
 class PagesController extends Controller
 {
@@ -17,31 +17,36 @@ class PagesController extends Controller
         $data['trackrecord'] = ContentManagement::where('type', 'about_travelrecord')->first();
         $data['trackwrapper'] = ContentManagement::where('type', 'about_travelrecordwrapper')->get();
         $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();
-        $data['social_links'] = ContentManagement::where('type', 'home_topbar')->where('keywords','!=','main_title')->get();
-        return view('web.pages.aboutus', compact('data'));
+        $packageTypes =  PackageType::with('subpackage')->whereNUll('parent_id')->get();
+        return view('web.pages.aboutus', compact('data','packageTypes'));
     }
 
     public function contactUs()
     {
         $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();        
-        return view('web.pages.contactus',compact('data'));
+        $packageTypes =  PackageType::with('subpackage')->whereNUll('parent_id')->get();
+        return view('web.pages.contactus',compact('data','packageTypes'));
     }
 
     public function blogs()
     {
         $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();      
-        return view('web.pages.blog',compact('data'));
+        $packageTypes =  PackageType::with('subpackage')->whereNUll('parent_id')->get();
+        return view('web.pages.blog',compact('data','packageTypes'));
+
     }
 
     public function termAndCondition()
     {
         $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();      
-        return view('web.pages.termsandcondition',compact('data'));
+        $packageTypes =  PackageType::with('subpackage')->whereNUll('parent_id')->get();
+        return view('web.pages.termsandcondition',compact('data','packageTypes'));
     }
 
     public function privacyPolicy()
     {
-        $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();     
-        return view('web.pages.privacypolicy',compact('data'));
+        $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();   
+        $packageTypes =  PackageType::with('subpackage')->whereNUll('parent_id')->get();  
+        return view('web.pages.privacypolicy',compact('data','packageTypes'));
     }
 }

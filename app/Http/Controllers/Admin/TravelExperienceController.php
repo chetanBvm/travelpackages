@@ -18,7 +18,7 @@ class TravelExperienceController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = TravelExperience::all();
+            $data = TravelExperience::orderBy('id','desc');
 
             return DataTables::of($data)
                 ->addIndexColumn()

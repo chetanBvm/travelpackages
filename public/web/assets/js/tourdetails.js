@@ -177,9 +177,7 @@ function renderFlights(data) {
                                                 </div>
                                             </div>
                                             <div class="ticket-details-right-data">
-                                            <div class="offers-data">
-                                                <span>100$ off</span>
-                                            </div>
+                                            
                                             ${enquiryButton}
                                         </div>
                     </div>

@@ -10,9 +10,7 @@
     <div class="col-md-12 col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Edit Promotion</h4>
-                <a href="{{route('promotion.index')}}" type="button"
-                class="btn btn-info gray-btn d-lg-block m-l-15"><i class="bi bi-caret-left-fill"></i><span>Back</span></a>
+                <h4 class="card-title">Edit Promotion</h4>           
 
             </div>
             <div class="card-content">
@@ -25,7 +23,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">Name</label>
+                                        <label for="first-name-vertical">Name<span class="text-danger">*</span></label>
                                         <input type="text" id="name-vertical" class="form-control" name="name"
                                             placeholder="Name" value="{{$promotion->name}}">
                                     </div>
@@ -35,7 +33,7 @@
                                 </div>
                                 <div class="col-6">
                                 <div class="form-group">
-                                    <label for="code">Code</label>
+                                    <label for="code">Code<span class="text-danger">*</span></label>
                                     <input type="text" id="code" class="form-control" name="code"
                                         placeholder="code" value="{{$promotion->code}}">
                                 </div>
@@ -46,7 +44,7 @@
 
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="price">Price</label>
+                                        <label for="price">Price<span class="text-danger">*</span></label>
                                         <input type="text" id="price" class="form-control" name="price"
                                             placeholder="price" value="{{$promotion->price}}">
                                     </div>
@@ -56,7 +54,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="type">Type</label>
+                                        <label for="type">Type<span class="text-danger">*</span></label>
                                         <input type="text" id="type" class="form-control" name="type"
                                             placeholder="type" value="{{$promotion->type}}">
                                     </div>
@@ -67,7 +65,7 @@
 
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="type">Expiry Date</label>
+                                        <label for="type">Expiry Date<span class="text-danger">*</span></label>
                                         <input type="date" id="expiry_date" class="form-control" name="expiry_date"
                                             placeholder="expiry date" value="{{$promotion->expiry_date}}">
                                     </div>
@@ -77,7 +75,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="days">Status</label>
+                                        <label for="days">Status<span class="text-danger">*</span></label>
                                         <select class="form-select" id="basicSelect" name="status">
                                             <option value="{{$promotion->status}}">{{$promotion->status}}</option>
                                             <option value="Active">Active</option>
@@ -88,7 +86,8 @@
 
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                    <a href="{{route('promotion.index')}}" type="button"
+                                    class="btn btn-light-secondary me-1 mb-1"><span>Back</span></a>
                                 </div>
                             </div>
                         </div>

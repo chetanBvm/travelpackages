@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class DestinationStoreRequest extends FormRequest
 {
@@ -20,11 +21,9 @@ class DestinationStoreRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
+    { 
         return [
-            'countries_id' => 'required',
-            // 'name' => 'required|string',
-            'type' => 'required|string',
+            'countries_id' => 'required|unique:destinations,countries_id',          
             'images' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'string',
         ];
@@ -38,9 +37,8 @@ class DestinationStoreRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'countries_id.required' => 'country name is required',
-            // 'name.required' => 'name is required',
-            'type.required' => 'type is required',
+            'countries_id.required' => 'country name is required',  
+            'countries_id.unique' => 'Country name already taken please choose another.'          
         ];
     }
 }

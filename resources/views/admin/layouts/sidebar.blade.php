@@ -87,7 +87,7 @@
                     <span>Promotion</span>
                 </a>
             </li>
-            <li class="sidebar-item {{ request()->routeIs('banner.index') ? 'active' : '' }}">
+            {{-- <li class="sidebar-item {{ request()->routeIs('banner.index') ? 'active' : '' }}">
                 <a href="{{ route('banner.index') }}" class='sidebar-link'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-postage-fill" viewBox="0 0 16 16">
@@ -97,7 +97,7 @@
                     </svg>
                     <span>Banner</span>
                 </a>
-            </li>
+            </li> --}}
             <li class="sidebar-item {{ request()->routeIs('airline.index') ? 'active' : '' }}">
                 <a href="{{ route('airline.index') }}" class='sidebar-link'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -123,13 +123,7 @@
                     <i class="bi bi-chat-left-quote-fill"></i>
                     <span>Travel Experinece</span>
                 </a>
-            </li>
-            <li class="sidebar-item {{ request()->routeIs('itinerary.index') ? 'active' : '' }}">
-                <a href="{{ route('itinerary.index') }}" class='sidebar-link'>
-                    <i class="bi bi-calendar-minus-fill"></i>
-                    <span>Itinerary</span>
-                </a>
-            </li>
+            </li>           
             
             <li class="sidebar-item {{ request()->routeIs('airport.index') ? 'active' : '' }}">
                 <a href="{{ route('airport.index') }}" class='sidebar-link'>

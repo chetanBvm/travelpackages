@@ -215,7 +215,7 @@
                 @elseif (request()->hasAny(['destination', 'duration', 'package_type']))
                     <p>No Packages Found</p>
                 @else
-                    <div class="package-bottom">
+                    <div class="package-bottom" id="package-list">
                         @if(!empty($data['package']))
                         @foreach ($data['package'] as $packages)
                             <div class="package-wapper">

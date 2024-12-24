@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('content')
-<style>
-    mark {
-        background-color: yellow;
-        color: black;
-        font-weight: bold;
-    }
-</style>
+    <style>
+        mark {
+            background-color: yellow;
+            color: black;
+            font-weight: bold;
+        }
+    </style>
     @php
         use Carbon\Carbon;
         // Get the current year
@@ -479,28 +479,31 @@
         });
     </script>
     <script>
-        document.getElementById('search-btn').addEventListener('click', function () {
+        document.getElementById('search-btn').addEventListener('click', function() {
             const searchTerm = document.getElementById('search-field').value.trim();
             const contentElement = document.getElementById('content');
             const originalText = contentElement.innerHTML;
-    
+
             // Reset previous highlights
             contentElement.innerHTML = originalText.replace(/<mark>(.*?)<\/mark>/g, '$1');
-    
+
             if (searchTerm === '') {
                 return; // Exit if the search term is empty
             }
-    
+
             const regex = new RegExp(`(${searchTerm})`, 'gi');
             const highlightedText = contentElement.innerHTML.replace(regex, '<mark>$1</mark>');
-    
+
             contentElement.innerHTML = highlightedText;
 
-             // Scroll to the first occurrence
-        const firstHighlight = document.querySelector('mark');
-        if (firstHighlight) {
-            firstHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+            // Scroll to the first occurrence
+            const firstHighlight = document.querySelector('mark');
+            if (firstHighlight) {
+                firstHighlight.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
         });
     </script>
     
