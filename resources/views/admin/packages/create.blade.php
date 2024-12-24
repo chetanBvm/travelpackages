@@ -48,7 +48,7 @@
                                         <select class="form-select" id="basicSelect" name="destination_id">
                                             <option value="">Select Destination</option>
                                             @foreach ($destination as $value)
-                                                <option value="{{ $value->id }}">{{ $value['country']->name }}</option>
+                                                <option value="{{ $value->id }}" {{ old('destination_id') == $value['country']->name ? 'selected' : '' }}>{{ $value['country']->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -60,7 +60,7 @@
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name<span class="text-danger">*</span></label>
                                         <input type="text" id="first-name-vertical" class="form-control" name="name"
-                                            placeholder="Name" value="{{ old('name') }}">
+                                            placeholder="Name" maxlength="50" value="{{ old('name') }}">
                                     </div>
                                     @error('name')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -69,8 +69,8 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="name-vertical">Sub Title<span class="text-danger">*</span></label>
-                                        <input type="text" id="name-vertical" class="form-control" name="sub_title"
-                                            placeholder="sub title">
+                                        <input type="text" id="name-vertical" class="form-control" maxlength="50" name="sub_title"
+                                            placeholder="sub title" value="{{old('sub_title')}}">
                                     </div>
                                     @error('sub_title')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -80,8 +80,9 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="price">Price<span class="text-danger">*</span></label>
-                                        <input type="text" id="price" class="form-control" name="price"
-                                            placeholder="price">
+                                        <input type="number" id="price"  min="0" 
+                                        max="9999999" class="form-control" name="price"
+                                        oninput="this.value = this.value.slice(0, 7);"  placeholder="price" value="{{old('price')}}">
                                     </div>
                                     @error('price')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -90,8 +91,8 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="price">Tax(%)<span class="text-danger">*</span></label>
-                                        <input type="text" id="tax" class="form-control" name="tax"
-                                            placeholder="tax">
+                                        <input type="number" id="tax" class="form-control" name="tax" min="0" max="99" oninput="if(this.value > 99) this.value = 99;" 
+                                            placeholder="tax" value="{{old('tax')}}">
                                     </div>
                                     @error('tax')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -101,7 +102,7 @@
                                     <div class="form-group">
                                         <label for="price">Tax Amount</label>
                                         <input type="text" id="tax_rate" class="form-control" name="tax_rate"
-                                            placeholder="tax rate" readonly>
+                                            placeholder="tax rate" value="{{old('tax_rate')}}" readonly>
                                     </div>
                                     @error('tax_rate')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -111,7 +112,7 @@
                                     <div class="form-group">
                                         <label for="price">Total Price</label>
                                         <input type="text" id="total_price" class="form-control" name="total_price"
-                                            placeholder="total price" readonly>
+                                            placeholder="total price" value="{{old('total_price')}}"readonly>
                                     </div>
                                     @error('total_price')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -121,8 +122,9 @@
                                     <div class="form-group">
                                         <label for="days">Package Type<span class="text-danger">*</span></label>
                                         <select class="form-select" id="basicSelect" name="packagetype_id">
+                                            <option>select package type</option>
                                             @foreach ($packageType as $value)
-                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                <option value="{{ $value->id }}" {{ old('packagetype_id') == $value->name ? 'selected' : '' }}>{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -133,8 +135,8 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Days<span class="text-danger">*</span></label>
-                                        <input type="text" id="days" class="form-control" name="days"
-                                            placeholder="days">
+                                        <input type="number" id="days" class="form-control" name="days" min="1" max="365"
+                                            placeholder="days" value="{{old('days')}}">
                                     </div>
                                     @error('days')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -160,8 +162,9 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="min_age">Min Age Limitation<span class="text-danger">*</span></label>
-                                        <input type="text" id="min-age" class="form-control" name="min_age"
-                                            placeholder="Min Age">
+                                        <input type="number" id="min-age" class="form-control" name="min_age"
+                                            placeholder="Min Age" min="1" max="99" 
+                                            pattern="^\d{1,4}$" value="{{old('min_age')}}">
                                     </div>
                                     <span class="text-danger" id="min-age-error"></span>
                                     @error('min_age')
@@ -171,8 +174,9 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="max_age">Max Age Limitation<span class="text-danger">*</span></label>
-                                        <input type="text" id="max-age" class="form-control" name="max_age"
-                                            placeholder="max age">
+                                        <input type="number" id="max-age" class="form-control" name="max_age"
+                                            placeholder="max age" min="1" max="100" 
+                                            pattern="^\d{1,4}$" value="{{old('max_age')}}">
                                     </div>
                                     <span class="text-danger" id="max-age-error"></span>
                                     @error('max_age')

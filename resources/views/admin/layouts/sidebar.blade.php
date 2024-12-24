@@ -36,18 +36,13 @@
                     <span>Bookings</span>
                 </a>
             </li>
-            <li class="sidebar-item {{ request()->routeIs('destination.index') ? 'active' : '' }}">
+            <li class="sidebar-item {{ request()->routeIs('destination.*') ? 'active' : '' }}">
                 <a href="{{ route('destination.index') }}" class='sidebar-link'>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-backpack-fill" viewBox="0 0 16 16">
-                        <path d="M5 13v-3h4v.5a.5.5 0 0 0 1 0V10h1v3z" />
-                        <path
-                            d="M6 2v.341C3.67 3.165 2 5.388 2 8v5.5A2.5 2.5 0 0 0 4.5 16h7a2.5 2.5 0 0 0 2.5-2.5V8a6 6 0 0 0-4-5.659V2a2 2 0 1 0-4 0m2-1a1 1 0 0 1 1 1v.083a6 6 0 0 0-2 0V2a1 1 0 0 1 1-1m0 3a4 4 0 0 1 3.96 3.43.5.5 0 1 1-.99.14 3 3 0 0 0-5.94 0 .5.5 0 1 1-.99-.14A4 4 0 0 1 8 4M4.5 9h7a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5" />
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 384 512"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>
                     <span>Destination</span>
                 </a>
             </li>
-            <li class="sidebar-item has-sub">
+            <li class="sidebar-item {{request()->routeIs('package.*', 'package-image.*','package-review.*','package-type.*','departure-flights.*','departure-city.index') ? 'active' : ''}} has-sub">
                 <a class='sidebar-link'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-box-fill" viewBox="0 0 16 16">
@@ -56,28 +51,28 @@
                     </svg>
                     <span>Packages</span>
                 </a>
-                <ul class="submenu">
-                    <li class="submenu-item {{ request()->routeIs('package.index') ? 'active' : '' }}">
+                <ul class="submenu {{request()->routeIs('package.*', 'package-image.*','package-review.*','package-type.*','departure-flights.*','departure-city.index') ? 'active' : ''}}">
+                    <li class="submenu-item {{ request()->routeIs('package.*') ? 'active' : '' }}">
                         <a href="{{ route('package.index') }}">Package</a>
                     </li>
-                    <li class="submenu-item {{ request()->routeIs('package-image.index') ? 'active' : '' }}">
+                    <li class="submenu-item {{ request()->routeIs('package-image.*') ? 'active' : '' }}">
                         <a href="{{ route('package-image.index') }}">Package Images</a>
                     </li>
-                    <li class="submenu-item {{ request()->routeIs('package-review.index') ? 'active' : '' }}">
+                    <li class="submenu-item {{ request()->routeIs('package-review.*') ? 'active' : '' }}">
                         <a href="{{ route('package-review.index') }}">Pacakge Reviews</a>
                     </li>
-                    <li class="submenu-item {{ request()->routeIs('package-type.index') ? 'active' : '' }}">
+                    <li class="submenu-item {{ request()->routeIs('package-type.*') ? 'active' : '' }}">
                         <a href="{{ route('package-type.index') }}">Pacakge Type</a>
                     </li>
-                    <li class="submenu-item {{ request()->routeIs('departure-flights.index') ? 'active' : '' }}">
+                    <li class="submenu-item {{ request()->routeIs('departure-flights.*') ? 'active' : '' }}">
                         <a href="{{ route('departure-flights.index') }}">Departure Flights</a>
                     </li>
-                    <li class="submenu-item {{ request()->routeIs('departure-city.index') ? 'active' : '' }}">
+                    <li class="submenu-item {{ request()->routeIs('departure-city.*') ? 'active' : '' }}">
                         <a href="{{ route('departure-city.index') }}">Departure City</a>
                     </li>
                 </ul>
             </li>
-            <li class="sidebar-item {{ request()->routeIs('promotion.index') ? 'active' : '' }}">
+            <li class="sidebar-item {{ request()->routeIs('promotion.*') ? 'active' : '' }}">
                 <a href="{{ route('promotion.index') }}" class='sidebar-link'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-person-badge-fill" viewBox="0 0 16 16">
@@ -87,18 +82,8 @@
                     <span>Promotion</span>
                 </a>
             </li>
-            {{-- <li class="sidebar-item {{ request()->routeIs('banner.index') ? 'active' : '' }}">
-                <a href="{{ route('banner.index') }}" class='sidebar-link'>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-postage-fill" viewBox="0 0 16 16">
-                        <path d="M4.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z" />
-                        <path
-                            d="M3.5 1a1 1 0 0 0 1-1h1a1 1 0 0 0 2 0h1a1 1 0 0 0 2 0h1a1 1 0 1 0 2 0H15v1a1 1 0 1 0 0 2v1a1 1 0 1 0 0 2v1a1 1 0 1 0 0 2v1a1 1 0 1 0 0 2v1a1 1 0 1 0 0 2v1h-1.5a1 1 0 1 0-2 0h-1a1 1 0 1 0-2 0h-1a1 1 0 1 0-2 0h-1a1 1 0 1 0-2 0H1v-1a1 1 0 1 0 0-2v-1a1 1 0 1 0 0-2V9a1 1 0 1 0 0-2V6a1 1 0 0 0 0-2V3a1 1 0 0 0 0-2V0h1.5a1 1 0 0 0 1 1M3 3v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1" />
-                    </svg>
-                    <span>Banner</span>
-                </a>
-            </li> --}}
-            <li class="sidebar-item {{ request()->routeIs('airline.index') ? 'active' : '' }}">
+           
+            <li class="sidebar-item {{ request()->routeIs('airline.*') ? 'active' : '' }}">
                 <a href="{{ route('airline.index') }}" class='sidebar-link'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-airplane-fill" viewBox="0 0 16 16">
@@ -108,7 +93,7 @@
                     <span>Airline</span>
                 </a>
             </li>
-            <li class="sidebar-item {{ request()->routeIs('stay.index') ? 'active' : '' }}">
+            <li class="sidebar-item {{ request()->routeIs('stay.*') ? 'active' : '' }}">
                 <a href="{{ route('stay.index') }}" class='sidebar-link'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-suitcase2-fill" viewBox="0 0 16 16">
@@ -118,20 +103,20 @@
                     <span>Stay</span>
                 </a>
             </li>
-            <li class="sidebar-item {{ request()->routeIs('travel-experience.index') ? 'active' : '' }}">
+            <li class="sidebar-item {{ request()->routeIs('travel-experience.*') ? 'active' : '' }}">
                 <a href="{{ route('travel-experience.index') }}" class='sidebar-link'>
                     <i class="bi bi-chat-left-quote-fill"></i>
                     <span>Travel Experinece</span>
                 </a>
             </li>           
             
-            <li class="sidebar-item {{ request()->routeIs('airport.index') ? 'active' : '' }}">
+            {{-- <li class="sidebar-item {{ request()->routeIs('airport.index') ? 'active' : '' }}">
                 <a href="{{ route('airport.index') }}" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
                     <span>Airport</span>
                 </a>
-            </li>
-            <li class="sidebar-item has-sub">
+            </li> --}}
+            <li class="sidebar-item {{request()->routeIs('home-banner','home.destination','home.stay','home.section','home.airline','home.package','home.travelExperience','home.topbar') ? 'active' : ''}} has-sub">
                 <a href="" class='sidebar-link'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-houses-fill" viewBox="0 0 16 16">
                         <path d="M7.207 1a1 1 0 0 0-1.414 0L.146 6.646a.5.5 0 0 0 .708.708L1 7.207V12.5A1.5 1.5 0 0 0 2.5 14h.55a2.5 2.5 0 0 1-.05-.5V9.415a1.5 1.5 0 0 1-.56-2.475l5.353-5.354z"/>
@@ -139,57 +124,57 @@
                       </svg>
                     <span>Home Management</span>
                 </a>
-                <ul class="submenu">
-                    <li class="submenu-item ">
+                <ul class="submenu {{request()->routeIs('home-banner','home.destination','home.stay','home.section','home.airline','home.package','home.travelExperience','home.topbar') ? 'active' : ''}}">
+                    <li class="submenu-item {{ request()->routeIs('home-banner') ? 'active' : '' }}">
                         <a href="{{ route('home-banner') }}">Home Banner</a>
                     </li>
-                    <li class="submenu-item ">
+                    <li class="submenu-item {{ request()->routeIs('home.destination') ? 'active' : '' }}">
                         <a href="{{ route('home.destination') }}">Home Destination</a>
                     </li>
-                    <li class="submenu-item ">
+                    <li class="submenu-item {{ request()->routeIs('home.stay') ? 'active' : '' }}">
                         <a href="{{ route('home.stay') }}">Home Stay</a>
                     </li>
-                    <li class="submenu-item ">
+                    <li class="submenu-item {{ request()->routeIs('home.section') ? 'active' : '' }}">
                         <a href="{{ route('home.section') }}">Home Section</a>
                     </li>
-                    <li class="submenu-item ">
+                    <li class="submenu-item {{ request()->routeIs('home.airline') ? 'active' : '' }}">
                         <a href="{{ route('home.airline') }}">Home Airline</a>
                     </li>
-                    <li class="submenu-item ">
+                    <li class="submenu-item {{ request()->routeIs('home.package') ? 'active' : '' }}">
                         <a href="{{ route('home.package') }}">Home Package</a>
                     </li>
-                    <li class="submenu-item ">
+                    <li class="submenu-item {{ request()->routeIs('home.travelExperience') ? 'active' : '' }}">
                         <a href="{{ route('home.travelExperience') }}">Home Travel Experience</a>
                     </li>
-                    <li class="submenu-item ">
+                    <li class="submenu-item {{ request()->routeIs('home.topbar') ? 'active' : '' }}">
                         <a href="{{ route('home.topbar') }}">Home TopBar</a>
                     </li>
                 </ul>
             </li>
-            <li class="sidebar-item has-sub">
+            <li class="sidebar-item {{request()->routeIs('aboutbanner','about.welcome','about-travelservice','about-travelservicecontent','about-trackrecord','about-trackrecordwrapper') ? 'active' : ''}} has-sub">
                 <a href="" class='sidebar-link'>
                     <i class="bi bi-file-earmark-person-fill"></i>
                     <span>About Management</span>
                 </a>
-                <ul class="submenu">
+                <ul class="submenu {{request()->routeIs('aboutbanner','about.welcome','about-travelservice','about-travelservicecontent','about-trackrecord','about-trackrecordwrapper') ? 'active' : ''}}">
 
-                    <li class="submenu-item">
+                    <li class="submenu-item {{ request()->routeIs('aboutbanner') ? 'active' : '' }}">
                         <a href="{{ route('aboutbanner') }}">About Banner</a>
                     </li>
 
-                    <li class="submenu-item">
+                    <li class="submenu-item {{ request()->routeIs('about.welcome') ? 'active' : '' }}">
                         <a href="{{ route('about.welcome') }}">About Welcome</a>
                     </li>
-                    <li class="submenu-item">
+                    <li class="submenu-item {{ request()->routeIs('about-travelservice') ? 'active' : '' }}">
                         <a href="{{ route('about-travelservice') }}">About Travel Service</a>
                     </li>
-                    <li class="submenu-item">
+                    <li class="submenu-item {{ request()->routeIs('about-travelservicecontent') ? 'active' : '' }}">
                         <a href="{{ route('about-travelservicecontent') }}">About Travel Service Content</a>
                     </li>
-                    <li class="submenu-item">
+                    <li class="submenu-item {{ request()->routeIs('about-trackrecord') ? 'active' : '' }}">
                         <a href="{{ route('about-trackrecord') }}">About Track Record</a>
                     </li>
-                    <li class="submenu-item">
+                    <li class="submenu-item {{ request()->routeIs('about-trackrecordwrapper') ? 'active' : '' }}">
                         <a href="{{ route('about-trackrecordwrapper') }}">About Track Record wrapper</a>
                     </li>
                 </ul>

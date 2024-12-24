@@ -24,7 +24,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name<span class="text-danger">*</span></label>
-                                        <input type="text" id="name-vertical" class="form-control" name="name"
+                                        <input type="text" id="name-vertical" class="form-control" maxlength="30" name="name"
                                             value="{{ $airline->name }}" placeholder="Name">
                                     </div>
                                     @error('name')

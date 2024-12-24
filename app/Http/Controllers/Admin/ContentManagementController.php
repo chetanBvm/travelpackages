@@ -356,43 +356,17 @@ class ContentManagementController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'header_title' => 'required',
-            'header_content' => 'required',
-            'image' => 'nullable|image|mimes:png,jpg,jpeg',
-            'icon' => 'nullable|image|mimes:png,jpg,jpeg',
+            // 'header_title' => 'required',
+            // 'header_content' => 'required',
+            // 'image' => 'nullable|image|mimes:png,jpg,jpeg',
+            // 'icon' => 'nullable|image|mimes:png,jpg,jpeg',
         ]);
         try {
-            $asset_image = null;
-            $asset_icon = null;
-            if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
-                if ($file->getClientOriginalExtension() === 'jpg' || $file->getClientOriginalExtension() === 'jpeg' || $file->getClientOriginalExtension() === 'png') {
-                    $asset_image = $file->storeAs('uploads/about/service', $tempName, 'public');
-                }
-            } else {
-                $asset_image = ContentManagement::where('type', 'about_travelservice')->value('image');
-            }
-            //save the icon image
-            if ($request->hasFile('icon')) {
-                $file = $request->file('icon');
-                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
-                if ($file->getClientOriginalExtension() === 'jpg' || $file->getClientOriginalExtension() === 'jpeg' || $file->getClientOriginalExtension() === 'png') {
-                    $asset_icon = $file->storeAs('uploads/about/service/icon', $tempName, 'public');
-                }
-            } else {
-                $asset_icon = ContentManagement::where('type', 'about_travelservice')->value('icon');
-            }
-
-
-            ContentManagement::updateOrCreate(
+             ContentManagement::updateOrCreate(
                 ['type' => 'about_travelservice'],
                 [
                     'title' => $request->title,
-                    'header_title' => $request->header_title,
-                    'header_content' => $request->header_content,
-                    'image' => $asset_image,
-                    'icon' => $asset_icon,
+                
                 ]
             );
 
@@ -451,7 +425,7 @@ class ContentManagementController extends Controller
                 ]
             );
 
-            return redirect()->back()->with('success', 'About travel service content Create successfully');
+            return redirect()->back()->with('message', 'About travel service content Create successfully');
         } catch (\Exception $exception) {
             Log::error('Error creating about travel service content: ' . $exception->getMessage());
             return redirect()->back()->with('error', 'something went wrong while creating About travel service content');

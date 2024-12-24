@@ -131,6 +131,7 @@
                                                 </label>
                                                 <select class="form-select" id="mySelectPackage"
                                                     aria-label="Default select example" name="package_type">
+                                                    <option value="all">All</option>
                                                     @foreach ($data['packageType'] as $packagetype)
                                                         <option value="{{ $packagetype->id }}">{{ $packagetype->name }}
                                                         </option>

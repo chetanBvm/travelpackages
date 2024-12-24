@@ -32,7 +32,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="heading-vertical">Title</label>
+                                        <label for="heading-vertical">Title<span class="text-danger">*</span></label>
                                         <input type="text" id="heading-vertical"
                                             class="form-control @error('title') is-invalid @enderror" name="title"
                                             placeholder="title" value="{{ old('title', $info->title ?? '') }}" required
@@ -45,7 +45,7 @@
 
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="sub-heading-vertical">Sub Title</label>
+                                        <label for="sub-heading-vertical">Sub Title<span class="text-danger">*</span></label>
                                         <textarea name="description" id="default" cols="30" rows="10" placeholder="Enter description">{{ old('description', $info->description ?? '') }}</textarea>
                                     </div>
                                     @error('description')
@@ -97,7 +97,6 @@
 
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
                                 </div>
                             </div>
                         </div>
@@ -108,19 +107,15 @@
     </div>
 @endsection
 @section('js')
-    <script src="{{ asset('admin/assets/vendors/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/vendors/ckeditor/ckeditor.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <script>
-        tinymce.init({
-            selector: '#default'
-        });
-        tinymce.init({
-            selector: '#dark',
-            toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
-            plugins: 'code'
-        });
-
+        ClassicEditor
+            .create(document.querySelector('#default'))
+            .catch(error => {
+                console.error(error);
+            });
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();

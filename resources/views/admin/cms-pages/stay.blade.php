@@ -33,10 +33,10 @@
 
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="heading-vertical">Title</label>
+                                        <label for="heading-vertical">Title<span class="text-danger">*</span></label>
                                         <input type="text" id="heading-vertical"
                                             class="form-control @error('title') is-invalid @enderror" name="title"
-                                            placeholder="title" value="{{ old('title', $info->title ?? '') }}" required
+                                            placeholder="title" value="{{ old('title', $info->title ?? '') }}" maxlength="50" required
                                             data-validation-required-message="This title field is required">
                                     </div>
                                     @error('title')
@@ -44,8 +44,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>                                   
                                 </div>
                             </div>
                         </div>

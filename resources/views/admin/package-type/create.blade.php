@@ -31,7 +31,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="icon-vertical">Icon</label>
+                                        <label for="icon-vertical">Icon<span class="text-danger">*</span></label>
                                         <input type="file" id="icon-vertical" class="form-control" name="icon"
                                             placeholder="Icon" value="{{ old('icon') }}">
                                     </div>
@@ -41,8 +41,8 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">Name</label>
-                                        <input type="text" id="first-name-vertical" class="form-control" name="name"
+                                        <label for="first-name-vertical">Name<span class="text-danger">*</span></label>
+                                        <input type="text" id="first-name-vertical" class="form-control" name="name" maxlength="15"
                                             placeholder="Name" value="{{ old('name') }}">
                                     </div>
                                     @error('name')

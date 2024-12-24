@@ -20,7 +20,7 @@ class PackageTypeController extends Controller
      */
     public function index(Request $request)
     {
-        $data= PackageType::with('parent')->get();
+        $data= PackageType::with('parent')->orderBy('id','desc');
         if ($request->ajax()) {
             return DataTables::of($data)
                 ->addIndexColumn()

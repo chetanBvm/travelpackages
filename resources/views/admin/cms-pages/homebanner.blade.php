@@ -21,7 +21,6 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Create Home Banner</h4>
-
             </div>
             <div class="card-content">
                 <div class="card-body">
@@ -33,10 +32,10 @@
 
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="heading-vertical">Button Title</label>
+                                        <label for="heading-vertical">Button Title<span class="text-danger">*</span></label>
                                         <input type="text" id="heading-vertical"
                                             class="form-control @error('title') is-invalid @enderror" name="title"
-                                            placeholder="title" value="{{ old('title', $info->title ?? '') }}" required
+                                            placeholder="title" value="{{ old('title', $info->title ?? '') }}" maxlength="20" required
                                             data-validation-required-message="This button title field is required">
                                     </div>
                                     @error('title')
@@ -46,10 +45,10 @@
 
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="sub-heading-vertical">Heading</label>
+                                        <label for="sub-heading-vertical">Heading<span class="text-danger">*</span></label>
                                         <input type="text" id="sub-heading-vertical"
                                             class="form-control @error('subtitle') is-invalid @enderror" name="subtitle"
-                                            placeholder="Heading" value="{{ old('subtitle', $info->subtitle ?? '') }}"
+                                            placeholder="Heading" maxlength="50" value="{{ old('subtitle', $info->subtitle ?? '') }}"
                                             required data-validation-required-message="This heading field is required">
                                     </div>
                                     @error('subtitle')
@@ -87,7 +86,7 @@
                                 </div>
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                    {{-- <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button> --}}
                                 </div>
                             </div>
                         </div>

@@ -22,8 +22,8 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">Name</label>
-                                        <input type="text" id="name-vertical" class="form-control" name="name"
+                                        <label for="first-name-vertical">Name<span class="text-danger">*</span></label>
+                                        <input type="text" id="name-vertical" class="form-control" maxlength="30" name="name"
                                             placeholder="Name">
                                     </div>
                                     @error('name')
@@ -33,7 +33,7 @@
 
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="days">Status</label>
+                                        <label for="days">Status<span class="text-danger">*</span></label>
                                         <select class="form-select" id="basicSelect" name="status">
                                             <option value="Active">Active</option>
                                             <option value="InActive">InActive</option>
@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="image" for="">Image</label>
+                                        <label class="image" for="">Image<span class="text-danger">*</span></label>
                                         <input type="file" class="form-control" name="image" id="image">
                                     </div>
                                 </div>

@@ -1,6 +1,6 @@
 @php
     $title = 'My Vacay Host';
-    $filename = 'About Travel Service';
+    $filename = 'About Travel Service Content';
 @endphp
 @extends('admin.layouts.app')
 @section('title', $title)
@@ -20,7 +20,7 @@
         @endif
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Create About Travel Service</h4>
+                <h4 class="card-title">Create About Travel Service Content</h4>
 
             </div>
             <div class="card-content">
@@ -32,12 +32,11 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="sub-heading-vertical">Title</label>
+                                        <label for="sub-heading-vertical">Title<span class="text-danger">*</span></label>
                                         <input type="text" id="sub-heading-vertical"
                                             class="form-control @error('header_title') is-invalid @enderror"
-                                            name="header_title" placeholder="Heading"
-                                            value="{{ old('header_title') }}" required
-                                            data-validation-required-message="This title field is required">
+                                            name="header_title" placeholder="Heading" value="{{ old('header_title') }}"
+                                            required data-validation-required-message="This title field is required">
                                     </div>
                                     @error('header_title')
                                         <span class="text-danger" role="alert">{{ $message }}</span>
@@ -45,7 +44,8 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="sub-heading-vertical">sub Title </label>
+                                        <label for="sub-heading-vertical">sub Title <span
+                                                class="text-danger">*</span></label>
                                         <textarea name="header_content" id="default" cols="30" rows="10" placeholder="content">{{ old('header_content') }}</textarea>
                                     </div>
                                     @error('header_content')
@@ -65,12 +65,11 @@
                                             </span>
                                         @enderror
                                     </div>
-
                                 </div>
 
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label>Icon</label>
+                                        <label>Icon<span class="text-danger">*</span></label>
                                         <input type="file" name="icon" id="main_image"
                                             class="form-control @error('icon') is-invalid @enderror"
                                             value="{{ old('icon') }}">
@@ -80,12 +79,9 @@
                                             </span>
                                         @enderror
                                     </div>
-
                                 </div>
-
                                 <div class="col-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>                             
                                 </div>
                             </div>
                         </div>
@@ -96,19 +92,15 @@
     </div>
 @endsection
 @section('js')
-    <script src="{{ asset('admin/assets/vendors/tinymce/tinymce.min.js') }}"></script>
-
+    <script src="{{ asset('admin/assets/vendors/ckeditor/ckeditor.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <script>
-        tinymce.init({
-            selector: '#default'
-        });
-        tinymce.init({
-            selector: '#dark',
-            toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
-            plugins: 'code'
-        });
+        ClassicEditor
+            .create(document.querySelector('#default'))
+            .catch(error => {
+                console.error(error);
+            });
 
         function readURL(input) {
             if (input.files && input.files[0]) {

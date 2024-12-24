@@ -76,7 +76,7 @@ class PackageReviewsController extends Controller
             ]);
             DB::commit();  //commit the transaction
 
-            return redirect()->route('package-review.index')->with('success', 'Package Review Created Successfully!');
+            return redirect()->route('package-review.index')->with('message', 'Package Review Created Successfully!');
         } catch (\Exception $exception) {
             DB::rollBack(); //Roll back the data if something goes wrong
 
@@ -148,7 +148,7 @@ class PackageReviewsController extends Controller
 
             DB::commit(); //commit the transaction
 
-            return redirect()->route('package-review.index')->with('success', 'Package Review updated successfully!');
+            return redirect()->route('package-review.index')->with('message', 'Package Review updated successfully!');
         } catch (\Exception $exception) {
             DB::rollBack(); //Roll back the data if something goes wrong
 

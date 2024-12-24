@@ -25,8 +25,8 @@
 
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">Name</label>
-                                        <input type="text" id="name-vertical" class="form-control" name="name"
+                                        <label for="first-name-vertical">Name<span class="text-danger">*</span></label>
+                                        <input type="text" id="name-vertical" class="form-control" maxlength="30" name="name"
                                             value="{{ $stay->name }}" placeholder="Name">
                                     </div>
                                     @error('name')
@@ -36,7 +36,7 @@
 
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="status">Status</label>
+                                        <label for="status">Status<span class="text-danger">*</span></label>
                                         <select class="form-select" id="basicSelect" name="status">
                                             <option value="{{ $stay->status }}">{{ $stay->status }}</option>
                                             <option value="Active">Active</option>
@@ -46,7 +46,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="image" for="">Image</label>
+                                        <label class="image" for="">Image<span class="text-danger">*</span></label>
                                         <div class="@error('image') error @enderror">
                                             <input type="file" name="image" id="image"
                                                 class="filestyle image_style" onchange="readURL(this);"

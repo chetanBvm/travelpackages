@@ -20,7 +20,7 @@ class DepartureFlightsController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = DepartureFlights::with('package');
+            $data = DepartureFlights::with('package')->orderBy('id','desc');
 
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -39,7 +39,7 @@ class DepartureFlightsController extends Controller
      */
     public function create()
     {
-        $package = Package::get();
+        $package = Package::where('status','Active')->get();
         return view('admin.departure.create', compact('package'));
     }
 
@@ -89,7 +89,7 @@ class DepartureFlightsController extends Controller
     public function edit(string $id)
     {
         $departureFlight = DepartureFlights::findOrFail($id);
-        $package = Package::get();
+        $package = Package::where('status','Active')->get();
         return view('admin.departure.edit', compact('departureFlight', 'package'));
     }
 

@@ -26,7 +26,7 @@ class DepartureFlightStoreRequest extends FormRequest
             'departure_date.*' => 'required|date',
             'return_date.*' => 'required|date',
             'year' => 'required|string',
-            'price.*' => 'nullable',
+            'price.*' => 'required',
             'status.*' => 'string|in:On Request,Show Price,Sold Out',
             'category.*' => 'string|in:classic Hotels,superior Hotels'
         ];

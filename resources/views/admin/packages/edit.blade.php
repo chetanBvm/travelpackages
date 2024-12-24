@@ -68,8 +68,9 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Price<span class="text-danger">*</span></label>
-                                        <input type="text" id="price" class="form-control" name="price"
-                                            value="{{ floor($package->price) }}" placeholder="price">
+                                        <input type="text" id="price" class="form-control" name="price" min="0" 
+                                        max="9999999"
+                                            value="{{ floor($package->price) }}" placeholder="price" oninput="this.value = this.value.slice(0, 7);">
                                     </div>
                                     @error('price')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -79,7 +80,7 @@
                                     <div class="form-group">
                                         <label for="price">Tax(%)<span class="text-danger">*</span></label>
                                         <input type="text" id="tax" class="form-control" name="tax"
-                                            placeholder="tax" value="{{ floor($package->tax) }}">
+                                            placeholder="tax" value="{{ floor($package->tax) }}" min="0" max="99" oninput="if(this.value > 99) this.value = 99;">
                                     </div>
                                     @error('tax')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -126,7 +127,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Days<span class="text-danger">*</span></label>
-                                        <input type="text" id="days" class="form-control" name="days"
+                                        <input type="number" id="days" class="form-control" name="days" min="1" max="365"
                                             value="{{ $package->days }}" placeholder="days">
                                     </div>
                                     @error('days')
@@ -153,7 +154,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="min_age">Min Age Limitation<span class="text-danger">*</span></label>
-                                        <input type="text" id="min_age" class="form-control" name="min_age"
+                                        <input type="number" id="min_age" class="form-control" name="min_age" max="99"
                                             value="{{ $package->min_age }}" placeholder="Min Age">
                                     </div>
                                     @error('min_age')
@@ -163,7 +164,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="max_age">Max Age Limitation<span class="text-danger">*</span></label>
-                                        <input type="text" id="max_age" class="form-control" name="max_age"
+                                        <input type="number" id="max_age" class="form-control" name="max_age" max="100"
                                             value="{{ $package->max_age }}" placeholder="max age">
                                     </div>
                                     @error('max_age')

@@ -18,7 +18,7 @@ class PackageImageController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = PackageImages::with('package');
+            $data = PackageImages::with('package')->orderBy('id','desc');
 
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -41,7 +41,7 @@ class PackageImageController extends Controller
      */
     public function create()
     {
-        $package = Package::get();
+        $package = Package::where('status','Active')->get();
         return view('admin.packageimage.create', compact('package'));
     }
 
@@ -77,7 +77,7 @@ class PackageImageController extends Controller
                 }
             }
 
-            return redirect()->route('package-image.index')->with('success', 'Images uploaded successfully!');
+            return redirect()->route('package-image.index')->with('message', 'Images uploaded successfully!');
         } catch (\Exception $exception) {
             Log::error('Error creating packageImage: ' . $exception->getMessage());
 
@@ -99,7 +99,7 @@ class PackageImageController extends Controller
     public function edit(string $id)
     {
         $packageImage = PackageImages::findOrFail($id);
-        $package = Package::get();
+        $package = Package::where('status','Active')->get();
         return view('admin.packageimage.edit', compact('package', 'packageImage'));
     }
 
@@ -141,7 +141,7 @@ class PackageImageController extends Controller
                 ]);
             }
 
-            return redirect()->route('package-image.index')->with('success', 'Images uploaded successfully!');
+            return redirect()->route('package-image.index')->with('message', 'Images uploaded successfully!');
         } catch (\Exception $exception) {
             Log::error('Error updating packageImage: ' . $exception->getMessage());
 
