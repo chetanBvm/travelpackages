@@ -213,3 +213,14 @@
         });
     });
 </script>
+<script>
+    $(document).ready(function() {
+        $('ul > li > a').click(function(e) {
+            const subMenu = $(this).next('ul');
+            if (subMenu.length) {
+                e.preventDefault();
+                subMenu.slideToggle();
+            }
+        });
+    });
+</script>

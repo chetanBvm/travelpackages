@@ -18,7 +18,7 @@ class StayController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Stay::all();
+            $data = Stay::orderBy('id','desc');
 
             return DataTables::of($data)
                 ->addIndexColumn()

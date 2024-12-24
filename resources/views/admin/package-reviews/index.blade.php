@@ -45,7 +45,7 @@
                     <table class="table table-striped data-table">
                         <thead>
                                 <tr>
-                                    <th>No</th>
+                                    <th>S.No.</th>
                                     <th>image</th>
                                     <th>Package Name</th>
                                     <th>Name</th>
@@ -68,9 +68,14 @@
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('package-review.index') }}",
+                order: [
+                    [0, 'desc']
+                ],
                 columns: [{
-                        data: 'id',
-                        name: 'id'
+                    data: 'DT_RowIndex', // Use DT_RowIndex for serial number
+                        name: 'DT_RowIndex',
+                        orderable: false, // Prevent ordering on this column
+                        searchable: false
                     },
                     {
                         data:'image',

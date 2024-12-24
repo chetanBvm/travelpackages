@@ -114,22 +114,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="side-contry-section">
-                                    <h2>Starting Rates</h2>
-                                    <ul>
-                                        @foreach($data['departureCity'] as $city)
-                                        <li>
-                                            <a href="#" class="side-contry-left">
-                                                <h3> {{$city->name}}</h3> <span>CAD ${{$city->price}}</span> <a class="travel-btn btn"
-                                                    href="javascript::" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal">See Dates</a>
-                                            </a>
-                                        </li>
-                                        @endforeach                                        
-                                    </ul>
-                                    <a class="travel-btn" href="javascript::" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal">Select Another City</a>
-                                </div>
+                               
                             </div>
                         </div>
                     </div>
@@ -139,7 +124,7 @@
         <section class="tab-result-section">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-lg-8">
                         <div class="tab-content" id="pills-tabContent">
                             <div class="package-details-tabs">
                                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -188,7 +173,7 @@
 
                                 <div class="package-details-filters">
                                     <form action="" class="row">
-                                        <div class="col-lg-7">
+                                        <div class="col-lg-10">
                                             <div class="Destination-form">
                                                 <div class="col-lg-3">
                                                     <div class="Destination-form-data">
@@ -393,7 +378,7 @@
                                 aria-labelledby="pills-Itinerary-tab" tabindex="0">
                                 <div class="heading-main">
                                     <div class="heading-inner">
-                                        <h2>{{ $data['itinerary']->name ?? '' }}</h2>
+                                        <h2>{{ $packages->name ?? '' }}</h2>
                                         <p>{{ $packages->days }} Days</p>
                                     </div>
                                     <div class="heading-main-right">
@@ -418,7 +403,7 @@
                                 aria-labelledby="pills-Accommodation-tab" tabindex="0">
                                 <div class="heading-main">
                                     <div class="heading-inner">
-                                        <h2>{{ $data['itinerary']->name ?? '' }}</h2>
+                                        <h2>{{ $packages->name ?? '' }}</h2>
                                     </div>
                                     <div class="heading-main-right">
                                         <a class="travel-btn btn" onclick="dates();">See Dates and Prices</a>
@@ -502,44 +487,14 @@
                                     </div>
                                 </div>
 
-                                <div class="inclusions-data">
-
-                                    <ul>
-                                        <li>
-                                            <div class="include-point">
-                                                {!! $packages->inclusion?? '' !!}
-                                            </div>
-                                            {{-- <img src="{{asset('web/assets/images/tick-circle.svg')}}"> --}}
-                                        </li>
-                                        {{-- <li> <img src="images/tick-circle.svg">Round-trip international flights between
-                                            Canada / Ponta Delgada with a good itinerary</li>
-                                        <li> <img src="images/tick-circle.svg"> Welcome and transfers between the airports
-                                            and the hotel in Ponta Delgada</li>
-                                        <li> <img src="images/tick-circle.svg"> 7 nights hotel accommodations</li>
-                                        <li> <img src="images/tick-circle.svg"> All breakfasts + 1 lunch</li>
-                                        <li> <img src="images/tick-circle.svg"> Multilingual English-speaking guide during
-                                            the tours</li>
-                                        <li> <img src="images/tick-circle.svg"> Three-hours whale watching boat tour</li>
-                                        <li> <img src="images/tick-circle.svg"> All taxes, fees, and OPC</li> --}}
-                                    </ul>
+                                <div class="inclusions-data mt-4">
+             
+                                    {!! $packages->inclusion?? '' !!}
 
                                     <h2>EXCLUDES</h2>
-                                    <ul>
-                                        <li>
-                                            <div class="include-point">
-                                                {!! $packages->exclusion ?? '' !!}
-                                            </div>
-                                        </li>
-                                        {{-- <p>International flights between Canada / Mumbai and New Delhi / Canada with good itineraries</p> --}}
-                                        {{-- <img src="images/tick-circle.svg">  --}}
-                                        {{-- <li> <img src="images/tick-circle.svg"> Fees for checked baggage</li>
-                                        <li> <img src="images/tick-circle.svg"> Tips: Guides, bus drivers and hotel staff
-                                        </li>
-                                        <li> <img src="images/tick-circle.svg"> Meals and beverages unless otherwise
-                                            mentioned</li>
-                                        <li> <img src="images/tick-circle.svg"> Personal expenses and optional activities
-                                        </li> --}}
-                                    </ul>
+                     
+                                    {!! $packages->exclusion ?? '' !!}
+                                    
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="pills-Map" role="tabpanel" aria-labelledby="pills-Map-tab"
@@ -681,6 +636,24 @@
                                 </div>
                             </div>
 
+                        </div>
+                    </div>
+                    <div class="col-lg-4 left-scroll-data">
+                        <div class="side-contry-section">
+                            <h2>Starting Rates</h2>
+                            <ul>
+                                @foreach($data['departureCity'] as $city)
+                                <li>
+                                    <a href="#" class="side-contry-left">
+                                        <h3> {{$city->name}}</h3> <span>CAD ${{$city->price}}</span> <a class="travel-btn btn"
+                                            href="javascript::" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal">See Dates</a>
+                                    </a>
+                                </li>
+                                @endforeach                                        
+                            </ul>
+                            <a class="travel-btn" href="javascript::" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">Select Another City</a>
                         </div>
                     </div>
                 </div>

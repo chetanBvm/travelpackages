@@ -38,21 +38,15 @@
                 <div class="card-header">
                     <span> Destination </span>
                     <a href="{{ route('destination.create') }}" type="button"
-                            class="btn btn-info d-none d-lg-block m-l-15">&#x002B; Add New</a>
+                        class="btn btn-info d-none d-lg-block m-l-15">&#x002B; Add New</a>
                 </div>
-                {{-- <div class="col-md-12 align-self-center text-right">
-                    <div class="d-flex justify-content-end align-items-center">
-
-                    </div>
-                </div> --}}
                 <div class="card-body">
                     <table class="table table-striped data-table">
                         <thead>
                             <tr>
-                                <th>No</th>
+                                <th>S.No.</th>
                                 <th>Country Name</th>
                                 <th>Image</th>
-                                <th>type</th>
                                 <th>Status</th>
                                 <th width="100px">Action</th>
                             </tr>
@@ -72,21 +66,20 @@
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('destination.index') }}",
+                order: [[0, 'desc']],
                 columns: [{
-                        data: 'id',
-                        name: 'id'
+                        data: 'DT_RowIndex', // Use DT_RowIndex for serial number
+                        name: 'DT_RowIndex',
+                        orderable: false, // Prevent ordering on this column
+                        searchable: false
                     },
                     {
                         data: 'country.name',
                         name: 'country.name'
                     },
                     {
-                        data:'image',
-                        name:'image'
-                    },
-                    {
-                        data: 'type',
-                        name: 'type'
+                        data: 'image',
+                        name: 'image'
                     },
                     {
                         data: 'status',

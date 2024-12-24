@@ -18,7 +18,7 @@ class AirlinesController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Airline::all();
+            $data = Airline::orderBy('id','desc');
 
             return DataTables::of($data)
                 ->addIndexColumn()

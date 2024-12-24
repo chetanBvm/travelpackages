@@ -11,8 +11,6 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Edit Airline</h4>
-
-
             </div>
             <div class="card-content">
                 <div class="card-body">
@@ -25,7 +23,7 @@
 
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">Name</label>
+                                        <label for="first-name-vertical">Name<span class="text-danger">*</span></label>
                                         <input type="text" id="name-vertical" class="form-control" name="name"
                                             value="{{ $airline->name }}" placeholder="Name">
                                     </div>
@@ -34,13 +32,9 @@
                                     @enderror
                                 </div>
 
-
-
-
-
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="status">Status</label>
+                                        <label for="status">Status<span class="text-danger">*</span></label>
                                         <select class="form-select" id="basicSelect" name="status">
                                             <option value="{{ $airline->status }}">{{ $airline->status }}</option>
                                             <option value="Active">Active</option>
@@ -50,10 +44,10 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="image" for="">Image</label>
+                                        <label class="image" for="">Image<span class="text-danger">*</span></label>
                                         <div class="@error('image') error @enderror">
                                             <input type="file" name="image" id="image"
-                                                class="filestyle image_style" onchange="readURL(this);"
+                                                class="form-control filestyle image_style" onchange="readURL(this);"
                                                 accept="image/jpeg, image/png, image/gif, image/jpg">
                                         </div>
                                     </div>
@@ -72,14 +66,12 @@
                                             <label class="error" role="alert">{{ $message }}</label>
                                         @enderror
                                     </div>
-
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-end">
                                 <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
                                 <a href="{{ route('airline.index') }}" type="button"
                                     class="btn btn-light-secondary me-1 mb-1"><span>Back</span></a>
-
                             </div>
                         </div>
                 </div>
@@ -117,9 +109,6 @@
                     text: {
                         required: true
                     },
-                    // image: {
-                    //     required: true
-                    // },
                     status: {
                         required: true
                     },
@@ -129,9 +118,6 @@
                     name: {
                         required: "Please enter the name of the airline."
                     },
-                    // image: {
-                    //     required: "Please choose the file."
-                    // },
                     status: {
                         required: "Please select the status of the airline."
                     }

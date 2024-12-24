@@ -19,7 +19,7 @@ class PromotionController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Promotion::all();
+            $data = Promotion::orderBy('id','desc');
 
             return DataTables::of($data)
                 ->addIndexColumn()

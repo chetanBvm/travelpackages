@@ -24,8 +24,8 @@ class PackagesController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Package::with('destination.country');
-
+            $data = Package::with('destination.country')->orderBy('id', 'desc');
+            
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -54,9 +54,9 @@ class PackagesController extends Controller
 
         // Get destinations if they exist
         $destination = Destination::with('country')->get();
-        $packagetype  = PackageType::get();
+        $packageType  = PackageType::whereNotNUll('parent_id')->get();
         // Return the view with destinations
-        return view('admin.packages.create', compact('destination','packagetype'));
+        return view('admin.packages.create', compact('destination','packageType'));
     }
 
     /**
@@ -136,7 +136,7 @@ class PackagesController extends Controller
         //Find the package by its ID
         $package = Package::findOrFail($id);
         $destination = Destination::with('country')->get();
-        $packageType = PackageType::get();
+        $packageType  = PackageType::whereNotNUll('parent_id')->get();
         $selectedMonths = json_decode($package->departure_month, true);
         return view('admin.packages.edit', compact('package', 'destination','packageType','selectedMonths'));
     }

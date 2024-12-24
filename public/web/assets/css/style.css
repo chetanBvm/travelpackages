@@ -58,14 +58,11 @@ figure {
 /*--------------------------------------------------------------------------------------*/
 /*Header-Css-Here
 /*--------------------------------------------------------------------------------------*/
-.main {
-  overflow: hidden;
-}
+
 
 html,
 body {
   width: 100%;
-  overflow-x: hidden;
 }
 
 header {
@@ -211,9 +208,9 @@ header {
 
 .login-btn span {
   color: var(--secondary);
-    font-weight: 700;
-    padding-right: 4px;
-    transition: 0.5s ease-out;
+  font-weight: 700;
+  padding-right: 4px;
+  transition: 0.5s ease-out;
 }
 
 .login-btn img {
@@ -710,7 +707,7 @@ line-height: 17.64px;
 }
 
 .travel-btn {
-  padding: 16px 51px;
+  padding: 16px 35px;
   background: var(--secondary);
   border-radius: 30px;
   color: var(--white);
@@ -2163,7 +2160,6 @@ h2.package-single-right-head {}
 
 .texes p {
   margin: 0;
-  font-family: Raleway;
   font-size: 14px;
   font-weight: 500;
   line-height: 16.44px;
@@ -2691,7 +2687,6 @@ h2.package-single-right-head {}
 
 .Package-Includes-main li {
   color: #666666;
-  font-family: Raleway;
   margin-bottom: 15px;
   font-size: 18px;
   font-weight: 500;
@@ -2848,7 +2843,7 @@ h2.package-single-right-head {}
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 30px;  
+  padding-top: 30px;
 }
 
 
@@ -2927,7 +2922,7 @@ h2.package-single-right-head {}
 
 .ticket-detail-bottom-data {
   border-right: 1px solid #E8E8E8;
-  padding-right: 88px;
+
 }
 
 .ticket-detail-bottom-data:nth-child(3) {
@@ -2988,7 +2983,7 @@ h2.package-single-right-head {}
 .ticket-details-bottom-inner {
   display: flex;
   align-items: center;
-  column-gap: 30px;
+  column-gap: 12px;
   width: 100%;
   justify-content: space-between;
 }
@@ -3025,7 +3020,7 @@ h2.package-single-right-head {}
 }
 
 .enquiry-btn .travel-btn {
-  width: 244px;
+  width: 189px;
 }
 
 .bottom-para {
@@ -3577,7 +3572,7 @@ h2.package-single-right-head {}
 }
 
 .status-label .travel-btn {
-  padding: 16px 77px;
+  padding: 16px 35px;
   background: var(--dark);
   border-radius: 30px;
   color: var(--white);
@@ -3587,8 +3582,7 @@ h2.package-single-right-head {}
   line-height: 17.64px;
   text-align: center;
   border: 1px solid var(--dark);
-  width: 244px;
-
+  width: 189px;
 }
 
 .status-label .travel-btn:hover {
@@ -3631,13 +3625,15 @@ h2.package-single-right-head {}
   border-color: var(--secondary);
 }
 
-.tranding-bottom .col-sm-6.col-md-4:nth-child(1),.tranding-bottom .col-sm-6.col-md-4:nth-child(2) {
+.tranding-bottom .col-sm-6.col-md-4:nth-child(1),
+.tranding-bottom .col-sm-6.col-md-4:nth-child(2) {
   width: 50%;
 }
 
-.track-right .col-md-6:nth-child(2){
+.track-right .col-md-6:nth-child(2) {
   margin-top: 68px;
 }
+
 .track-right .col-md-6:nth-child(4) {
   margin-top: 50px;
 }
@@ -3647,6 +3643,7 @@ h2.package-single-right-head {}
   transition: 0.3s ease-in-out;
   width: 100%;
 }
+
 .guest span {
   padding-right: 12px;
   display: flex;
@@ -3660,14 +3657,8 @@ h2.package-single-right-head {}
   color: var(--gray);
 }
 
-.package-details-tabs {
-  max-width: 65%;
-}
-.tab-result-section .heading-main{
-  max-width: 65%;
-}
 
-.side-contry-section{
+.side-contry-section {
   margin-top: 20px;
   border: 1px solid #7B79791A;
   background: var(--white);
@@ -3678,34 +3669,38 @@ h2.package-single-right-head {}
   flex-direction: column;
   row-gap: 24px;
 }
+
 .side-contry-section li {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
 }
-.side-contry-left{
+
+.side-contry-left {
   display: flex;
   align-items: center;
   column-gap: 20px;
 }
 
-.side-contry-left h3{
+.side-contry-left h3 {
   font-family: Plus Jakarta Sans;
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 700;
   line-height: 20.16px;
   color: var(--dark);
   margin-left: 30px;
 }
+
 .side-contry-left span {
   font-family: Plus Jakarta Sans;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 20px;
   color: #203638;
 }
-.side-contry-section h2{
+
+.side-contry-section h2 {
   font-family: Raleway;
   font-size: 24px;
   font-weight: 700;
@@ -3714,39 +3709,38 @@ h2.package-single-right-head {}
 }
 
 .side-contry-section .travel-btn {
-	padding: 10px 34px;
+  padding: 10px 24px;
 
 }
-.side-contry-left{
+
+.side-contry-left {
   position: relative;
 }
+
 .side-contry-left::before {
-	content: "";
-	position: absolute;
-	left: 0px;
-	background-image: url(../images/right-arop.svg);
-	width: 24px;
-	z-index: 1;
-	height: 24px;
-	top: 0px;
-	background-size: 24px;
+  content: "";
+  position: absolute;
+  left: 0px;
+  background-image: url(../images/right-arop.svg);
+  width: 24px;
+  z-index: 1;
+  height: 24px;
+  top: 0px;
+  background-size: 24px;
 }
-.tab-result-section {
-  margin-top: -314px;
-}
+
 #pills-Accommodation .itinerary-inner {
   padding-top: 40px;
-  max-width: 65%;
+
 }
-#pills-Inclusions .inclusions-data{
-  max-width: 65%;
-}
+
 
 p.dropResDepCity {
   padding: 8px 10px;
   margin-bottom: 3px;
   border-bottom: 1px solid #ffffff;
 }
+
 .q_result.packRes {
   height: fit-content;
   max-height: 274px;
@@ -3756,6 +3750,63 @@ p.dropResDepCity {
   color: #ffffff;
   overflow: auto;
 }
+
 div#results_frame {
   height: 10px;
+}
+
+/* hbhbbbbbbbbbbbbbbbb */
+
+
+
+.ticket-detail-bottom-data {
+  border-right: 1px solid #E8E8E8;
+  padding-right: 14px;
+}
+
+.faq-data {
+  padding-top: 30px;
+}
+
+.tab-result-section .Destination-form {
+  margin-top: 30px;
+}
+
+.texes p {
+  font-family: Plus Jakarta Sans;
+}
+
+.Package-Includes-main li {
+  font-family: Plus Jakarta Sans;
+}
+
+.left-scroll-data {
+  position: sticky;
+  top: 12px;
+  height: 479px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.Package-Includes-main li,
+.inclusions-data li {
+  position: relative;
+  padding-left: 28px;
+}
+
+.Package-Includes-main li::before,
+.inclusions-data li::before {
+  content: "";
+  top: 3px;
+  left: -3px;
+  width: 23px;
+  height: 23px;
+  position: absolute;
+  background-size: 23px;
+  background-image: url(../images/tick-circle.svg);
+}
+
+.sub-inner-menu {
+  margin-left: 20px;
+  display: none;
 }

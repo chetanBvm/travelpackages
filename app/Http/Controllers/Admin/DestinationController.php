@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DestinationStoreRequest;
+use App\Http\Requests\DestinationUpdateRequest;
 use App\Models\Country;
 use App\Models\Destination;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Yajra\DataTables\DataTables;
 
@@ -22,19 +24,18 @@ class DestinationController extends Controller
     {
 
         if ($request->ajax()) {
-            $data = Destination::with('country');
+            $data = Destination::with('country')->orderBy('id', 'desc');
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('image', function($row){
-                    $url= asset('storage/').'/'.$row->image;
-                    return '<img src="'.$url.'" border="0" width="40" class="img-rounded" align="center" />';
+                ->addColumn('image', function ($row) {
+                    $url = asset('storage/') . '/' . $row->image;
+                    return '<img src="' . $url . '" border="0" width="40" class="img-rounded" align="center" />';
                 })
-                ->addColumn('action', function($row){
+                ->addColumn('action', function ($row) {
                     $urlpath = url('admin/destination');
-                    return '<a href="'.$urlpath.'/'.$row->id.'/edit'.'" class="edit"><i class="bi bi-pen-fill"></i></a><a href="javascript:void(0);" onClick="deleteFunc('.$row->id.')" class="delete"><i class="bi bi-trash-fill"></i></a>';
-
+                    return '<a href="' . $urlpath . '/' . $row->id . '/edit' . '" class="edit"><i class="bi bi-pen-fill"></i></a><a href="javascript:void(0);" onClick="deleteFunc(' . $row->id . ')" class="delete"><i class="bi bi-trash-fill"></i></a>';
                 })
-                ->rawColumns(['image','action'])
+                ->rawColumns(['image', 'action'])
                 ->make(true);
         }
 
@@ -47,7 +48,7 @@ class DestinationController extends Controller
     public function create()
     {
         $country = Country::all();
-        return view('admin.destination.create',compact('country'));
+        return view('admin.destination.create', compact('country'));
     }
 
     /**
@@ -68,14 +69,13 @@ class DestinationController extends Controller
             }
             Destination::create([
                 'countries_id' => $validated['countries_id'],
-                'type' => $validated['type'],
                 'image' => $asset_image,
                 'status' => $validated['status'],
             ]);
 
             DB::commit(); //commit the transaction
 
-            return redirect()->route('destination.index')->with('success', 'Destination Created Successfully');
+            return redirect()->route('destination.index')->with('message', 'Destination has been created successfully');
         } catch (\Exception $exception) {
             DB::rollBack(); //Roll back the data if something goes wrong
 
@@ -103,7 +103,7 @@ class DestinationController extends Controller
     {
         $destination = Destination::findOrFail($id);
         $country = Country::all();
-        return view('admin.destination.edit', compact('destination','country'));
+        return view('admin.destination.edit', compact('destination', 'country'));
     }
 
     /**
@@ -111,7 +111,7 @@ class DestinationController extends Controller
      *
      * @return string $id
      */
-    public function update(DestinationStoreRequest $request, string $id)
+    public function update(DestinationUpdateRequest $request, string $id)
     {
         //find the package by its ID
         $destination = Destination::findOrFail($id);
@@ -125,7 +125,6 @@ class DestinationController extends Controller
             // Update the destination record
             $destination->update([
                 'countries_id' => $validated['countries_id'],
-                'type' => $validated['type'],
                 'status' => $validated['status'],
             ]);
 
@@ -152,7 +151,7 @@ class DestinationController extends Controller
 
             DB::commit(); //commit the transaction
 
-            return redirect()->route('destination.index')->with('success', 'Destination updated successfully!');
+            return redirect()->route('destination.index')->with('message', 'Destination has been updated successfully!');
         } catch (\Exception $exception) {
             DB::rollBack(); //Roll back the data if something goes wrong
 

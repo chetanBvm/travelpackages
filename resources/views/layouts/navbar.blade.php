@@ -66,23 +66,31 @@
                         <div class="collapse service-menu" id="collapseExample1">
                             <div class="card card-body">
                                 <ul class="inner-menu">
-                                    <!-- <li><a href="package.php"><img src="images/TourPackages.svg"> Tour Packages</a></li> -->
-                                    <li><a href="{{ route('web.packages') }}"><img
-                                                src="{{ asset('web/assets/images/safari.svg') }}"> Safari</a></li>
-                                    {{-- <li><a href="#"><img
-                                                src="{{ asset('web/assets/images/OceanCruisePackages.svg') }}"> River
-                                            Cruise Packages</a></li> --}}
+                                    @foreach ($packageTypes as $packageType)
+                                        <li>
+                                            <a href="{{ route('package.details', $packageType->id) }}">
+                                                <img
+                                                    src="{{ asset('storage' . '/' . $packageType->icon) }}">{{ $packageType->name }}</a>
+                                            @if ($packageType->subpackage->count())
+                                                <ul class="sub-inner-menu" >
+                                                    @foreach ($packageType->subpackage as $subPackageType)
+                                                        <li>
+                                                            <a href="{{route('package.details',$subPackageType->id)}}">
+                                                                <img
+                                                                    src="{{ asset('storage' . '/' . $subPackageType->icon) }}">{{ $subPackageType->name }}</a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
+                                        </li>
+                                    @endforeach                                   
                                 </ul>
                             </div>
                         </div>
                     </li>
-
-
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('pages.about') }}">About Us</a>
                     </li>
-
-
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('pages.contactus') }}">Contact Us</a>
                     </li>

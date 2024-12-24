@@ -21,7 +21,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">Name</label>
+                                        <label for="first-name-vertical">Name<span class="text-danger">*</span></label>
                                         <input type="text" id="name-vertical" class="form-control" name="name"
                                             placeholder="Name">
                                     </div>
@@ -33,7 +33,7 @@
 
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="days">Status</label>
+                                        <label for="days">Status<span class="text-danger">*</span></label>
                                         <select class="form-select" id="basicSelect" name="status">
                                             <option value="Active">Active</option>
                                             <option value="InActive">InActive</option>
@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="image" for="">Image</label>
+                                        <label class="image" for="">Image<span class="text-danger">*</span></label>
                                         <input type="file" class="form-control" name="image" id="image">
                                     </div>
                                 </div>
@@ -50,7 +50,6 @@
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
                                     <a href="{{route('airline.index')}}" type="button"
                                     class="btn btn-light-secondary me-1 mb-1"><span>Back</span></a>
-                                    {{-- <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button> --}}
                                 </div>
                             </div>
                         </div>

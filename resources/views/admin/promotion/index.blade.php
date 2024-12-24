@@ -28,14 +28,14 @@
                 <div class="card-header">
                     <span>Promotion</span>
                     <a href="{{ route('promotion.create') }}" type="button"
-                    class="btn btn-info d-none d-lg-block m-l-15">&#x002B; Add New</a>
+                        class="btn btn-info d-none d-lg-block m-l-15">&#x002B; Add New</a>
                 </div>
 
                 <div class="card-body">
                     <table class="table table-striped data-table">
                         <thead>
                             <tr>
-                                <th>No</th>
+                                <th>S.No.</th>
                                 <th>Name</th>
                                 <th>Code</th>
                                 <th>Price</th>
@@ -60,29 +60,34 @@
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('promotion.index') }}",
+                order: [
+                    [0, 'desc']
+                ],
                 columns: [{
-                        data: 'id',
-                        name: 'id'
+                        data: 'DT_RowIndex', // Use DT_RowIndex for serial number
+                        name: 'DT_RowIndex',
+                        orderable: false, // Prevent ordering on this column
+                        searchable: false
                     },
                     {
                         data: 'name',
                         name: 'name'
                     },
                     {
-                        data:'code',
-                        name:'code'
+                        data: 'code',
+                        name: 'code'
                     },
                     {
-                        data:'price',
-                        name:'price'
+                        data: 'price',
+                        name: 'price'
                     },
                     {
                         data: 'type',
                         name: 'type'
                     },
                     {
-                        data:'expiry_date',
-                        name:'expiry_date'
+                        data: 'expiry_date',
+                        name: 'expiry_date'
                     },
                     {
                         data: 'status',

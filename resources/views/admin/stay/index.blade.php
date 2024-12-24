@@ -34,7 +34,7 @@
                     <table class="table table-striped data-table">
                         <thead>
                             <tr>
-                                <th>No</th>
+                                <th>S.No.</th>
                                 <th>Name</th>
                                 <th>Image</th>
                                 <th>Status</th>
@@ -56,9 +56,14 @@
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('stay.index') }}",
+                order: [
+                    [0, 'desc']
+                ],
                 columns: [{
-                        data: 'id',
-                        name: 'id'
+                data: 'DT_RowIndex', // Use DT_RowIndex for serial number
+                        name: 'DT_RowIndex',
+                        orderable: false, // Prevent ordering on this column
+                        searchable: false
                     },
                     {
                         data: 'name',

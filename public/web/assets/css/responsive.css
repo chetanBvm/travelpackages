@@ -233,6 +233,9 @@
 
 @media (max-width:991px){
 /*-----------------------------*/   
+.tab-result-section .row{
+	flex-direction: column-reverse;
+}
 	.tab-result-section{
 		margin-top: 0px;
 	}
@@ -1098,6 +1101,12 @@ header {
 
 }
 @media(max-width:480px){
+	.side-contry-left h3 {
+		font-size: 15px;
+	  }
+	  .side-contry-left span {
+		font-size: 14px;
+	  }
 	.bannr-inner .Destination-form {
 		padding: 8px 24px;
 	}

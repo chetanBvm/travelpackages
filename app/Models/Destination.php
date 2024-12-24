@@ -10,9 +10,10 @@ class Destination extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = [ 'countries_id','name', 'type', 'status','image'];
+    protected $fillable = ['countries_id', 'name', 'status', 'image'];
 
-    public function country(){
-        return $this->hasOne(Country::class,'id','countries_id');
+    public function country()
+    {
+        return $this->hasOne(Country::class, 'id', 'countries_id');
     }
 }

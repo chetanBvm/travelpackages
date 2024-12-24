@@ -22,7 +22,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">Name</label>
+                                        <label for="first-name-vertical">Name<span class="text-danger">*</span></label>
                                         <input type="text" id="name-vertical" class="form-control" name="name"
                                             placeholder="Name">
                                     </div>
@@ -33,13 +33,13 @@
 
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="image" for="">Image</label>
+                                        <label class="image" for="">Image<span class="text-danger">*</span></label>
                                         <input type="file" class="form-control" name="image" id="image">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="">Description</label>
+                                        <label for="">Description<span class="text-danger">*</span></label>
                                         <textarea name="description" id="editor" cols="30" rows="10"></textarea>
                                     </div>
                                     @error('description')

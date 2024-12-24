@@ -38,19 +38,18 @@
                 <div class="card-header">
                     <span>Package Type</span>
                     <a href="{{ route('package-type.create') }}" type="button"
-                    class="btn btn-info d-none d-lg-block m-l-15">&#x002B; Add New</a>
+                        class="btn btn-info d-none d-lg-block m-l-15">&#x002B; Add New</a>
                 </div>
 
                 <div class="card-body">
                     <table class="table table-striped data-table">
                         <thead>
-                                <tr>
-                                    <th>No</th>
-                                  
-                                    <th>Name</th>
-                                    <th>Status</th>
-                                    <th width="100px">Action</th>
-                                </tr>
+                            <tr>
+                                <th>No</th>
+                                <th>Name</th>
+                                <th>Parent/Subcategory</th>
+                                <th width="100px">Action</th>
+                            </tr>
                         </thead>
                         <tbody>
                         </tbody>
@@ -70,14 +69,16 @@
                 columns: [{
                         data: 'id',
                         name: 'id'
-                    },                    
+                    },
                     {
                         data: 'name',
                         name: 'name'
-                    },                    
+                    },
                     {
-                        data:'status',
-                        name:'status'
+                        data: 'parent',
+                        name: 'parent',
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         data: 'action',

@@ -10,5 +10,15 @@ class PackageType extends Model
 {
     use HasFactory,SoftDeletes;
 
-    protected $fillable = ['name','status'];
+    protected $fillable = ['name','icon','parent_id'];
+
+    public function subpackage()
+    {
+        return $this->hasMany(PackageType::class, 'parent_id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(PackageType::class, 'parent_id');
+    }
 }
