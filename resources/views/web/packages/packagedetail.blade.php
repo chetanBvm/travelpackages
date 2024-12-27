@@ -123,7 +123,7 @@
         </section>
         <section class="tab-result-section">
             <div class="container">
-                <div class="row">
+                <div class="row main-row">
                     <div class="col-lg-8">
                         <div class="tab-content" id="pills-tabContent">
                             <div class="package-details-tabs">
@@ -218,155 +218,7 @@
                                     <div id="flightsContainer">
                                     </div>
                                 </div>
-
-                                {{-- <div class="ticket-details-main">
-                                    <div class="ticket-date-name">
-                                        <h3>July 2025</h3>
-                                        <span>MS Seine Princess - Standard ship</span>
-                                    </div>
-
-                                    <div class="ticket-details-bottom-main">
-                                        <div class="ticket-details-bottom-inner">
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/airplane.svg">Departure Date</span>
-                                                <h4>Fri Apr 11</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/aroplan-bt.svg">Departure Date</span>
-                                                <h4>Fri Apr 11</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/starting-price.svg">Departure Date</span>
-                                                <div class="price-details-data">
-                                                    <span>$3698</span>
-                                                    <h4>$3,598<span>/person</span></h4>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                        <div class="ticket-details-right-data">
-                                            <div class="offers-data">
-                                                <span>100$ off</span>
-                                            </div>
-                                            <div class="enquiry-btn">
-                                                <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal">Send Enquiry</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div> --}}
-
-                                {{-- <div class="ticket-details-main">
-                                    <div class="ticket-date-name">
-                                        <h3>September 2025</h3>
-                                        <span>MS Botticelli - Standard ship</span>
-                                    </div>
-
-                                    <div class="ticket-details-bottom-main">
-                                        <div class="ticket-details-bottom-inner">
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/airplane.svg">Departure Date</span>
-                                                <h4>Fri Apr 11</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/aroplan-bt.svg">Departure Date</span>
-                                                <h4>Fri Apr 11</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/starting-price.svg">Departure Date</span>
-                                                <div class="price-details-data">
-                                                    <span>$3698</span>
-                                                    <h4>$3,598<span>/person</span></h4>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                        <div class="ticket-details-right-data">
-                                            <div class="offers-data">
-                                                <span>100$ off</span>
-                                            </div>
-                                            <div class="enquiry-btn">
-                                                <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal">Send Enquiry</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ticket-details-bottom-main">
-                                        <div class="ticket-details-bottom-inner">
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/airplane.svg">Departure Date</span>
-                                                <h4>Sat Apr 13</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/aroplan-bt.svg">Departure Date</span>
-                                                <h4>Mon Apr 28</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/starting-price.svg">Departure Date</span>
-                                                <div class="price-details-data">
-                                                    <span>$3698</span>
-                                                    <h4>$3,598<span>/person</span></h4>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                        <div class="ticket-details-right-data">
-                                            <div class="offers-data">
-                                                <span>100$ off</span>
-                                            </div>
-                                            <div class="enquiry-btn">
-                                                <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal">Send Enquiry</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div> --}}
-
-                                {{-- <div class="ticket-details-main">
-                                    <div class="ticket-date-name">
-                                        <h3>October 2025</h3>
-                                        <span>MS Botticelli - Standard ship</span>
-                                    </div>
-
-                                    <div class="ticket-details-bottom-main">
-                                        <div class="ticket-details-bottom-inner">
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/airplane.svg">Departure Date</span>
-                                                <h4>Fri Apr 11</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/aroplan-bt.svg">Departure Date</span>
-                                                <h4>Fri Apr 11</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/starting-price.svg">Departure Date</span>
-                                                <div class="price-details-data">
-                                                    <span>$3698</span>
-                                                    <h4>$3,598<span>/person</span></h4>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                        <div class="ticket-details-right-data">
-                                            <div class="offers-data">
-                                                <span>100$ off</span>
-                                            </div>
-                                            <div class="enquiry-btn">
-                                                <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal">Send Enquiry</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>  --}}
+                               
                                 <div class="bottom-para">
                                     <p>*The advertised starting rate is available from Toronto on Jan 2025</p>
                                     <p>**All prices are subject to change without notice</p>
@@ -416,7 +268,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <div class="col-lg-3 col-md-6">
                                             <div class="accommodation-images">
                                                 @if (isset($packages->images[0]))
                                                     <figure>
@@ -428,7 +280,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-lg-3 col-md-6">
                                             <div class="accommodation-images">
                                                 @if (isset($packages->images[1]))
                                                     <figure>
@@ -440,7 +292,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-lg-3 col-md-6">
                                             <div class="accommodation-images">
                                                 @if (isset($packages->images[2]))
                                                     <figure>
@@ -452,7 +304,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-lg-3 col-md-6">
                                             <div class="tree-img accommodation-images">
                                                 @if (isset($packages->images[3]))
                                                     <figure>

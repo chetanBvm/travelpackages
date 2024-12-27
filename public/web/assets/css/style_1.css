@@ -154,17 +154,17 @@ header {
 }
 
 .inner-menu li a {
-	font-family: Plus Jakarta Sans;
-	font-size: 13px;
-	font-weight: 600;
-	line-height: 14px;
-	letter-spacing: 0.5px;
-	text-align: left;
-	color: var(--dark);
-	padding-bottom: 12px;
-	display: inline-block;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-	width: 100%;
+  font-family: Plus Jakarta Sans;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0.5px;
+  text-align: left;
+  color: var(--dark);
+  padding-bottom: 12px;
+  display: inline-block;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  width: 100%;
 }
 
 .inner-menu {
@@ -180,10 +180,10 @@ header {
   z-index: 999;
 }
 
-/* .inner-menu li:last-child a {
+.inner-menu li:last-child a {
   border: none;
   padding: 0;
-} */
+}
 
 .search {
   font-size: 20px;
@@ -633,8 +633,6 @@ line-height: 17.64px;
 .city img {
   width: 100%;
   border-radius: 20px;
-  height: 268px;
-  object-fit: cover;
 }
 
 .city {
@@ -883,17 +881,9 @@ line-height: 17.64px;
   transform: scale(1.1);
 }
 
-.hotels-section .hotels-bottom .hotels-wapper figure img {
-	border-radius: 20px;
-	width: 100%;
-	height: 480px;
-	object-fit: cover;
-  }
-.hotels .hotels-wapper figure img {
-	border-radius: 20px;
-	width: 100%;
-	height: 353px;
-	object-fit: cover;
+.hotels-wapper figure img {
+  border-radius: 20px;
+  width: 100%;
 }
 
 .hotels-bottom .row {
@@ -1191,7 +1181,7 @@ footer {
 }
 
 .tours-right h2 {
-  font-family: Plus Jakarta Sans;
+  font-family: Raleway;
   font-size: 28px;
   font-weight: 700;
   line-height: 32.87px;
@@ -1200,7 +1190,7 @@ footer {
 }
 
 .tours-right p {
-  font-family: Plus Jakarta Sans;
+  font-family: Raleway;
   font-size: 18px;
   font-weight: 500;
   line-height: 28px;
@@ -1349,16 +1339,14 @@ footer {
   border: 8.4px solid #FFFFFF;
   box-shadow: 0px 0px 31.52px 0px #00000014;
   border-radius: 315px;
-  height: 527px;
+  height: 100%;
 }
 
 .welcome-img-right img {
-	border: 8.4px solid #FFFFFF;
-	box-shadow: 0px 0px 31.52px 0px #00000014;
-	border-radius: 315px;
-	height: 259px;
-	width: 80%;
-	object-fit: cover;
+  border: 8.4px solid #FFFFFF;
+  box-shadow: 0px 0px 31.52px 0px #00000014;
+  border-radius: 315px;
+  height: 100%;
 }
 
 .welcome-img-left {
@@ -1467,8 +1455,6 @@ footer {
 .track-left img {
   width: 100%;
   border-radius: 20px;
-  height: 658px;
-  object-fit: cover;
 }
 
 .track-left figure {
@@ -1483,7 +1469,7 @@ footer {
 .track-wapper {
   box-shadow: 0px 6px 20px 0px #0000001A;
   border-radius: 20px;
-  padding: 37px 10px;
+  padding: 37px 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1496,8 +1482,7 @@ footer {
   font-size: 32px;
   font-weight: 700;
   line-height: 37.57px;
-  text-align: center;
-  width: 100%;
+  text-align: left;
   color: var(--dark);
 }
 
@@ -1506,8 +1491,7 @@ footer {
   font-size: 16px;
   font-weight: 500;
   line-height: 18.78px;
-  text-align: center;
-  width: 100%;
+  text-align: left;
   color: var(--gray);
 }
 
@@ -1529,10 +1513,9 @@ footer {
 }
 
 .arrow-shape-five {
-	position: absolute;
-	top: -90px;
-	right: 20px;
-	z-index: -1;
+  position: absolute;
+  top: -90px;
+  right: 20px;
 }
 
 .featured {
@@ -1550,7 +1533,7 @@ footer {
 }
 
 .featured-left-content h2 {
-  font-family: Plus Jakarta Sans;
+  font-family: Raleway;
   font-size: 36px;
   font-weight: 700;
   line-height: 48px;
@@ -1559,7 +1542,7 @@ footer {
 }
 
 .featured-left-content h4 {
-  font-family: Plus Jakarta Sans;
+  font-family: Raleway;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -1568,7 +1551,7 @@ footer {
 
 .featured-left-content p {
   margin: 0;
-  font-family: Plus Jakarta Sans;
+  font-family: Raleway;
   font-size: 18px;
   font-weight: 400;
   line-height: 28px;
@@ -1617,7 +1600,7 @@ footer {
 }
 
 .tours-right h4 {
-  font-family: Plus Jakarta Sans;
+  font-family: Raleway;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -2055,12 +2038,11 @@ footer {
 }
 
 .package-single-left-img img {
-	width: 100%;
-	border-radius: 20px;
-	height: 100%;
-	object-fit: cover;
-	aspect-ratio: 3 / 2;
-  }
+  width: 100%;
+  border-radius: 20px;
+  height: 100%;
+  object-fit: cover;
+}
 
 .tree-img figure {
   height: 100%;
@@ -2356,12 +2338,7 @@ h2.package-single-right-head {}
   height: 62px;
   position: relative;
 }
-.guests-wapper-head figure img {
-  width: 62px;
-  border-radius: 50%;
-  height: 62px;
-  object-fit: cover;
-}
+
 .guests-wapper-head figure::after {
   position: absolute;
   content: "";
@@ -2470,7 +2447,7 @@ h2.package-single-right-head {}
 
 .policy-inner p {
   margin: 0;
-  font-family: Plus Jakarta Sans;
+  font-family: Raleway;
   font-size: 18px;
   font-weight: 400;
   line-height: 28px;
@@ -2569,15 +2546,11 @@ h2.package-single-right-head {}
 .page-number.mobile-page {
   display: none;
 }
-.service-content img {
-  max-width: 48px;
-  width: 100%;
-}
+
 .track-right .track-wapper img {
-  max-width: 60px;
+  max-width: 100%;
   transition: 0.3s ease-in-out;
   filter: brightness(0) saturate(100%) invert(70%) sepia(58%) saturate(573%) hue-rotate(342deg) brightness(92%) contrast(94%);
-  width: 100%;
 }
 
 .contact .travel-btn {
@@ -3095,7 +3068,7 @@ h2.package-single-right-head {}
 
 
 .itinerary-inner h2 {
-  font-family: Plus Jakarta Sans;
+  font-family: Raleway;
   font-size: 18px;
   font-weight: 700;
   line-height: 21.13px;
@@ -3103,7 +3076,7 @@ h2.package-single-right-head {}
 }
 
 .itinerary-inner p {
-  font-family: Plus Jakarta Sans;
+  font-family: Raleway;
   font-size: 18px;
   font-weight: 500;
   line-height: 28px;
@@ -3202,7 +3175,7 @@ h2.package-single-right-head {}
 }
 
 .accordion-body {
-  font-family: Plus Jakarta Sans;
+  font-family: Raleway;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
@@ -3416,8 +3389,9 @@ h2.package-single-right-head {}
 }
 
 .contact-content .mobile-number-inner {
-  height: 78px;
+  height: 60px;
 }
+
 .contact-content .select2-container--default .select2-selection--single {
   background-color: white;
 }
@@ -3430,7 +3404,11 @@ h2.package-single-right-head {}
   width: 24% !important;
 }
 
-
+.contact-content .mobile-number-inner .form-control {
+  margin-left: -88px;
+  z-index: 1111111;
+  position: relative;
+}
 
 .select2-container--open {
   z-index: 11111;
@@ -3625,7 +3603,6 @@ h2.package-single-right-head {}
   height: 87px;
   width: 87px;
   border-radius: 50%;
-  object-fit: cover;
 }
 
 .experience .content {
@@ -3717,7 +3694,7 @@ h2.package-single-right-head {}
 
 .side-contry-left span {
   font-family: Plus Jakarta Sans;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 20px;
   color: #203638;
@@ -3806,7 +3783,7 @@ div#results_frame {
 .left-scroll-data {
   position: sticky;
   top: 12px;
-  height: 480px;
+  height: 479px;
   overflow-y: auto;
   scrollbar-width: none;
 }
@@ -3831,35 +3808,5 @@ div#results_frame {
 
 .sub-inner-menu {
   margin-left: 20px;
+  display: none;
 }
-#pills-Accommodation .accommodation-images {
-	margin-top: 10px;
-  }
-  .inner-menu li a img {
-    width: 42px;
-    max-width: 42px;
-  }
-  #pills-Map .map-image img {
-    width: 100%;
-    max-width: 601px;
-    height: 100%;
-  }
-  .heading-main-right .download-data a img{
-    max-width: 21px;
-  }
-
-  .travel-service .service-wapper {
-    margin-bottom: 10px;
-  }
-
-  .iti--allow-dropdown .iti__flag-container:hover .iti__selected-flag {
-    background-color: transparent !important;
-  }
-  .iti--separate-dial-code .iti__selected-flag {
-    background-color: transparent!important;
-  }
-  .iti {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-  }

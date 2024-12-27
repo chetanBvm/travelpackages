@@ -36,6 +36,7 @@
                             </tbody>
                         </table>
                     </div>
+                    <h2>Url: {{$paymentLink}}</h2>
                 </div>
             </div>
         </div>

@@ -504,9 +504,6 @@
 .tours-right h2 {
 	font-size: 24px;
 }
-.left-scroll-data {
-	position: inherit;
-  }
 }
 
 @media (max-width:767px){
@@ -694,7 +691,9 @@
   .offer-news.offer-news-2 {
 	display: block;
   }
-
+  .left-scroll-data {
+	position: inherit;
+  }
   .hotels-wapper figure img {
 	border-radius: 20px;
 	width: 100%;

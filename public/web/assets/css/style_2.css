@@ -633,8 +633,6 @@ line-height: 17.64px;
 .city img {
   width: 100%;
   border-radius: 20px;
-  height: 268px;
-  object-fit: cover;
 }
 
 .city {
@@ -3430,7 +3428,11 @@ h2.package-single-right-head {}
   width: 24% !important;
 }
 
-
+.contact-content .mobile-number-inner .form-control {
+  margin-left: -86px;
+  z-index: 1111111;
+  position: relative;
+}
 
 .select2-container--open {
   z-index: 11111;
@@ -3850,16 +3852,4 @@ div#results_frame {
 
   .travel-service .service-wapper {
     margin-bottom: 10px;
-  }
-
-  .iti--allow-dropdown .iti__flag-container:hover .iti__selected-flag {
-    background-color: transparent !important;
-  }
-  .iti--separate-dial-code .iti__selected-flag {
-    background-color: transparent!important;
-  }
-  .iti {
-    position: relative;
-    display: inline-block;
-    width: 100%;
   }

@@ -6,6 +6,12 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Seo -->
+    <meta name="description" content="{{ isset($pageSEO) ? strip_tags($pageSEO->meta_description) : 'Hey there, I am the description' }}">
+    <meta name="keywords" content="{{ isset($pageSEO) ? $pageSEO->meta_keywords : 'myvacayhost' }}">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ isset($pageSEO) ? strtolower($pageSEO->title) : 'myvacayhost' }}">
+    <meta property="og:description" content="{{ isset($pageSEO) ? strip_tags($pageSEO->meta_description) : 'Hey there, I am the description' }}">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -36,5 +42,4 @@
     @yield('js')
 
 </body>
-
 </html>
