@@ -6,13 +6,13 @@
                     <div class="footer-content">
                         <a href="{{ route('dashboard') }}" class="footer-logo">
                             @php
-                    $images = json_decode($settings, true);
-                @endphp
-                @if(isset($images))
-                <img src="{{ asset('storage'.'/'.$images['footer']) }}">
-                @else
-                <img src="{{ asset('web/assets/images/footer-logo.png') }}">
-                @endif
+                                $images = json_decode($settings, true);
+                            @endphp
+                            @if (isset($images))
+                                <img src="{{ asset('storage' . '/' . $images['footer']) }}">
+                            @else
+                                <img src="{{ asset('web/assets/images/footer-logo.png') }}">
+                            @endif
                         </a>
                         <div class="footer-wapper">
                             <p><span>Experienced:</span> Our friendly Consultants travel regularly & offer first hand
@@ -56,7 +56,7 @@
                     <div class="footer-content">
                         <h2>Important links</h2>
                         <ul class="footer-menu">
-                            <li><a class="{{ request()->routeIs('pages.dashboard') ? 'active' : '' }}"
+                            <li><a class="{{ request()->routeIs('dashboard') ? 'active' : '' }}"
                                     href="{{ route('dashboard') }}">Home</a></li>
                             <li><a class="{{ request()->routeIs('pages.about') ? 'active' : '' }}"
                                     href="{{ route('pages.about') }}">About Us</a></li>
@@ -114,9 +114,9 @@
 <script src="{{ asset('web/assets/js/owl.carousel.min.js') }}"></script>
 <script src="{{ asset('web/assets/js/perfect-scrollbar.min.js') }}"></script>
 <script src="{{ asset('web/assets/js/select2.min.js') }}"></script>
-<script src="{{ asset('web/assets/js/airport_filter.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
 <script src="{{ asset('web/assets/js/tourdetails.js') }}"></script>
+<script src="{{ asset('web/assets/js/airport_filter.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.8/slick.min.js"></script>
 <script type="text/javascript">
     $(".guests-slider").owlCarousel({
@@ -263,4 +263,8 @@
             }
         });
     });
+
+    setTimeout(function() {
+        $('.alert-success').fadeOut('fast');
+    }, 3000);
 </script>

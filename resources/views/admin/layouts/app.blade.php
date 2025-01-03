@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Default Title')- @yield('filename', 'default') </title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('stylesfirst')
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -21,9 +22,9 @@
     <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
     <link rel="stylesheet" href="{{ asset('admin/assets/vendors/sweetalert2/sweetalert2.min.css') }}">
-    <link rel="stylesheet" href="{{asset('admin/assets/vendors/choices.js/choices.min.css')}}" />
+    <link rel="stylesheet" href="{{ asset('admin/assets/vendors/choices.js/choices.min.css') }}" />
     <!-- toastify -->
-    <link rel="stylesheet" href="{{asset('admin/assets/vendors/toastify/toastify.css')}}">
+    <link rel="stylesheet" href="{{ asset('admin/assets/vendors/toastify/toastify.css') }}">
 </head>
 
 <body>
@@ -49,7 +50,8 @@
     <script src="{{ asset('admin/assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/extensions/sweetalert2.js') }}"></script>
     <script src="{{ asset('admin/assets/vendors/sweetalert2/sweetalert2.all.min.js') }}"></script>
-    <script src="{{asset('admin/assets/vendors/choices.js/choices.min.js')}}"></script>
+    <script src="{{ asset('admin/assets/vendors/choices.js/choices.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/packages.js') }}"></script>
     @yield('js')
     <script src="{{ asset('admin/assets/js/main.js') }}"></script>
 </body>

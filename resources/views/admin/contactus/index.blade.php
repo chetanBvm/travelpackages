@@ -46,7 +46,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Contact No.</th>
-                                {{-- <th width="100px">Action</th> --}}
+                                <th width="100px">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -65,33 +65,41 @@
                 ajax: "{{ route('contactus.index') }}",
                 order: [
                     [0, 'desc']
-                ], 
+                ],
                 columns: [{
-                    data: 'DT_RowIndex', // Use DT_RowIndex for serial number
+                        data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
-                        orderable: false, // Prevent ordering on this column
+                        orderable: false,
                         searchable: false
                     },
                     {
-                        data: 'f_name',
-                        name: 'f_name'
+                        data: null,
+                        render: function(data, type, row) {
+                            const firstName = row.f_name ||
+                                '';
+                            const lastName = row.l_name ||
+                                '';
+
+                            return firstName + (lastName ? ' ' + lastName : '');
+                        },
+                        name: 'full_name'
                     },
                     {
                         data: 'email',
                         name: 'email',
-                    
-                    },              
+
+                    },
                     {
                         data: 'mobile_number',
                         name: 'mobile_number',
-                    
-                    },    
-                    // {
-                    //     data: 'action',
-                    //     name: 'action',
-                    //     orderable: false,
-                    //     searchable: false
-                    // },
+
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
                 ]
             });
 

@@ -19,7 +19,7 @@ class BookingsController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Booking::with('airport')->get();
+            $data = Booking::with('airport')->orderBy('id','desc');
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -79,11 +79,12 @@ class BookingsController extends Controller
             $bookings->status = 'approved';
             $bookings->save();
             
-            $paymentLink  = (new StripePaymentController)->createPaymentLink($package);
-          
+            $paymentLink = (new StripePaymentController)->createPaymentLink($package);
+            Log::info($paymentLink);
+                      
             Mail::send('email.approve_booking', compact('bookings','package','paymentLink'), 
             function ($message) use ($bookings) {
-                $message->to($bookings->c_email)->subject('Booking Approved');
+                $message->to($bookings->c_email)->from(env('MAIL_FROM_ADDRESS'), 'MyVacayHost')->subject('Booking Approved');
             });
                         
             return response()->json(['success' => true,'']);

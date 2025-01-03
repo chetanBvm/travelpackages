@@ -154,17 +154,17 @@ header {
 }
 
 .inner-menu li a {
-	font-family: Plus Jakarta Sans;
-	font-size: 13px;
-	font-weight: 600;
-	line-height: 14px;
-	letter-spacing: 0.5px;
-	text-align: left;
-	color: var(--dark);
-	padding-bottom: 12px;
-	display: inline-block;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-	width: 100%;
+  font-family: Plus Jakarta Sans;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 14px;
+  letter-spacing: 0.5px;
+  text-align: left;
+  color: var(--dark);
+  padding-bottom: 12px;
+  display: inline-block;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  width: 100%;
 }
 
 .inner-menu {
@@ -714,7 +714,7 @@ line-height: 17.64px;
   border-radius: 30px;
   color: var(--white);
   font-family: Plus Jakarta Sans;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 17.64px;
   text-align: center;
@@ -884,16 +884,17 @@ line-height: 17.64px;
 }
 
 .hotels-section .hotels-bottom .hotels-wapper figure img {
-	border-radius: 20px;
-	width: 100%;
-	height: 480px;
-	object-fit: cover;
-  }
+  border-radius: 20px;
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
+}
+
 .hotels .hotels-wapper figure img {
-	border-radius: 20px;
-	width: 100%;
-	height: 353px;
-	object-fit: cover;
+  border-radius: 20px;
+  width: 100%;
+  height: 353px;
+  object-fit: cover;
 }
 
 .hotels-bottom .row {
@@ -1353,12 +1354,12 @@ footer {
 }
 
 .welcome-img-right img {
-	border: 8.4px solid #FFFFFF;
-	box-shadow: 0px 0px 31.52px 0px #00000014;
-	border-radius: 315px;
-	height: 259px;
-	width: 80%;
-	object-fit: cover;
+  border: 8.4px solid #FFFFFF;
+  box-shadow: 0px 0px 31.52px 0px #00000014;
+  border-radius: 315px;
+  height: 259px;
+  width: 80%;
+  object-fit: cover;
 }
 
 .welcome-img-left {
@@ -1529,10 +1530,10 @@ footer {
 }
 
 .arrow-shape-five {
-	position: absolute;
-	top: -90px;
-	right: 20px;
-	z-index: -1;
+  position: absolute;
+  top: -90px;
+  right: 20px;
+  z-index: -1;
 }
 
 .featured {
@@ -2055,12 +2056,12 @@ footer {
 }
 
 .package-single-left-img img {
-	width: 100%;
-	border-radius: 20px;
-	height: 100%;
-	object-fit: cover;
-	aspect-ratio: 3 / 2;
-  }
+  width: 100%;
+  border-radius: 20px;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 3 / 2;
+}
 
 .tree-img figure {
   height: 100%;
@@ -2356,12 +2357,14 @@ h2.package-single-right-head {}
   height: 62px;
   position: relative;
 }
+
 .guests-wapper-head figure img {
   width: 62px;
   border-radius: 50%;
   height: 62px;
   object-fit: cover;
 }
+
 .guests-wapper-head figure::after {
   position: absolute;
   content: "";
@@ -2569,10 +2572,12 @@ h2.package-single-right-head {}
 .page-number.mobile-page {
   display: none;
 }
+
 .service-content img {
   max-width: 48px;
   width: 100%;
 }
+
 .track-right .track-wapper img {
   max-width: 60px;
   transition: 0.3s ease-in-out;
@@ -3412,19 +3417,20 @@ h2.package-single-right-head {}
 
 .contact-content .form-control:focus {
   box-shadow: none;
-  border: 1px solid #EAEBEC;
+  border: 1px solid var(--secondary);
 }
 
 .contact-content .mobile-number-inner {
   height: 78px;
 }
+
 .contact-content .select2-container--default .select2-selection--single {
   background-color: white;
 }
 
-.contact-content .mobile-number-inner .form-control:focus {
+/* .contact-content .mobile-number-inner .form-control:focus {
   border: none;
-}
+} */
 
 .contact-content .mobile-number-inner .select2-container {
   width: 24% !important;
@@ -3829,37 +3835,49 @@ div#results_frame {
   background-image: url(../images/tick-circle.svg);
 }
 
-.sub-inner-menu {
-  margin-left: 20px;
+.sub-inner-menu a {
+  padding-left: 20px;
+  font-size: 13px !important;
+  font-weight: 500 !important;
 }
+
 #pills-Accommodation .accommodation-images {
-	margin-top: 10px;
-  }
-  .inner-menu li a img {
-    width: 42px;
-    max-width: 42px;
-  }
-  #pills-Map .map-image img {
-    width: 100%;
-    max-width: 601px;
-    height: 100%;
-  }
-  .heading-main-right .download-data a img{
-    max-width: 21px;
-  }
+  margin-top: 10px;
+}
 
-  .travel-service .service-wapper {
-    margin-bottom: 10px;
-  }
+.inner-menu li a img {
+  width: 42px;
+  max-width: 42px;
+}
 
-  .iti--allow-dropdown .iti__flag-container:hover .iti__selected-flag {
-    background-color: transparent !important;
-  }
-  .iti--separate-dial-code .iti__selected-flag {
-    background-color: transparent!important;
-  }
-  .iti {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-  }
+#pills-Map .map-image img {
+  width: 100%;
+  max-width: 601px;
+  height: 100%;
+}
+
+.heading-main-right .download-data a img {
+  max-width: 21px;
+}
+
+.travel-service .service-wapper {
+  margin-bottom: 10px;
+}
+
+.iti--allow-dropdown .iti__flag-container:hover .iti__selected-flag {
+  background-color: transparent !important;
+}
+
+.iti--separate-dial-code .iti__selected-flag {
+  background-color: transparent !important;
+}
+
+.iti {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.sub-inner-menu li a {
+  margin-top: 13px;
+}

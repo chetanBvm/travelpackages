@@ -64,7 +64,7 @@
             <div class="collapse navbar-collapse header-inner" id="navbarTogglerDemo01">
                 <ul class="navbar-nav m-auto mt-0 mb-lg-0 main-menu">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ route('dashboard') }}">Home</a>
+                        <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" aria-current="page" href="{{ route('dashboard') }}">Home</a>
                     </li>
 
                     <li class="nav-item our-service">
@@ -77,15 +77,16 @@
                                     @foreach ($packageTypes as $packageType)
                                         <li>
                                             <a href="{{ route('package.details', $packageType->id) }}">
-                                                <img
-                                                    src="{{ asset('storage' . '/' . $packageType->icon) }}">{{ $packageType->name }}</a>
+                                                {{-- <img
+                                                    src="{{ asset('storage' . '/' . $packageType->icon) }}"> --}}
+                                                    {{ $packageType->name }}</a>
                                             @if ($packageType->subpackage->count())
                                                 <ul class="sub-inner-menu" >
                                                     @foreach ($packageType->subpackage as $subPackageType)
                                                         <li>
                                                             <a href="{{route('package.details',$subPackageType->id)}}">
-                                                                <img
-                                                                    src="{{ asset('storage' . '/' . $subPackageType->icon) }}">{{ $subPackageType->name }}</a>
+                                                                {{-- <img src="{{ asset('storage' . '/' . $subPackageType->icon) }}"> --}}
+                                                                    {{ $subPackageType->name }}</a>
                                                         </li>
                                                     @endforeach
                                                 </ul>
@@ -96,11 +97,11 @@
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('pages.about') }}">About Us</a>
+                    <li class="nav-item ">
+                        <a class="nav-link {{ request()->routeIs('pages.about') ? 'active' : '' }}" href="{{ route('pages.about') }}">About Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('pages.contactus') }}">Contact Us</a>
+                        <a class="nav-link {{ request()->routeIs('pages.contactus') ? 'active' : '' }}" href="{{ route('pages.contactus') }}">Contact Us</a>
                     </li>
                 </ul>
                 <div class="login-sec">

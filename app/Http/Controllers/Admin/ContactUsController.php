@@ -15,16 +15,16 @@ class ContactUsController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = ContactUs::all();
+            $data = ContactUs::orderBy('id','desc');
 
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $urlpath = url('admin/contactUs');
-                    return '<a href="' . $urlpath . '/' . $row->id . '/view' . '" class="edit"><i class="bi bi-eye-fill"></i></a>
+                    $urlpath = route('contactus.show', $row->id);                    
+                    return '<a href="' . $urlpath .'" class="view"><i class="bi bi-eye-fill"></i></a>
                     ';
                 })
-                ->rawColumns(['image','action'])
+                ->rawColumns(['action'])
                 ->make(true);
         }
         return view('admin.contactus.index');

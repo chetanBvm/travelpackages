@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PackageStoreRequest extends FormRequest
 {
@@ -22,14 +23,21 @@ class PackageStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('packages')->where(function ($query) {
+                    return $query->whereNull('deleted_at');
+                })->ignore($this->route('package')),
+            ],
             'description' => 'nullable|string',
             'days' => 'required|numeric|min:0',
             'price' => 'required|numeric|min:0|max:9999999',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'string',
             'destination_id' => 'string|exists:destinations,id',
-            'sub_title' => 'required|string',
+            'sub_title' => 'nullable',
             'tax' => 'required|numeric|min:0|max:99',
             'tax_rate' => 'numeric',
             'total_price' => 'numeric',
@@ -55,7 +63,6 @@ class PackageStoreRequest extends FormRequest
         return [
             'name.required' => 'name is required.',
             'days.required' => 'days is required.',
-            'sub_title.required' => 'Please enter the sub title.',
             'tax.required' => 'tax is required.',
             'packagetype_id.required' => 'Please select the package type.',
             'accommodation.required' => 'Please provide the accommodation description',

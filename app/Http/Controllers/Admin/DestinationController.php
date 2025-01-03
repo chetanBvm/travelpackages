@@ -33,7 +33,7 @@ class DestinationController extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $urlpath = url('admin/destination');
-                    return '<a href="' . $urlpath . '/' . $row->id . '/edit' . '" class="edit"><i class="bi bi-pen-fill"></i></a><a href="javascript:void(0);" onClick="deleteFunc(' . $row->id . ')" class="delete"><i class="bi bi-trash-fill"></i></a>';
+                    return '<a href="' . $urlpath . '/' . $row->id . '/edit' . '" class="edit"><i class="bi bi-pen-fill"></i></a>';
                 })
                 ->rawColumns(['image', 'action'])
                 ->make(true);

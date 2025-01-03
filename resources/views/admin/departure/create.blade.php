@@ -6,19 +6,6 @@
 @section('title', $title)
 @section('filename', $filename)
 @section('content')
-    @php
-        use Carbon\Carbon;
-        // Get the current year
-        $currentYear = Carbon::now();
-
-        // Array to hold the months
-        $months = [];
-
-        // Generate the months for the current year
-        for ($i = 0; $i <= 12; $i++) {
-            $months[] = $currentYear->copy()->addMonths($i)->format('F Y');
-        }
-    @endphp
     <div class="col-md-12 col-12">
         <div class="card">
             <div class="card-header">
@@ -35,7 +22,7 @@
                                     <div class="form-group">
                                         <label for="first-name-vertical">Package Name<span
                                                 class="text-danger">*</span></label>
-                                        <select class="form-select" id="basicSelect" name="package_id">
+                                        <select class="form-select packageDropdown" id="basicSelect" name="package_id">
                                             <option>select package</option>
                                             @foreach ($package as $packages)
                                                 <option value="{{ $packages->id }}"
@@ -51,14 +38,15 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Month Year<span class="text-danger">*</span></label>
+                                        @php $months = currentYear(); @endphp
                                         <select name="year" id="year" class="form-select"
                                             aria-label="Default select example">
                                             <option>select month</option>
-                                            @foreach ($months as $index => $month)
+                                            {{-- @foreach ($months as $index => $month)
                                                 <option value="{{ $month }}"
                                                     {{ old('year') == $month ? 'selected' : '' }}>
                                                     {{ $month }}</option>
-                                            @endforeach
+                                            @endforeach --}}
                                         </select>
                                     </div>
                                     @error('year')
@@ -68,8 +56,15 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Departure date<span class="text-danger">*</span></label>
-                                        <input type="date" id="date" class="form-control departure_date"
-                                            name="departure_date[]" placeholder="Departure Date" min="">
+                                        {{-- <input type="text" name="departure_date[]"
+                                            class="form-control mb-3 flatpickr-no-config flatpickr-input" id="date"
+                                            placeholder="Select date.." readonly="readonly"> --}}
+                                        <input type="text" name="departure_date[]"
+                                            class="form-control departure_date date-picker" id="date"
+                                            placeholder="Select Date">
+
+                                        {{-- <input type="date" id="date" class="form-control departure_date"
+                                            name="departure_date[]" placeholder="Departure Date" min=""> --}}
                                     </div>
                                     @error('departure_date')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -78,8 +73,10 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="return_date">Return Date<span class="text-danger">*</span></label>
-                                        <input type="date" id="return_date" class="form-control return_date"
-                                            name="return_date[]" placeholder="Return Date" min="">
+                                        <input type="text" class="form-control return_date date-picker" id="date"
+                                            name="return_date[]" placeholder="Select Date">
+                                        {{-- <input type="date" id="return_date" class="form-control return_date"
+                                            name="return_date[]" placeholder="Return Date" min=""> --}}
                                     </div>
                                     @error('return_date')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -88,9 +85,9 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="price">Price<span class="text-danger">*</span></label>
-                                        <input type="number" id="price" min="0" 
-                                        max="9999999" oninput="this.value = this.value.slice(0, 7);" class="form-control" name="price[]"
-                                            placeholder="Price">
+                                        <input type="number" id="price" min="0" max="9999999"
+                                            oninput="this.value = this.value.slice(0, 7);" class="form-control"
+                                            name="price[]" placeholder="Price">
                                     </div>
                                     @error('price')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -98,7 +95,8 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="days">Accommodation Category<span class="text-danger">*</span></label>
+                                        <label for="days">Accommodation Category<span
+                                                class="text-danger">*</span></label>
                                         <select class="form-select" id="basicSelect" name="category[]">
                                             <option value="classic Hotels">classic Hotels</option>
                                             <option value="superior Hotels">superior Hotels</option>
@@ -115,7 +113,7 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>                      
+                            </div>
                             <div class="col-12 d-flex justify-content-end">
                                 <button type="button" class="btn btn-primary me-1 mb-1" id="add-more-fields">+
                                     Add More</button>
@@ -131,9 +129,22 @@
     </div>
 @endsection
 @section('js')
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+
+    <script>
+        function initializeDatePickers() {
+            flatpickr('.date-picker', {
+                dateFormat: "Y-m-d",
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeDatePickers();
+        });
+    </script>
 
     <script>
         //Validation script
@@ -152,7 +163,7 @@
                     return_date: {
                         required: true
                     },
-                    price:{
+                    price: {
                         required: true
                     },
                     status: {
@@ -176,7 +187,7 @@
                     return_date: {
                         required: "Please enter the return date."
                     },
-                    price:{
+                    price: {
                         required: "Please enter the price."
                     },
                     status: {
@@ -203,6 +214,7 @@
 
     <script>
         $(document).ready(function() {
+           
             let fieldCounter = 1; // To keep track of added fields
             const maxFields = 20; // Maximum number of fields allowed
 
@@ -217,7 +229,7 @@
                         const returnInput = $(this).closest('.dynamic-fields').find('.return_date');
                         if (selectedDepartureDate) {
                             returnInput.attr('min',
-                            selectedDepartureDate); // Update the minimum date for return date
+                                selectedDepartureDate); // Update the minimum date for return date
                         } else {
                             returnInput.removeAttr('min'); // Reset if no date is selected
                         }
@@ -264,6 +276,7 @@
 
             // Add More Fields
             $('#add-more-fields').click(function() {
+                initializeDatePickers();
                 if (fieldCounter < maxFields) {
                     fieldCounter++;
                     const newFields = `
@@ -271,13 +284,13 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="departure_date">Departure Date<span class="text-danger">*</span></label>
-                                <input type="date" class="departure_date form-control" id="date" name="departure_date[]" placeholder="Departure Date" min="">
+                                <input type="text" class="departure_date form-control date-picker" id="date" name="departure_date[]" placeholder="Departure Date" min="">
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="return_date">Return Date<span class="text-danger">*</span></label>
-                                <input type="date" class="return_date form-control" name="return_date[]"  placeholder="Return Date" min="">
+                                <input type="text" class="return_date form-control date-picker" name="return_date[]"  placeholder="Return Date" min="">
                             </div>
                         </div>
                         <div class="col-6">
@@ -310,6 +323,8 @@
                         </div>
                     </div>`;
                     $('#dynamic-fields-container').append(newFields);
+                    initializeDatePickers();
+
                     applyDateLogic();
                     toggleSubmitButton();
                     toggleAddMoreButton(); // Check and update "Add More" button visibility

@@ -10,7 +10,7 @@
 
         // Generate the months for the current year
         for ($i = 0; $i <= 12; $i++) {
-            $months[] = $currentYear->copy()->addMonths($i)->format('M Y');
+            $months[] = $currentYear->copy()->addMonthsNoOverflow($i)->format('M Y');
         }
     @endphp
     <div class="main">

@@ -6,20 +6,6 @@
 @section('title', $title)
 @section('filename', $filename)
 @section('content')
-    @php
-        use Carbon\Carbon;
-        // Get the current year
-        $currentYear = Carbon::now();
-
-        // Array to hold the months
-        $months = [];
-
-        // Generate the months for the current year
-        for ($i = 0; $i <= 12; $i++) {
-            $months[] = $currentYear->copy()->addMonths($i)->format('F Y');
-        }
-    @endphp
-
     <div class="col-md-12 col-12">
         <div class="card">
             <div class="card-header">
@@ -53,6 +39,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Month Year<span class="text-danger">*</span></label>
+                                        @php $months = currentYear(); @endphp
                                         <select name="year" id="year" class="form-select"
                                             aria-label="Default select example">
                                             @foreach ($months as $index => $month)
@@ -71,7 +58,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Departure date<span class="text-danger">*</span></label>
-                                        <input type="date" class="departure_date form-control" name="departure_date"
+                                        <input type="text" id="date" class="departure_date form-control" name="departure_date"
                                             value="{{ old('departure_date', $departureFlight->departure_date) ?? '' }}"
                                             placeholder="Departure date">
                                     </div>
@@ -83,7 +70,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="return_date">Return Date<span class="text-danger">*</span></label>
-                                        <input type="date" id="return_date" class="return_date form-control"
+                                        <input type="text" id="date" class="return_date form-control"
                                             name="return_date"
                                             value="{{ old('return_date', $departureFlight->return_date) ?? '' }}"
                                             placeholder="return date">
@@ -144,9 +131,19 @@
     </div>
 @endsection
 @section('js')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Flatpickr
+            flatpickr("#date", {
+                dateFormat: "Y-m-d",
+            });
+        });
+    </script>
     <script>
         //Validation script
         $(document).ready(function() {

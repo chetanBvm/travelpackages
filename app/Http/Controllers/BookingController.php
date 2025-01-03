@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\ContentManagement;
+use App\Models\Package;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -32,13 +35,21 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
+        $departureCity = $request->input('departure_city');
+
+        if (is_array($departureCity)) {
+            $departureCityValue = strtoupper($departureCity[0]); 
+        } else {
+            $departureCityValue = $departureCity; 
+        }
+
         DB::beginTransaction();
         try {
             $booking = new Booking();
             $booking->c_formName = $request->c_formName;
             $booking->c_currency = $request->c_currency;
             $booking->departure_date = $request->departure_date;
-            $booking->departure_city = $request->departure_city;
+            $booking->departure_city = $departureCityValue;
             $booking->passengers_adult = $request->passengers_adult;
             $booking->passengers_children = $request->passengers_children;
             $booking->passengers_infant = $request->passengers_infant;
@@ -56,8 +67,11 @@ class BookingController extends Controller
 
             DB::commit();
 
-
-            Mail::send('email.booking', compact('booking'), function ($message) use ($booking) {
+            $contact = Setting::where('type','contact')->first();
+            $package = Package::where('id',$booking->package_id)->first();
+            $info = ContentManagement::where('type', 'home_topbar')->first();
+            
+            Mail::send('email.booking', compact('booking','contact','package','info'), function ($message) use ($booking) {
                 $message->to($booking->c_email, $booking->passenger_name)->subject('Booking Inquiry:' . $booking->package_name);
                 $message->from('employee@myvacayhost.com','My Vacay Host');
             });

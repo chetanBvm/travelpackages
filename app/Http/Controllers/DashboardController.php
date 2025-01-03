@@ -35,7 +35,7 @@ class DashboardController extends Controller
         $data['stay'] = Stay::get()->take(5);
         $data['airline'] = Airline::get()->take(6);
         $data['experience'] = TravelExperience::get();
-        $data['packageType'] = PackageType::whereNotNUll('parent_id')->get();
+        $data['packageType'] = PackageType::get();
         $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();
         $packageTypes =  PackageType::with('subpackage')->whereNUll('parent_id')->get();
         $pageSEO = SeoManagement::where('page_id','1')->first();
@@ -88,7 +88,7 @@ class DashboardController extends Controller
         $packageTypes =  PackageType::with('subpackage')->whereNUll('parent_id')->get();
         $settings = Setting::where('type','logo')->value('image');
         $settingContact = Setting::where('type','contact')->first();
-        $data['packageType'] = PackageType::whereNotNUll('parent_id')->get();
+        $data['packageType'] = PackageType::get();
         $pageSEO = SeoManagement::where('page_id','3')->first();
         return view('web.packages.tourpackages', compact('pageSEO','filteredPackages', 'data','packageTypes','settings','settingContact'));
     }
@@ -128,7 +128,7 @@ class DashboardController extends Controller
         $packageTypes =  PackageType::with('subpackage')->whereNUll('parent_id')->get();
         $settings = Setting::where('type','logo')->value('image');
         $settingContact = Setting::where('type','contact')->first();
-        $data['packageType'] = PackageType::whereNotNUll('parent_id')->get();
+        $data['packageType'] = PackageType::get();
         return view('web.packages.tourpackages', compact('filteredPackages', 'data','packageTypes','settings','settingContact'));
     }
 
@@ -142,7 +142,7 @@ class DashboardController extends Controller
         $packageTypes =  PackageType::with('subpackage')->whereNUll('parent_id')->get();
         $settings = Setting::where('type','logo')->value('image');
         $settingContact = Setting::where('type','contact')->first();
-        $data['packageType'] = PackageType::whereNotNUll('parent_id')->get();
+        $data['packageType'] = PackageType::get();
         $pageSEO = SeoManagement::where('page_id','3')->first();
         return view('web.packages.tourpackages', compact('data','pageSEO','packageTypes','settings','settingContact'))->with('filteredPackages', collect());
     }

@@ -49,7 +49,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label class="image" for="">Image<span class="text-danger">*</span></label>
-                                        <input type="file" class="form-control" name="image" id="image">
+                                        <input type="file" class="form-control" name="image" id="image" accept="image/jpeg, image/png, image/gif, image/jpg">
                                         <!-- Display the existing image if available -->
                                         @if ($destination->image)
                                             <div>

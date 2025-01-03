@@ -56,17 +56,17 @@ class PackageTypeController extends Controller
         DB::beginTransaction();
         try {
             $validated = $request->validated();
-            $asset_icon=null;
+            // $asset_icon=null;
             //Check if the request has an image file
-            if ($request->hasFile('icon')) {
-                $file = $request->file('icon');
-                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
-                $asset_icon = $file->storeAs('uploads/packages', $tempName, 'public');
-            }
+            // if ($request->hasFile('icon')) {
+            //     $file = $request->file('icon');
+            //     $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
+            //     $asset_icon = $file->storeAs('uploads/packages', $tempName, 'public');
+            // }
             PackageType::create([
                 'name' => $validated['name'],
                 'parent_id' =>$validated['parent_id'],
-                'icon' => $asset_icon,
+                // 'icon' => $asset_icon,
             ]);
             DB::commit();  //commit the transaction
 
@@ -119,23 +119,23 @@ class PackageTypeController extends Controller
             ]);
 
             //Check if the request has an image file
-            if ($request->hasFile('icon')) {
-                // Validate the image file (optional, add size/extension validation if necessary)
-                $request->validate([
-                    'icon' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                ]);
+            // if ($request->hasFile('icon')) {
+            //     // Validate the image file (optional, add size/extension validation if necessary)
+            //     $request->validate([
+            //         'icon' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            //     ]);
 
-                $file = $request->file('icon');
-                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
-                $oldFilePath = 'uploads/packages' . $packageType->icon;
-                if (Storage::disk('public')->exists($oldFilePath)) {
-                    Storage::disk('public')->delete($oldFilePath);
-                }
-                $asset_icon = $file->storeAs('uploads/packages', $tempName, 'public');
-                $packageType->update([
-                    'icon' => $asset_icon,
-                ]);
-            }
+            //     $file = $request->file('icon');
+            //     $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
+            //     $oldFilePath = 'uploads/packages' . $packageType->icon;
+            //     if (Storage::disk('public')->exists($oldFilePath)) {
+            //         Storage::disk('public')->delete($oldFilePath);
+            //     }
+            //     $asset_icon = $file->storeAs('uploads/packages', $tempName, 'public');
+            //     $packageType->update([
+            //         'icon' => $asset_icon,
+            //     ]);
+            // }
 
             DB::commit(); //commit the transaction
 

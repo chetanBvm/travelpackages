@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DepartureCityController;
 use App\Http\Controllers\Admin\DepartureFlightsController;
 use App\Http\Controllers\Admin\DestinationController;
+use App\Http\Controllers\Admin\EmailTemplatesController;
 use App\Http\Controllers\Admin\ExclusionsController;
 use App\Http\Controllers\Admin\InclusionsController;
 use App\Http\Controllers\Admin\ItineraryController;
@@ -89,6 +90,7 @@ Route::group(['prefix' => 'admin'], function () {
 
         //Departure Flights
         Route::resource('departure-flights',DepartureFlightsController::class);
+        Route::post('departure-flights/get-month-by-package',[DepartureFlightsController::class,'getMonthByPackage']);
 
         //Departure City
         Route::resource('departure-city',DepartureCityController::class);
@@ -132,6 +134,9 @@ Route::group(['prefix' => 'admin'], function () {
 
         //ContactUs
         Route::resource('contactus',ContactUsController::class);
+        
+        //Email Template
+        Route::resource('email-template',EmailTemplatesController::class);
         
         //Settings
         Route::group(['prefix' => 'settings'],function(){
@@ -225,6 +230,9 @@ Route::get('get-departure-dates-airport',[ControllersPackagesController::class,'
 Route::post('get-packages-filter',[ControllersPackagesController::class,'PackagesDetailFilter'])->name('packages.filter');
 
 Route::get('get-packages-city-wise/{id}',[ControllersDashboardController::class,'getPackageDetailCityWies'])->name('packages.city');
+
+Route::post('/other_departure_city',[ControllersPackagesController::class,'getOtherDepartureCity']);
+
 //Pages
 Route::get('about-us', [PagesController::class, 'aboutUs'])->name('pages.about');
 Route::get('contact-us', [PagesController::class, 'contactUs'])->name('pages.contactus');
@@ -239,3 +247,4 @@ Route::post('/booking/store', [BookingController::class, 'store'])->name('bookin
 
 //Payment
 Route::post('payment-link',[StripePaymentController::class,'createPaymentLink'])->name('payment.link');
+Route::post('stripe/webhook',[StripePaymentController::class,'handleWebhook'])->name('payment.webhook');

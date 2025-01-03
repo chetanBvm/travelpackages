@@ -55,9 +55,7 @@
 		height: 250px;
 		object-fit: cover;
 	  }
-	.contact-content .mobile-number-inner .form-control {
-		margin-left: -60px;
-	}
+
 	.ticket-detail-bottom-data {
 		padding-right: 4px;
 	  }
@@ -272,9 +270,7 @@
 	.navbar-brand img {
 		max-width: 160px;
 	  }
-	.contact-content .mobile-number-inner .form-control {
-		margin-left: -31px;
-	  }
+
 	.mobile-number-inner .form-control {
 		margin-left: -162px;
 	  }
@@ -525,9 +521,7 @@
 	.tours-left img {
 		height: 100%;
 	}
-	.contact-content .mobile-number-inner .form-control {
-		margin-left: -14px;
-	}
+
 	.accommodation-images img {
 		width: 100%;
 		margin-top: 10px;
@@ -734,9 +728,7 @@
 		padding: 12px 22px;
 		width: 138px;
 	}
-	.contact-content .mobile-number-inner .form-control {
-		margin-left: -54px;
-	}
+
 	.tab-result-section .Destination-form {
         row-gap: 6px;
 		flex-direction: column;
@@ -1191,9 +1183,7 @@ header {
 	.bannr-inner .Destination-form {
 		padding: 8px 10px;
 	}
-	.contact-content .mobile-number-inner .form-control {
-		margin-left: -23px;
-	  }
+
 	  .contact .travel-btn {
 		width: 234px;
 	  }

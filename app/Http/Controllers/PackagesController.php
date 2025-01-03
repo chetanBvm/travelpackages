@@ -88,19 +88,23 @@ class PackagesController extends Controller
     public function getDepartureFlight(Request $request)
     {
        
-        $depCityId = $request->DEPC;  // The selected city ID
+        $depCityId = $request->depc;  // The selected city ID
         $selectedMonth = $request->month ?? null;  // Optional: The selected month
         $category = $request->CAT;
-        
+        $tomsId = $request->tomsId; 
+       
+
         $cityData = Destination::with('country')->where('id',$depCityId)->first();
         $countryName = $cityData && $cityData->country ? $cityData->country->name : null;
         
+        $flightsQuery = DepartureFlights::with('package')->where('package_id',$tomsId);
+        
         // Fetch flights for the selected city
-        $flightsQuery = DepartureFlights::whereHas('package.destination', function ($query) use ($depCityId) {
-            $query->where('id', $depCityId);
-        })->with(['package' => function ($query) {
-            $query->select('id', 'price'); 
-        }]);
+        // $flightsQuery = DepartureFlights::whereHas('package.destination', function ($query) use ($depCityId) {
+        //     $query->where('id', $depCityId);
+        // })->with(['package' => function ($query) {
+        //     $query->select('id', 'price'); 
+        // }]);
         
         if ($selectedMonth && strtolower($selectedMonth) !== 'all') {
             $monthNumber = date('m', strtotime($selectedMonth));            $flightsQuery->whereMonth('departure_date', $monthNumber);
@@ -176,6 +180,7 @@ class PackagesController extends Controller
         foreach ($airportDates as $flight) {
             $dateList[] = [
                 'date' => Carbon::parse($flight->departure_date)->format('Y-m-d'),
+                'returnDate' => Carbon::parse($flight->return_date)->format('Y-m-d'),
                 'status' => $flight->status,
             ];
         }
@@ -236,4 +241,22 @@ class PackagesController extends Controller
         // Return a view with the filtered packages
         return view('web.packages.tourpackages', compact('pageSEO','filteredPackages','data','packageTypes','settings','settingContact'));
     } 
+
+    /**
+     * 
+     */
+    public function getOtherDepartureCity(Request $request){
+        $packageId = $request->pack;
+        $category = $request->OCCCATID;
+        $landdate = $request->date;
+
+        $packagetype = DepartureFlights::with('package')->where('package_id',$packageId)->where('departure_date',$landdate)->where('category',$category)->get()->map(function ($flight) {
+            return $flight->package->price; 
+        });
+        
+        return response()->json([
+            'success' => true,
+            'data' => $packagetype
+        ]);
+    }
 }

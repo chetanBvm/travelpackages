@@ -101,8 +101,8 @@
                         name: 'package_name'
                     },
                     {
-                        data: 'airport.name',
-                        name: 'airport.name'
+                        data: 'departure_city',
+                        name: 'departure_city'
                     },
                     {
                         data: 'departure_date',

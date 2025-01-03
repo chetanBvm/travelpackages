@@ -16,7 +16,7 @@
 
         // Generate the months for the current year
         for ($i = 0; $i <= 12; $i++) {
-            $months[] = $currentYear->copy()->addMonths($i)->format('M Y');
+            $months[] = $currentYear->copy()->addMonthsNoOverflow($i)->format('M Y');
         }
     @endphp
     <div class="col-md-12 col-12">
@@ -58,9 +58,9 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">Name<span class="text-danger">*</span></label>
+                                        <label for="first-name-vertical">Package Name<span class="text-danger">*</span></label>
                                         <input type="text" id="first-name-vertical" class="form-control" name="name"
-                                            placeholder="Name" maxlength="50" value="{{ old('name') }}">
+                                            placeholder="Enter package (Eg:land & sea)" maxlength="50" value="{{ old('name') }}">
                                     </div>
                                     @error('name')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -68,9 +68,9 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="name-vertical">Sub Title<span class="text-danger">*</span></label>
+                                        <label for="name-vertical">Sub Title</label>
                                         <input type="text" id="name-vertical" class="form-control" maxlength="50" name="sub_title"
-                                            placeholder="sub title" value="{{old('sub_title')}}">
+                                            placeholder="Eg: Per night before taxes and fees" value="{{old('sub_title')}}">
                                     </div>
                                     @error('sub_title')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -92,7 +92,7 @@
                                     <div class="form-group">
                                         <label for="price">Tax(%)<span class="text-danger">*</span></label>
                                         <input type="number" id="tax" class="form-control" name="tax" min="0" max="99" oninput="if(this.value > 99) this.value = 99;" 
-                                            placeholder="tax" value="{{old('tax')}}">
+                                            placeholder="tax percentage(Eg:18)" value="{{old('tax')}}">
                                     </div>
                                     @error('tax')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -212,7 +212,7 @@
 
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="default">Description<span class="text-danger">*</span></label>
+                                        <label for="default">Description</label>
                                         <textarea name="description" id="editor2" cols="30" rows="10">{{ old('description') }}</textarea>
                                     </div>
                                     @error('description')
@@ -339,9 +339,6 @@
                     destination_id: {
                         required: true,
                     },
-                    sub_title: {
-                        required: true
-                    },
                     name: {
                         required: true
                     },
@@ -349,9 +346,6 @@
                         required: true
                     },
                     days: {
-                        required: true
-                    },
-                    description: {
                         required: true
                     },
                     status: {
@@ -393,9 +387,6 @@
                     destination_id: {
                         required: "Please select the destination."
                     },
-                    sub_title: {
-                        required: "Please enter the sub title."
-                    },
                     name: {
                         required: "Please enter the name of the package."
                     },
@@ -404,10 +395,7 @@
                     },
                     days: {
                         required: "Please specify the number of days."
-                    },
-                    description: {
-                        required: "Please provide a description."
-                    },
+                    },                   
                     status: {
                         required: "Please select the status."
                     },

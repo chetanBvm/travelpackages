@@ -54,7 +54,7 @@ class PackagesController extends Controller
 
         // Get destinations if they exist
         $destination = Destination::with('country')->where('status','Active')->orderBy('id','desc')->get();
-        $packageType  = PackageType::whereNotNUll('parent_id')->get();
+        $packageType  = PackageType::get();
         // Return the view with destinations
         return view('admin.packages.create', compact('destination','packageType'));
     }
@@ -68,6 +68,7 @@ class PackagesController extends Controller
         try {
             $validated = $request->validated();
             $asset_image = null;
+            $asset_map = null;
             //Check if the request has an image file
             if ($request->hasFile('thumbnail')) {
                 $file = $request->file('thumbnail');
@@ -136,7 +137,7 @@ class PackagesController extends Controller
         //Find the package by its ID
         $package = Package::findOrFail($id);
         $destination = Destination::with('country')->where('status','Active')->orderBy('id','desc')->get();
-        $packageType  = PackageType::whereNotNUll('parent_id')->get();
+        $packageType  = PackageType::get();
         $selectedMonths = json_decode($package->departure_month, true);
         return view('admin.packages.edit', compact('package', 'destination','packageType','selectedMonths'));
     }
@@ -146,7 +147,6 @@ class PackagesController extends Controller
      */
     public function update(PackageStoreRequest $request, string $id)
     {
-        
         //find the package by its ID
         $package = Package::findOrFail($id);
         DB::beginTransaction();

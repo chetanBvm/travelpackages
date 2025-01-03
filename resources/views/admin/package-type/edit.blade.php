@@ -21,21 +21,21 @@
                         {{ method_field('PUT') }}
                         <div class="form-body">
                             <div class="row">
-                                <div class="col-6">
+                                {{-- <div class="col-6">
                                     <div class="form-group">
                                         <label for="first-name-vertical">Icon<span class="text-danger">*</span></label>
                                         <input type="file" id="name-vertical" class="form-control" name="icon"
-                                            value="{{ $packageType->icon }}" placeholder="Icon">
+                                            value="{{ $packageType->icon }}" placeholder="Icon" accept="image/jpeg, image/png, image/gif, image/jpg,image/svg">
                                     </div>
                                     @error('icon')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
-                                </div>
+                                </div> --}}
 
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name<span class="text-danger">*</span></label>
-                                        <input type="text" id="name-vertical" class="form-control" name="name" maxlength="15"
+                                        <input type="text" id="name-vertical" class="form-control" name="name" maxlength="25"
                                             value="{{ $packageType->name }}" placeholder="name">
                                     </div>
                                     @error('name')

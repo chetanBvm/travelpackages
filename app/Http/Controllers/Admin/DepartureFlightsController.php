@@ -7,6 +7,7 @@ use App\Http\Requests\DepartureFlightStoreRequest;
 use App\Http\Requests\DepartureFlightUpdateRequest;
 use App\Models\DepartureFlights;
 use App\Models\Package;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -137,4 +138,36 @@ class DepartureFlightsController extends Controller
 
         return response()->json(['success' => 'departure flight deleted successfully!']);
     }
+
+    public function getMonthByPackage(Request $request){
+        $packageId = $request->pacakge; 
+        
+        if (!$packageId) {
+            return response()->json(['error' => 'Package ID is required'], 400);
+        }
+
+        $package = Package::where('id',$packageId )->first();
+        
+        $departureMonths = json_decode($package->departure_month,true);
+        
+        $currentDate = Carbon::now();
+
+        $filteredMonths = [];
+        foreach ($departureMonths as $month) {
+            $departureDate = Carbon::createFromDate($currentDate->year, $month, 1);
+    
+            // If month is past, check the next year
+            if ($departureDate->lt($currentDate)) {
+                $departureDate->addYear();
+            }
+    
+            // Add month and year
+            $filteredMonths[] = $departureDate->format('F Y'); // e.g., "March 2025"
+        }
+    
+        // Sort the filtered months
+        $filteredMonths = collect($filteredMonths)->unique()->sort()->values();
+        
+        return response()->json($filteredMonths);
+    } 
 }

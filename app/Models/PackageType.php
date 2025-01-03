@@ -10,7 +10,7 @@ class PackageType extends Model
 {
     use HasFactory,SoftDeletes;
 
-    protected $fillable = ['name','icon','parent_id'];
+    protected $fillable = ['name','parent_id'];
 
     public function subpackage()
     {

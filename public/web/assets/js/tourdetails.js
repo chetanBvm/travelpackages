@@ -1,6 +1,8 @@
 var selectedCategory = '';
 var selectedCity = false;
 var departureCity;
+var selectedDepartureDate;
+var price;
 $('.travel-btn.request').click(function () {
     $('.priceTab').trigger('click');
     $('html, body').animate({
@@ -19,6 +21,8 @@ $('#month_prices').parent().click(function () {
     }
 })
 
+// var tomsId = packageId;
+
 //On change to the departure city drop down, show list price
 $('.action_rates').change(function () {
 
@@ -35,30 +39,66 @@ $('.action_rates').change(function () {
     }
     $('#modal_cat').prop('disabled', false);
     $('#modal_cat').css({ opacity: 1 });
-    
+
     thisDepc = '';
-    $.ajax({
-        url: '/departure-flights/year',
-        type: 'post',
-        data: {
-            DEPC: depCityId,
-            CAT: cur_cat,
-            _token: $('meta[name="csrf-token"]').attr('content'),
-        },
-        success: function (response) {
-            if (response.success) {
-                if (response.data && response.data.length > 0) {
-                    departureCity = response.cityName;
-                    renderFlights(response.data);
-                } else {
-                    showOtherModal();
+    if (depCityId === '' || depCityId === 'other') {
+        $('#modal_cat').val('');
+        selectedCity = false;
+        showOtherModal();
+        thisDepc = '';
+        $('#airport_code').val('');
+        $('#departure_city').val('');
+        $('.departure_city').attr('disabled', false);
+        $('.departure_date').attr('disabled', true);
+
+        $.ajax({
+            url: '/departure-flights/year',
+            type: 'POST',
+            data: {
+                DEPC: 'DEFAULT',
+                TOMSID: packageId,
+                OCCCATID: $("#modal_cat").val(),
+                _token: $('meta[name="csrf-token"]').attr('content'),
+            },
+            success: function (response) {
+                if (response.success) {
+                    if (response.data && response.data.length > 0) {
+                        departureCity = city;
+                        renderFlights(response.data);
+                    }
                 }
-            } else {
-                alert('No flights found for this destination.');
-                showOtherModal();
+                // $('.departure_date').html(response);
             }
-        }
-    });
+        });
+    } else if (thisDepc != depCityId) {
+        selectedCity = true;
+        $('.action_rates').not(this).val($(this).val());
+        var city = $("option:selected", this).text();
+
+        $.ajax({
+            url: '/departure-flights/year',
+            type: 'post',
+            data: {
+                DEPC: depCityId,
+                CAT: cur_cat,
+                tomsId: packageId,
+                _token: $('meta[name="csrf-token"]').attr('content'),
+            },
+            success: function (response) {
+
+                if (response.success) {
+                    if (response.data && response.data.length > 0) {
+                        departureCity = city;
+                        renderFlights(response.data);
+                    }
+                    // else {
+                    //     showOtherModal();
+                    // }
+                }
+            }
+        });
+    }
+
 });
 
 $('#month_prices').change(function () {
@@ -88,6 +128,7 @@ function fetchFlightsByCityAndMonth(cityId, month, cur_cat) {
             DEPC: cityId,
             month: month,
             CAT: cur_cat,
+            tomsId: packageId,
             _token: $('meta[name="csrf-token"]').attr('content'),
         },
         success: function (response) {
@@ -157,7 +198,7 @@ function renderFlights(data) {
                 const enquiryButton = flight.status === 'Sold Out'
                     ? `<div class="status-label"> <a class="travel-btn btn" href="javascript::" >Sold Out</a></div>`
                     : `<div class="enquiry-btn">
-                        <a class="travel-btn btn book_by_date" href="javascript::" data-bs-toggle="modal" data-bs-target="#exampleModal"  data-tourstartdate="${formattedDepartureDate}" data-date="${formattedDepartureDate}" data-city="${departureCity}"data-category="${flight.category}" data-price="${price}">Send Enquiry</a>
+                        <a class="travel-btn btn book_by_date" href="javascript::" data-bs-toggle="modal" data-bs-target="#exampleModal"  data-tourstartdate="${formattedDepartureDate}" data-date="${formattedDepartureDate}" data-city="${departureCity}" data-category="${flight.category}" data-onrequest="${flight.status}" data-price="${price}">Send Enquiry</a>
                    </div>`;
                 container.append(
                     `<div class='ticket-details-bottom-main'>
@@ -192,8 +233,16 @@ function renderFlights(data) {
 
 function showOtherModal() {
     $('#exampleModal').modal('show');
+    $('#tour_price').val('');
     $('#modal-form .form_fill').prop('disabled', false);
 }
+
+$('.see_other_modal').click(function () {
+    selectedCity = false;
+    showOtherModal();
+    thisDepc = '';
+    $(".action_rates").val('other').change();
+});
 
 var insert_counter = false;
 $('.getAirport').keydown(function (e) {
@@ -229,6 +278,7 @@ $('html').on('click', '.packRes p', function () {
     var city = $(this).data('city');
     var country = $(this).data('country');
 
+
     $(".departure_city").val(city + ' (' + code + ')');
     $("#departure_city").val(city);
     $("#airport_code").val(code);
@@ -252,6 +302,9 @@ $('#exampleModal').on('show.bs.modal', function (event) {
     $(this).find('input[name="departure_city"]').val(departureCity);
     var departure = $('.action_rates').val();
 
+    var button = $(event.relatedTarget);
+    price = button.data('price');
+
     $.ajax({
         url: '/get-departure-dates',
         type: 'GET',
@@ -272,8 +325,9 @@ $('#exampleModal').on('show.bs.modal', function (event) {
     });
 });
 
-$('#modal_cat').change(function () {
+$('#modal_cat').change(function (event) {
     let package = $('#package_id').val();
+    $('#hotel_category').val($(this).val());
 
     $.ajax({
         url: '/get-departure-dates-airport',
@@ -286,25 +340,47 @@ $('#modal_cat').change(function () {
             let html = '';
 
             dateList.forEach(date => {
-                html += `<option value="${date.date}" ${date.status == 'Sold Out' ? 'disabled' : ''}>${date.date} ${date.status == 'Sold Out' ? '(Sold Out)' : ''}</option>`;
+                html += `<option value="${date.date}" ${date.status == 'Sold Out' ? 'disabled' : ''} data-landdate="${date.date}" data-returndate="${date.returnDate}">${date.date} ${date.status == 'Sold Out' ? '(Sold Out)' : ''}</option>`;
             });
             $('.departure_date').html(html).prop('disabled', false);
             let defaultDate = dateList.length > 0 ? dateList[0].date : '';
             if (defaultDate) {
-                $('.departure_date').val(defaultDate).trigger('change'); // Update and trigger any change event listeners
+                $('.departure_date').val(defaultDate).trigger('change');
             }
         }
     });
 })
 
-$(".departure_date").change(function () {
-    var defaultdate = $(this).val();
+$(".departure_date").change(function (event) {
+    selectedDepartureDate = $(this).val();
+    if (!selectedDepartureDate) {
+        return;
+    }
+    $.ajax({
+        url: '/other_departure_city',
+        type: "POST",
+        data: {
+            pack: packageId,
+            OCCCATID: $('#hotel_category').val(),
+            date: $('.departure_date option:selected').data("landdate"),
+            _token: $('meta[name="csrf-token"]').attr('content'),
+
+        },
+        success: function (response) {
+            response = response.data;
+
+            $('#tour_price').val(response);
+            $('#selected_price').html(parseInt(response).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        }
+    });
     var tour_start_date = $(this).find(":selected").data('landdate');
     $('#tour_start_date').val(tour_start_date);
-    $("#departure_date").val(defaultdate);
-    $('#earliest_date').val(defaultdate);
-    $('#return_date').val(defaultdate);
+    $("#departure_date").val(selectedDepartureDate);
+    $('#earliest_date').val(selectedDepartureDate);
+    $('#return_date').val(selectedDepartureDate);
+
 });
+
 
 function validateFields(elm) {
     valid = true;
@@ -377,80 +453,103 @@ $('#modal-form').submit(function (event) {
     event.preventDefault();
     multiple_requests = window.location.href;
 
+    var valid = true;
+
+    // if ($("#airport_code").length > 0 && $("#airport_code").val() == '') {
+    //     $(".departure_city").css({ border: '1px solid red' });
+    //     valid = false;
+    // }
+
+    if ($("#departure_date").val() == '') {
+        $(".departure_date").css({ border: '1px solid red' });
+        valid = false;
+    }
+
+    if ($("#signup").prop('checked') == false) {
+        valid = false;
+    }
+
+    var thisForm = $(this);
+
     //loading
-    $("#fullPageLoader").fadeIn();
-    var vars = $(this).serialize();
+    // $("#fullPageLoader").fadeIn();
+    // var vars = $(this).serialize();
 
-    var thisEmail = $('input[name="email"]', this);
-    var thisConfirmation = $('input[name="c_email"]', this);
-    var thisPhone = $('input[name="phone"]', this);
+    if (valid && validateFields($('#modal-form'))) {
+        var vars = $(this).serializeObject();
 
-    $url = $('#modal-form').attr('action');
-    $.ajax({
-        method: 'POST',
-        url: $url,
-        timeout: 20000,
-        data: vars,
-        success: function (response) {
-            // $("#loadBooking").fadeOut();
-            // $("#sbmBooking").fadeIn();
-            $("#fullPageLoader").fadeOut();
-            if (response.success == true) {
-                
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'Your booking has been submitted successfully!',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                }).then(() => {
-                    location.reload(); // Reload the page after user confirms
-                });
-            }else{
-                Swal.fire({
-                    title: 'Error!',
-                    text: response.message || 'An error occurred. Please try again later.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            }
-           
-        }, error: function (jqXHR, textStatus, errorMessage) {
-            // Handle error, including timeout error
-            $("#fullPageLoader").fadeOut();
-            if (textStatus === 'timeout') {
+        var thisEmail = $('input[name="email"]', this);
+        var thisConfirmation = $('input[name="c_email"]', this);
+        var thisPhone = $('input[name="phone"]', this);
+
+        $url = $('#modal-form').attr('action');
+        $.ajax({
+            method: 'POST',
+            url: $url,
+            timeout: 20000,
+            data: vars,
+            success: function (response) {
+                // $("#loadBooking").fadeOut();
+                // $("#sbmBooking").fadeIn();
+                $("#fullPageLoader").fadeOut();
+                if (response.success == true) {
+
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Your booking has been submitted successfully!',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        location.reload(); // Reload the page after user confirms
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: response.message || 'An error occurred. Please try again later.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+
+            }, error: function (jqXHR, textStatus, errorMessage) {
+                // Handle error, including timeout error
+                $("#fullPageLoader").fadeOut();
+                if (textStatus === 'timeout') {
                     Swal.fire({
                         title: 'Error!',
                         text: 'The server took too long to respond. Please try again.',
                         icon: 'error',
                         confirmButtonText: 'OK'
                     });
-                // $('html, body').animate({ scrollTop: 0 }, 500);
-                // $('#request_form').css({ 'top': '50px' });
-                // $("#loadBooking").fadeOut();
-                // $('#modal-form').fadeOut();
-                // var err = new Error('Booking Request Error - submission timed out:' + JSON.stringify(errorMessage) + ' Form Vars: ' + JSON.stringify(vars));
-                // newrelic.noticeError(err);
-                // $('#errorBooking').html('FATAL ERROR SERVER TIMEOUT. PLEASE CONTACT US').fadeIn();
+                    // $('html, body').animate({ scrollTop: 0 }, 500);
+                    // $('#request_form').css({ 'top': '50px' });
+                    // $("#loadBooking").fadeOut();
+                    // $('#modal-form').fadeOut();
+                    // var err = new Error('Booking Request Error - submission timed out:' + JSON.stringify(errorMessage) + ' Form Vars: ' + JSON.stringify(vars));
+                    // newrelic.noticeError(err);
+                    // $('#errorBooking').html('FATAL ERROR SERVER TIMEOUT. PLEASE CONTACT US').fadeIn();
 
-            } else {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'An error occurred: ' + errorMessage,
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-                // Display other error message
-                // $('html, body').animate({ scrollTop: 0 }, 500);
-                // $('#request_form').css({ 'top': '50px' });
-                // $("#loadBooking").fadeOut();
-                // $('#modal-form').fadeOut();
-                // var err = new Error('Booking Request Error - other ajax submit error: ' + JSON.stringify(errorMessage) + ' Form Vars: ' + JSON.stringify(vars));
-                // newrelic.noticeError(err);
-                // $('#errorBooking').html('FATAL ERROR. PLEASE CONTACT US. ' + errorMessage).fadeIn();
+                } else {
+                    // Swal.fire({
+                    //     title: 'Error!',
+                    //     text: 'An error occurred: ' + errorMessage,
+                    //     icon: 'error',
+                    //     confirmButtonText: 'OK'
+                    // });
+                    // Display other error message
+                    // $('html, body').animate({ scrollTop: 0 }, 500);
+                    // $('#request_form').css({ 'top': '50px' });
+                    // $("#loadBooking").fadeOut();
+                    // $('#modal-form').fadeOut();
+                    // var err = new Error('Booking Request Error - other ajax submit error: ' + JSON.stringify(errorMessage) + ' Form Vars: ' + JSON.stringify(vars));
+                    // newrelic.noticeError(err);
+                    // $('#errorBooking').html('FATAL ERROR. PLEASE CONTACT US. ' + errorMessage).fadeIn();
+                }
             }
-        }
 
-    });
+        });
+
+    }
 
 });
 
@@ -609,7 +708,7 @@ $(document).ready(function () {
                 console.log('Default option selected.');
             } else {
                 const selectedOption = options[selectedIndex];
-                console.log('Selected Room Option:', selectedOption);
+                // console.log('Selected Room Option:', selectedOption);
                 // Additional logic for when a room option is selected
             }
         });
@@ -634,11 +733,11 @@ $(document).ready(function () {
     $('.filter').on('change', function () {
         const sortValue = $("#sort-days").val(); // Get selected value
         const priceValue = $('#price-filter').val();
-        
+
         $.ajax({
             url: '/packages/sort',
             type: 'GET',
-            data: { sort: sortValue ,price: priceValue},
+            data: { sort: sortValue, price: priceValue },
             success: function (response) {
                 // Update the package list with the response data
                 $('#package-list').html(response);

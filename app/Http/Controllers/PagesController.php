@@ -75,11 +75,14 @@ class PagesController extends Controller
     public function SaveContactUs(Request $request){
 
         $this->validate($request,[
-            'f_name' => 'required',
-            'l_name' => 'required',
-            'email' => 'required|email',
+            'f_name' => 'required|string',
+            'l_name' => 'required|string',
+            'email' => 'required|email|email:rfc,dns',
             'mobile_number' => 'required|numeric|max_digits:11',
             'message' => 'required'
+        ],[
+            'f_name.required' => 'The first name is required.',
+            'l_name.required' => 'The last name is required.'
         ]);
         
         try{
@@ -91,7 +94,7 @@ class PagesController extends Controller
                 'message' => $request->message,
         ]);
 
-        return redirect()->back()->with('success','Contat data send successfully.MyVacayHost team contact you shortly!');
+        return redirect()->back()->with('success','Contact data send successfully.MyVacayHost team contact you shortly!');
         }catch(Exception $e){
             Log::info('contact Us:'. $e->getMessage());
             return redirect()->back()->with('error','something missing');

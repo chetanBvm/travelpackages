@@ -29,20 +29,20 @@
                         @csrf
                         <div class="form-body">
                             <div class="row">
-                                <div class="col-6">
+                                {{-- <div class="col-6">
                                     <div class="form-group">
                                         <label for="icon-vertical">Icon<span class="text-danger">*</span></label>
                                         <input type="file" id="icon-vertical" class="form-control" name="icon"
-                                            placeholder="Icon" value="{{ old('icon') }}">
+                                            placeholder="Icon" value="{{ old('icon') }}" accept="image/jpeg, image/png, image/gif, image/jpg,image/svg">
                                     </div>
                                     @error('icon')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
-                                </div>
+                                </div> --}}
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name<span class="text-danger">*</span></label>
-                                        <input type="text" id="first-name-vertical" class="form-control" name="name" maxlength="15"
+                                        <input type="text" id="first-name-vertical" class="form-control" name="name" maxlength="25"
                                             placeholder="Name" value="{{ old('name') }}">
                                     </div>
                                     @error('name')
@@ -92,9 +92,9 @@
         $(document).ready(function() {
             $('#createDrawPackages').validate({ // initialize the plugin
                 rules: {
-                    icon: {
-                        required: true
-                    },
+                    // icon: {
+                    //     required: true
+                    // },
                     name: {
                         required: true,
                     },
@@ -104,9 +104,9 @@
                 },
                 // Customizing error messages
                 messages: {
-                    icon: {
-                        required: "Please choose the icon."
-                    },
+                    // icon: {
+                    //     required: "Please choose the icon."
+                    // },
                     name: {
                         required: "Please enter the name of the package.",
                     },

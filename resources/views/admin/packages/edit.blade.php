@@ -16,7 +16,7 @@
 
         // Generate the months for the current year
         for ($i = 0; $i <= 12; $i++) {
-            $months[] = $currentYear->copy()->addMonths($i)->format('M Y');
+            $months[] = $currentYear->copy()->addMonthsNoOverflow($i)->format('M Y');
         }
     @endphp
     <div class="col-md-12 col-12">
@@ -43,24 +43,25 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div>                                
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">sub Title<span class="text-danger">*</span></label>
-                                        <input type="text" id="name-vertical" class="form-control" name="sub_title"
-                                            value="{{ $package->sub_title }}" placeholder="sub title">
-                                    </div>
-                                    @error('sub_title')
-                                        <span class="text-danger" role="alert">*{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="first-name-vertical">Name<span class="text-danger">*</span></label>
+                                        <label for="first-name-vertical">Package Name<span class="text-danger">*</span></label>
                                         <input type="text" id="name-vertical" class="form-control" name="name"
                                             value="{{ $package->name }}" placeholder="Name">
                                     </div>
                                     @error('name')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">sub Title</label>
+                                        <input type="text" id="name-vertical" class="form-control" name="sub_title"
+                                            value="{{ $package->sub_title }}" placeholder="sub title">
+                                    </div>
+                                    @error('sub_title')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -216,7 +217,7 @@
 
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="">Description<span class="text-danger">*</span></label>
+                                        <label for="">Description</label>
                                         <textarea name="description" id="editor" cols="30" rows="10">{{ old('description', $package->description ?? '') }}</textarea>
                                     </div>
                                     @error('description')
@@ -352,12 +353,6 @@
                     days: {
                         required: true
                     },
-                    description: {
-                        required: true
-                    },
-                    sub_title: {
-                        required: true
-                    },
                     status: {
                         required: true
                     },
@@ -399,12 +394,6 @@
                     },
                     days: {
                         required: "Please specify the number of days."
-                    },
-                    description: {
-                        required: "Please provide a description."
-                    },
-                    sub_title: {
-                        required: 'Please enter the sub title.'
                     },
                     status: {
                         required: "Please select the status."

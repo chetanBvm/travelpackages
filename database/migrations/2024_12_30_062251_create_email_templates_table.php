@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('package_types', function (Blueprint $table) {
+        Schema::create('email_templates', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique()->nullable();
-            // $table->string('icon')->nullable();
-            $table->integer('parent_id')->nullable();
+            $table->string('name')->unique();
+            $table->text('subject')->nullable();
+            $table->longText('body')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('package_types');
+        Schema::dropIfExists('email_templates');
     }
 };
