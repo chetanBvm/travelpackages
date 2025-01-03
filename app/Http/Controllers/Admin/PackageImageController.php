@@ -28,7 +28,7 @@ class PackageImageController extends Controller
                 })                
                 ->addColumn('action', function ($row) {
                     $urlpath = url('admin/package-image');
-                    return '<a href="' . $urlpath . '/' . $row->id . '/edit' . '" class="edit"><i class="material-icons">edit</i></a><a href="javascript:void(0);" onClick="deleteFunc(' . $row->id . ')" class="delete"><i class="material-icons">delete</i></a>';
+                    return '<a href="' . $urlpath . '/' . $row->id . '/edit' . '" class="edit"><i class="bi bi-pencil-fill"></i></a><a href="'.$urlpath.'/' .$row->id .'" class="view"><i class="bi bi-eye-fill"></i></a><a href="javascript:void(0);" onClick="deleteFunc(' . $row->id . ')" class="delete"><i class="bi bi-trash-fill"></i></a>';
                 })
                 ->rawColumns(['images', 'action'])
                 ->make(true);
@@ -77,7 +77,7 @@ class PackageImageController extends Controller
                 }
             }
 
-            return redirect()->route('package-image.index')->with('message', 'Images uploaded successfully!');
+            return redirect()->route('package-image.index')->with('message', 'Package Images uploaded successfully!');
         } catch (\Exception $exception) {
             Log::error('Error creating packageImage: ' . $exception->getMessage());
 
@@ -90,7 +90,8 @@ class PackageImageController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $packageImage = PackageImages::with('package')->findOrfail($id);
+        return view('admin.packageimage.show',compact('packageImage'));
     }
 
     /**
@@ -141,7 +142,7 @@ class PackageImageController extends Controller
                 ]);
             }
 
-            return redirect()->route('package-image.index')->with('message', 'Images uploaded successfully!');
+            return redirect()->route('package-image.index')->with('message', 'Package Images uploaded successfully!');
         } catch (\Exception $exception) {
             Log::error('Error updating packageImage: ' . $exception->getMessage());
 

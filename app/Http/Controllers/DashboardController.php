@@ -32,8 +32,8 @@ class DashboardController extends Controller
         $data['homePackage'] = ContentManagement::where('type', 'home_package')->first();
         $data['homeExperience'] = ContentManagement::where('type', 'home_travelexperience')->first();
         $data['banner'] = Banner::where('type', 'Home')->get();
-        $data['stay'] = Stay::get()->take(5);
-        $data['airline'] = Airline::get()->take(6);
+        $data['stay'] = Stay::where('status','Active')->get()->take(5);
+        $data['airline'] = Airline::where('status','Active')->get()->take(6);
         $data['experience'] = TravelExperience::get();
         $data['packageType'] = PackageType::get();
         $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();

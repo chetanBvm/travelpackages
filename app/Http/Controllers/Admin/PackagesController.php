@@ -240,7 +240,10 @@ class PackagesController extends Controller
         // Find the package by its ID
         $package = Package::findOrFail($id);
 
+        $package->images()->delete();
+
         $package->delete();
+        
 
         return response()->json(['success' => 'Package deleted successfully!']);
     }

@@ -248,3 +248,4 @@ Route::post('/booking/store', [BookingController::class, 'store'])->name('bookin
 //Payment
 Route::post('payment-link',[StripePaymentController::class,'createPaymentLink'])->name('payment.link');
 Route::post('stripe/webhook',[StripePaymentController::class,'handleWebhook'])->name('payment.webhook');
+Route::post('stripe/refund', [StripePaymentController::class, 'refund']);

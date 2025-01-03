@@ -51,7 +51,7 @@ class PackagesController extends Controller
         $data['itinerary'] = Itinerary::where('package_id', $id)->first();
         $data['airport'] = Airport::get();
         $data['country'] = Country::get();
-        $data['coupon'] = Promotion::get();
+        $data['coupon'] = Promotion::where('status','Active')->first();
         $data['review'] = PackageReview::where('package_id', $id)->where('status','Active')->get();       
         $data['destination'] = Destination::with('country')->get();
         $data['departureFlight'] = DepartureFlights::with('package.destination')->get();

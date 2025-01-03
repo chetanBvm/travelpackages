@@ -60,7 +60,7 @@ class SettingsController extends Controller
     public function SaveContact(Request $request){
         $this->validate($request,[
             'address' => 'required',
-            'email' => 'required',
+            'email' => 'required|email:rfc,dns',
             'mobile_number' => 'required',
             'toll_number' => 'required',
         ]);

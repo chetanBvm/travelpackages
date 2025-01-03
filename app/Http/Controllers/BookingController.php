@@ -54,8 +54,10 @@ class BookingController extends Controller
             $booking->passengers_children = $request->passengers_children;
             $booking->passengers_infant = $request->passengers_infant;
             $booking->room_occupancy = $request->room_occupancy;
+            $booking->room_description = $request->room_description;
             $booking->passenger_name = $request->passenger_name;
-            $booking->phone = $request->phone_code.$request->phone;
+            $booking->tour_price = $request->tour_price;
+            $booking->phone = $request->phone;
             $booking->c_email = $request->c_email;
             $booking->signup = $request->signup;
             $booking->package_id = $request->package_id;
