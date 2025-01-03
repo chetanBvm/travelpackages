@@ -10,9 +10,8 @@
     <div class="col-md-12 col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Create Departure City</h4>
-                <a href="{{ route('departure-city.index') }}" type="button"
-                    class="btn btn-info gray-btn d-lg-block m-l-15"><i class="bi bi-caret-left-fill"></i><span>Back</span></a>
+                <h4 class="card-title">Create Departure Cities</h4>
+
             </div>
             <div class="card-content">
                 <div class="card-body">
@@ -21,13 +20,13 @@
                         @csrf
                         <div class="form-body">
                             <div class="row">
-                                                            
-                                    
+
+
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="name">Name</label>
-                                        <input type="text" id="name" class="form-control" name="name"
-                                            placeholder="Enter name">
+                                        <label for="name">Name<span class="text-danger">*</span></label>
+                                        <input type="text" id="name" class="form-control" name="name" maxlength="30" pattern="[A-Za-z\s]+" 
+                                            placeholder="Enter name"  oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')">
                                     </div>
                                     @error('name')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -35,22 +34,21 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="price">Price</label>
-                                        <input type="text" id="price" class="form-control" name="price"
+                                        <label for="price">Price<span class="text-danger">*</span></label>
+                                        <input type="number" id="price" class="form-control" name="price" min="1" max="9999"
                                             placeholder="Price">
                                     </div>
                                     @error('price')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
-                                
-                              
-                          
-                            <div class="col-12 d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
+                                    <a href="{{ route('departure-city.index') }}" type="button"
+                                        class="btn btn-light-secondary me-1 mb-1"><span>Back</span></a>
+                                </div>
                             </div>
-                        </div>
                     </form>
                 </div>
             </div>
@@ -70,7 +68,7 @@
                     name: {
                         required: true
                     },
-                    price:{
+                    price: {
                         required: true
                     },
                 },
@@ -79,7 +77,7 @@
                     name: {
                         required: "Please enter name of the departure city."
                     },
-                    price:{
+                    price: {
                         required: "Please enter the price."
                     },
                 },
@@ -98,7 +96,7 @@
         });
     </script>
 
-   
+
 
 
 @endsection

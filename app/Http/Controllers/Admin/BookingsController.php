@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\StripePaymentController;
 use App\Models\Booking;
 use App\Models\Package;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class BookingsController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Booking::with('airport')->get();
+            $data = Booking::with('airport')->orderBy('id','desc');
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -71,25 +72,22 @@ class BookingsController extends Controller
     public function update(Request $request, string $id)
     {
         $bookings = Booking::findOrFail($id);
-        
+            
         $package = Package::findOrfail($bookings->package_id);
-                
+               
         if($request->formData == 'Approved'){
             $bookings->status = 'approved';
             $bookings->save();
-    
-            // $paymentLink = route('payment.link', ['bookingId' => $bookings->id]);
-
-            // $mailData = [
-            //     'name' => $bookings->passenger_name,
-            //     // 'link' => $paymentLink,
-            // ];
-    
-            Mail::send('email.approve_booking', compact('bookings','package'), function ($message) use ($bookings) {
-                $message->to($bookings->c_email)->subject('Booking Approved');
-            });
             
-            return response()->json(['success' => true]);
+            $paymentLink = (new StripePaymentController)->createPaymentLink($package);
+            Log::info($paymentLink);
+                      
+            Mail::send('email.approve_booking', compact('bookings','package','paymentLink'), 
+            function ($message) use ($bookings) {
+                $message->to($bookings->c_email)->from(env('MAIL_FROM_ADDRESS'), 'MyVacayHost')->subject('Booking Approved');
+            });
+                        
+            return response()->json(['success' => true,'']);
         }elseif ($request->formData == 'rejected') {
             $request->validate([
                 'reason' => 'required|string|max:255',

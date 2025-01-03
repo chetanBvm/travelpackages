@@ -24,7 +24,7 @@ class PackageTypeStoreRequest extends FormRequest
         return [
             'name' => 'required|string|max:255|unique:package_types,name',
             'parent_id' => 'nullable|numeric',
-            'icon' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'icon' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 

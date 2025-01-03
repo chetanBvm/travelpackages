@@ -52,9 +52,13 @@
                     <input type="hidden" id="package_id" name="package_id" value="{{ $packages->id }}">
                     <input type="hidden" name="c_formName" value="booking">
                     <input type="hidden" name="c_currency" id="c_currency" value="{{ $currency }}">
+                    <input type="hidden" name="request_type" id="request_type">
                     <input type="hidden" name="airport_code" id="airport_code">
                     <input type="hidden" name="departure_date" id="departure_date">
                     <input type="hidden" name="departure_city" id="departure_city" >
+                    <input type="hidden" name="tour_price" id="tour_price" required="">
+                    <input type="hidden" name="hotel_category" id="hotel_category">
+
                     <div class="modal-body">
                         <h2>{{ $packages->name }}</h2>
                         <div class="row">
@@ -68,16 +72,6 @@
                                     <div class="Destination-form-data selection-country">
                                         <input type="text" class="form-control form_fill getAirport departure_city" placeholder="" value="" name="departure_city" disabled>
                                         <div id="results_frame"></div>
-                                        {{-- <select class="form-select" aria-label="Default select example"
-                                            name="departure_city" id="airport_code"> --}}
-                                            {{-- @foreach ($data['airport'] as $airport)
-                                                <option value="{{ $airport->id }}">{{ $airport->name }}</option>
-                                            @endforeach --}}
-                                            {{-- <option value="1" selected>1 adult</option>
-                                            <option value="2">6-9 Days</option>
-                                            <option value="3">10-15 Days</option>
-                                            <option value="4">16-21 Days</option> --}}
-                                        {{-- </select> --}}
                                     </div>
                                 </div>
                             </div>
@@ -90,7 +84,6 @@
                                         <option value="classic Hotels">Classic Hotels</option>
                                         <option value="superior Hotels">Superior Hotels</option>
                                     </select>
-                                    {{-- <input type="date" class="form-control departure_date" id="date"> --}}
                                 </div>
                             </div>
 
@@ -98,7 +91,6 @@
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Date</label>
                                     <select disabled class="form-control uppercase form_fill flex_select departure_date " required></select>
-                                    {{-- <input type="date" class="form-control departure_date" id="date"> --}}
                                 </div>
                             </div>
                         </div>
@@ -161,6 +153,39 @@
                             </div>
                         </div>
 
+                        {{-- <div class="main_modal">
+                            <div class="col-12 col-mob-12 clearFix priceSummaryRequest">
+                                <p class="blueTxt uppercase s18" style="padding:10px 0"> PRICE PER PERSON, TAXES INCLUDED</p>
+                                <div class="col-12 col-mob-12">
+                                    <div class="col-4 col-mob-12 floatLeft bbox selected_price">
+                                                                                <div class="curr blueTxt">*CAD$</div>
+                                                                            <div id="selected_price" class="extrabold blueTxt">2,398</div>
+                                                                        </div>
+                                    <div class="col-8 col-mob-12 floatLeft bbox category" style="position: relative; font-size: 16px;">
+    
+                                        <div>
+                                            <span id="doubleMsg"><b>1</b>  room(s) in double occupancy <br></span>
+                                            <span id="tripleMsg" class="none" style="display: none;"><b></b>  room(s) in triple occupancy <br></span>
+                                            <div class="triple_price  blueTxt bold" style="display: none;">+
+                                                <span>$</span><span id="triple_price">0</span>                                              / TRIPLE OCCUPANCY SUPPLEMENT                                         </div>
+    
+                                            <span id="quadMsg" class="none"><b></b>  room(s) in quad occupancy <br></span>
+                                            <div class="quad_price  blueTxt bold none">+
+                                                <span>$</span><span id="quad_price"></span>                                              / QUAD OCCUPANCY SUPPLEMENT                                         </div>
+                                            <span id="singleMsg" class="none" style="display: none;"><b></b>  room(s) in single occupancy </span>
+                                            <div class="singl_price  blueTxt bold" style="display: none;">+
+                                                <span>$</span><span id="singl_price">600</span>                                              / SINGLE OCCUPANCY SUPPLEMENT                                         </div>
+                                            <div class="childDiscount blueTxt bold none">
+                                                 + 15% Discount per child                                         </div>
+                                            <div class="infantPrice blueTxt bold none">
+                                                 + $150 per infant                                         </div>
+                                        </div>
+    
+                                    </div>
+                                </div>
+                            </div>
+                        </div> --}}
+
                         <h2>Your contact information</h2>
                         <div class="row">
                             <div class="col-lg-4">
@@ -174,23 +199,14 @@
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Mobile Number</label>
                                     <div class="mobile-number-inner">
-                                        <select class="form-select" aria-label="Default select example"
-                                            name="phone_code" id="phone">
-                                            <option value="+91" selected>+91</option>
-                                            <option value="+55">+55</option>
-                                            <option value="+81">+81</option>
-                                            <option value="+82">+82</option>
-                                        </select>
-                                        <input type="text" class="form-control" id="exampleFormControlInput1" name="phone"
-                                            placeholder="Enter mobile number">
+                                        <input name="phone" type="tel" id="phone" class="form-control @error('mobile_number') is-invalid @enderror" placeholder="Enter mobile number" value="{{ old('mobile_number') }}" maxlength="11" pattern="[0-9\s]+" required>                                                                             
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Email Address</label>
-                                    <input type="text" class="form-control" name="c_email"
-                                        id="exampleFormControlInput1" placeholder="Enter email address">
+                                    <input type="text" class="form-control" name="c_email" id="email" placeholder="Enter email address" required>
                                 </div>
                             </div>
                         </div>

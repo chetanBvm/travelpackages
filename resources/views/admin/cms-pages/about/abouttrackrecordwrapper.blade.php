@@ -20,7 +20,7 @@
         @endif
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Create About Travel Service</h4>
+                <h4 class="card-title">Create About Track Record Wrapper</h4>
 
             </div>
             <div class="card-content">
@@ -32,12 +32,12 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="sub-heading-vertical">Title</label>
-                                        <input type="text" id="sub-heading-vertical"
-                                            class="form-control @error('title') is-invalid @enderror"
-                                            name="title" placeholder="Eg: flights,Hotels etc"
-                                            value="{{ old('title') }}" required
-                                            data-validation-required-message="This title field is required">
+                                        <label>Title<span class="text-danger">*</span></label>
+                                        <input type="text" 
+                                            class="form-control"
+                                            name="title" maxlength="20" placeholder="Eg: flights,Hotels etc"
+                                            value="{{ old('title') }}" 
+                                            >
                                     </div>
                                     @error('title')
                                         <span class="text-danger" role="alert">{{ $message }}</span>
@@ -45,12 +45,12 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="sub-heading-vertical">sub Title </label>
-                                        <input type="text" id="sub-heading-vertical"
-                                        class="form-control @error('subtitle') is-invalid @enderror"
-                                        name="subtitle" placeholder="Eg: 2000+"
-                                        value="{{ old('subtitle') }}" required
-                                        data-validation-required-message="This sub title field is required">
+                                        <label>sub Title <span class="text-danger">*</span></label>
+                                        <input type="text" 
+                                        class="form-control"
+                                        name="subtitle" maxlength="20" placeholder="Eg: 2000+"
+                                        value="{{ old('subtitle') }}" 
+                                        >
                                     </div>
                                     @error('subtitle')
                                         <span class="text-danger" role="alert">{{ $message }}</span>
@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label>Icon</label>
+                                        <label>Icon <span class="text-danger">*</span></label>
                                         <input type="file" name="icon" id="main_image"
                                             class="form-control @error('icon') is-invalid @enderror"
                                             value="{{ old('icon') }}">
@@ -70,8 +70,7 @@
                                     </div>                                    
                                 </div>
                                 <div class="col-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>                                   
                                 </div>
                             </div>
                         </div>

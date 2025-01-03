@@ -32,10 +32,10 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="heading-vertical">Title</label>
+                                        <label for="heading-vertical">Title<span class="text-danger">*</span></label>
                                         <input type="text" id="heading-vertical"
                                             class="form-control @error('title') is-invalid @enderror" name="title"
-                                            placeholder="title" value="{{ old('title', $info->title ?? '') }}" required
+                                            placeholder="title" value="{{ old('title', $info->title ?? '') }}" maxlength="30"
                                             data-validation-required-message="This title field is required">
                                     </div>
                                     @error('title')
@@ -44,10 +44,10 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="heading-vertical">Sub Title</label>
+                                        <label for="heading-vertical">Sub Title<span class="text-danger">*</span></label>
                                         <input type="text" id="heading-vertical"
                                             class="form-control @error('subtitle') is-invalid @enderror" name="subtitle"
-                                            placeholder="Enter subtitle" value="{{ old('subtitle', $info->subtitle ?? '') }}" required
+                                            placeholder="Enter subtitle" maxlength="30" value="{{ old('subtitle', $info->subtitle ?? '') }}" required
                                             data-validation-required-message="This subtitle field is required">
                                     </div>
                                     @error('subtitle')
@@ -79,8 +79,7 @@
                          
 
                                 <div class="col-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>                                   
                                 </div>
                             </div>
                         </div>
@@ -91,20 +90,9 @@
     </div>
 @endsection
 @section('js')
-    <script src="{{ asset('admin/assets/vendors/tinymce/tinymce.min.js') }}"></script>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-    <script>
-        tinymce.init({
-            selector: '#default'
-        });
-        tinymce.init({
-            selector: '#dark',
-            toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
-            plugins: 'code'
-        });
-
+    <script>      
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();

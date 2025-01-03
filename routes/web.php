@@ -6,11 +6,13 @@ use App\Http\Controllers\Admin\AirportController;
 use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BookingsController;
+use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\ContentManagementController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DepartureCityController;
 use App\Http\Controllers\Admin\DepartureFlightsController;
 use App\Http\Controllers\Admin\DestinationController;
+use App\Http\Controllers\Admin\EmailTemplatesController;
 use App\Http\Controllers\Admin\ExclusionsController;
 use App\Http\Controllers\Admin\InclusionsController;
 use App\Http\Controllers\Admin\ItineraryController;
@@ -19,6 +21,8 @@ use App\Http\Controllers\Admin\PackageReviewsController;
 use App\Http\Controllers\Admin\PackagesController;
 use App\Http\Controllers\Admin\PackageTypeController;
 use App\Http\Controllers\Admin\PromotionController;
+use App\Http\Controllers\Admin\SeoManagementController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\StayController;
 use App\Http\Controllers\Admin\TravelExperienceController;
 use App\Http\Controllers\Admin\UserController;
@@ -26,10 +30,12 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\DashboardController as ControllersDashboardController;
 use App\Http\Controllers\PackagesController as ControllersPackagesController;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\StripePaymentController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+use function Laravel\Prompts\clear;
 
 Auth::routes();
 
@@ -42,7 +48,6 @@ Route::get('/clear-cache', function () {
     Artisan::call('cache:clear');
     Artisan::call('view:clear');
     Artisan::call('route:clear');
-
     return 'Route cache cleared!';
 });
 
@@ -85,6 +90,7 @@ Route::group(['prefix' => 'admin'], function () {
 
         //Departure Flights
         Route::resource('departure-flights',DepartureFlightsController::class);
+        Route::post('departure-flights/get-month-by-package',[DepartureFlightsController::class,'getMonthByPackage']);
 
         //Departure City
         Route::resource('departure-city',DepartureCityController::class);
@@ -122,6 +128,31 @@ Route::group(['prefix' => 'admin'], function () {
         //Bookings
         Route::resource('bookings', BookingsController::class);
         Route::post('bookings/{id}',[BookingsController::class,'update'])->name('admin.bookings.update');
+
+        //Seo 
+        Route::resource('seo-management',SeoManagementController::class);
+
+        //ContactUs
+        Route::resource('contactus',ContactUsController::class);
+        
+        //Email Template
+        Route::resource('email-template',EmailTemplatesController::class);
+        
+        //Settings
+        Route::group(['prefix' => 'settings'],function(){
+            //logo
+            Route::get('logo',[SettingsController::class,'logo'])->name('logo');
+            Route::post('logo-save',[SettingsController::class,'saveLogo'])->name('logo.save');
+            
+            //Contact
+            Route::get('contact',[SettingsController::class,'contact'])->name('contact');
+            Route::post('contact-save',[SettingsController::class,'SaveContact'])->name('contact.save');
+
+            //contact us
+            Route::get('contactus',[SettingsController::class,'contactUs'])->name('contactus');
+            Route::post('contact-us-save',[SettingsController::class,'saveContactUs'])->name('admin.contactus.save');
+        });
+       
 
         //Content Management
         Route::group(['prefix' => 'content'], function () {
@@ -199,6 +230,9 @@ Route::get('get-departure-dates-airport',[ControllersPackagesController::class,'
 Route::post('get-packages-filter',[ControllersPackagesController::class,'PackagesDetailFilter'])->name('packages.filter');
 
 Route::get('get-packages-city-wise/{id}',[ControllersDashboardController::class,'getPackageDetailCityWies'])->name('packages.city');
+
+Route::post('/other_departure_city',[ControllersPackagesController::class,'getOtherDepartureCity']);
+
 //Pages
 Route::get('about-us', [PagesController::class, 'aboutUs'])->name('pages.about');
 Route::get('contact-us', [PagesController::class, 'contactUs'])->name('pages.contactus');
@@ -206,5 +240,11 @@ Route::get('blog', [PagesController::class, 'blogs'])->name('pages.blog');
 Route::get('terms-and-condition', [PagesController::class, 'termAndCondition'])->name('pages.terms');
 Route::get('privacy-policy', [PagesController::class, 'privacyPolicy'])->name('pages.policy');
 
+Route::post('contactus-save',[PagesController::class,'saveContactUs'])->name('contactus.save');
+
 //Booking 
 Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
+
+//Payment
+Route::post('payment-link',[StripePaymentController::class,'createPaymentLink'])->name('payment.link');
+Route::post('stripe/webhook',[StripePaymentController::class,'handleWebhook'])->name('payment.webhook');

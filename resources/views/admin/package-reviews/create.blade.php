@@ -20,9 +20,7 @@
         @endif
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Create Package Reviews</h4>
-                <a href="{{ route('package-review.index') }}" type="button" class="btn btn-info gray-btn d-lg-block m-l-15"><i
-                        class="bi bi-caret-left-fill"></i><span>Back</span></a>
+                <h4 class="card-title">Create Package Reviews</h4>             
 
             </div>
             <div class="card-content">
@@ -34,9 +32,9 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="package-vertical">Package</label>
+                                        <label for="package-vertical">Package<span class="text-danger">*</span></label>
                                         <select class="form-select" id="basicSelect" name="package_id">
-                                            <option value="">---</option>
+                                            <option value="">Select packages</option>
                                             @foreach ($package as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
@@ -49,8 +47,8 @@
                               
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">Name</label>
-                                        <input type="text" id="first-name-vertical" class="form-control" name="name"
+                                        <label for="first-name-vertical">Name<span class="text-danger">*</span></label>
+                                        <input type="text" id="first-name-vertical" class="form-control" maxlength="30" name="name"
                                             placeholder="Name">
                                     </div>
                                     @error('name')
@@ -60,7 +58,7 @@
                              
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="days">Status</label>
+                                        <label for="days">Status<span class="text-danger">*</span></label>
                                         <select class="form-select" id="basicSelect" name="status">
                                             <option value="Active">Active</option>
                                             <option value="InActive">InActive</option>
@@ -74,14 +72,14 @@
                                                 src="{{ asset('admin/assets/images/faces/1.jpg') }}" alt="your image"
                                                 width="100px" height="auto" />
                                         </div>
-                                        <label class="image" for="">Image</label>
+                                        <label class="image" for="">Image<span class="text-danger">*</span></label>
                                         <input type="file" class="form-control" name="images" id="main_image"
                                             accept="image/jpeg, image/png, image/gif, image/jpg">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="default">Description</label>
+                                        <label for="default">Description<span class="text-danger">*</span></label>
                                         <textarea name="description" id="default" cols="30" rows="10"></textarea>
                                     </div>
                                     @error('description')
@@ -91,7 +89,7 @@
 
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                    <a href="{{ route('package-review.index') }}" type="button" class="btn btn-light-secondary me-1 mb-1"><span>Back</span></a>
                                 </div>
                             </div>
                         </div>
@@ -102,19 +100,16 @@
     </div>
 @endsection
 @section('js')
-    <script src="{{ asset('admin/assets/vendors/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/vendors/ckeditor/ckeditor.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 
     <script>
-        tinymce.init({
-            selector: '#default'
-        });
-        tinymce.init({
-            selector: '#dark',
-            toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
-            plugins: 'code'
-        });
+        ClassicEditor
+            .create(document.querySelector('#default'))
+            .catch(error => {
+                console.error(error);
+            });
 
         function readURL(input) {
             if (input.files && input.files[0]) {

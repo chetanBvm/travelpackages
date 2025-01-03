@@ -18,7 +18,7 @@ class DepartureCityController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = DepartureCity::get();
+            $data = DepartureCity::orderBy('id','desc');
 
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -55,7 +55,7 @@ class DepartureCityController extends Controller
             
             DB::commit();  //commit the transaction
 
-            return redirect()->route('departure-city.index')->with('success', 'departure city Created Successfully!');
+            return redirect()->route('departure-city.index')->with('message', 'departure city Created Successfully!');
         } catch (\Exception $exception) {
             DB::rollBack(); //Roll back the data if something goes wrong
 
@@ -101,7 +101,7 @@ class DepartureCityController extends Controller
              ]);
          DB::commit(); //commit the transaction
 
-         return redirect()->route('departure-city.index')->with('success', 'Departure City updated successfully!');
+         return redirect()->route('departure-city.index')->with('message', 'Departure City updated successfully!');
      } catch (\Exception $exception) {
          DB::rollBack(); //Roll back the data if something goes wrong
 

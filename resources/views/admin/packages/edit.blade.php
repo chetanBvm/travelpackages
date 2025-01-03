@@ -16,7 +16,7 @@
 
         // Generate the months for the current year
         for ($i = 0; $i <= 12; $i++) {
-            $months[] = $currentYear->copy()->addMonths($i)->format('M Y');
+            $months[] = $currentYear->copy()->addMonthsNoOverflow($i)->format('M Y');
         }
     @endphp
     <div class="col-md-12 col-12">
@@ -43,20 +43,10 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div>                                
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">sub Title<span class="text-danger">*</span></label>
-                                        <input type="text" id="name-vertical" class="form-control" name="sub_title"
-                                            value="{{ $package->sub_title }}" placeholder="sub title">
-                                    </div>
-                                    @error('sub_title')
-                                        <span class="text-danger" role="alert">*{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="first-name-vertical">Name<span class="text-danger">*</span></label>
+                                        <label for="first-name-vertical">Package Name<span class="text-danger">*</span></label>
                                         <input type="text" id="name-vertical" class="form-control" name="name"
                                             value="{{ $package->name }}" placeholder="Name">
                                     </div>
@@ -67,9 +57,21 @@
 
                                 <div class="col-6">
                                     <div class="form-group">
+                                        <label for="first-name-vertical">sub Title</label>
+                                        <input type="text" id="name-vertical" class="form-control" name="sub_title"
+                                            value="{{ $package->sub_title }}" placeholder="sub title">
+                                    </div>
+                                    @error('sub_title')
+                                        <span class="text-danger" role="alert">*{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group">
                                         <label for="days">Price<span class="text-danger">*</span></label>
-                                        <input type="text" id="price" class="form-control" name="price"
-                                            value="{{ floor($package->price) }}" placeholder="price">
+                                        <input type="text" id="price" class="form-control" name="price" min="0" 
+                                        max="9999999"
+                                            value="{{ floor($package->price) }}" placeholder="price" oninput="this.value = this.value.slice(0, 7);">
                                     </div>
                                     @error('price')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -79,7 +81,7 @@
                                     <div class="form-group">
                                         <label for="price">Tax(%)<span class="text-danger">*</span></label>
                                         <input type="text" id="tax" class="form-control" name="tax"
-                                            placeholder="tax" value="{{ floor($package->tax) }}">
+                                            placeholder="tax" value="{{ floor($package->tax) }}" min="0" max="99" oninput="if(this.value > 99) this.value = 99;">
                                     </div>
                                     @error('tax')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -126,7 +128,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Days<span class="text-danger">*</span></label>
-                                        <input type="text" id="days" class="form-control" name="days"
+                                        <input type="number" id="days" class="form-control" name="days" min="1" max="365"
                                             value="{{ $package->days }}" placeholder="days">
                                     </div>
                                     @error('days')
@@ -153,7 +155,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="min_age">Min Age Limitation<span class="text-danger">*</span></label>
-                                        <input type="text" id="min_age" class="form-control" name="min_age"
+                                        <input type="number" id="min_age" class="form-control" name="min_age" max="99"
                                             value="{{ $package->min_age }}" placeholder="Min Age">
                                     </div>
                                     @error('min_age')
@@ -163,7 +165,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="max_age">Max Age Limitation<span class="text-danger">*</span></label>
-                                        <input type="text" id="max_age" class="form-control" name="max_age"
+                                        <input type="number" id="max_age" class="form-control" name="max_age" max="100"
                                             value="{{ $package->max_age }}" placeholder="max age">
                                     </div>
                                     @error('max_age')
@@ -215,7 +217,7 @@
 
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="">Description<span class="text-danger">*</span></label>
+                                        <label for="">Description</label>
                                         <textarea name="description" id="editor" cols="30" rows="10">{{ old('description', $package->description ?? '') }}</textarea>
                                     </div>
                                     @error('description')
@@ -351,12 +353,6 @@
                     days: {
                         required: true
                     },
-                    description: {
-                        required: true
-                    },
-                    sub_title: {
-                        required: true
-                    },
                     status: {
                         required: true
                     },
@@ -398,12 +394,6 @@
                     },
                     days: {
                         required: "Please specify the number of days."
-                    },
-                    description: {
-                        required: "Please provide a description."
-                    },
-                    sub_title: {
-                        required: 'Please enter the sub title.'
                     },
                     status: {
                         required: "Please select the status."

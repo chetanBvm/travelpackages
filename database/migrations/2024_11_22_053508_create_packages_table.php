@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('destination_id')->references('id')->on('destinations')->onDelete('cascade')->onUpdate('cascade');            
-            $table->string('name');
-            $table->longText('description');
+            $table->string('name')->unique();
+            $table->longText('description')->nullable();
             $table->decimal('price',8,2);  
             $table->string('images')->nullable();
             $table->string('days');

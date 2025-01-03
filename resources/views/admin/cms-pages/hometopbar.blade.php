@@ -32,10 +32,10 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="heading-vertical">Title</label>
+                                        <label for="heading-vertical">Title<span class="text-danger">*</span></label>
                                         <input type="text" id="heading-vertical"
                                             class="form-control @error('title') is-invalid @enderror" name="title"
-                                            placeholder="title" value="{{ old('title', $info->title ?? '') }}" required
+                                            placeholder="title" maxlength="100" value="{{ old('title', $info->title ?? '') }}" required
                                             data-validation-required-message="This title field is required">
                                     </div>
                                     @error('title')
@@ -45,9 +45,9 @@
 
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="sub-heading-vertical">Title Coupon Banner</label>
+                                        <label for="sub-heading-vertical">Title Coupon Banner<span class="text-danger">*</span></label>
                                         <input type="text" id="sub-heading-vertical"
-                                            class="form-control @error('header_title') is-invalid @enderror" name="header_title"
+                                            class="form-control @error('header_title') is-invalid @enderror" maxlength="100" name="header_title"
                                             placeholder="Eg:BLACK FRIDAY AT My Vacay Host: Additional $100 OFF" value="{{ old('header_title', $info->header_title ?? '') }}"
                                             required>
                                     </div>
@@ -60,7 +60,7 @@
                                 {{-- <div class="col-6"></div> --}}
                                 <div class="col-6">
                                 <div class="form-group">
-                                    <label>Social Links</label>
+                                    <label>Social Links<span class="text-danger">*</span></label>
                                     <div id="social-links-container">
                                         @if (!empty($socialLinks))
                                         @foreach ($socialLinks as $index => $link)
@@ -85,10 +85,8 @@
                                     @enderror
                                 </div>
                             </div>
-
                                 <div class="col-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>                                   
                                 </div>
                             </div>
                         </div>

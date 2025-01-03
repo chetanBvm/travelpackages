@@ -10,7 +10,7 @@
 
         // Generate the months for the current year
         for ($i = 0; $i <= 12; $i++) {
-            $months[] = $currentYear->copy()->addMonths($i)->format('F Y');
+            $months[] = $currentYear->copy()->addMonthsNoOverflow($i)->format('F Y');
         }
     @endphp
     <div class="main">
@@ -74,7 +74,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="package-single-right">
-                                    <div class="package-single-right-head">
+                                    <div id="packageName" class="package-single-right-head">
                                         <h2>{{ $packages->name }}</h2>
                                         <div class="guest">
                                             <img src="{{ asset('web/assets/images/timer.svg') }}" /><span>{{ $packages->days }}
@@ -123,7 +123,7 @@
         </section>
         <section class="tab-result-section">
             <div class="container">
-                <div class="row">
+                <div class="row main-row">
                     <div class="col-lg-8">
                         <div class="tab-content" id="pills-tabContent">
                             <div class="package-details-tabs">
@@ -181,9 +181,8 @@
                                                         <select class="form-select action_rates" id="mySelect"
                                                             aria-label="Default select example">
                                                             <option selected>SELECT A CITY</option>
-                                                            @foreach ($data['destination'] as $destinations)
-                                                                <option value="{{ $destinations->id }}">
-                                                                    {{ $destinations->country->name }}</option>
+                                                            @foreach ($data['departureCity'] as $destinations)
+                                                                <option value="{{ $destinations->id }}">{{ strtoupper($destinations->name) }}</option>
                                                             @endforeach
                                                             <option value="other" class="open_other_modal">Other</option>
                                                         </select>
@@ -218,155 +217,7 @@
                                     <div id="flightsContainer">
                                     </div>
                                 </div>
-
-                                {{-- <div class="ticket-details-main">
-                                    <div class="ticket-date-name">
-                                        <h3>July 2025</h3>
-                                        <span>MS Seine Princess - Standard ship</span>
-                                    </div>
-
-                                    <div class="ticket-details-bottom-main">
-                                        <div class="ticket-details-bottom-inner">
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/airplane.svg">Departure Date</span>
-                                                <h4>Fri Apr 11</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/aroplan-bt.svg">Departure Date</span>
-                                                <h4>Fri Apr 11</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/starting-price.svg">Departure Date</span>
-                                                <div class="price-details-data">
-                                                    <span>$3698</span>
-                                                    <h4>$3,598<span>/person</span></h4>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                        <div class="ticket-details-right-data">
-                                            <div class="offers-data">
-                                                <span>100$ off</span>
-                                            </div>
-                                            <div class="enquiry-btn">
-                                                <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal">Send Enquiry</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div> --}}
-
-                                {{-- <div class="ticket-details-main">
-                                    <div class="ticket-date-name">
-                                        <h3>September 2025</h3>
-                                        <span>MS Botticelli - Standard ship</span>
-                                    </div>
-
-                                    <div class="ticket-details-bottom-main">
-                                        <div class="ticket-details-bottom-inner">
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/airplane.svg">Departure Date</span>
-                                                <h4>Fri Apr 11</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/aroplan-bt.svg">Departure Date</span>
-                                                <h4>Fri Apr 11</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/starting-price.svg">Departure Date</span>
-                                                <div class="price-details-data">
-                                                    <span>$3698</span>
-                                                    <h4>$3,598<span>/person</span></h4>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                        <div class="ticket-details-right-data">
-                                            <div class="offers-data">
-                                                <span>100$ off</span>
-                                            </div>
-                                            <div class="enquiry-btn">
-                                                <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal">Send Enquiry</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ticket-details-bottom-main">
-                                        <div class="ticket-details-bottom-inner">
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/airplane.svg">Departure Date</span>
-                                                <h4>Sat Apr 13</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/aroplan-bt.svg">Departure Date</span>
-                                                <h4>Mon Apr 28</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/starting-price.svg">Departure Date</span>
-                                                <div class="price-details-data">
-                                                    <span>$3698</span>
-                                                    <h4>$3,598<span>/person</span></h4>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                        <div class="ticket-details-right-data">
-                                            <div class="offers-data">
-                                                <span>100$ off</span>
-                                            </div>
-                                            <div class="enquiry-btn">
-                                                <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal">Send Enquiry</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div> --}}
-
-                                {{-- <div class="ticket-details-main">
-                                    <div class="ticket-date-name">
-                                        <h3>October 2025</h3>
-                                        <span>MS Botticelli - Standard ship</span>
-                                    </div>
-
-                                    <div class="ticket-details-bottom-main">
-                                        <div class="ticket-details-bottom-inner">
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/airplane.svg">Departure Date</span>
-                                                <h4>Fri Apr 11</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/aroplan-bt.svg">Departure Date</span>
-                                                <h4>Fri Apr 11</h4>
-                                            </div>
-                                            <div class="ticket-detail-bottom-data">
-                                                <span><img src="./images/starting-price.svg">Departure Date</span>
-                                                <div class="price-details-data">
-                                                    <span>$3698</span>
-                                                    <h4>$3,598<span>/person</span></h4>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                        <div class="ticket-details-right-data">
-                                            <div class="offers-data">
-                                                <span>100$ off</span>
-                                            </div>
-                                            <div class="enquiry-btn">
-                                                <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal">Send Enquiry</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>  --}}
+                               
                                 <div class="bottom-para">
                                     <p>*The advertised starting rate is available from Toronto on Jan 2025</p>
                                     <p>**All prices are subject to change without notice</p>
@@ -416,7 +267,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <div class="col-lg-3 col-md-6">
                                             <div class="accommodation-images">
                                                 @if (isset($packages->images[0]))
                                                     <figure>
@@ -428,7 +279,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-lg-3 col-md-6">
                                             <div class="accommodation-images">
                                                 @if (isset($packages->images[1]))
                                                     <figure>
@@ -440,7 +291,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-lg-3 col-md-6">
                                             <div class="accommodation-images">
                                                 @if (isset($packages->images[2]))
                                                     <figure>
@@ -452,7 +303,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-lg-3 col-md-6">
                                             <div class="tree-img accommodation-images">
                                                 @if (isset($packages->images[3]))
                                                     <figure>
@@ -635,7 +486,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <div class="col-lg-4 left-scroll-data">
@@ -645,14 +495,14 @@
                                 @foreach($data['departureCity'] as $city)
                                 <li>
                                     <a href="#" class="side-contry-left">
-                                        <h3> {{$city->name}}</h3> <span>CAD ${{$city->price}}</span> <a class="travel-btn btn"
+                                        <h3> {{strtoupper($city->name)}}</h3> <span>CAD ${{$city->price}}</span> <a class="travel-btn btn"
                                             href="javascript::" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal">See Dates</a>
                                     </a>
                                 </li>
                                 @endforeach                                        
                             </ul>
-                            <a class="travel-btn" href="javascript::" data-bs-toggle="modal"
+                            <a class="travel-btn see_other_modal open_other_modal"  href="javascript::" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">Select Another City</a>
                         </div>
                     </div>
@@ -709,63 +559,42 @@
                                             <p>{{ $package->sub_title ?? 'Per night before taxes and fees' }}</p>
                                             @php $currency_1 =  $package->destination->country->currency_symbol @endphp
                                             <span class="inr">{{ $currency_1 }} {{ $package->price }}</span>
-                                            {{-- <span class="inr">$ 4,403.29</span> --}}
                                         </div>
                                     </div>
                                 </div>
                             @endforeach
-
-                            {{-- <div class="col-sm-6 col-md-4">
-                                <div class="hotels-wapper">
-                                    <figure>
-                                        <img src="images/hotel-two.png">
-                                    </figure>
-                                    <div class="hotels-content">
-                                        <a href="package-single.php">
-                                            <h3>Highlights of Norway</h3>
-                                        </a>
-                                        <p>Per night before taxes and fees</p>
-                                        <span class="inr">$ 1,937.53</span>
-                                    </div>
-                                </div>
-                            </div> --}}
-
-                            {{-- <div class="col-sm-6 col-md-4">
-                                <div class="hotels-wapper">
-                                    <figure>
-                                        <img src="images/hotel-three.png">
-                                    </figure>
-                                    <div class="hotels-content">
-                                        <a href="package-single.php">
-                                            <h3>Japan Great discovery</h3>
-                                        </a>
-                                        <p>Per night before taxes and fees</p>
-                                        <span class="inr">$ 1,417.86</span>
-                                    </div>
-                                </div>
-                            </div> --}}
-
-
-
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
     </div>
     <!--Modal form -->
     @include('web.packages.modal.requestenquiry')
     @include('web.packages.modal.photoslider')
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
     <script>
         function dates() {
             $('#pills-dateprice-tab').click();
         }
+        var packageId = @json($packages->id); 
     </script>
     <script>
         const airplaneIcon = "{{ asset('web/assets/images/airplane.svg') }}";
         const returnIcon = "{{ asset('web/assets/images/aroplan-bt.svg') }}";
         const priceIcon = "{{ asset('web/assets/images/starting-price.svg') }}";
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const phoneInput = document.querySelector("#phone");
+
+            const iti = window.intlTelInput(phoneInput, {
+                initialCountry: "in", // Set default country (e.g., India)
+                preferredCountries: ["in", "us", "gb"], // Set preferred countries
+                separateDialCode: true, // Show country code separately
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js", // Load utility scripts for formatting
+            });
+        });
     </script>
 @endsection

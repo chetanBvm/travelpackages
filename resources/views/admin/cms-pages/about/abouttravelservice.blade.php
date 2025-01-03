@@ -32,22 +32,21 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="heading-vertical">Title</label>
-                                        <input type="text" id="heading-vertical"
+                                        <label for="heading-vertical">Title<span class="text-danger">*</span></label>
+                                        <input type="text" id="title"
                                             class="form-control @error('title') is-invalid @enderror" name="title"
-                                            placeholder="title" value="{{ old('title', $info->title ?? '') }}" required
+                                            placeholder="title" value="{{ old('title', $info->title ?? '') }}"
+                                            maxlength="30" required
                                             data-validation-required-message="This title field is required">
                                     </div>
                                     @error('title')
                                         <span class="text-danger" role="alert">{{ $message }}</span>
                                     @enderror
                                 </div>
-
-
-
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                    {{-- <button type="reset" id="resetButton"
+                                        class="btn btn-light-secondary me-1 mb-1">Reset</button> --}}
                                 </div>
                             </div>
                         </div>
@@ -61,8 +60,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <script>
-
-
         //Validation script
         $(document).ready(function() {
             $('#createDrawHomeDestination').validate({ // initialize the plugin

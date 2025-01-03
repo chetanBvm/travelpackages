@@ -20,9 +20,7 @@
         @endif
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Packages Images</h4>
-                <a href="{{route('package-image.index')}}" type="button"
-                class="btn btn-info gray-btn d-lg-block m-l-15"><i class="bi bi-caret-left-fill"></i><span>Back</span></a>
+                <h4 class="card-title">Packages Images</h4>            
             </div>
             <div class="card-content">
                 <div class="card-body">
@@ -34,7 +32,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="package-vertical">Package</label>
+                                        <label for="package-vertical">Package<span class="text-danger">*</span></label>
                                         <select class="form-select" id="basicSelect" name="package_id">
                                             @foreach ($package as $value)
                                                 <option value="{{ $value->id }}"
@@ -50,7 +48,7 @@
 
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="package-vertical">Images</label>
+                                        <label for="package-vertical">Images<span class="text-danger">*</span></label>
                                         <input type="file" class="form-control" name="images" id="imageInput"
                                             accept="image/jpeg, image/png, image/gif, image/jpg"
                                             onchange="previewImages(event)" multiple>
@@ -59,17 +57,7 @@
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
-                                {{-- <div id="imagePreviews" style="display: flex; flex-wrap: wrap;">
-                                    @if (isset($packageData) && $packageData->images)
-                                        @php
-                                            $images = json_decode($packageData->images);
-                                        @endphp
-                                        @foreach ($images as $image)
-                                            <img src="{{ asset('storage/' . $image) }}" alt="image"
-                                                style="width: 150px; margin: 10px; border: 2px solid #ccc;">
-                                        @endforeach
-                                    @endif
-                                </div> --}}
+                               
                                 <div id="imagePreviews" style="display: flex; flex-wrap: wrap;">
                                     @if (isset($packageImage->images) && $packageImage->images)
                                         @php
@@ -87,7 +75,8 @@
                                 </div>
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                    <a href="{{route('package-image.index')}}" type="button"
+                                    class="btn btn-light-secondary me-1 mb-1"><span>Back</span></a>
                                 </div>
                             </div>
                         </div>

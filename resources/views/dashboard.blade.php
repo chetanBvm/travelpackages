@@ -17,7 +17,7 @@
 
         // Generate the months for the current year
         for ($i = 0; $i <= 12; $i++) {
-            $months[] = $currentYear->copy()->addMonths($i)->format('M Y');
+            $months[] = $currentYear->copy()->addMonthsNoOverflow($i)->format('M Y');
         }
     @endphp
     <div class="main" id="content">
@@ -131,6 +131,7 @@
                                                 </label>
                                                 <select class="form-select" id="mySelectPackage"
                                                     aria-label="Default select example" name="package_type">
+                                                    <option value="all">All</option>
                                                     @foreach ($data['packageType'] as $packagetype)
                                                         <option value="{{ $packagetype->id }}">{{ $packagetype->name }}
                                                         </option>

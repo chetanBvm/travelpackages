@@ -6,11 +6,16 @@
             <div class="container-fluid">
                 <div class="college-inner">
                     <figure>
-                        <img src="{{asset('web/assets/images/contact-bg.png')}}">
+                        <img src="{{ asset('web/assets/images/contact-bg.png') }}">
                     </figure>
                     <div class="college-content">
-                        <h1>Contact Us</h1>
-                        <p>Come See the world with Us</p>
+                        @if (isset($contactUs))
+                            <h1>{{ $contactUs->title }}</h1>
+                            <p>{{ $contactUs->subtitle }}</p>
+                        @else
+                            <h1>Contact Us</h1>
+                            <p>Come See the world with Us</p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -18,53 +23,81 @@
         <!-- Contact -->
         <section class="contact">
             <div class="container">
+
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        {{ session()->get('success') }}
+                    </div>
+                @endif
+                @if (session()->has('error'))
+                    <div class="alert alert-danger">
+                        {{ session()->get('error') }}
+                    </div>
+                @endif
                 <div class="contact-inner">
-                    <form class="contact-form">
+                    <form class="contact-form" action="{{ route('contactus.save') }}" method="post">
+                        @csrf()
                         <div class="row">
                             <div class="col-sm-6 col-md-6">
                                 <div class="contact-content">
                                     <label>First Name </label>
-                                    <input type="text" name="Name" class="form-control"
-                                        placeholder="Enter First Name">
+                                    <input type="text" name="f_name"
+                                        class="form-control @error('f_name') is-invalid @enderror"
+                                        placeholder="Enter First Name" value="{{ old('f_name') }}">
+                                    @error('f_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6">
                                 <div class="contact-content">
                                     <label>Last Name</label>
-                                    <input type="text" name="Name" class="form-control" placeholder="Enter Last Name">
+                                    <input type="text" name="l_name"
+                                        class="form-control @error('l_name') is-invalid @enderror"
+                                        placeholder="Enter Last Name" value="{{ old('l_name') }}">
+                                    @error('l_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-sm-6 col-md-6">
                                 <div class="contact-content">
                                     <label>Email Address</label>
-                                    <input type="email" name="Email" class="form-control"
-                                        placeholder="Enter email address">
+                                    <input type="email" name="email"
+                                        class="form-control @error('email') is-invalid @enderror"
+                                        placeholder="Enter email address" value="{{ old('email') }}">
+                                    @error('email')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6">
                                 <div class="contact-content">
                                     <label>Phone Number</label>
                                     <div class="mobile-number-inner">
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option value="1" selected>+91</option>
-                                            <option value="2">+55</option>
-                                            <option value="3">+81</option>
-                                            <option value="4">+82</option>
-                                        </select>
-                                        <input type="text" class="form-control" id="exampleFormControlInput1"
-                                            placeholder="Enter 10 digit phone number">
+                                        <input name="mobile_number" type="tel" id="phone"
+                                            class="form-control @error('mobile_number') is-invalid @enderror"
+                                            placeholder="Enter 10 digit phone number" value="{{ old('mobile_number') }}"
+                                            maxlength="11" pattern="[0-9\s]+">
+                                       
                                     </div>
+                                    @error('mobile_number')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="contact-content">
                                     <label>Message</label>
-                                    <textarea placeholder="Message" class="form-control"></textarea>
+                                    <textarea placeholder="Message" name="message" class="form-control @error('message') is-invalid @enderror">{{ old('message') }}</textarea>
+                                    @error('message')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
-                        <a class="travel-btn" href="javascript::">Submit</a>
+                        <button class="travel-btn" type="submit">Submit</button>
                     </form>
                 </div>
             </div>
@@ -74,41 +107,35 @@
             <div class="container-fluid">
                 <div class="con-inner">
                     <div class="owl-carousel owl-theme contact-slider">
-                        <div class="item">
-                            <figure>
-                                <img src="{{asset('web/assets/images/contact-one.png')}}">
-                            </figure>
-                        </div>
-                        <div class="item">
-                            <figure>
-                                <img src="{{asset('web/assets/images/contact-two.png')}}">
-                            </figure>
-                        </div>
-                        <div class="item">
-                            <figure>
-                                <img src="{{asset('web/assets/images/contact-three.png')}}">
-                            </figure>
-                        </div>
-                        <div class="item">
-                            <figure>
-                                <img src="{{asset('web/assets/images/contact-four.png')}}">
-                            </figure>
-                        </div>
-                        <div class="item">
-                            <figure>
-                                <img src="{{asset('web/assets/images/contact-five.png')}}">
-                            </figure>
-                        </div>
-                        <div class="item">
-                            <figure>
-                                <img src="{{asset('web/assets/images/contact-six.png')}}">
-                            </figure>
-                        </div>
-
-
+                        @php
+                            $images = json_decode($contactUs->image, true);
+                        @endphp
+                        @foreach ($images as $image)
+                            <div class="item">
+                                <figure>
+                                    <img src="{{ asset('storage' . '/' . $image) }}">
+                                </figure>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </section>
     </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const phoneInput = document.querySelector("#phone");
+
+            const iti = window.intlTelInput(phoneInput, {
+                initialCountry: "in", // Set default country (e.g., India)
+                preferredCountries: ["in", "us", "gb"], // Set preferred countries
+                separateDialCode: true, // Show country code separately
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js", // Load utility scripts for formatting
+            });
+        });
+    </script>
 @endsection

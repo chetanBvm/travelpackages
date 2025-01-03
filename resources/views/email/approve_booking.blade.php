@@ -36,6 +36,9 @@
                             </tbody>
                         </table>
                     </div>
+                    <h2>click the below link and complelte your payment</h2>
+                    <a href="{{ $paymentLink }}">Complete Payment</a>
+                    {{-- <h2>Url: {{$paymentLink}}</h2> --}}
                 </div>
             </div>
         </div>

@@ -17,6 +17,8 @@ use App\Models\PackageImages;
 use App\Models\PackageReview;
 use App\Models\PackageType;
 use App\Models\Promotion;
+use App\Models\SeoManagement;
+use App\Models\Setting;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -28,11 +30,13 @@ class PackagesController extends Controller
         $data['package'] = Package::with('destination.country')->where('status','Active')->paginate(20);
         $data['banner'] = Banner::where('type', 'Packages')->first();
         $data['country'] = Country::get();
-        $data['packageType'] = PackageType::whereNUll('parent_id')->where('status','Active')->get();
+        $data['packageType'] = PackageType::whereNotNUll('parent_id')->get();
         $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();
         $data['social_links'] = ContentManagement::where('type', 'home_topbar')->where('keywords','!=','main_title')->get();
         $data['destination'] = Destination::with('country')->get();
-        return view('web.packages.tourpackages', compact('data'))->with('filteredPackages', collect());
+        $packageTypes =  PackageType::with('subpackage')->whereNUll('parent_id')->get();
+        $pageSEO = SeoManagement::where('page_id','3')->first();
+        return view('web.packages.tourpackages', compact('data','packageTypes','pageSEO'))->with('filteredPackages', collect());
     }
     /**
      * @return  int $id 
@@ -48,14 +52,18 @@ class PackagesController extends Controller
         $data['airport'] = Airport::get();
         $data['country'] = Country::get();
         $data['coupon'] = Promotion::get();
-        $data['review'] = PackageReview::where('package_id', $id)->get();       
+        $data['review'] = PackageReview::where('package_id', $id)->where('status','Active')->get();       
         $data['destination'] = Destination::with('country')->get();
         $data['departureFlight'] = DepartureFlights::with('package.destination')->get();
         $data['departureCities'] = DepartureCity::get();
         $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();       
         $data['departureCity'] = DepartureCity::get()->take(5);
         $packageTypes =  PackageType::with('subpackage')->whereNUll('parent_id')->get();
-        return view('web.packages.packagedetail', compact('packages', 'data','packageTypes'));
+        $settings = Setting::where('type','logo')->value('image');
+        $settingContact = Setting::where('type','contact')->first();
+        $data['packageType'] = PackageType::whereNotNUll('parent_id')->get();
+        $pageSEO = SeoManagement::where('page_id','3')->first();
+        return view('web.packages.packagedetail', compact('pageSEO','packages', 'data','packageTypes','settings','settingContact'));
     }
 
     /**
@@ -80,19 +88,23 @@ class PackagesController extends Controller
     public function getDepartureFlight(Request $request)
     {
        
-        $depCityId = $request->DEPC;  // The selected city ID
+        $depCityId = $request->depc;  // The selected city ID
         $selectedMonth = $request->month ?? null;  // Optional: The selected month
         $category = $request->CAT;
-        
+        $tomsId = $request->tomsId; 
+       
+
         $cityData = Destination::with('country')->where('id',$depCityId)->first();
         $countryName = $cityData && $cityData->country ? $cityData->country->name : null;
         
+        $flightsQuery = DepartureFlights::with('package')->where('package_id',$tomsId);
+        
         // Fetch flights for the selected city
-        $flightsQuery = DepartureFlights::whereHas('package.destination', function ($query) use ($depCityId) {
-            $query->where('id', $depCityId);
-        })->with(['package' => function ($query) {
-            $query->select('id', 'price'); 
-        }]);
+        // $flightsQuery = DepartureFlights::whereHas('package.destination', function ($query) use ($depCityId) {
+        //     $query->where('id', $depCityId);
+        // })->with(['package' => function ($query) {
+        //     $query->select('id', 'price'); 
+        // }]);
         
         if ($selectedMonth && strtolower($selectedMonth) !== 'all') {
             $monthNumber = date('m', strtotime($selectedMonth));            $flightsQuery->whereMonth('departure_date', $monthNumber);
@@ -168,6 +180,7 @@ class PackagesController extends Controller
         foreach ($airportDates as $flight) {
             $dateList[] = [
                 'date' => Carbon::parse($flight->departure_date)->format('Y-m-d'),
+                'returnDate' => Carbon::parse($flight->return_date)->format('Y-m-d'),
                 'status' => $flight->status,
             ];
         }
@@ -221,7 +234,29 @@ class PackagesController extends Controller
         $data['social_links'] = ContentManagement::where('type', 'home_topbar')->where('keywords','!=','main_title')->get();
         $data['destination'] = Destination::with('country')->get();
         $packageTypes =  PackageType::with('subpackage')->whereNUll('parent_id')->get();
+        $settings = Setting::where('type','logo')->value('image');
+        $settingContact = Setting::where('type','contact')->first();
+        $data['packageType'] = PackageType::whereNotNUll('parent_id')->get();
+        $pageSEO = SeoManagement::where('page_id','3')->first();
         // Return a view with the filtered packages
-        return view('web.packages.tourpackages', compact('filteredPackages','data','packageTypes'));
+        return view('web.packages.tourpackages', compact('pageSEO','filteredPackages','data','packageTypes','settings','settingContact'));
     } 
+
+    /**
+     * 
+     */
+    public function getOtherDepartureCity(Request $request){
+        $packageId = $request->pack;
+        $category = $request->OCCCATID;
+        $landdate = $request->date;
+
+        $packagetype = DepartureFlights::with('package')->where('package_id',$packageId)->where('departure_date',$landdate)->where('category',$category)->get()->map(function ($flight) {
+            return $flight->package->price; 
+        });
+        
+        return response()->json([
+            'success' => true,
+            'data' => $packagetype
+        ]);
+    }
 }

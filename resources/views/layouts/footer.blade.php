@@ -4,8 +4,16 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="footer-content">
-                        <a href="{{ route('dashboard') }}" class="footer-logo"><img
-                                src="{{ asset('web/assets/images/footer-logo.png') }}"></a>
+                        <a href="{{ route('dashboard') }}" class="footer-logo">
+                            @php
+                                $images = json_decode($settings, true);
+                            @endphp
+                            @if (isset($images))
+                                <img src="{{ asset('storage' . '/' . $images['footer']) }}">
+                            @else
+                                <img src="{{ asset('web/assets/images/footer-logo.png') }}">
+                            @endif
+                        </a>
                         <div class="footer-wapper">
                             <p><span>Experienced:</span> Our friendly Consultants travel regularly & offer first hand
                                 advice.</p>
@@ -14,36 +22,62 @@
                             <p><span>Trusted:</span> Hundreds of customers travel with us every week.</p>
                         </div>
                         <ul class="social-icon">
-                            <li><a href="javascript::"><i class="fa-brands fa-instagram"></i></a></li>
-                            <li><a href="javascript::"><i class="fa-brands fa-facebook"></i></a></li>
-                            <li><a href="javascript::"><i class="fa-brands fa-twitter"></i></a></li>
-                            <li><a href="javascript::"><i class="fa-brands fa-linkedin"></i></a></li>
-                            <li><a href="javascript::"><i class="fa-brands fa-youtube"></i></a></li>
+                            @php
+                                $socialLinks = json_decode($data['social_link']->social_link, true);
+                            @endphp
+                            @php
+                                // Predefined mapping of platforms to font-awesome icon classes
+                                $platformIcons = [
+                                    'facebook' => 'facebook',
+                                    'youtube' => 'youtube',
+                                    'twitter' => 'twitter',
+                                    'instagram' => 'instagram',
+                                    'linkedin' => 'linkedin',
+                                ];
+                            @endphp
+                            @foreach ($socialLinks as $social)
+                                @php
+                                    // Extract the platform name from the URL
+                                    $url = parse_url($social['url']);
+                                    $host = $url['host'] ?? ''; // Get the host (e.g., facebook.com)
+                                    $platform = explode('.', $host)[0]; // Extract the platform name (e.g., facebook)
+
+                                    // Get the corresponding icon class
+                                    $icon = $platformIcons[strtolower($platform)] ?? 'link'; // Default to 'link' if platform not found
+                                @endphp
+                                <li><a href="{{ $social['url'] }}">
+                                        <i class="fa-brands fa-{{ $icon }}"></i>
+                                    </a></li>
+                            @endforeach
                         </ul>
                     </div>
-
                 </div>
                 <div class="col-md-3">
                     <div class="footer-content">
                         <h2>Important links</h2>
                         <ul class="footer-menu">
-                            <li><a class="active" href="javascript::">Home</a></li>
-                            <li><a href="{{ route('pages.about') }}">About Us</a></li>
-                            <li><a href="{{ route('pages.contactus') }}">Contact Us</a></li>
-                            <li><a href="{{ route('pages.blog') }}">Blogs</a></li>
-                            <li><a href="{{ route('pages.policy') }}">Privacy Policy</a></li>
-                            <li><a href="{{ route('pages.terms') }}">Terms and Condition</a></li>
+                            <li><a class="{{ request()->routeIs('dashboard') ? 'active' : '' }}"
+                                    href="{{ route('dashboard') }}">Home</a></li>
+                            <li><a class="{{ request()->routeIs('pages.about') ? 'active' : '' }}"
+                                    href="{{ route('pages.about') }}">About Us</a></li>
+                            <li><a class="{{ request()->routeIs('pages.contactus') ? 'active' : '' }}"
+                                    href="{{ route('pages.contactus') }}">Contact Us</a></li>
+                            <li><a class="{{ request()->routeIs('pages.blog') ? 'active' : '' }}"
+                                    href="{{ route('pages.blog') }}">Blogs</a></li>
+                            <li><a class="{{ request()->routeIs('pages.policy') ? 'active' : '' }}"
+                                    href="{{ route('pages.policy') }}">Privacy Policy</a></li>
+                            <li><a class="{{ request()->routeIs('pages.terms') ? 'active' : '' }}"
+                                    href="{{ route('pages.terms') }}">Terms and Condition</a></li>
                         </ul>
                     </div>
-
                 </div>
                 <div class="col-md-3">
                     <div class="footer-content">
                         <h2>Packages</h2>
                         <ul class="footer-menu">
-                            <li><a href="{{ route('web.packages') }}">Tour Packages</a></li>
-                            <li><a href="{{ route('web.packages') }}">Ocean Cruise Packages</a></li>
-                            <li><a href="{{ route('web.packages') }}">River Cruise Packages</a></li>
+                            @foreach ($data['packageType'] as $package)
+                                <li><a href="{{ route('packages.city', $package->id) }}">{{ $package->name }}</a></li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -51,9 +85,16 @@
                     <div class="footer-content">
                         <h2>Contact Us</h2>
                         <ul class="footer-contact">
-                            <li><span><i class="fa-solid fa-location-dot"></i></span> India</li>
-                            <li><span><i class="fa-solid fa-phone-volume"></i></span> 1800 2404 202 </li>
-                            <li><span><i class="fa-regular fa-envelope"></i></span> info@travelagency.com</li>
+                            <li><span><i class="fa-solid fa-location-dot"></i></span>
+                                {{ isset($settingContact->address) ? $settingContact->address : '' }}</li>
+                            <li><span><i class="fa-solid fa-phone-volume"></i></span>
+                                {{ isset($settingContact->mobile_number) ? $settingContact->mobile_number : '' }}
+                            </li>
+                            <li><span><i class="fa-regular fa-envelope"></i></span>
+                                @if (isset($settingContact->email) && $settingContact->email)
+                                    <a href="mailto:{{ $settingContact->email }}">{{ $settingContact->email }}</a>
+                                @endif
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -73,10 +114,9 @@
 <script src="{{ asset('web/assets/js/owl.carousel.min.js') }}"></script>
 <script src="{{ asset('web/assets/js/perfect-scrollbar.min.js') }}"></script>
 <script src="{{ asset('web/assets/js/select2.min.js') }}"></script>
-<script src="{{asset('web/assets/js/airport_filter.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
 <script src="{{ asset('web/assets/js/tourdetails.js') }}"></script>
+<script src="{{ asset('web/assets/js/airport_filter.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.8/slick.min.js"></script>
 <script type="text/javascript">
     $(".guests-slider").owlCarousel({
@@ -223,4 +263,8 @@
             }
         });
     });
+
+    setTimeout(function() {
+        $('.alert-success').fadeOut('fast');
+    }, 3000);
 </script>
