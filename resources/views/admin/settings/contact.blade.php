@@ -47,7 +47,7 @@
                                         <label for="heading-vertical">Mobile Number<span class="text-danger">*</span></label>
                                         <input type="text" id="heading-vertical"
                                             class="form-control" name="mobile_number"
-                                            placeholder="mobile number" value="{{ old('mobile_number', $contact->mobile_number ?? '') }}" maxlength="12" pattern="[0-9\s]+" >
+                                            placeholder="mobile number" value="{{ old('mobile_number', $contact->mobile_number ?? '') }}" maxlength="12" pattern="[0-9\s]+" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                     </div>
                                     @error('mobile_number')
                                         <span class="text-danger" role="alert">{{ $message }}</span>
@@ -58,7 +58,7 @@
                                         <label for="heading-vertical">Toll Free Number<span class="text-danger">*</span></label>
                                         <input type="text" id="heading-vertical"
                                             class="form-control" name="toll_number"
-                                            placeholder="Toll number" value="{{ old('toll_number', $contact->toll_number ?? '') }}" maxlength="12" pattern="[0-9\s]+">
+                                            placeholder="Toll number" value="{{ old('toll_number', $contact->toll_number ?? '') }}" maxlength="12" pattern="[0-9\s]+" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                     </div>
                                     @error('toll_number')
                                         <span class="text-danger" role="alert">{{ $message }}</span>
@@ -69,7 +69,7 @@
                                         <label for="heading-vertical">Location<span class="text-danger">*</span></label>
                                         <input type="text" id="heading-vertical"
                                             class="form-control" name="address"
-                                            placeholder="address" value="{{ old('address', $contact->address ?? '') }}" maxlength="40" pattern="[A-Za-z\s]+">
+                                            placeholder="address" value="{{ old('address', $contact->address ?? '') }}" maxlength="15" pattern="[A-Za-z\s]+" oninput="this.value = this.value.replace(/[^A-Za-z]/g, '')">
                                     </div>
                                     @error('address')
                                         <span class="text-danger" role="alert">{{ $message }}</span>

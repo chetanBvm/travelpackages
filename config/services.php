@@ -38,6 +38,7 @@ return [
     'stripe' => [
         'secret' => env('STRIPE_SECRET'),
         'public' => env('STRIPE_PUBLIC'),
+        'websecret' => env('STRIPE_SIGNING_SECRET')
     ],
 
 ];

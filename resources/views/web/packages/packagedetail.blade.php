@@ -96,25 +96,42 @@
                                 </div>
                                 <div class="Package-Includes-main">
                                     <h2>Package Includes</h2>
-                                                           
-                                        {!! $packages->package_includes !!}
-                                    
+
+                                    {!! $packages->package_includes !!}
+
+                                    @if(isset($data['coupon']))
                                     <div class="coupon-main">
                                         <div class="coupon-left">
                                             <div class="coupon-top">
-                                                <span>PROMO: $100 off</span>
-                                                <span>$2098.00</span>
+
+                                                <span>PROMO: {{ $data['coupon']->code }}off</span>
+                                                <span>{{ $currency }} {{ $packages->price }}</span>
                                             </div>
-                                            <h3>CAD$ <span>1,998*</span></h3>
+                                            @php
+                                                // Original price
+                                                $originalPrice = $packages->price;
+
+                                                // Discount value from coupon
+                                                $discountValue = $data['coupon']->price; // Assuming the coupon has a 'value' field
+
+                                                // Calculate final price after discount
+                                                $finalPrice = $originalPrice - $discountValue;
+
+                                                // Calculate discount percentage
+                                                $discountPercentage = ($discountValue / $originalPrice) * 100;
+                                            @endphp
+                                            <h3>{{ $currency }} <span>{{ number_format($finalPrice, 2) }}</span></h3>
+                                            {{-- <h3>CAD$ <span>1,998*</span></h3> --}}
                                             <p>STARTING AT PER PERSON/TAXES INCL</p>
                                         </div>
                                         <div class="coupon-right">
                                             <span>OFF</span>
-                                            <span>20%</span>
+                                            <span>{{ round($discountPercentage) }}%</span>
                                         </div>
                                     </div>
+                                    @endif
                                 </div>
-                               
+
                             </div>
                         </div>
                     </div>
@@ -142,8 +159,7 @@
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link" id="pills-Accommodation-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-Accommodation" type="button" role="tab"
-                                            aria-controls="pills-Accommodation"
-                                            aria-selected="false">Accommodation</button>
+                                            aria-controls="pills-Accommodation" aria-selected="false">Accommodation</button>
                                     </li>
 
                                     <li class="nav-item" role="presentation">
@@ -217,7 +233,7 @@
                                     <div id="flightsContainer">
                                     </div>
                                 </div>
-                               
+
                                 <div class="bottom-para">
                                     <p>*The advertised starting rate is available from Toronto on Jan 2025</p>
                                     <p>**All prices are subject to change without notice</p>
@@ -339,22 +355,22 @@
                                 </div>
 
                                 <div class="inclusions-data mt-4">
-             
-                                    {!! $packages->inclusion?? '' !!}
+
+                                    {!! $packages->inclusion ?? '' !!}
 
                                     <h2>EXCLUDES</h2>
-                     
+
                                     {!! $packages->exclusion ?? '' !!}
-                                    
+
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="pills-Map" role="tabpanel" aria-labelledby="pills-Map-tab"
                                 tabindex="0">
                                 <div class="map-image">
-                                    @if(!empty($packages->map_image))
-                                    <img src="{{asset('storage').'/'. $packages->map_image}}">
+                                    @if (!empty($packages->map_image))
+                                        <img src="{{ asset('storage') . '/' . $packages->map_image }}">
                                     @else
-                                    <img src="{{ asset('web/assets/images/map-image.jpg') }}">
+                                        <img src="{{ asset('web/assets/images/map-image.jpg') }}">
                                     @endif
                                 </div>
                             </div>
@@ -492,18 +508,18 @@
                         <div class="side-contry-section">
                             <h2>Starting Rates</h2>
                             <ul>
-                                @foreach($data['departureCity'] as $city)
-                                <li>
-                                    <a href="#" class="side-contry-left">
-                                        <h3> {{strtoupper($city->name)}}</h3> <span>CAD ${{$city->price}}</span> <a class="travel-btn btn"
-                                            href="javascript::" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal">See Dates</a>
-                                    </a>
-                                </li>
-                                @endforeach                                        
+                                @foreach ($data['departureCity'] as $city)
+                                    <li>
+                                        <a href="#" class="side-contry-left">
+                                            <h3> {{ strtoupper($city->name) }}</h3> <span>CAD ${{ $city->price }}</span>
+                                            <a class="travel-btn btn" href="javascript::" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal">See Dates</a>
+                                        </a>
+                                    </li>
+                                @endforeach
                             </ul>
-                            <a class="travel-btn see_other_modal open_other_modal"  href="javascript::" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">Select Another City</a>
+                            <a class="travel-btn see_other_modal open_other_modal" href="javascript::"
+                                data-bs-toggle="modal" data-bs-target="#exampleModal">Select Another City</a>
                         </div>
                     </div>
                 </div>
@@ -578,7 +594,7 @@
         function dates() {
             $('#pills-dateprice-tab').click();
         }
-        var packageId = @json($packages->id); 
+        var packageId = @json($packages->id);
     </script>
     <script>
         const airplaneIcon = "{{ asset('web/assets/images/airplane.svg') }}";

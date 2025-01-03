@@ -18,28 +18,164 @@
             {{-- action="{{ route('bookings.update', $bookings->id) }}" --}}
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form form-vertical" id="submit-form" method="post" enctype="multipart/form-data"
+                    <form class="form form-vertical" method="post" enctype="multipart/form-data"
                         action="{{ route('admin.bookings.update', $bookings->id) }}" id="createDrawDestination">
                         @csrf
-                        {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> --}}
                         <div class="form-body">
                             <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="days">Transaction Id</label>
+                                        <input type="text" id="heading-vertical" class="form-control"
+                                            name="transaction_id" placeholder="customer name"
+                                            value="{{ old('transaction_id', $bookings->transaction_id ?? '') }}"
+                                            maxlength="12" pattern="[A-Za-z\s]+"
+                                            oninput="this.value = this.value.replace(/[^A-Za-z]/g, '')" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="days">Customer Name<span class="text-danger">*</span></label>
+                                        <input type="text" id="heading-vertical" class="form-control"
+                                            name="passenger_name" placeholder="customer name"
+                                            value="{{ old('passenger_name', $bookings->passenger_name ?? '') }}"
+                                            maxlength="12" pattern="[A-Za-z\s]+"
+                                            oninput="this.value = this.value.replace(/[^A-Za-z]/g, '')">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="days">Customer Email<span class="text-danger">*</span></label>
+                                        <input type="text" id="heading-vertical" class="form-control" name="c_email"
+                                            placeholder="email" value="{{ old('c_email', $bookings->c_email ?? '') }}"
+                                            maxlength="30" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="days">Contact No.<span class="text-danger">*</span></label>
+                                        <input type="text" id="heading-vertical" class="form-control" name="phone"
+                                            placeholder="contact no" value="{{ old('phone', $bookings->phone ?? '') }}"
+                                            maxlength="30">
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="days">Pacakage Name<span class="text-danger">*</span></label>
+                                        <input type="text" id="heading-vertical" class="form-control" name="package_name"
+                                            placeholder="package name"
+                                            value="{{ old('package_name', $bookings->package_name ?? '') }}" maxlength="40">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="days">Departure City<span class="text-danger">*</span></label>
+                                        <input type="text" id="heading-vertical" class="form-control"
+                                            name="departure_city" placeholder="departure city"
+                                            value="{{ old('departure_city', $bookings->departure_city ?? '') }}"
+                                            maxlength="40" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="days">Departure Date<span class="text-danger">*</span></label>
+                                        <input type="date" id="heading-vertical" class="form-control"
+                                            name="departure_date" placeholder="departure date"
+                                            value="{{ old('departure_date', $bookings->departure_date ?? '') }}"
+                                            maxlength="40">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="days">Adult Passenger<span class="text-danger">*</span></label>
+                                        <input type="number" id="heading-vertical" class="form-control"
+                                            name="passengers_adult" placeholder="passenger adult"
+                                            value="{{ old('passengers_adult', $bookings->passengers_adult ?? '') }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="days">Child Passenger</label>
+                                        <input type="number" id="heading-vertical" class="form-control"
+                                            name="passengers_children" placeholder="passenger child(Eg:1)"
+                                            value="{{ old('passengers_children', $bookings->passengers_children ?? '') }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="days">Infant Passenger</label>
+                                        <input type="number" id="heading-vertical" class="form-control"
+                                            name="passengers_infant" placeholder="passenger infant(Eg:0)"
+                                            value="{{ old('passengers_infant', $bookings->passengers_infant ?? '') }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="days">Room Description<span class="text-danger">*</span></label>
+                                        <input type="text" id="heading-vertical" class="form-control"
+                                            name="room_description" placeholder="room description"
+                                            value="{{ old('room_description', $bookings->room_description ?? '') }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="price">Price<span class="text-danger">*</span></label>
+                                        <input type="text" id="heading-vertical" class="form-control"
+                                            name="tour_price" placeholder="price"
+                                            value="{{ old('tour_price', $bookings->tour_price ?? '') }}"
+                                            pattern="[0-9\s]+" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="days">Special Request</label>
+                                        <input type="text" id="heading-vertical" class="form-control"
+                                            name="special_requests" placeholder="special requests"
+                                            value="{{ old('special_requests', $bookings->special_requests ?? '') }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-6 d-none" id="cancelReason">
+                                    <div class="form-group">
+                                        <label for="days">Cancel Reason</label>
+                                        <input type="text" id="heading-vertical" class="form-control"
+                                            name="cancellation_reason" placeholder="cancellation reason"
+                                            value="{{ old('cancellation_reason', $bookings->cancellation_reason ?? '') }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-6 d-none" id="rejectReason">
+                                    <div class="form-group">
+                                        <label for="days">Reject Reason</label>
+                                        <input type="text" id="heading-vertical" class="form-control"
+                                            name="reject_reason" placeholder="reject reason"
+                                            value="{{ old('reject_reason', $bookings->reject_reason ?? '') }}">
+                                    </div>
+                                </div>
+
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Status</label>
                                         <select class="form-select" id="bookingStatus" name="status">
                                             <option value="{{ $bookings->status }}">{{ $bookings->status }}</option>
-                                            <option value="Booking">Booking</option>
                                             <option value="Approved">Approved</option>
-                                            {{-- <option value="Cancel">Cancelled</option> --}}
-                                            <option value="rejected">Rejected</option>
+                                            <option value="Cancel">Cancelled</option>
+                                            <option value="Rejected">Rejected</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                    <a href="{{ route('bookings.index') }}" type="button" class="btn btn-light-secondary me-1 mb-1"><span>Back</span></a>
-                                    {{-- <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button> --}}
+                                    <a href="{{ route('bookings.index') }}" type="button"
+                                        class="btn btn-light-secondary me-1 mb-1"><span>Back</span></a>
                                 </div>
                             </div>
                         </div>
@@ -50,7 +186,7 @@
     </div>
 
     <!-- Rejection Reason Modal -->
-    <div class="modal fade" id="rejectionModal" tabindex="-1" aria-labelledby="rejectionModalLabel" aria-hidden="true">
+    {{-- <div class="modal fade" id="rejectionModal" tabindex="-1" aria-labelledby="rejectionModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -69,92 +205,30 @@
                 </div>
             </div>
         </div>
-    </div>
-
+    </div> --}}
 @endsection
 @section('js')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('#submit-form').on('submit', function(e) {
-                e.preventDefault(); // Prevent the default form submission
+        function toggleReasonInputs(selectedValue) {
 
-                const selectedStatus = $('#bookingStatus').val();
+            $('#cancelReason').addClass('d-none');
+            $('#rejectReason').addClass('d-none');
 
-                if (selectedStatus === 'rejected') {
-                    // Open the rejection reason modal
-                    $('#rejectionModal').modal('show');
-                } else {
-                    // Submit the form for other statuses
-                    submitBookingForm({
-                        status: selectedStatus
-                    });
-                }
-            });
-
-            // Handle rejection reason modal submission
-            $('#rejectionSubmit').on('click', function() {
-                const reason = $('#rejectionReason').val();
-                if (reason.trim() === '') {
-                    alert('Please provide a rejection reason.');
-                    return;
-                }
-
-                // Close the modal and submit the form with rejection reason
-                $('#rejectionModal').modal('hide');
-                submitBookingForm({
-                    status: 'rejected',
-                    reason: reason,
-                });
-            });
-
-            function submitBookingForm(data) {
-
-                const formData = data.status;
-                const formReason = data.reason;
-                // const form = document.getElementById('submit-form');
-
-                // const formData = new FormData(form);
-
-                // Add custom data like reason (if any)
-                // for (const key in data) {
-                //     formData.append(key, data[key]);
-                // }
-
-                $.ajax({
-                    url: $('#submit-form').attr('action'),
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                            'content'), // Ensure meta tag exists
-                    },
-                    data: {
-                        formData: formData,
-                        reason : formReason,
-                        "_token": "{{ csrf_token() }}"
-                    },
-
-                    success: function(response) {
-                        if (response.success) {
-                            Swal.fire(
-                                'Approved!',
-                                'Booking approved successfully!',
-                                'success'
-                            )
-                            location.reload(); // Refresh the page after success
-                        } else {
-                            // console.log(response);
-
-                            alert('Error: ' + response.message);
-                        }
-                    },
-                    error: function(xhr) {
-                        console.error(xhr.responseText);
-                        alert('An error occurred while updating the booking status.');
-                    },
-                });
+            if (selectedValue === 'Cancel') {
+                $('#cancelReason').removeClass('d-none');
+            } else if (selectedValue === 'Rejected') {
+                $('#rejectReason').removeClass('d-none');
             }
+        }
+        var currentStatus = $('#bookingStatus').val();
+        toggleReasonInputs(currentStatus);
+
+        // On change event, toggle inputs based on new selection
+        $('#bookingStatus').on('change', function() {
+            var selectedValue = $(this).val();
+            toggleReasonInputs(selectedValue);
         });
     </script>
 @endsection

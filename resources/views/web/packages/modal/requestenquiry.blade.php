@@ -58,7 +58,7 @@
                     <input type="hidden" name="departure_city" id="departure_city" >
                     <input type="hidden" name="tour_price" id="tour_price" required="">
                     <input type="hidden" name="hotel_category" id="hotel_category">
-
+                    <input type="hidden" name="room_description" id="room_description" value="1 ROOM (1 Double)">
                     <div class="modal-body">
                         <h2>{{ $packages->name }}</h2>
                         <div class="row">

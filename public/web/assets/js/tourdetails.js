@@ -708,7 +708,9 @@ $(document).ready(function () {
                 console.log('Default option selected.');
             } else {
                 const selectedOption = options[selectedIndex];
-                // console.log('Selected Room Option:', selectedOption);
+                $('#room_description').val(selectedOption.description);
+                console.log('Selected Room Option:', selectedOption);
+
                 // Additional logic for when a room option is selected
             }
         });

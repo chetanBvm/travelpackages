@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('passengers_children')->nullable();
             $table->string('passengers_infant')->nullable();
             $table->string('room_occupancy')->nullable();
+            $table->string('room_description')->nullable();
+            $table->decimal('tour_price',8,2)->nullable();
             $table->string('passenger_name')->nullable();
             $table->string('phone')->nullable();
             $table->string('c_email');
@@ -29,7 +31,7 @@ return new class extends Migration
             $table->string('package_name');
             $table->string('transaction_id');
             $table->string('special_requests')->nullable();
-            $table->enum('status',['Booking','Approved','Cancel','Pending','rejected'])->default('Pending');
+            $table->enum('status',['Booking','Approved','Cancel','Pending','Rejected'])->default('Pending');
             $table->longText('reject_reason')->nullable();
             $table->string('payment_gateway_id')->nullable();
             $table->timestamps();
