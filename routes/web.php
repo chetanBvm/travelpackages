@@ -78,7 +78,8 @@ Route::group(['prefix' => 'admin'], function () {
 
         //Packages
         Route::resource('package', PackagesController::class);
-
+        Route::get('check-packagename',[PackagesController::class,'CheckPackageName'])->name('check.package.name');
+        
         //Package Image
         Route::resource('package-image', PackageImageController::class);
 

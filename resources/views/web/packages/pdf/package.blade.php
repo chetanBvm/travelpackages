@@ -25,9 +25,13 @@
         style="max-width: 800px;margin: auto;padding: 20px;border: 1px solid #eee;box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);font-size: 16px;line-height: 24px;color: #203638;">
         <table style="width: 100%; line-height: inherit;text-align: left;border-collapse: collapse;">
             <tr>
+                @php
+                    $images = json_decode($logo, true);
+                @endphp               
                 <td style="vertical-align: middle;">
-                    <img src="{{ asset('web/assets/images/logo.png') }}" style="width: 100%; max-width: 150px;"
-                        alt="Company Logo">
+                    @if (isset($images))
+                        <img src="{{ asset('storage/' . $images['home']) }}" style="width: 100%; max-width: 150px;" alt="Company Logo">
+                    @endif
                 </td>
                 <td style="vertical-align: top; text-align: right;">
                     <b>Myvacayhost</b><br>
@@ -35,7 +39,8 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2"><img src="{{ asset('storage' . '/' . $package->thumbnail) }}" style="width: 100%; "></td>
+                <td colspan="2"><img src="{{ asset('storage' . '/' . $package->thumbnail) }}" style="width: 100%; ">
+                </td>
             </tr>
             <tr>
                 <td colspan="2"><span
@@ -52,12 +57,12 @@
                 <td></td>
             </tr>
             <tr>
-              {!! $package->itinerary !!}
+                {!! $package->itinerary !!}
             </tr>
             <tr>
-                <td style=" padding: 10px 0px;" colspan="2"> 
-                  <img src="{{asset('storage/'.$package->map_image)}}" style="max-width: 600px;">
-                 </td>
+                <td style=" padding: 10px 0px;" colspan="2">
+                    <img src="{{ asset('storage/' . $package->map_image) }}" style="max-width: 600px;">
+                </td>
             </tr>
 
 
@@ -72,7 +77,7 @@
             <tr>
                 <td style="padding-top: 10px;" colspan="2">
                     <b>Excludes:</b>
-{!! $package->exclusion !!}
+                    {!! $package->exclusion !!}
                 </td>
             </tr>
 
@@ -80,7 +85,7 @@
             <tr>
                 <td style="padding-top: 10px;" colspan="2">
                     <b>Accommodation:</b>
-                   {!! $package->accommodation !!}
+                    {!! $package->accommodation !!}
                 </td>
             </tr>
 

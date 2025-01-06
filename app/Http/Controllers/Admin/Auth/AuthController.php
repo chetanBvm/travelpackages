@@ -23,7 +23,7 @@ class AuthController extends Controller
     public function checkLogin(Request $request)
     {
         $this->validate($request, [
-            'email' => 'required|email',
+            'email' => 'required|email|email:rfc,dns',
             'password' => 'required',
         ]);
         $email = $request->email;

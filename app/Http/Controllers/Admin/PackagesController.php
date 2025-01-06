@@ -25,12 +25,12 @@ class PackagesController extends Controller
     {
         if ($request->ajax()) {
             $data = Package::with('destination.country')->orderBy('id', 'desc');
-            
+
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $urlpath = url('admin/package');
-                    return '<a href="' . $urlpath . '/' . $row->id . '/edit' . '" class="edit"><i class="material-icons">edit</i></a><a href="javascript:void(0);" onClick="deleteFunc(' . $row->id . ')" class="delete"><i class="material-icons">delete</i></a>';
+                    return '<a href="' . $urlpath . '/' . $row->id . '/edit' . '" class="edit"><i class="bi bi-pencil-fill"></i></a><a href="javascript:void(0);" onClick="deleteFunc(' . $row->id . ')" class="delete"><i class="bi bi-trash-fill"></i></a>';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -53,10 +53,10 @@ class PackagesController extends Controller
         }
 
         // Get destinations if they exist
-        $destination = Destination::with('country')->where('status','Active')->orderBy('id','desc')->get();
+        $destination = Destination::with('country')->where('status', 'Active')->orderBy('id', 'desc')->get();
         $packageType  = PackageType::get();
         // Return the view with destinations
-        return view('admin.packages.create', compact('destination','packageType'));
+        return view('admin.packages.create', compact('destination', 'packageType'));
     }
 
     /**
@@ -64,16 +64,21 @@ class PackagesController extends Controller
      */
     public function store(PackageStoreRequest $request): RedirectResponse
     {
+
         DB::beginTransaction();
         try {
             $validated = $request->validated();
-            $asset_image = null;
             $asset_map = null;
-            //Check if the request has an image file
-            if ($request->hasFile('thumbnail')) {
-                $file = $request->file('thumbnail');
-                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
-                $asset_image = $file->storeAs('uploads/packages', $tempName, 'public');
+
+            $images = [];
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $index => $file) {
+                    $path = $file->store('uploads/packages', 'public');
+                    $images[] = [
+                        'path' => $path,
+                        'is_thumbnail' => $index == $request->input('thumbnail'),
+                    ];
+                }
             }
             if ($request->hasFile('map_image')) {
                 $file = $request->file('map_image');
@@ -82,12 +87,12 @@ class PackagesController extends Controller
             }
             $price = $validated['price'];
             $taxPercentage = $validated['tax'];
-           
+
             Package::create([
                 'name' => $validated['name'],
                 'description' => $validated['description'],
                 'price' => $price,
-                'thumbnail' => $asset_image,
+                'images' => json_encode($images),
                 'days' => $validated['days'],
                 'status' => $validated['status'],
                 'destination_id' => $validated['destination_id'],
@@ -136,10 +141,11 @@ class PackagesController extends Controller
     {
         //Find the package by its ID
         $package = Package::findOrFail($id);
-        $destination = Destination::with('country')->where('status','Active')->orderBy('id','desc')->get();
+        
+        $destination = Destination::with('country')->where('status', 'Active')->orderBy('id', 'desc')->get();
         $packageType  = PackageType::get();
         $selectedMonths = json_decode($package->departure_month, true);
-        return view('admin.packages.edit', compact('package', 'destination','packageType','selectedMonths'));
+        return view('admin.packages.edit', compact('package', 'destination', 'packageType', 'selectedMonths'));
     }
 
     /**
@@ -154,6 +160,10 @@ class PackagesController extends Controller
             // Validate the incoming request data
             $validated = $request->validated();
 
+            if ($validated['min_age'] > $validated['max_age']) {
+                return redirect()->back()->withErrors(['min_age' => 'Min Age cannot be greater than Max Age.']);
+            }
+            
             // Update the package record
             $package->update([
                 'name' => $validated['name'],
@@ -177,26 +187,53 @@ class PackagesController extends Controller
                 'departure_month' => json_encode($validated['departure_month']),
             ]);
 
-            //Check if the request has an image file
-            if ($request->hasFile('thumbnail')) {
+            $existingImages = json_decode($package->thumbnail ?? '[]', true);
+            $deletedImages = json_decode($request->input('deleted_images', '[]'), true);
+            
+            $updatedImages = array_filter($existingImages, function ($image) use ($deletedImages) {
+                return !in_array($image['path'], $deletedImages);
+            });
 
-                // Validate the image file (optional, add size/extension validation if necessary)
-                $request->validate([
-                    'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                ]);
-
-                $file = $request->file('thumbnail');
-                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
-                $oldFilePath = 'uploads/packages' . $package->thumbnail;
-                if (Storage::disk('public')->exists($oldFilePath)) {
-                    Storage::disk('public')->delete($oldFilePath);
+            $newImages = [];
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $index => $file) {
+                    $path = $file->store('uploads/packages', 'public');
+                    $newImages[] = [
+                        'path' => $path,
+                        'is_thumbnail' => $index == $request->input('thumbnail'),
+                    ];
                 }
-
-                $asset_image = $file->storeAs('uploads/packages', $tempName, 'public');
-                $package->update([
-                    'thumbnail' => $asset_image,
-                ]);
+              
             }
+            $updatedImages = array_merge($updatedImages, $newImages);
+            
+            $package->update([
+                'images' => json_encode($updatedImages),
+            ]);
+            // foreach($images as $imageData){
+            //     $package->create($imageData);
+            // }
+
+            //Check if the request has an image file
+            // if ($request->hasFile('thumbnail')) {
+
+            //     // Validate the image file (optional, add size/extension validation if necessary)
+            //     $request->validate([
+            //         'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            //     ]);
+
+            //     $file = $request->file('thumbnail');
+            //     $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
+            //     $oldFilePath = 'uploads/packages' . $package->thumbnail;
+            //     if (Storage::disk('public')->exists($oldFilePath)) {
+            //         Storage::disk('public')->delete($oldFilePath);
+            //     }
+
+            //     $asset_image = $file->storeAs('uploads/packages', $tempName, 'public');
+            //     $package->update([
+            //         'thumbnail' => $asset_image,
+            //     ]);
+            // }
             if ($request->hasFile('map_image')) {
 
                 // Validate the image file (optional, add size/extension validation if necessary)
@@ -216,7 +253,7 @@ class PackagesController extends Controller
                     'map_image' => $asset_map,
                 ]);
             }
-            
+
             DB::commit(); //commit the transaction
 
             return redirect()->route('package.index')->with('message', 'Package updated successfully!');
@@ -243,8 +280,23 @@ class PackagesController extends Controller
         $package->images()->delete();
 
         $package->delete();
-        
+
 
         return response()->json(['success' => 'Package deleted successfully!']);
+    }
+
+
+    /**
+     * check the pacakge name already exists
+     */
+
+    public function CheckPackageName(Request $request)
+    {
+        $packageName = $request->package_name;
+        $destination = $request->departure_id;
+
+        $exists =  Package::where('name', $packageName)->where('destination_id', $destination)->exists();
+
+        return response()->json(['exists' => $exists]);
     }
 }

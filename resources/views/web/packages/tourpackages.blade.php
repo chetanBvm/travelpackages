@@ -166,12 +166,13 @@
                 @if ($filteredPackages->isNotEmpty())
                     <div class="package-bottom" id="package-list">
                         @foreach ($filteredPackages as $packages)
+
                             <div class="package-wapper">
                                 <div class="row">
                                     <div class="col-md-5">
                                         <div class="package-left">
                                             <figure>
-                                                <img src="{{ asset('storage') . '/' . $packages->thumbnail }}">
+                                                <img src="{{ asset('storage') . '/' . $packages->images }}">
                                             </figure>
                                         </div>
                                     </div>

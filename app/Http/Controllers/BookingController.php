@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\ContentManagement;
+use App\Models\DepartureFlights;
 use App\Models\Package;
 use App\Models\Setting;
 use Illuminate\Http\Request;
@@ -71,9 +72,10 @@ class BookingController extends Controller
 
             $contact = Setting::where('type','contact')->first();
             $package = Package::where('id',$booking->package_id)->first();
+            $departureFlights = DepartureFlights::where('package_id',$booking->package_id)->first();
             $info = ContentManagement::where('type', 'home_topbar')->first();
             
-            Mail::send('email.booking', compact('booking','contact','package','info'), function ($message) use ($booking) {
+            Mail::send('email.booking', compact('booking','contact','package','info','departureFlights'), function ($message) use ($booking) {
                 $message->to($booking->c_email, $booking->passenger_name)->subject('Booking Inquiry:' . $booking->package_name);
                 $message->from('employee@myvacayhost.com','My Vacay Host');
             });

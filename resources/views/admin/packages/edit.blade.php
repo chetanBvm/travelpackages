@@ -43,10 +43,11 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>                                
+                                </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">Package Name<span class="text-danger">*</span></label>
+                                        <label for="first-name-vertical">Package Name<span
+                                                class="text-danger">*</span></label>
                                         <input type="text" id="name-vertical" class="form-control" name="name"
                                             value="{{ $package->name }}" placeholder="Name">
                                     </div>
@@ -69,9 +70,9 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Price<span class="text-danger">*</span></label>
-                                        <input type="text" id="price" class="form-control" name="price" min="0" 
-                                        max="9999999"
-                                            value="{{ floor($package->price) }}" placeholder="price" oninput="this.value = this.value.slice(0, 7);">
+                                        <input type="text" id="price" class="form-control" name="price"
+                                            min="0" max="9999999" value="{{ floor($package->price) }}"
+                                            placeholder="price" oninput="this.value = this.value.slice(0, 7);">
                                     </div>
                                     @error('price')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -81,7 +82,8 @@
                                     <div class="form-group">
                                         <label for="price">Tax(%)<span class="text-danger">*</span></label>
                                         <input type="text" id="tax" class="form-control" name="tax"
-                                            placeholder="tax" value="{{ floor($package->tax) }}" min="0" max="99" oninput="if(this.value > 99) this.value = 99;">
+                                            placeholder="tax" value="{{ floor($package->tax) }}" min="0"
+                                            max="99" oninput="if(this.value > 99) this.value = 99;">
                                     </div>
                                     @error('tax')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -128,8 +130,9 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Days<span class="text-danger">*</span></label>
-                                        <input type="number" id="days" class="form-control" name="days" min="1" max="365"
-                                            value="{{ $package->days }}" placeholder="days">
+                                        <input type="number" id="days" class="form-control" name="days"
+                                            min="1" max="365" value="{{ $package->days }}"
+                                            placeholder="days">
                                     </div>
                                     @error('days')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -155,8 +158,10 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="min_age">Min Age Limitation<span class="text-danger">*</span></label>
-                                        <input type="number" id="min_age" class="form-control" name="min_age" max="99"
-                                            value="{{ $package->min_age }}" placeholder="Min Age">
+                                        <input type="text" id="min_age" class="form-control" name="min_age"
+                                            min="5" max="99" value="{{ $package->min_age }}"
+                                            pattern="[0-9\s]+" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                            placeholder="Min Age">
                                     </div>
                                     @error('min_age')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -165,8 +170,9 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="max_age">Max Age Limitation<span class="text-danger">*</span></label>
-                                        <input type="number" id="max_age" class="form-control" name="max_age" max="100"
-                                            value="{{ $package->max_age }}" placeholder="max age">
+                                        <input type="text" id="max_age" class="form-control" name="max_age"
+                                            max="99" value="{{ $package->max_age }}" placeholder="max age"
+                                            pattern="[0-9\s]+" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                     </div>
                                     @error('max_age')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -186,17 +192,31 @@
 
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="image" for="">Thumbnail<span
+                                        <label class="image" for="">Upload Image<span
                                                 class="text-danger">*</span></label>
                                         <!-- Display the existing image if available -->
-                                        @if ($package->thumbnail)
+
+                                        {{-- @if ($package->thumbnail)
                                             <div>
                                                 <img id="imagePreview"
                                                     src="{{ asset('storage/' . $package->thumbnail) }}"
                                                     alt="Current Image" width="100" height="100">
                                             </div>
+                                        @endif --}}
+                                        {{-- <input type="file" class="form-control" name="images[]" id="image"
+                                            multiple> --}}
+                                        <input type="file" id="image" name="images[]" multiple
+                                            class="form-control">
+
+                                        <input type="hidden" name="thumbnail" id="thumbnail-input">
+                                        <div id="imagePreview"></div>
+                                        <input type="hidden" id="deleted-images" name="deleted_images" value="[]">
+
+                                        @if (isset($package->images))
+                                            @php
+                                            $packageImages = json_decode($package->images); 
+                                            @endphp
                                         @endif
-                                        <input type="file" class="form-control" name="thumbnail" id="image">
                                     </div>
                                 </div>
 
@@ -325,20 +345,20 @@
                 console.error(error);
             });
         //preview Image
-        function previewImage() {
-            const file = document.getElementById('image').files[0];
-            const reader = new FileReader();
+        // function previewImage() {
+        //     const file = document.getElementById('image').files[0];
+        //     const reader = new FileReader();
 
-            reader.onloadend = function() {
-                document.getElementById('imagePreview').src = reader.result;
-            }
+        //     reader.onloadend = function() {
+        //         document.getElementById('imagePreview').src = reader.result;
+        //     }
 
-            if (file) {
-                reader.readAsDataURL(file); // This will trigger the onloadend event
-            } else {
-                document.getElementById('imagePreview').src = "#"; // Reset the preview if no file is selected
-            }
-        }
+        //     if (file) {
+        //         reader.readAsDataURL(file); // This will trigger the onloadend event
+        //     } else {
+        //         document.getElementById('imagePreview').src = "#"; // Reset the preview if no file is selected
+        //     }
+        // }
 
         //Validation script
         $(document).ready(function() {
@@ -455,4 +475,146 @@
             });
         })
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const existingImages = JSON.parse(`@json($packageImages ?? [])`) ;
+            const deletedImagesInput = document.getElementById('deleted-images');
+            const baseUrl = "{{ asset('storage/') }}/";
+            const galleryContainer = document.getElementById('imagePreview');
+
+            existingImages.forEach((image, index) => {
+                addImageToGallery(baseUrl + image.path, index, image.is_thumbnail);
+            });
+
+            function addImageToGallery(src, index, isThumbnail) {
+                const thumbnailClass = isThumbnail ? 'btn-success' : '';
+                const thumbnailText = isThumbnail ? 'Thumbnail' : 'Set as Thumbnail';
+
+                const imageElement = `<div class="image-wrapper" style="display: inline-block; margin: 10px; text-align: center;" data-index="${index}">
+                <img src="${src}" alt="Image ${index}" style="width: 150px; height: 150px; display: block; border:1px solid gray;">
+                <button type="button" class="btn btn-primary btn-sm thumbnail-btn ${thumbnailClass}" data-index="${index}" style="margin-top: 5px;">${thumbnailText}</button>
+                <button type="button" class="btn btn-danger btn-sm remove-image" data-path="${src}" style="margin-top: 5px;">&times</button>
+            </div>`;
+
+                galleryContainer.insertAdjacentHTML('beforeend', imageElement);
+            }
+
+            // Handle Set as Thumbnail button click
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('set-thumbnail')) {
+                    const index = e.target.getAttribute('data-index');
+
+                    // Reset all buttons and borders
+                    document.querySelectorAll('.set-thumbnail').forEach(btn => btn.textContent =
+                        'Set as Thumbnail');
+                    document.querySelectorAll('.image-wrapper img').forEach(img => img.style.border =
+                        '1px solid gray');
+
+                    // Highlight selected thumbnail
+                    e.target.textContent = 'Thumbnail';
+                    // e.target.previousElementSibling.style.border = '2px solid green';
+                }
+            });
+
+            // Handle Remove Image button click
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-image')) {
+                    const wrapper = e.target.closest('.image-wrapper');
+                    const imagePath = e.target.getAttribute('data-path');
+                    const deletedImages = JSON.parse(deletedImagesInput.value);
+
+                    deletedImages.push(imagePath);
+                    deletedImagesInput.value = JSON.stringify(deletedImages);
+
+                    // Perform your delete action (for example, add path to deleted images list)
+                    // console.log('Removing image:', imagePath);
+
+                    // Remove the image from UI
+                    wrapper.remove();
+
+                    updateImageIndices();
+                }
+            });
+
+            // Update the image indices after an image is removed
+            function updateImageIndices() {
+                const images = document.querySelectorAll('.image-wrapper');
+                images.forEach((image, newIndex) => {
+                    const index = newIndex; // Set new index based on the order of images in the DOM
+                    image.setAttribute('data-index', index);
+                    const button = image.querySelector('.set-thumbnail');
+                    if (button) {
+                        button.setAttribute('data-index', index);
+                    }
+                });
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            let selectedImages = [];
+            let thumbnailIndex = null;
+            const existingImages = JSON.parse(`@json($packageImages ?? [])`);
+
+            // Handle file input change
+            $('#image').on('change', function(event) {
+                const files = event.target.files;
+
+
+                Array.from(files).forEach((file, index) => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const newimgIndex = existingImages.length + selectedImages.length;
+                        selectedImages.push(file);
+
+                        // Add preview
+                        $('#imagePreview').append(`
+                          <div class="col-mb-3 mb-3 preview-container" data-index="${newimgIndex}">
+                            <div class="image-wrapper style="display: inline-block; margin: 10px; text-align: center;" data-index="${newimgIndex}">
+                            <img src="${e.target.result}" class="img-thumbnail preview-img" alt="Image Preview">
+                            <button type="button" class="btn btn-danger btn-sm remove-btn" data-index="${newimgIndex}"> &times;</button>
+                            <button type="button" class="btn btn-primary btn-sm thumbnail-btn" data-index="${newimgIndex}">Set as Thumbnail</button>
+                                </div>
+                            
+                        </div>
+                    `);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            });
+
+            $(document).on('click', '.thumbnail-btn', function() {
+                const index = $(this).data('index');
+                thumbnailIndex = index; // Set thumbnail index
+                $('#thumbnail-input').val(index); // Update thumbnail input value
+                $('.thumbnail-btn').removeClass('btn-success').text(
+                    'Set as Thumbnail'); // Reset all buttons
+                $(this).addClass('btn-success').text('Thumbnail'); // Highlight selected thumbnail
+            });
+
+            // Handle remove button click
+            $(document).on('click', '.remove-btn', function() {
+                const index = $(this).data('index');
+                $(`.preview-container[data-index="${index}"]`).remove();
+                selectedImages[index] = null;
+                if (thumbnailIndex === index) {
+                    thumbnailIndex = null;
+                    $('#thumbnail-input').val('');
+                }
+            });
+
+            // Handle set as thumbnail button click
+            $(document).on('click', '.thumbnail-btn', function() {
+                const index = $(this).data('index');
+                thumbnailIndex = index;
+                $('#thumbnail-input').val(index);
+                $('.thumbnail-btn').removeClass('btn-success').text('Set as Thumbnail');
+                $(this).addClass('btn-success').text('Thumbnail');
+            });
+
+
+        });
+    </script>
+
 @endsection

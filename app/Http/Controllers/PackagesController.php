@@ -72,10 +72,11 @@ class PackagesController extends Controller
     public function downloadPdf($id)
     {
         $package = Package::with(['inclusions', 'exclusions'])->findOrFail($id);
-
+        $logo = Setting::where('type','logo')->value('image');
         // Share data with the Blade view
         $data = [
             'package' => $package,
+            'logo' => $logo
         ];
 
         // Load the Blade view and pass the data

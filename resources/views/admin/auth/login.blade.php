@@ -13,7 +13,7 @@
                 <div class="auth-logo">
                     <a href="index.html"><img src="{{asset('admin/assets/images/logo/logo.png')}}" alt="Logo"></a>
                 </div>
-                <h1 class="auth-title">Log in.</h1>
+                <h1 class="auth-title">Log in</h1>
                 <p class="auth-subtitle mb-5">Log in with your data that you entered during registration.</p>
 
                 <form id="loginform" name="loginform"action="{{route('admin.login.check')}}" method="POST">
@@ -87,7 +87,7 @@
                 rules: {
                     email: {
                         required: true,
-                        email:email,
+                        email:true,
                         validEmail: true,
                     },
                     password: {
