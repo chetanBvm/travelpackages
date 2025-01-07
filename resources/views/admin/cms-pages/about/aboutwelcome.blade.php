@@ -45,7 +45,8 @@
 
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="sub-heading-vertical">Sub Title<span class="text-danger">*</span></label>
+                                        <label for="sub-heading-vertical">Sub Title<span
+                                                class="text-danger">*</span></label>
                                         <textarea name="description" id="default" cols="30" rows="10" placeholder="Enter description">{{ old('description', $info->description ?? '') }}</textarea>
                                     </div>
                                     @error('description')
@@ -54,10 +55,10 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label>Image <span class="text-danger">*</span></label>
-                                        <input type="file" name="image" id="main_image"
-                                            class="form-control @error('image') is-invalid @enderror"
-                                            value="{{ old('image') }}">
+                                        <label>Image<span class="text-danger">*</span></label>
+                                        <input type="file" id="main_image" name="image[]"
+                                            class="form-control file-input @error('image') is-invalid @enderror"
+                                            value="{{ old('image') }}" multiple>
                                         @error('image')
                                             <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -65,35 +66,28 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div id="error-message" style="color: red; display: none;"></div>
+                                <input type="hidden" id="image_paths" name="image_paths" value="{{ json_encode($info->image) }}">
 
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label>Image <span class="text-danger">*</span></label>
-                                        <input type="file" name="image_1" id="main_image_1"
-                                            class="form-control @error('image_1') is-invalid @enderror"
-                                            value="{{ old('image_1') }}">
-                                        @error('image_1')
-                                            <span class="invalid-feedback d-block" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
+                                <div class="mt-3 imagePreview">
+                                    @if ($info && isset($info->image))
+                                        @php
+                                            $images = json_decode($info->image, true);
+                                        @endphp
+                                        @if ($images && is_array($images))
+                                            @foreach ($images as $index => $image)
+                                                <img class="profile-image" src="{{ asset('storage/' . $image['path']) }}"
+                                                    alt="your image" width="100px" height="auto"
+                                                    style="margin-right: 10px;" />
+                                                <button type="button" class="remove-image"
+                                                    data-index="{{ $index }}"
+                                                    style="background: red; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer;">&times;</button>
+                                            @endforeach
+                                        @endif
+                                    @else
+                                        <p class="text-muted">No images Uploded yet</p>
+                                    @endif
                                 </div>
-
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label>Image <span class="text-danger">*</span></label>
-                                        <input type="file" name="image_2" id="main_image_2"
-                                            class="form-control @error('image_2') is-invalid @enderror"
-                                            value="{{ old('image_2') }}">
-                                        @error('image_2')
-                                            <span class="invalid-feedback d-block" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
 
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
@@ -110,28 +104,68 @@
     <script src="{{ asset('admin/assets/vendors/ckeditor/ckeditor.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> --}}
+
     <script>
         ClassicEditor
             .create(document.querySelector('#default'))
             .catch(error => {
                 console.error(error);
             });
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
 
-                reader.onload = function(e) {
-                    $('#imagePreview')
-                        .attr('src', e.target.result);
-                };
+        $(function() {
 
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
+            var imagesPreview = function(input, placeToInsertImagePreview) {
 
-        $("#main_image").change(function() {
-            readURL(this);
+                if (input.files) {
+                    var filesAmount = input.files.length;
+
+                    for (i = 0; i < filesAmount; i++) {
+                        var reader = new FileReader();
+
+                        reader.onload = function(event) {
+                            $($.parseHTML(
+                                '<img class="profile-image" width="100px" height="auto" style="margin-right: 10px;">'
+                                )).attr('src', event.target.result).appendTo(
+                                placeToInsertImagePreview);
+                        }
+                        reader.readAsDataURL(input.files[i]);
+                    }
+                }
+            };
+
+            $('#main_image').on('change', function() {
+                imagesPreview(this, 'div.imagePreview');
+            });
         });
+
+        $(document).ready(function() {
+            var maxImages = 3;
+
+            $('#main_image').on('change', function(event) {
+                const selectedFiles = event.target.files;
+
+                if (selectedFiles.length > maxImages) {
+                    // Show error message
+                    $('#error-message').text(`You can only select up to ${maxImages} images.`).show();
+
+                    // Clear the file input so the user can try again
+                    $(this).val('');
+                } else {
+                    // Hide error message
+                    $('#error-message').hide();
+                    console.log('Selected images:', selectedFiles);
+                }
+            });
+        });
+
+        $('.remove-image').click(function(){
+            $(this).parent().remove();            
+            
+        });
+        
+
+
         //Validation script
         $(document).ready(function() {
             $('#createDrawHomeDestination').validate({ // initialize the plugin

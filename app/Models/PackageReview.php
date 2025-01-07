@@ -14,6 +14,6 @@ class PackageReview extends Model
 
 
     public function package(){
-        return $this->hasOne(Package::class,'id','package_id');
+        return $this->hasOne(Package::class,'id','package_id')->withTrashed();
     }
 }

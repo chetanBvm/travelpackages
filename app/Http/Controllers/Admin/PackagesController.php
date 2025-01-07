@@ -153,6 +153,7 @@ class PackagesController extends Controller
      */
     public function update(PackageStoreRequest $request, string $id)
     {
+        
         //find the package by its ID
         $package = Package::findOrFail($id);
         DB::beginTransaction();
@@ -193,7 +194,7 @@ class PackagesController extends Controller
             $updatedImages = array_filter($existingImages, function ($image) use ($deletedImages) {
                 return !in_array($image['path'], $deletedImages);
             });
-
+                
             $newImages = [];
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $index => $file) {
@@ -202,11 +203,10 @@ class PackagesController extends Controller
                         'path' => $path,
                         'is_thumbnail' => $index == $request->input('thumbnail'),
                     ];
-                }
-              
+                }              
             }
             $updatedImages = array_merge($updatedImages, $newImages);
-            
+            // dd($updatedImages);
             $package->update([
                 'images' => json_encode($updatedImages),
             ]);

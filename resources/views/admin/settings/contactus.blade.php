@@ -32,9 +32,9 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="heading-vertical">Title<span class="text-danger">*</span></label>
-                                        <input type="text" id="heading-vertical"
-                                            class="form-control" name="title"
-                                            placeholder="title" value="{{ old('title', $contactus->title ?? '') }}" maxlength="30">
+                                        <input type="text" id="heading-vertical" class="form-control" name="title"
+                                            placeholder="title" value="{{ old('title', $contactus->title ?? '') }}"
+                                            maxlength="30">
                                     </div>
                                     @error('title')
                                         <span class="text-danger" role="alert">{{ $message }}</span>
@@ -44,43 +44,61 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="heading-vertical">SubTitle<span class="text-danger">*</span></label>
-                                        <input type="text" id="heading-vertical"
-                                            class="form-control" name="subtitle"
-                                            placeholder="sub title" value="{{ old('subtitle', $contactus->subtitle ?? '') }}" maxlength="30" >
+                                        <input type="text" id="heading-vertical" class="form-control" name="subtitle"
+                                            placeholder="sub title"
+                                            value="{{ old('subtitle', $contactus->subtitle ?? '') }}" maxlength="30">
                                     </div>
                                     @error('subtitle')
                                         <span class="text-danger" role="alert">{{ $message }}</span>
                                     @enderror
                                 </div>
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="heading-vertical">Banner Image<span class="text-danger">*</span></label>
+                                        <input type="file" id="heading-vertical" class="form-control" name="banner_image"
+                                            placeholder="banner image"
+                                            value="{{ old('banner_image', $contactus->banner_image ?? '') }}"
+                                            accept = 'image/jpeg , image/jpg, image/gif, image/png , image/svg' multiple>
+                                    </div>
+                                    @error('banner_image')
+                                        <span class="text-danger" role="alert">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="heading-vertical">Image<span class="text-danger">*</span></label>
-                                        <input type="file" id="heading-vertical"
-                                            class="form-control" name="image[]"
-                                            placeholder="image" value="{{ old('image', $contact->image ?? '') }}"  accept = 'image/jpeg , image/jpg, image/gif, image/png , image/svg' multiple>
+                                        <input type="file" id="main_image" class="form-control" name="image[]"
+                                            placeholder="image" value="{{ old('image', $contactus->image ?? '') }}"
+                                            accept = 'image/jpeg , image/jpg, image/gif, image/png , image/svg' multiple>
                                     </div>
                                     @error('image')
                                         <span class="text-danger" role="alert">{{ $message }}</span>
                                     @enderror
-                                </div>         
+                                </div>
                                 <div class="mt-3">
-                                    @if (isset($contactus->image) && $contactus->image)
-                                        @php
-                                            // Decode the JSON-encoded image field
-                                            $images = json_decode($contactus->image, true);
-                                        @endphp                                
-                                        @foreach ($images as $area => $imagePath)
-                                            <div class="image-preview">
-                                                <img class="profile-image"
-                                                    src="{{ asset('storage/' . $imagePath) }}"
-                                                    alt="{{ $area }} image"
-                                                    width="100px" height="auto" style="margin-right: 10px;" />
-                                            </div>
+                                    @php $images = json_decode($contactus->image, true); @endphp
+                                    @if (isset($images))
+                                        @foreach ($images as $image)
+                                            {{-- $path = $image['path']; --}}
+                                            {{-- $isBanner = $image['is_banner']; --}}
+
+                                            @if ($image['is_banner'])
+                                                <h3>Banner Image:</h3>
+                                                <img src="{{ asset('storage/' . $image['path']) }}" alt='Banner Image'
+                                                    style="width:50%;height:auto;">
+                                            @else
+                                                <h3>Gallery Image</h3>
+                                                <img src="{{ asset('storage/' . $image['path']) }}" alt='Gallery Image'
+                                                    style="width:50%;height:auto;">
+                                            @endif
                                         @endforeach
+                                    @else
                                     @endif
-                                </div>                        
+                                </div>
                                 <div class="col-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>                      
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -94,7 +112,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <script>
-         function readURL(input) {
+        function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
 
@@ -117,8 +135,8 @@
                     title: {
                         required: true,
                     },
-                    subtitle:{
-                        required:true,
+                    subtitle: {
+                        required: true,
                     },
                 },
                 // Customizing error messages
@@ -126,8 +144,8 @@
                     title: {
                         required: "The title field is required."
                     },
-                    subtitle:{
-                        required:"The subtitle field is required.",
+                    subtitle: {
+                        required: "The subtitle field is required.",
                     },
                 },
                 errorPlacement: function(error, element) {

@@ -338,7 +338,13 @@
                                         <div class="hotels-wapper">
                                             <a href="{{ route('web.packageDetails', $packages->id) }}">
                                                 <figure>
-                                                    <img src="{{ asset('storage') . '/' . $packages->thumbnail }}">
+                                                    @foreach (json_decode($packages->images) as $image)
+                                                    @if ($image->is_thumbnail)
+                                                        <img src="{{ asset('storage/' . $image->path) }}"
+                                                            alt="Thumbnail Image">
+                                                    @endif
+                                                @endforeach
+                                                    {{-- <img src="{{ asset('storage') . '/' . $packages->thumbnail }}"> --}}
                                                 </figure>
                                                 <div class="hotels-content">
 

@@ -45,7 +45,6 @@ class PackagesController extends Controller
     public function packageDetail(int $id)
     {
         $packages = Package::with('images')->findOrFail($id);
-        $data['packageImages'] = PackageImages::where('package_id', $id)->get();
         $data['packages'] = Package::where('status','Active')->get()->take(3);
         $data['feature'] = Package::get()->take(10);
         $data['itinerary'] = Itinerary::where('package_id', $id)->first();

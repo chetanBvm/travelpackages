@@ -95,22 +95,32 @@ class SettingsController extends Controller
         ]);
 
         try{
-            $asset_images = [];
+            $images = [];
+            if ($request->hasFile('banner_image')) {
+                $bannerImage = $request->file('banner_image');
+                $tempName = uniqid('asset_', true) . '.' . $bannerImage->getClientOriginalExtension();                           
+                $bannerImagePath = $bannerImage->storeAs('uploads/contactus', $bannerImage ,'public');
+                $images[] = [
+                    'path' => $bannerImagePath,
+                    'is_banner' => true,
+                ];
+            }
+            // $asset_images = [];
             if ($request->hasFile('image')) {
                 foreach ($request->file('image') as $file) {
                     $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();                           
                     $path = $file->storeAs('uploads/contactus', $tempName, 'public');
-                    $asset_images[] = $path; 
+                    $images[] = ['path' => $path,'is_banner'=>false]; 
                 }
             } else {
                 $existing_images = ContentManagement::where('type', 'contactus')->value('image');
-                $asset_images = $existing_images ? json_decode($existing_images, true) : [];
+                $images = $existing_images ? json_decode($existing_images, true) : [];
             }
 
             ContentManagement::updateOrCreate(['type' => 'contactus'],[
                 'title' => $request->title,
                 'subtitle' => $request->subtitle,
-                'image' => json_encode($asset_images)
+                'image' => json_encode($images)
             ]);
     
             return redirect()->back()->with('success','contactus created successfully!');

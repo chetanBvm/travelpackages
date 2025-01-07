@@ -11,38 +11,47 @@
         <div class="col-lg-5 col-12">
             <div id="auth-left">
                 <div class="auth-logo">
-                    <a href="index.html"><img src="{{asset('admin/assets/images/logo/logo.png')}}" alt="Logo"></a>
+                    <a href="index.html"><img src="{{ asset('admin/assets/images/logo/logo.png') }}" alt="Logo"></a>
                 </div>
                 <h1 class="auth-title">Log in</h1>
                 <p class="auth-subtitle mb-5">Log in with your data that you entered during registration.</p>
 
-                <form id="loginform" name="loginform"action="{{route('admin.login.check')}}" method="POST">
+                <form id="loginform" name="loginform"action="{{ route('admin.login.check') }}" method="POST">
                     @csrf
                     <div class="form-group position-relative has-icon-left mb-4">
-                        <input type="text" class="form-control form-control-xl @error('email') is-invalid @enderror" name="email" placeholder="email" value="@if(old('email')){{ old('email')}}@elseif(\App\Helpers\Admin::getRememberMeCookie()['email']){{ (\App\Helpers\Admin::getRememberMeCookie())['email'] }}@endif" autocomplete="email" autofocus>
+                        <input type="text" class="form-control form-control-xl @error('email') is-invalid @enderror"
+                            name="email" placeholder="email"
+                            value="@if (old('email')) {{ old('email') }}@elseif(\App\Helpers\Admin::getRememberMeCookie()['email']){{ \App\Helpers\Admin::getRememberMeCookie()['email'] }} @endif"
+                            autocomplete="email" autofocus>
                         <div class="form-control-icon">
                             <i class="bi bi-person"></i>
                         </div>
                         @error('email')
-                        <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                        </span>
-                      @enderror  
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                     <div class="form-group position-relative has-icon-left mb-4">
-                        <input type="password" class="form-control form-control-xl @error('password') is-invalid @enderror" name="password" placeholder="Password">
+                        <input type="password" class="form-control form-control-xl @error('password') is-invalid @enderror"
+                            name="password" id="password" placeholder="Password">
                         <div class="form-control-icon">
                             <i class="bi bi-shield-lock"></i>
                         </div>
+                        <span class="password-toggle"
+                            style="position: absolute; top: 50%; right: 15px; transform: translateY(-50%); cursor: pointer;">
+                            <i class="bi bi-eye-slash" id="togglePassword"></i>
+                        </span>
                         @error('password')
-                          <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                          </span>
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                         @enderror
                     </div>
                     <div class="form-check form-check-lg d-flex align-items-end">
-                        <input type="checkbox" name="rememberme" id="rememberme" class="form-check-input me-2" @if(\App\Helpers\Admin::getRememberMeCookie()['email']) {{ 'checked' }} @endif>
-                        
+                        <input type="checkbox" name="rememberme" id="rememberme" class="form-check-input me-2"
+                            @if (\App\Helpers\Admin::getRememberMeCookie()['email']) {{ 'checked' }} @endif>
+
                         <label class="form-check-label text-gray-600" for="flexCheckDefault">
                             Keep me logged in
                         </label>
@@ -62,32 +71,33 @@
             </div>
         </div>
     </div>
-   
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function(){
-            @if(Session::has('flash-message'))
-                @if(Session::get('flash-message.status') == 'success')
-                    successNotification("{{Session::get('flash-message.msg')}}")
-                @elseif(Session::get('flash-message.status') == 'warning')
-                    warningNotification("{{Session::get('flash-message.msg')}}")
+        $(document).ready(function() {
+            @if (Session::has('flash-message'))
+                @if (Session::get('flash-message.status') == 'success')
+                    successNotification("{{ Session::get('flash-message.msg') }}")
+                @elseif (Session::get('flash-message.status') == 'warning')
+                    warningNotification("{{ Session::get('flash-message.msg') }}")
                 @else
-                    errorNotification("{{Session::get('flash-message.msg')}}")
+                    errorNotification("{{ Session::get('flash-message.msg') }}")
                 @endif
             @endif
-            @if(\App\Helpers\Admin::getRememberMeCookie()['email'] || old('email')) 
+            @if (\App\Helpers\Admin::getRememberMeCookie()['email'] || old('email'))
                 $('.form-line').addClass('focused');
             @endif
             jQuery.validator.addMethod("validEmail", function(value, element) {
-                var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                var emailRegex =
+                    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 return this.optional(element) || (emailRegex.test(String(value).toLowerCase()));
             }, "Please enter a valid email");
             $("#loginform").validate({
                 rules: {
                     email: {
                         required: true,
-                        email:true,
+                        email: true,
                         validEmail: true,
                     },
                     password: {
@@ -97,26 +107,39 @@
                 messages: {
                     email: {
                         required: "Please enter email",
-                        email:"Please enter a valid email",
+                        email: "Please enter a valid email",
                     },
                     password: {
                         required: "Please enter password",
                     }
                 },
-                submitHandler:function(form) {
+                submitHandler: function(form) {
                     loader('show');
                     form.submit();
                 },
-                highlight: function (input) {
+                highlight: function(input) {
                     $(input).parents('.form-line').addClass('error');
                 },
-                unhighlight: function (input) {
+                unhighlight: function(input) {
                     $(input).parents('.form-line').removeClass('error');
                 },
-                errorPlacement: function (error, element) {
+                errorPlacement: function(error, element) {
                     $(element).parents('.form-group').append(error);
                 }
             });
         });
-    </script>   
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#togglePassword').on('click', function() {
+                // Toggle the type attribute
+                const passwordField = $('#password');
+                const passwordFieldType = passwordField.attr('type') === 'password' ? 'text' : 'password';
+                passwordField.attr('type', passwordFieldType);
+
+                // Toggle the eye icon class
+                $(this).toggleClass('bi-eye bi-eye-slash');
+            });
+        });
+    </script>
 @endsection

@@ -13,6 +13,8 @@
             $months[] = $currentYear->copy()->addMonthsNoOverflow($i)->format('F Y');
         }
     @endphp
+    @php $packageImage = json_decode($packages->images); 
+    @endphp
     <div class="main">
         <!-- Package-Single -->
         <section class="package-single">
@@ -26,12 +28,11 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="package-single-left-img">
-                                                @if (isset($packages->images[0]))
+                                                @if (isset($packageImage))
                                                     <figure>
                                                         {{-- @php dd($packages->images[0]->images);@endphp --}}
-                                                        @if ($packages->images[0] && count($packages->images) > 0)
-                                                            <img
-                                                                src="{{ asset('storage') . '/' . $packages->images[0]->images }}" />
+                                                        @if ($packageImage && count($packageImage) > 0)
+                                                            <img src="{{ asset('storage') . '/' . $packageImage[0]->path }}" />
                                                         @endif
                                                     </figure>
                                                 @endif
@@ -40,33 +41,31 @@
 
                                         <div class="col-md-4 mt-md-0 mt-4">
                                             <div class="package-single-left-img">
-                                                @if (isset($packages->images[1]))
+                                                @if (isset($packageImage[1]))
                                                     <figure>
                                                         <img
-                                                            src="{{ asset('storage') . '/' . $packages->images[1]->images }}" />
+                                                            src="{{ asset('storage') . '/' . $packageImage[1]->path }}" />
                                                     </figure>
                                                 @endif
                                                 {{-- <img src="{{asset('web/assets/images/pool-two.png')}}" /> --}}
                                                 <div class="tree-img">
-                                                    @if (isset($packages->images[2]))
+                                                    @if (isset($packageImage[2]))
                                                         <figure>
                                                             <img
-                                                                src="{{ asset('storage') . '/' . $packages->images[2]->images }}">
+                                                                src="{{ asset('storage') . '/' . $packageImage[2]->path }}">
                                                             {{-- <img src="images/pool-three.png" /> --}}
                                                         </figure>
                                                     @endif
                                                     <a href="#" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal2">
-                                                        <figcaption>{{ $packages->images->count() ?? '' }} photos <i
+                                                        <figcaption>{{ count($packageImage) ?? '' }} photos <i
                                                                 class="fa-solid fa-circle-arrow-right"></i></figcaption>
                                                     </a>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
                                     <!-- tab-section -->
-
                                     <div class="itinerary-inner">
                                         {!! $packages->description !!}
                                     </div>
@@ -285,11 +284,11 @@
                                     <div class="row">
                                         <div class="col-lg-3 col-md-6">
                                             <div class="accommodation-images">
-                                                @if (isset($packages->images[0]))
+                                                @if (isset($packageImage[0]))
                                                     <figure>
-                                                        @if ($packages->images[0] && count($packages->images) > 0)
+                                                        @if ($packageImage[0] && count($packageImage) > 0)
                                                             <img
-                                                                src="{{ asset('storage') . '/' . $packages->images[0]->images }}" />
+                                                                src="{{ asset('storage') . '/' . $packageImage[0]->path }}" />
                                                         @endif
                                                     </figure>
                                                 @endif
@@ -297,11 +296,11 @@
                                         </div>
                                         <div class="col-lg-3 col-md-6">
                                             <div class="accommodation-images">
-                                                @if (isset($packages->images[1]))
+                                                @if (isset($packageImage[1]))
                                                     <figure>
-                                                        @if ($packages->images[1] && count($packages->images) > 0)
+                                                        @if ($packageImage[1] && count($packageImage) > 0)
                                                             <img
-                                                                src="{{ asset('storage') . '/' . $packages->images[1]->images }}" />
+                                                                src="{{ asset('storage') . '/' . $packageImage[1]->path }}" />
                                                         @endif
                                                     </figure>
                                                 @endif
@@ -309,11 +308,11 @@
                                         </div>
                                         <div class="col-lg-3 col-md-6">
                                             <div class="accommodation-images">
-                                                @if (isset($packages->images[2]))
+                                                @if (isset($packageImage[2]))
                                                     <figure>
-                                                        @if ($packages->images[2] && count($packages->images) > 0)
+                                                        @if ($packageImage[2] && count($packageImage) > 0)
                                                             <img
-                                                                src="{{ asset('storage') . '/' . $packages->images[2]->images }}" />
+                                                                src="{{ asset('storage') . '/' . $packageImage[2]->path }}" />
                                                         @endif
                                                     </figure>
                                                 @endif
@@ -321,16 +320,16 @@
                                         </div>
                                         <div class="col-lg-3 col-md-6">
                                             <div class="tree-img accommodation-images">
-                                                @if (isset($packages->images[3]))
+                                                @if (isset($packageImage[3]))
                                                     <figure>
-                                                        @if ($packages->images[3] && count($packages->images) > 0)
+                                                        @if ($packageImage[3] && count($packageImage) > 0)
                                                             <img
-                                                                src="{{ asset('storage') . '/' . $packages->images[3]->images }}" />
+                                                                src="{{ asset('storage') . '/' . $packageImage[3]->path }}" />
                                                         @endif
                                                     </figure>
                                                 @endif
                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-                                                    <figcaption>+{{ $packages->images->count() ?? '' }} photos <i
+                                                    <figcaption>+ {{count($packageImage)}} photos <i
                                                             class="fa-solid fa-circle-arrow-right"></i>
                                                     </figcaption>
                                                 </a>
@@ -566,7 +565,12 @@
                                 <div class="col-sm-6 col-md-4">
                                     <div class="hotels-wapper">
                                         <figure>
-                                            <img src="{{ asset('storage') . '/' . $package->thumbnail }}">
+                                            @foreach (json_decode($package->images) as $image)
+                                                    @if ($image->is_thumbnail)
+                                                        <img src="{{ asset('storage/' . $image->path) }}"
+                                                            alt="Thumbnail Image">
+                                                    @endif
+                                                @endforeach
                                         </figure>
                                         <div class="hotels-content">
                                             <a href="{{ route('web.packageDetails', $package->id) }}">

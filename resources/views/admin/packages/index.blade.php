@@ -38,22 +38,22 @@
                 <div class="card-header">
                     <span>Packages</span>
                     <a href="{{ route('package.create') }}" type="button"
-                    class="btn btn-info d-none d-lg-block m-l-15">&#x002B; Add New</a>
+                        class="btn btn-info d-none d-lg-block m-l-15">&#x002B; Add New</a>
                 </div>
 
                 <div class="card-body">
                     <table class="table table-striped data-table">
                         <thead>
-                                <tr>
-                                    <th>S.No.</th>
-                                    <th>Destination Name</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>Total Price</th>
-                                    <th>Days</th>
-                                    <th>Status</th>
-                                    <th width="100px">Action</th>
-                                </tr>
+                            <tr>
+                                <th>S.No.</th>
+                                <th>Destination Name</th>
+                                <th>Package Name</th>
+                                <th>Price</th>
+                                <th>Total Price</th>
+                                <th>Days</th>
+                                <th>Status</th>
+                                <th width="100px">Action</th>
+                            </tr>
                         </thead>
                         <tbody>
                         </tbody>
@@ -63,6 +63,7 @@
 
         </section>
     </div>
+  
     <script type="text/javascript">
         $(function() {
 
@@ -70,16 +71,18 @@
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('package.index') }}",
-                order: [[0, 'desc']],
+                order: [
+                    [0, 'desc']
+                ],
                 columns: [{
-                    data: 'DT_RowIndex', // Use DT_RowIndex for serial number
+                        data: 'DT_RowIndex', // Use DT_RowIndex for serial number
                         name: 'DT_RowIndex',
                         orderable: false, // Prevent ordering on this column
                         searchable: false
                     },
                     {
                         data: 'destination.country.name',
-                        name:'destination.country.name'
+                        name: 'destination.country.name'
                     },
                     {
                         data: 'name',
@@ -90,7 +93,7 @@
                         name: 'price'
                     },
                     {
-                        data:'total_price',
+                        data: 'total_price',
                         name: 'total_price'
                     },
                     {
@@ -98,8 +101,8 @@
                         name: 'days'
                     },
                     {
-                        data:'status',
-                        name:'status'
+                        data: 'status',
+                        name: 'status'
                     },
                     {
                         data: 'action',

@@ -59,15 +59,18 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label class="image" for="">Image<span class="text-danger">*</span></label>
-                                        <!-- Display the existing image if available -->
-                                        @if ($packageReview->images)
-                                            <div>
-                                                <img id="imagePreview"
-                                                    src="{{ asset('storage/' . $packageReview->images) }}"
-                                                    alt="Current Image" width="100" height="100">
-                                            </div>
-                                        @endif
+                                       
                                         <input type="file" class="form-control" name="images" id="image">
+                                    </div>
+                                    <div>
+                                         <!-- Display the existing image if available -->
+                                         @if ($packageReview->images)
+                                         <div>
+                                             <img id="imagePreview"
+                                                 src="{{ asset('storage/' . $packageReview->images) }}"
+                                                 alt="Current Image" width="100" height="100">
+                                         </div>
+                                     @endif
                                     </div>
                                 </div>
 
@@ -122,6 +125,9 @@
                 document.getElementById('imagePreview').src = "#"; // Reset the preview if no file is selected
             }
         }
+        $("#image").change(function() {
+            previewImage(this);
+        });
 
         //Validation script
         $(document).ready(function() {

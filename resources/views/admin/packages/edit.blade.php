@@ -570,9 +570,9 @@
 
                         // Add preview
                         $('#imagePreview').append(`
-                          <div class="col-mb-3 mb-3 preview-container" data-index="${newimgIndex}">
-                            <div class="image-wrapper style="display: inline-block; margin: 10px; text-align: center;" data-index="${newimgIndex}">
-                            <img src="${e.target.result}" class="img-thumbnail preview-img" alt="Image Preview">
+                          <div class="preview-container" data-index="${newimgIndex}">
+                            <div class="image-wrapper" style="display: inline-block; margin: 10px; text-align: center;" data-index="${newimgIndex}">
+                            <img src="${e.target.result}" class="img-thumbnail preview-img" alt="Image ${newimgIndex}" style="width: 150px; height: 150px; display: block; border:1px solid gray;">
                             <button type="button" class="btn btn-danger btn-sm remove-btn" data-index="${newimgIndex}"> &times;</button>
                             <button type="button" class="btn btn-primary btn-sm thumbnail-btn" data-index="${newimgIndex}">Set as Thumbnail</button>
                                 </div>
@@ -612,7 +612,6 @@
                 $('.thumbnail-btn').removeClass('btn-success').text('Set as Thumbnail');
                 $(this).addClass('btn-success').text('Thumbnail');
             });
-
 
         });
     </script>
