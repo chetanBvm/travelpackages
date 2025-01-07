@@ -32,7 +32,7 @@
     </style>
 </head>
 
-<body style="font-family:sans-serif;margin:0; padding: 20px; ">
+<body style="font-family:sans-serif;margin:0; padding: 20px;">
     <div
         style="max-width: 800px;margin: auto;padding: 20px;border: 1px solid #eee;box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); font-size: 16px;line-height: 24px;">
         <table style="width: 100%;line-height: inherit;text-align: left;border-collapse: collapse;">
@@ -63,20 +63,23 @@
                 <td style="font-size: 16px; font-weight: 600; padding-top: 20px;" class="head-data"> <b>{{ $booking->package_name }}</b></td>
             </tr>
             <tr>
-                <td style="font-size: 16px; font-weight: 600; " class="head-data"> <b>Depart:</b> <span>{{ $booking->departure_date }}</span></td>
+                <td style="font-size: 16px; font-weight: 600; " class="head-data"> <b>Depart:</b> 
+                    <span>{{ $booking->departure_date ? \Carbon\Carbon::parse($booking->departure_date)->format('F j, Y') : 'N/A' }}</span>
+                </td>
             </tr>
             <tr>
                 <td style="font-size: 16px; font-weight: 600; padding-bottom: 20px;" class="head-data"> <b>Return:</b>
-                    <span>January 15 2025</span></td>
+                    <span>{{ $departureFlights->return_date ? \Carbon\Carbon::parse($departureFlights->return_date)->format('F j, Y') : 'N/A' }}</span>
             </tr>
 
-
-
             <tr>
-                <td style="background-color: #E5A13D; padding: 8px; color: white; font-weight: bold;">TRIP DETAILS</td>
-                {{-- {!! $package->itinerary !!} --}}
+                <td style="background-color: #E5A13D; padding: 8px; color: white; font-weight: bold;">TRIP DETAILS</td>                
             </tr>            
-          
+            <tr>
+                <td>
+                    {!!  $package->itinerary !!}
+                </td>
+            </tr>
 
             <tr>
                 <td style="background-color: #E5A13D; padding: 8px; color: white; font-weight: bold;">Package Price</td>
@@ -85,11 +88,11 @@
 
             <tr>
                 <td style="font-size: 16px; font-weight: 600; padding-top: 20px;">
-                    {{$booking->room_occupancy}}</td>
+                    {{$booking->room_description}}</td>
             </tr>
 
             <tr>
-                <td style="font-size: 16px; font-weight: 500; ">$3,398.00 CAD</td>
+                <td style="font-size: 16px; font-weight: 500; ">{{$booking->c_currency}}{{$booking->tour_price}}</td>
             </tr>
             <tr>
                 <td
@@ -98,13 +101,19 @@
             </tr>
 
             <tr>
-                <td style="font-size: 16px; font-weight: 500; padding-top: 10px;">2x $3,298.00 CAD</td>
+                <td style="font-size: 16px; font-weight: 500; padding-top: 10px;">
+                    {{$booking->passengers_adult}} x {{$booking->c_currency}} {{$booking->tour_price}}
+                    {{-- 2x $3,298.00 CAD --}}
+                </td>
             </tr>
 
 
             <tr>
+                @php 
+                $totalPrice =  $booking->passengers_adult * $booking->tour_price;
+                @endphp
                 <td style="font-size: 16px; font-weight: 600; align-items: end; padding: 20px 0px;" class="head-data">
-                    <b style="font-size: 40px; font-weight: bold;">$6,596.00 CAD</b> <b>taxes included</b></td>
+                    <b style="font-size: 40px; font-weight: bold;">{{number_format($totalPrice,2)}}</b> <b>taxes included</b></td>
             </tr>
 
 
@@ -118,52 +127,18 @@
 
             <tr>
                 <td style="padding-top: 10px;">
-                    <b>Addons:</b>
-                    <p style="margin: 0;">
-                        Catamaran Sailing sunset tour: + $205.00 CAD p.p. <br>
-                        Join the group at a meeting point near the beach area. You will be sailing to one of the
-                        many pristine beaches in the area. On the way, you will be likely able to admire marine
-                        wildlife, especially turtles, dolphins, flying fish or whales. The crew will provide snorkel
-                        equipment and you will practice it for one hour approximately, looking for exotic sea life.
-                        You will also enjoy a varied lunch as well as an open bar including sodas, juices, beers,
-                        and some liquors. After lunch, you will return to the bay for a beautiful sunset along the
-                        beach shore. Once you finish, make your way to your hotel for the evening in Tamarindo.
-
-                        </up>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td style="padding-top: 10px;">
                     <b>Includes:</b>
 
                     {!! $package->inclusion !!}
 
                 </td>
             </tr>
-
-            <tr>
-                <td style="padding-top: 10px;">
-                    <b>Hotels:</b>
-                    <p style="margin: 0;padding-top: 10px;">3 nights in Rincon De La Vieja at the Buena Vista del Rincon
-                        Eco Adventure 3* hotel (or similar)
-                        in a standard room</p>
-                    <p style="margin: 0;">3 nights in Tamarindo at the Wyndham Tamarindo 3.5* hotel (or similar) in a
-                        standard room</p>
-                    <p style="margin: 0;">1 night in Liberia at the Hampton by Hilton Guanacaste Airport 3.5* hotel (or
-                        similar) in a
-                        standard room</p>
-                </td>
-            </tr>
-
             <tr>
                 <td style="padding-top: 10px;">
                     <b>Excludes:</b>
                     {!! $package->exclusion !!}
                 </td>
             </tr>
-
 
             <tr>
                 <td style="padding-top: 10px;">
@@ -199,14 +174,6 @@
                 </td>
             </tr>
 
-
-
-            <tr>
-                <td>
-                    <span>Felicia</span>
-                </td>
-            </tr>
-
             <tr>
                 <td style= "border-bottom: 1px solid rgb(177, 177, 177); padding-bottom: 10px;">
                     <b>Toll-free:</b> <span>{{$contact->toll_number}}</span>
@@ -216,15 +183,12 @@
             <tr style=" border-top: 1px solid rgb(177, 177, 177); padding-top: 10px;">
                 <td style=" padding: 10px 0px; ">
 
-
-
                     <span>Myvacayhost.com - Where Vacation Dreams Come True</span> <br>
                     <span><b>Toll-free: </b>{{$contact->toll_number}}</span><br>
 
                     <a href="#"
                         style="border-right:1px solid #203638; color: #203638; font-size: 14px; padding-right: 5px;">account@myvacayhost.com</a>
-                    <a href="#" style="color: #203638; font-size: 14px; ">myvacayhost.com</a>
-
+                    <a href="#" style="color: #203638; font-size: 14px;">myvacayhost.com</a>
                 </td>
             </tr>
         </table>

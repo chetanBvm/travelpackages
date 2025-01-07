@@ -23,9 +23,9 @@ class PromotionStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0', // Added numeric and minimum validation for price
-            'type' => 'required|string|max:100', // Added string validation and length limit for type
-            'expiry_date' => 'required|date',
+            'price' => 'required|numeric|min:0', 
+            'type' => 'required|string|max:100', 
+            'expiry_date' => 'required|date|after_or_equal:today',
             'status' => 'string',
             'code' =>'required',
         ];

@@ -1,12 +1,23 @@
 @extends('layouts.app')
 @section('content')
+    @php
+        $images = json_decode($contactUs->image, true);
+    @endphp
     <div class="main">
         <!-- College-Banner -->
         <section class="college">
             <div class="container-fluid">
                 <div class="college-inner">
                     <figure>
-                        <img src="{{ asset('web/assets/images/contact-bg.png') }}">
+                        @if (isset($images))
+                            @foreach ($images as $image)
+                                @if ($image['is_banner'])
+                                    <img src="{{ asset('storage/' . $image['path']) }}">
+                                @endif
+                            @endforeach
+                        @else
+                            <img src="{{ asset('web/assets/images/contact-bg.png') }}">
+                        @endif
                     </figure>
                     <div class="college-content">
                         @if (isset($contactUs))
@@ -80,11 +91,11 @@
                                             class="form-control @error('mobile_number') is-invalid @enderror"
                                             placeholder="Enter 10 digit phone number" value="{{ old('mobile_number') }}"
                                             maxlength="11" pattern="[0-9\s]+">
-                                       
+
                                     </div>
                                     @error('mobile_number')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -107,15 +118,14 @@
             <div class="container-fluid">
                 <div class="con-inner">
                     <div class="owl-carousel owl-theme contact-slider">
-                        @php
-                            $images = json_decode($contactUs->image, true);
-                        @endphp
                         @foreach ($images as $image)
-                            <div class="item">
-                                <figure>
-                                    <img src="{{ asset('storage' . '/' . $image) }}">
-                                </figure>
-                            </div>
+                            @if (!$image['is_banner'])
+                                <div class="item">
+                                    <figure>
+                                        <img src="{{ asset('storage' . '/' . $image['path']) }}">
+                                    </figure>
+                                </div>
+                            @endif
                         @endforeach
                     </div>
                 </div>

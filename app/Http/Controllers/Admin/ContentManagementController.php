@@ -302,32 +302,24 @@ class ContentManagementController extends Controller
 
     public function aboutWelcomeSave(Request $request)
     {
+        // dd($request->all());
         $this->validate($request, [
             'title' => 'required',
             'description' => 'required',
-            'image' => 'image|mimes:png,jpg,jpeg',
-            'image_1' => 'image|mimes:png,jpg,jpeg',
-            'image_2' => 'image|mimes:png,jpg,jpeg',
+            'image.*' => 'image|mimes:png,jpg,jpeg,svg',            
         ]);
 
         try {
-            $asset_image = [];
+            $asset_images = [];
             if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
-                $asset_image[] = $file->storeAs('uploads/about/welcome', $tempName, 'public');
-            }
-            if ($request->hasFile('image_1')) {
-                $file = $request->file('image_2');
-                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
-                $asset_image[] = $file->storeAs('uploads/about/welcome', $tempName, 'public');
-            }
-            if ($request->hasFile('image_2')) {
-                $file = $request->file('image_2');
-                $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
-                $asset_image[] = $file->storeAs('uploads/about/welcome', $tempName, 'public');
-            } else {
-                $asset_image = ContentManagement::where('type', 'about_welcome')->value('image', 'image_1', 'image_2');
+                foreach ($request->file('image') as$index => $file) {
+                    $tempName = uniqid('asset_', true) . '.' . $file->getClientOriginalExtension();
+                    $path = $file->storeAs('uploads/about/welcome', $tempName,'public');
+                    $asset_images[] = ['index' =>$index,
+                    'path'=> $path]; 
+                }              
+            }else {
+                $asset_images = ContentManagement::where('type', 'about_welcome')->value('image');
             }
 
             ContentManagement::updateOrCreate(
@@ -335,7 +327,7 @@ class ContentManagementController extends Controller
                 [
                     'title' => $request->title,
                     'description' => $request->description,
-                    'image' => json_encode($asset_image),
+                    'image' => json_encode($asset_images),
                 ]
             );
 
@@ -356,10 +348,7 @@ class ContentManagementController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            // 'header_title' => 'required',
-            // 'header_content' => 'required',
-            // 'image' => 'nullable|image|mimes:png,jpg,jpeg',
-            // 'icon' => 'nullable|image|mimes:png,jpg,jpeg',
+          
         ]);
         try {
              ContentManagement::updateOrCreate(

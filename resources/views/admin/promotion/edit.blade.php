@@ -25,7 +25,7 @@
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name<span class="text-danger">*</span></label>
                                         <input type="text" id="name-vertical" class="form-control" name="name"
-                                            placeholder="Name" value="{{$promotion->name}}">
+                                            placeholder="Name" value="{{$promotion->name}}" minlength="2" maxlength="25">
                                     </div>
                                     @error('name')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -35,7 +35,7 @@
                                 <div class="form-group">
                                     <label for="code">Code<span class="text-danger">*</span></label>
                                     <input type="text" id="code" class="form-control" name="code"
-                                        placeholder="code" value="{{$promotion->code}}">
+                                        placeholder="code" value="{{$promotion->code}}" minlength="2" maxlength="10">
                                 </div>
                                 @error('code')
                                     <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -46,7 +46,7 @@
                                     <div class="form-group">
                                         <label for="price">Price<span class="text-danger">*</span></label>
                                         <input type="text" id="price" class="form-control" name="price"
-                                            placeholder="price" value="{{$promotion->price}}">
+                                            placeholder="price" value="{{floor($promotion->price)}}" min="0" max="9999999" pattern="[0-9\s]+" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                     </div>
                                     @error('price')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -56,7 +56,7 @@
                                     <div class="form-group">
                                         <label for="type">Type<span class="text-danger">*</span></label>
                                         <input type="text" id="type" class="form-control" name="type"
-                                            placeholder="type" value="{{$promotion->type}}">
+                                            placeholder="type" value="{{$promotion->type}}" minlength="2" maxlength="15">
                                     </div>
                                     @error('type')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -67,7 +67,7 @@
                                     <div class="form-group">
                                         <label for="type">Expiry Date<span class="text-danger">*</span></label>
                                         <input type="date" id="expiry_date" class="form-control" name="expiry_date"
-                                            placeholder="expiry date" value="{{$promotion->expiry_date}}">
+                                            placeholder="expiry date" value="{{$promotion->expiry_date}}"   min={{Carbon\Carbon::now()}}>
                                     </div>
                                     @error('expiry_date')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>

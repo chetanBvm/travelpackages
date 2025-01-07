@@ -45,10 +45,12 @@
                                     <div class="form-group">
                                         <label for="destination-vertical">Destination<span
                                                 class="text-danger">*</span></label>
-                                        <select class="form-select" id="basicSelect" name="destination_id">
+                                        <select class="form-select destination" id="basicSelect" name="destination_id">
                                             <option value="">Select Destination</option>
                                             @foreach ($destination as $value)
-                                                <option value="{{ $value->id }}" {{ old('destination_id') == $value['country']->name ? 'selected' : '' }}>{{ $value['country']->name }}</option>
+                                                <option value="{{ $value->id }}"
+                                                    {{ old('destination_id') == $value->id ? 'selected' : '' }}>
+                                                    {{ $value['country']->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -58,10 +60,13 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">Package Name<span class="text-danger">*</span></label>
-                                        <input type="text" id="first-name-vertical" class="form-control" name="name"
-                                            placeholder="Enter package (Eg:land & sea)" maxlength="50" value="{{ old('name') }}">
+                                        <label for="first-name-vertical">Package Name<span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" id="package-name" class="form-control" name="name"
+                                            placeholder="Enter package (Eg:land & sea)" maxlength="50"
+                                            value="{{ old('name') }}">
                                     </div>
+                                    <div id="package-name-feedback"></div>
                                     @error('name')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
@@ -69,8 +74,9 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="name-vertical">Sub Title</label>
-                                        <input type="text" id="name-vertical" class="form-control" maxlength="50" name="sub_title"
-                                            placeholder="Eg: Per night before taxes and fees" value="{{old('sub_title')}}">
+                                        <input type="text" id="name-vertical" class="form-control" maxlength="50"
+                                            name="sub_title" placeholder="Eg: Per night before taxes and fees"
+                                            value="{{ old('sub_title') }}">
                                     </div>
                                     @error('sub_title')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -80,9 +86,10 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="price">Price<span class="text-danger">*</span></label>
-                                        <input type="number" id="price"  min="0" 
-                                        max="9999999" class="form-control" name="price"
-                                        oninput="this.value = this.value.slice(0, 7);"  placeholder="price" value="{{old('price')}}">
+                                        <input type="number" id="price" min="0" max="9999999"
+                                            class="form-control" name="price"
+                                            oninput="this.value = this.value.slice(0, 7);" placeholder="price"
+                                            value="{{ old('price') }}">
                                     </div>
                                     @error('price')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -91,8 +98,9 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="price">Tax(%)<span class="text-danger">*</span></label>
-                                        <input type="number" id="tax" class="form-control" name="tax" min="0" max="99" oninput="if(this.value > 99) this.value = 99;" 
-                                            placeholder="tax percentage(Eg:18)" value="{{old('tax')}}">
+                                        <input type="number" id="tax" class="form-control" name="tax"
+                                            min="0" max="99" oninput="if(this.value > 99) this.value = 99;"
+                                            placeholder="tax percentage(Eg:18)" value="{{ old('tax') }}">
                                     </div>
                                     @error('tax')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -102,7 +110,7 @@
                                     <div class="form-group">
                                         <label for="price">Tax Amount</label>
                                         <input type="text" id="tax_rate" class="form-control" name="tax_rate"
-                                            placeholder="tax rate" value="{{old('tax_rate')}}" readonly>
+                                            placeholder="tax rate" value="{{ old('tax_rate') }}" readonly>
                                     </div>
                                     @error('tax_rate')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -112,7 +120,7 @@
                                     <div class="form-group">
                                         <label for="price">Total Price</label>
                                         <input type="text" id="total_price" class="form-control" name="total_price"
-                                            placeholder="total price" value="{{old('total_price')}}"readonly>
+                                            placeholder="total price" value="{{ old('total_price') }}"readonly>
                                     </div>
                                     @error('total_price')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -124,7 +132,9 @@
                                         <select class="form-select" id="basicSelect" name="packagetype_id">
                                             <option>select package type</option>
                                             @foreach ($packageType as $value)
-                                                <option value="{{ $value->id }}" {{ old('packagetype_id') == $value->name ? 'selected' : '' }}>{{ $value->name }}</option>
+                                                <option value="{{ $value->id }}"
+                                                    {{ old('packagetype_id') == $value->id ? 'selected' : '' }}>
+                                                    {{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -135,8 +145,9 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Days<span class="text-danger">*</span></label>
-                                        <input type="number" id="days" class="form-control" name="days" min="1" max="365"
-                                            placeholder="days" value="{{old('days')}}">
+                                        <input type="number" id="days" class="form-control" name="days"
+                                            min="1" max="365" placeholder="days"
+                                            value="{{ old('days') }}">
                                     </div>
                                     @error('days')
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
@@ -146,7 +157,8 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="days">Month<span class="text-danger">*</span></label>
-                                        <select class="form-control choices multiple-remove" name="departure_month[]" multiple="multiple">
+                                        <select class="form-control choices multiple-remove" name="departure_month[]"
+                                            multiple="multiple">
                                             @foreach ($months as $index => $month)
                                                 <option value="{{ $index + 1 }}"
                                                     {{ old('departure_month') == $index + 1 ? 'selected' : '' }}>
@@ -158,13 +170,14 @@
                                         <span class="text-danger" role="alert">*{{ $message }}</span>
                                     @enderror
                                 </div>
-                                
+
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="min_age">Min Age Limitation<span class="text-danger">*</span></label>
-                                        <input type="number" id="min-age" class="form-control" name="min_age"
-                                            placeholder="Min Age" min="1" max="99" 
-                                            pattern="^\d{1,4}$" value="{{old('min_age')}}">
+                                        <input type="text" id="min-age" class="form-control" name="min_age"
+                                            placeholder="Min Age" min="5" max="99" pattern="[0-9\s]+"
+                                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                            value="{{ old('min_age') }}">
                                     </div>
                                     <span class="text-danger" id="min-age-error"></span>
                                     @error('min_age')
@@ -174,9 +187,10 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="max_age">Max Age Limitation<span class="text-danger">*</span></label>
-                                        <input type="number" id="max-age" class="form-control" name="max_age"
-                                            placeholder="max age" min="1" max="100" 
-                                            pattern="^\d{1,4}$" value="{{old('max_age')}}">
+                                        <input type="text" id="max-age" class="form-control" name="max_age"
+                                            placeholder="max age" min="5" max="99" pattern="[0-9\s]+"
+                                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                            value="{{ old('max_age') }}">
                                     </div>
                                     <span class="text-danger" id="max-age-error"></span>
                                     @error('max_age')
@@ -194,12 +208,15 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="image" for="">Thumbnail<span
+                                        <label class="image" for="">Upload Image<span
                                                 class="text-danger">*</span></label>
-                                        <input type="file" class="form-control" name="thumbnail" id="main_image"
-                                            accept="image/jpeg, image/png, image/gif, image/jpg">
+                                        <input type="file" class="form-control" name="images[]" id="main_image"
+                                            accept="image/jpeg, image/png, image/gif, image/jpg, image/svg" multiple>
                                     </div>
                                 </div>
+                                <div id="imagePreview" style="display: flex; flex-wrap: wrap;">
+                                </div>
+                                <input type="hidden" name="thumbnail" id="thumbnail-input">
 
                                 <div class="col-12">
                                     <div class="form-group">
@@ -318,19 +335,7 @@
                 console.error(error);
             });
 
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $("#imagePreview").attr("src", e.target
-                        .result); //css("background-image", "url("+e.target.result+")");
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        $("#main_image").change(function() {
-            readURL(this);
-        });
+
 
         //Validation script
         $(document).ready(function() {
@@ -378,8 +383,8 @@
                     itinerary: {
                         required: true
                     },
-                    departure_month:{
-                        required:true
+                    departure_month: {
+                        required: true
                     }
                 },
                 // Customizing error messages
@@ -395,7 +400,7 @@
                     },
                     days: {
                         required: "Please specify the number of days."
-                    },                   
+                    },
                     status: {
                         required: "Please select the status."
                     },
@@ -426,7 +431,7 @@
                     itinerary: {
                         required: 'Please enter the itinerary.'
                     },
-                    departure_month:{
+                    departure_month: {
                         required: 'please select the departure month.'
                     }
                 },
@@ -471,7 +476,7 @@
 
             if (maxAge < minAge) {
                 maxAgeError.textContent = 'Max Age should be greater than or equal to Min Age.';
-                this.value = ''; // Clear the invalid value
+                this.value = '';
             }
         });
 
@@ -481,8 +486,108 @@
 
             if (minAge > maxAge) {
                 minAgeError.textContent = 'Min Age should be less than or equal to Max Age.';
-                this.value = ''; // Clear the invalid value
+                this.value = '';
             }
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            let selectedImages = [];
+            let thumbnailIndex = null;
+
+            // Handle file input change
+            $('#main_image').on('change', function(event) {
+                const files = event.target.files;
+                $('#imagePreview').html('');
+
+                Array.from(files).forEach((file, index) => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const imgIndex = selectedImages.length;
+                        selectedImages.push(file);
+
+                        // Add preview
+                        $('#imagePreview').append(`
+                        <div class="preview-container" data-index="${imgIndex}">
+                            <div class="image-wrapper">
+                            <img src="${e.target.result}" class="img-thumbnail preview-img" alt="Image Preview">
+                            <button type="button" class="btn btn-danger btn-sm remove-btn" data-index="${imgIndex}"> &times;</button>
+                            <button type="button" class="btn btn-primary btn-sm thumbnail-btn" data-index="${imgIndex}">Set as Thumbnail</button>
+                                </div>
+                            
+                        </div>
+                    `);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            });
+
+            $(document).on('click', '.thumbnail-btn', function() {
+                const index = $(this).data('index');
+                thumbnailIndex = index; // Set thumbnail index
+                $('#thumbnail-input').val(index); // Update thumbnail input value
+                $('.thumbnail-btn').removeClass('btn-success').text(
+                    'Set as Thumbnail'); // Reset all buttons
+                $(this).addClass('btn-success').text('Thumbnail'); // Highlight selected thumbnail
+            });
+
+            // Handle remove button click
+            $(document).on('click', '.remove-btn', function() {
+                const index = $(this).data('index');
+                $(`.preview-container[data-index="${index}"]`).remove();
+                selectedImages[index] = null;
+                if (thumbnailIndex === index) {
+                    thumbnailIndex = null;
+                    $('#thumbnail-input').val('');
+                }
+            });
+
+            // Handle set as thumbnail button click
+            $(document).on('click', '.thumbnail-btn', function() {
+                const index = $(this).data('index');
+                thumbnailIndex = index;
+                $('#thumbnail-input').val(index);
+                $('.thumbnail-btn').removeClass('btn-success').text('Set as Thumbnail');
+                $(this).addClass('btn-success').text('Thumbnail');
+            });
+
+
+        });
+    </script>
+
+    <script>      
+            $(document).ready(function() {
+                $("#package-name").on("keyup", function() {
+                    var packageName = $(this).val(); 
+                    var destination = $(".destination").val();
+                  
+                    if (packageName.length > 2 && destination != '') { 
+                        $.ajax({
+                            url: '{{ route('check.package.name') }}', 
+                            method: 'GET', 
+                            data: {
+                                package_name: packageName, 
+                                departure_id: destination
+                            },
+                            success: function(response) {
+                                if (response.exists) {
+                                    $('#package-name-feedback').text('Package name already exists')
+                                        .css('color', 'red');
+                                } else {                                    
+                                    $('#package-name-feedback').text('Package name is available')
+                                        .css('color', 'green');
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(error);
+                            }
+                        });
+                    }
+                });
+            });
+    </script>
+
+    <!-- Add a field for feedback message -->
+    <div id="package-name-feedback"></div>
 @endsection

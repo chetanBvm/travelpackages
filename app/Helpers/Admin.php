@@ -34,7 +34,7 @@ class Admin
     {
         return [
             'user_id' => Session::get('user_id'),
-            'user_role' => Session::get('user_role'),
+            // 'user_role' => Session::get('user_role'),
         ];
     }
     public static function flashSessionMessage($status, $message)

@@ -73,16 +73,8 @@
                         searchable: false
                     },
                     {
-                        data: null,
-                        render: function(data, type, row) {
-                            const firstName = row.f_name ||
-                                '';
-                            const lastName = row.l_name ||
-                                '';
-
-                            return firstName + (lastName ? ' ' + lastName : '');
-                        },
-                        name: 'full_name'
+                        data: 'name',
+                        name: 'name',
                     },
                     {
                         data: 'email',

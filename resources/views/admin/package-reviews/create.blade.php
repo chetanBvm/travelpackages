@@ -66,15 +66,13 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="form-group">
-                                        <div>
-                                            <img id="imagePreview" class="profile-image"
-                                                src="{{ asset('admin/assets/images/faces/1.jpg') }}" alt="your image"
-                                                width="100px" height="auto" />
-                                        </div>
+                                    <div class="form-group">                                        
                                         <label class="image" for="">Image<span class="text-danger">*</span></label>
                                         <input type="file" class="form-control" name="images" id="main_image"
-                                            accept="image/jpeg, image/png, image/gif, image/jpg">
+                                            accept="image/jpeg, image/png, image/gif, image/jpg,image/svg">
+                                    </div>
+                                    <div>
+                                        <img id="imagePreview" width="100px" height="auto" />
                                     </div>
                                 </div>
                                 <div class="col-12">

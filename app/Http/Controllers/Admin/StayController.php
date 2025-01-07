@@ -28,7 +28,7 @@ class StayController extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $urlpath = url('admin/stay');
-                    return '<a href="' . $urlpath . '/' . $row->id . '/edit' . '" class="edit"><i class="material-icons">edit</i></a><a href="javascript:void(0);" onClick="deleteFunc(' . $row->id . ')" class="delete"><i class="material-icons">delete</i></a>';
+                    return '<a href="' . $urlpath . '/' . $row->id . '/edit' . '" class="edit"><i class="bi bi-pencil-fill"></i></a><a href="javascript:void(0);" onClick="deleteFunc(' . $row->id . ')" class="delete"><i class="bi bi-trash-fill"></i></a>';
                 })
                 ->rawColumns(['image', 'action'])
                 ->make(true);

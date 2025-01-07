@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ContactUs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
+
+use function Illuminate\Log\log;
 
 class ContactUsController extends Controller
 {
@@ -19,12 +22,20 @@ class ContactUsController extends Controller
 
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('name', function ($data) {
+                    return $data->f_name.'  '.$data->l_name;
+                })
                 ->addColumn('action', function ($row) {
                     $urlpath = route('contactus.show', $row->id);                    
                     return '<a href="' . $urlpath .'" class="view"><i class="bi bi-eye-fill"></i></a>
                     ';
                 })
-                ->rawColumns(['action'])
+                ->filterColumn('name', function ($query, $keyword) {
+                    $keywords = trim($keyword);
+                    $query->whereRaw("CONCAT(f_name, l_name) like ?", ["%{$keywords}%"]);
+                 })
+
+                ->rawColumns(['name','action'])
                 ->make(true);
         }
         return view('admin.contactus.index');

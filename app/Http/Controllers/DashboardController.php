@@ -138,7 +138,6 @@ class DashboardController extends Controller
         $data['package']= Package::where('packagetype_id', $id)->where('status','Active')->get();
         $data['destination'] = Destination::with('country')->get();
         $data['social_link'] = ContentManagement::where('type', 'home_topbar')->first();
-      
         $packageTypes =  PackageType::with('subpackage')->whereNUll('parent_id')->get();
         $settings = Setting::where('type','logo')->value('image');
         $settingContact = Setting::where('type','contact')->first();

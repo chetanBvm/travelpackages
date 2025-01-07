@@ -45,7 +45,6 @@ class PackagesController extends Controller
     public function packageDetail(int $id)
     {
         $packages = Package::with('images')->findOrFail($id);
-        $data['packageImages'] = PackageImages::where('package_id', $id)->get();
         $data['packages'] = Package::where('status','Active')->get()->take(3);
         $data['feature'] = Package::get()->take(10);
         $data['itinerary'] = Itinerary::where('package_id', $id)->first();
@@ -72,10 +71,11 @@ class PackagesController extends Controller
     public function downloadPdf($id)
     {
         $package = Package::with(['inclusions', 'exclusions'])->findOrFail($id);
-
+        $logo = Setting::where('type','logo')->value('image');
         // Share data with the Blade view
         $data = [
             'package' => $package,
+            'logo' => $logo
         ];
 
         // Load the Blade view and pass the data
